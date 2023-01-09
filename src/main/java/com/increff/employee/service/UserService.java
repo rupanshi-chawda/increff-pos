@@ -1,9 +1,12 @@
 package com.increff.employee.service;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.transaction.Transactional;
 
+import com.increff.employee.dto.UserDto;
+import com.increff.employee.util.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,13 +19,13 @@ public class UserService {
 	@Autowired
 	private UserDao dao;
 
+	@Autowired
+	private UserDto dto;
+
 	@Transactional
 	public void add(UserPojo p) throws ApiException {
-		normalize(p);
-		UserPojo existing = dao.select(p.getEmail());
-		if (existing != null) {
-			throw new ApiException("User with given email already exists");
-		}
+		UserDto.normalize(p);
+		dto.getCheck(p);
 		dao.insert(p);
 	}
 
@@ -41,8 +44,4 @@ public class UserService {
 		dao.delete(id);
 	}
 
-	protected static void normalize(UserPojo p) {
-		p.setEmail(p.getEmail().toLowerCase().trim());
-		p.setRole(p.getRole().toLowerCase().trim());
-	}
 }

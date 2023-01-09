@@ -1,58 +1,33 @@
 package com.increff.employee.controller;
 
-import java.util.List;
-
+import com.increff.employee.dto.InitDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.increff.employee.model.InfoData;
-import com.increff.employee.model.UserForm;
-import com.increff.employee.pojo.UserPojo;
-import com.increff.employee.service.ApiException;
-import com.increff.employee.service.UserService;
+import com.increff.employee.model.form.UserForm;
+import com.increff.employee.util.ApiException;
 
 import io.swagger.annotations.ApiOperation;
 
 @Controller
-public class InitApiController extends AbstractUiController {
+public class InitController {
 
 	@Autowired
-	private UserService service;
-	@Autowired
-	private InfoData info;
+	private InitDto dto;
 
 	@ApiOperation(value = "Initializes application")
-	@RequestMapping(path = "/site/init", method = RequestMethod.GET)
+	@GetMapping(path = "/site/init")
 	public ModelAndView showPage(UserForm form) throws ApiException {
-		info.setMessage("");
-		return mav("init.html");
+		return dto.show(form);
 	}
 
 	@ApiOperation(value = "Initializes application")
-	@RequestMapping(path = "/site/init", method = RequestMethod.POST)
+	@PostMapping(path = "/site/init")
 	public ModelAndView initSite(UserForm form) throws ApiException {
-		List<UserPojo> list = service.getAll();
-		if (list.size() > 0) {
-			info.setMessage("Application already initialized. Please use existing credentials");
-		} else {
-			form.setRole("admin");
-			UserPojo p = convert(form);
-			service.add(p);
-			info.setMessage("Application initialized");
-		}
-		return mav("init.html");
-
-	}
-
-	private static UserPojo convert(UserForm f) {
-		UserPojo p = new UserPojo();
-		p.setEmail(f.getEmail());
-		p.setRole(f.getRole());
-		p.setPassword(f.getPassword());
-		return p;
+		return dto.init(form);
 	}
 
 }

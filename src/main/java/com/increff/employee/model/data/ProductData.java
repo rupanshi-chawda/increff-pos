@@ -1,11 +1,11 @@
 package com.increff.employee.model.data;
 
-import com.increff.employee.model.form.BrandForm;
+import com.increff.employee.model.form.ProductForm;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class BrandData extends BrandForm {
+public class ProductData extends ProductForm {
     private int id;
 }

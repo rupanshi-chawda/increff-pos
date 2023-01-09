@@ -67,7 +67,6 @@ public class DbConfig {
 		jpaProperties.put("hibernate.dialect", hibernateDialect);
 		jpaProperties.put("hibernate.show_sql", hibernateShowSql);
 		jpaProperties.put("hibernate.hbm2ddl.auto", hibernateHbm2ddl);
-		jpaProperties.put("hibernate.hbm2ddl.auto", hibernateHbm2ddl);
 		bean.setJpaProperties(jpaProperties);
 		return bean;
 	}

@@ -53,9 +53,12 @@ public class ControllerConfig extends WebMvcConfigurerAdapter {
 	// Add configuration for Swagger
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
-		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
-		registry.addResourceHandler("/static/**").addResourceLocations("/static/");
+		registry.addResourceHandler("/swagger-ui.html").
+				addResourceLocations("classpath:/META-INF/resources/");
+		registry.addResourceHandler("/webjars/**").
+				addResourceLocations("classpath:/META-INF/resources/webjars/");
+		registry.addResourceHandler("/static/**").
+				addResourceLocations("/static/");
 	}
 
 	@Override
@@ -92,7 +95,7 @@ public class ControllerConfig extends WebMvcConfigurerAdapter {
 	public ObjectMapper objectMapper() {
 		JavaTimeModule javaTimeModule = new JavaTimeModule();
 		javaTimeModule.addSerializer(ZonedDateTime.class, new ZonedDateTimeSerializer(DateTimeFormatter.ISO_DATE_TIME));
-		return Jackson2ObjectMapperBuilder.json().featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS) // ISODate
+		return Jackson2ObjectMapperBuilder.json().featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
 				.modules(javaTimeModule).build();
 	}
 }

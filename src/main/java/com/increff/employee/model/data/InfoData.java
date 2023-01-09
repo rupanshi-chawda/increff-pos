@@ -1,12 +1,16 @@
-package com.increff.employee.model;
+package com.increff.employee.model.data;
 
 import java.io.Serializable;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 @Component
+@Getter
+@Setter
 @Scope(value="session", proxyMode=ScopedProxyMode.TARGET_CLASS)
 public class InfoData implements Serializable {
 
@@ -19,21 +23,4 @@ public class InfoData implements Serializable {
 		message = "No message";
 		email = "No email";
 	}
-	
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 }
