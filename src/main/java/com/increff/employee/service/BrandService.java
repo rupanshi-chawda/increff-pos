@@ -33,7 +33,7 @@ public class BrandService {
 
     @Transactional
     public List<BrandPojo> getAll() {
-        return dao.selectAll();
+        return dao.selectAll(BrandPojo.class, "BrandPojo");
     }
 
     @Transactional(rollbackOn = ApiException.class)

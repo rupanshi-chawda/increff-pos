@@ -65,9 +65,9 @@ public class BrandDto {
     }
 
     public BrandPojo checkId(int id) throws ApiException {
-        BrandPojo p = dao.select(id);
+        BrandPojo p = dao.selectById(id, BrandPojo.class, "BrandPojo");
         if (p == null) {
-            throw new ApiException("Employee with given ID does not exit, id: " + id);
+            throw new ApiException("Brand with given ID does not exit, id: " + id);
         }
         return p;
     }

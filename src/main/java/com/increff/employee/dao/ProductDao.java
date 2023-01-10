@@ -13,9 +13,8 @@ import java.util.List;
 @Repository
 public class ProductDao extends AbstractDao{
 
-    private static final String SELECT_BY_BRAND_CATEGORY = "select p from ProductPojo p where brand_category=:brand_category";
-    private static final String SELECT_BY_ID = "select p from ProductPojo p where id=:id";
-    private static final String SELECT_ALL = "select p from ProductPojo p";
+    private static final String SELECT_BY_BRAND_CATEGORY = "select p from ProductPojo p where " +
+            "brandCategory=:brandCategory";
 
     @PersistenceContext
     private EntityManager em;
@@ -25,20 +24,9 @@ public class ProductDao extends AbstractDao{
         em.persist(p);
     }
 
-    public ProductPojo select(int id) {
-        TypedQuery<ProductPojo> query = getQuery(SELECT_BY_ID, ProductPojo.class);
-        query.setParameter("id", id);
-        return getSingle(query);
-    }
-
-    public List<ProductPojo> selectAll() {
-        TypedQuery<ProductPojo> query = getQuery(SELECT_ALL, ProductPojo.class);
-        return query.getResultList();
-    }
-
-    public ProductPojo selectComp(int brand_category){
+    public ProductPojo selectComp(int brandCategory){
         TypedQuery<ProductPojo> query = getQuery(SELECT_BY_BRAND_CATEGORY, ProductPojo.class);
-        query.setParameter("brand_category", brand_category);
+        query.setParameter("brandCategory", brandCategory);
         return getSingle(query);
     }
 

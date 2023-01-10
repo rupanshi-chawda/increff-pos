@@ -1,6 +1,9 @@
 package com.increff.employee.service;
 
+import com.increff.employee.dao.BrandDao;
 import com.increff.employee.dao.ProductDao;
+import com.increff.employee.dto.ProductDto;
+import com.increff.employee.pojo.BrandPojo;
 import com.increff.employee.pojo.ProductPojo;
 import com.increff.employee.util.ApiException;
 import com.increff.employee.util.StringUtil;
@@ -15,64 +18,36 @@ import java.util.Objects;
 public class ProductService {
 
     @Autowired
+    private ProductDto dto;
+
+    @Autowired
     private ProductDao dao;
 
     @Transactional(rollbackOn = ApiException.class)
-    public void add(ProductPojo p) throws ApiException {
-        normalize(p);
-        if(StringUtil.isEmpty(p.getBarcode())) {
-            throw new ApiException("Barcode cannot be empty");
-        }
-        if(StringUtil.isEmpty(p.getName())) {
-            throw new ApiException("Name cannot be empty");
-        }
-        if(p.getMrp()==0) {
-            throw new ApiException("MRP cannot be empty or zero");
-        }
-        dao.insert(getCheck(p));
+    public void add(ProductPojo p, String brand, String category) throws ApiException {
+        ProductDto.normalize(p);
+        dto.checkEmpty(p);
+        dao.insert(dto.checkExists(p, brand, category));
     }
 
     @Transactional(rollbackOn = ApiException.class)
     public ProductPojo get(int id) throws ApiException {
-        return getCheck(id);
+        return dto.checkId(id);
     }
 
     @Transactional
     public List<ProductPojo> getAll() {
-        return dao.selectAll();
+        return dao.selectAll(ProductPojo.class, "ProductPojo");
     }
 
     @Transactional(rollbackOn  = ApiException.class)
     public void update(int id, ProductPojo p) throws ApiException {
-        normalize(p);
-        ProductPojo b = getCheck(id);
-        b.setBarcode(p.getBarcode());
-        b.setName(p.getName());
-        b.setMrp(p.getMrp());
-        dao.update(b);
-    }
-    
-    // Checkers and Normalizers
-    @Transactional
-    public ProductPojo getCheck(int id) throws ApiException {
-        ProductPojo p = dao.select(id);
-        if (p == null) {
-            throw new ApiException("Employee with given ID does not exit, id: " + id);
-        }
-        return p;
+        ProductDto.normalize(p);
+        ProductPojo bx = dto.checkId(id);
+        bx.setBarcode(p.getBarcode());
+        bx.setName(p.getName());
+        bx.setMrp(p.getMrp());
+        dao.update(p);
     }
 
-    @Transactional
-    public ProductPojo getCheck(ProductPojo p) throws ApiException {
-        ProductPojo b = dao.selectComp(p.getBrandCategory());
-        if( Objects.isNull(b) ) {
-            throw new ApiException("Brand Category already exists");
-        }
-        return p;
-    }
-    
-    protected static void normalize(ProductPojo p) {
-        p.setBarcode(StringUtil.toLowerCase(p.getBarcode()));
-        p.setName(StringUtil.toLowerCase(p.getName()));
-    }
 }

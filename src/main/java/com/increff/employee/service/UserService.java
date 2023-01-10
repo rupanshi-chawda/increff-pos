@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import com.increff.employee.dto.UserDto;
 import com.increff.employee.util.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import com.increff.employee.dao.UserDao;
@@ -36,7 +37,7 @@ public class UserService {
 
 	@Transactional
 	public List<UserPojo> getAll() {
-		return dao.selectAll();
+		return dao.selectAll(UserPojo.class, "UserPojo");
 	}
 
 	@Transactional
