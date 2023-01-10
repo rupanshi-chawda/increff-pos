@@ -20,11 +20,11 @@ public class BrandDto {
     @Autowired
     private BrandService service;
 
-    @Autowired
-    private BrandDao dao;
-
     public void add(BrandForm form) throws ApiException {
         BrandPojo p = convert(form);
+        normalize(p);
+        checkEmpty(p);
+        p = service.getBrandCategory(p);
         service.add(p);
     }
 
@@ -44,10 +44,12 @@ public class BrandDto {
 
     public void update(int id, BrandForm f) throws ApiException {
         BrandPojo p = convert(f);
+        normalize(p);
+        checkUpdate(p.getBrand(), p.getCategory());
         service.update(id, p);
     }
 
-    //Conversion and Normalization methods
+    //Conversion and Normalization methods --------------------------------------
 
     private static BrandData convert(BrandPojo p) {
         BrandData d = new BrandData();
@@ -64,14 +66,6 @@ public class BrandDto {
         return p;
     }
 
-    public BrandPojo checkId(int id) throws ApiException {
-        BrandPojo p = dao.selectById(id, BrandPojo.class, "BrandPojo");
-        if (p == null) {
-            throw new ApiException("Brand with given ID does not exit, id: " + id);
-        }
-        return p;
-    }
-
     public void checkEmpty(BrandPojo p) throws ApiException {
         if(StringUtil.isEmpty(p.getBrand())) {
             throw new ApiException("Brand cannot be empty");
@@ -81,16 +75,8 @@ public class BrandDto {
         }
     }
 
-    public BrandPojo checkExists(BrandPojo p) throws ApiException {
-        BrandPojo b = dao.selectComp(p.getBrand(), p.getCategory());
-        if(!Objects.isNull(b)) {
-            throw new ApiException("Brand Category already exists");
-        }
-        return p;
-    }
-
     public void checkUpdate(String brand, String category) throws ApiException {
-        BrandPojo b = dao.selectComp(brand, category);
+        BrandPojo b = service.getBrandCategory(brand, category);
         if(!Objects.isNull(b)) {
             throw new ApiException("Brand and Category already exist");
         }

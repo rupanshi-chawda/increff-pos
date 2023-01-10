@@ -1,7 +1,5 @@
 package com.increff.employee.dao;
 
-import java.util.List;
-
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
@@ -21,13 +19,13 @@ public class UserDao extends AbstractDao {
 		em().persist(p);
 	}
 
-	public void delete(int id) {
+	public void deleteById(int id) {
 		Query query = em().createQuery(DELETE_BY_ID);
 		query.setParameter("id", id);
 		query.executeUpdate();
 	}
 
-	public UserPojo select(String email) {
+	public UserPojo selectByEmail(String email) {
 		TypedQuery<UserPojo> query = getQuery(SELECT_BY_EMAIL, UserPojo.class);
 		query.setParameter("email", email);
 		return getSingle(query);

@@ -22,7 +22,7 @@ public class BrandDao extends AbstractDao {
         em.persist(p);
     }
 
-    public BrandPojo selectComp(String brand, String category){
+    public BrandPojo selectBrandCategory(String brand, String category){
         TypedQuery<BrandPojo> query = getQuery(SELECT_BY_BRAND_AND_CATEGORY, BrandPojo.class);
         query.setParameter("brand", brand); 
         query.setParameter("category", category);

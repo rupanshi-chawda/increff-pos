@@ -2,9 +2,7 @@ package com.increff.employee.dto;
 
 import com.increff.employee.dao.BrandDao;
 import com.increff.employee.dao.ProductDao;
-import com.increff.employee.model.data.BrandData;
 import com.increff.employee.model.data.ProductData;
-import com.increff.employee.model.form.BrandForm;
 import com.increff.employee.model.form.ProductForm;
 import com.increff.employee.pojo.BrandPojo;
 import com.increff.employee.pojo.ProductPojo;
@@ -21,17 +19,14 @@ import java.util.Objects;
 
 @Configuration
 public class ProductDto {
+
     @Autowired
     private ProductService service;
 
-    @Autowired
-    private ProductDao dao;
-
-    @Autowired
-    private BrandDao brandDao;
-
     public void add(ProductForm form) throws ApiException {
         ProductPojo p = convert(form);
+        normalize(p);
+        checkEmpty(p);
         service.add(p, form.getBrand(), form.getCategory());
     }
 
@@ -51,10 +46,11 @@ public class ProductDto {
 
     public void update(int id, ProductForm f) throws ApiException {
         ProductPojo p = convert(f);
+        normalize(p);
         service.update(id, p);
     }
 
-    //Conversion and Normalization methods
+    //Conversion and Normalization methods --------------------------------------
 
     private static ProductData convert(ProductPojo p) {
         ProductData d = new ProductData();
@@ -85,25 +81,6 @@ public class ProductDto {
         if(p.getMrp()<1) {
             throw new ApiException("MRP cannot be empty or zero");
         }
-    }
-
-    @Transactional
-    public ProductPojo checkId(int id) throws ApiException {
-        ProductPojo p = dao.selectById(id, ProductPojo.class, "ProductPojo");
-        if (p == null) {
-            throw new ApiException("Product with given ID does not exit, id: " + id);
-        }
-        return p;
-    }
-
-    @Transactional
-    public ProductPojo checkExists(ProductPojo p, String brand, String category) throws ApiException {
-        BrandPojo b = brandDao.selectComp(brand, category);
-        if( Objects.isNull(b) ) {
-            throw new ApiException("Brand Category doesn't exists");
-        }
-        p.setBrandCategory(b.getId());
-        return p;
     }
 
     public static void normalize(ProductPojo p) {
