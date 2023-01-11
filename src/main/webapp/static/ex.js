@@ -11,9 +11,9 @@ function getProductUrl(){
 }
 
 function getBrandOption() {
-    selectElement = document.querySelector('#inputBrand');
-    output = selectElement.options[selectElement.selectedIndex].value;
-    return output;
+        selectElement = document.querySelector('#inputBrand');
+        output = selectElement.options[selectElement.selectedIndex].value;
+        return output;
 }
 
 //BUTTON ACTIONS
@@ -22,6 +22,7 @@ function addProduct(event){
    var $form = $("#product-form");
    var json = toJson($form);
    var url = getProductUrl();
+    console.log(url);
    $.ajax({
       url: url,
       type: 'POST',
@@ -42,11 +43,13 @@ function updateProduct(event){
    $('#edit-product-modal').modal('toggle');
    //Get the ID
    var id = $("#product-edit-form input[name=id]").val();
-   var url = getProductUrl() + "/" + editProduct;
+   var url = getProductUrl() + "/" + id;
 
    //Set the values to update
    var $form = $("#product-edit-form");
    var json = toJson($form);
+       console.log(url);
+       console.log(json)
 
    $.ajax({
       url: url,
@@ -154,12 +157,14 @@ function displayProductList(data){
 var editProduct=null;
 function displayEditProduct(id){
    var url = getProductUrl() + "/" + id;
+   console.log(url);
    editProduct=id;
    $.ajax({
       url: url,
       type: 'GET',
       success: function(data) {
              displayProduct(data);
+             console.log(data);
       },
       error: handleAjaxError
    });
@@ -200,20 +205,21 @@ function displayProduct(data){
    $("#product-edit-form input[name=barcode]").val(data.barcode);
    $("#product-edit-form input[name=name]").val(data.name);
    $("#product-edit-form input[name=mrp]").val(data.mrp);
+   $("#product-edit-form input[name=id]").val(data.id);
    $('#edit-product-modal').modal('toggle');
 }
 
 function getBrandList()
 {
     var url = getBrandUrl();
-    $.ajax({
+       $.ajax({
           url: url,
           type: 'GET',
           success: function(data) {
                 displayBrandOptions(data);
           },
           error: handleAjaxError
-    });
+       });
 }
 
 function displayBrandOptions(data)
@@ -227,20 +233,26 @@ function displayBrandOptions(data)
                 Object.assign(brandData, {[a]:[]});
             brandData[a].push(b);
         }
-    console.log(brandData);
-    var $elB = $("#inputBrand");
+console.log(brandData);
+        var $elB = $("#inputBrand");
 
-    $elB.empty();
-    $.each(brandData, function(key,value) {
-        $elB.append($("<option></option>")
-        .attr("value", key).text(key));
-        });
-    displayCategoryOptions();
+        $elB.empty();
+
+        $.each(brandData, function(key,value) {
+                  $elB.append($("<option></option>")
+                     .attr("value", key).text(key));
+
+                });
+
+        displayCategoryOptions();
+
 }
+
 
 function displayCategoryOptions()
 {
     var $elC = $("#inputCategory");
+
     $elC.empty();
 
     var a = getBrandOption();
@@ -248,11 +260,11 @@ function displayCategoryOptions()
     console.log(brandData[a].length);
     var len = brandData[a].length;
     for(var i=0; i<len; i++)
-    {
-        $elC.append($("<option></option>")
-        .attr("value", brandData[a][i]).text(brandData[a][i]));
+        {
+            $elC.append($("<option></option>")
+                .attr("value", brandData[a][i]).text(brandData[a][i]));
 
-    }
+        }
 }
 
 
@@ -264,10 +276,11 @@ function init(){
    $('#upload-data').click(displayUploadData);
    $('#process-data').click(processData);
    $('#download-errors').click(downloadErrors);
-   $('#productFile').on('change', updateFileName)
-   $('#inputBrand').change(displayCategoryOptions);
+    $('#productFile').on('change', updateFileName)
+    $('#inputBrand').change(displayCategoryOptions);
 }
 
 $(document).ready(init);
 $(document).ready(getProductList);
+
 $(document).ready(getBrandList);

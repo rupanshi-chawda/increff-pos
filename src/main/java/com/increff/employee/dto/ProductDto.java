@@ -78,8 +78,8 @@ public class ProductDto {
         if(StringUtil.isEmpty(p.getName())) {
             throw new ApiException("Name cannot be empty");
         }
-        if(p.getMrp()<1) {
-            throw new ApiException("MRP cannot be empty or zero");
+        if(p.getMrp()<1 || Objects.isNull(p.getMrp())) {
+            throw new ApiException("MRP cannot be empty or less than one");
         }
     }
 
