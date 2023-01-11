@@ -26,7 +26,7 @@ public class BrandService {
     }
 
     public List<BrandPojo> getAll() {
-        return dao.selectAll(BrandPojo.class, "BrandPojo");
+        return dao.selectAll(BrandPojo.class);
     }
 
     public void update(int id, BrandPojo p) throws ApiException {
@@ -37,7 +37,7 @@ public class BrandService {
     }
 
     public BrandPojo getBrandId(int id) throws ApiException {
-        BrandPojo p = dao.selectById(id, BrandPojo.class, "BrandPojo");
+        BrandPojo p = dao.selectById(id, BrandPojo.class);
         if (Objects.isNull(p)) {
             throw new ApiException("Brand with given ID does not exit, id: " + id);
         }
@@ -54,5 +54,10 @@ public class BrandService {
 
     public BrandPojo getBrandCategory(String brand, String category) {
         return dao.selectBrandCategory(brand, category);
+    }
+
+    public int getBrandCategoryId(String brand, String category) {
+        BrandPojo p = dao.selectBrandCategory(brand, category);
+        return p.getId();
     }
 }

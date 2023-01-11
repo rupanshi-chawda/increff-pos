@@ -17,8 +17,12 @@ public class ProductService {
     @Autowired
     private ProductDao dao;
 
+    @Autowired
+    private BrandService brandService;
+
     public void add(ProductPojo p, String brand, String category) throws ApiException {
         p = getProductBarcode(p);
+        p.setBrandCategory(brandService.getBrandCategoryId(brand, category));
         dao.insert(p);
     }
 
@@ -27,7 +31,7 @@ public class ProductService {
     }
 
     public List<ProductPojo> getAll() {
-        return dao.selectAll(ProductPojo.class, "ProductPojo");
+        return dao.selectAll(ProductPojo.class);
     }
 
     public void update(int id, ProductPojo p) throws ApiException {
@@ -39,7 +43,7 @@ public class ProductService {
     }
 
     public ProductPojo getProductId(int id) throws ApiException {
-        ProductPojo p = dao.selectById(id, ProductPojo.class, "ProductPojo");
+        ProductPojo p = dao.selectById(id, ProductPojo.class);
         if (Objects.isNull(p)) {
             throw new ApiException("Product with given ID does not exit, id: " + id);
         }
@@ -47,7 +51,7 @@ public class ProductService {
     }
 
     public ProductPojo getProductBarcode(ProductPojo p) throws ApiException {
-        ProductPojo d = dao.selectBarcode(p.getBarcode(), ProductPojo.class, "ProductPojo");
+        ProductPojo d = dao.selectBarcode(p.getBarcode(), ProductPojo.class);
         if (!Objects.isNull(d)) {
             throw new ApiException("Product with given barcode already exists");
         }

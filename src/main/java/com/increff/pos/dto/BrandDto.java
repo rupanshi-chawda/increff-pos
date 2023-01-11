@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Configuration
 @Service
@@ -36,28 +37,22 @@ public class BrandDto {
     }
 
     public List<BrandData> getAll() {
-        List<BrandPojo> list = service.getAll();
-        List<BrandData> list2 = new ArrayList<BrandData>();
-        for (BrandPojo p : list) {
-            list2.add(BrandHelper.convert(p));
-        }
-        return list2;
+        return service.getAll().stream().map(p -> BrandHelper.convert(p)).collect(Collectors.toList());
     }
 
     public void update(int id, BrandForm f) throws ApiException {
         BrandHelper.normalize(f);
         checkUpdate(f.getBrand(), f.getCategory());
+        BrandHelper.validate(f);
         BrandPojo p = BrandHelper.convert(f);
         service.update(id, p);
     }
 
     //Check Method
-
     public void checkUpdate(String brand, String category) throws ApiException {
         BrandPojo b = service.getBrandCategory(brand, category);
         if(!Objects.isNull(b)) {
             throw new ApiException("Brand and Category already exist");
         }
     }
-
 }

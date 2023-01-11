@@ -25,21 +25,21 @@ public abstract class AbstractDao {
 		return em;
 	}
 
-	public <T> T selectById(int id, Class<T> clazz, String s) {
-		String SELECT_BY_ID = "select p from " + s + " p where id=:id";
+	public <T> T selectById(int id, Class<T> clazz) {
+		String SELECT_BY_ID = "select p from " + clazz.getName() + " p where id=:id";
 		TypedQuery<T> query = getQuery(SELECT_BY_ID, clazz);
 		query.setParameter("id", id);
 		return getSingle(query);
 	}
 
-	public <T> List<T> selectAll(Class<T> clazz, String s) {
-		String SELECT_ALL = "select p from " + s + " p";
+	public <T> List<T> selectAll(Class<T> clazz) {
+		String SELECT_ALL = "select p from " + clazz.getName() + " p";
 		TypedQuery<T> query = getQuery(SELECT_ALL, clazz);
 		return query.getResultList();
 	}
 
-	public <T> T selectBarcode(String barcode, Class<T> clazz, String s){
-		String SELECT_BY_BARCODE = "select p from " + s + " p where barcode=:barcode";
+	public <T> T selectBarcode(String barcode, Class<T> clazz){
+		String SELECT_BY_BARCODE = "select p from " + clazz.getName() + " p where barcode=:barcode";
 		TypedQuery<T> query = getQuery(SELECT_BY_BARCODE, clazz);
 		query.setParameter("barcode", barcode);
 		return getSingle(query);

@@ -1,5 +1,6 @@
 package com.increff.pos.dto;
 
+import com.increff.pos.helper.BrandHelper;
 import com.increff.pos.model.data.UserData;
 import com.increff.pos.model.form.UserForm;
 import com.increff.pos.pojo.UserPojo;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Configuration
 @Service
@@ -29,12 +31,7 @@ public class AdminDto {
     }
 
     public List<UserData> getAll(){
-        List<UserPojo> list = service.getAll();
-        List<UserData> list2 = new ArrayList<UserData>();
-        for (UserPojo p : list) {
-            list2.add(convert(p));
-        }
-        return list2;
+        return service.getAll().stream().map(p -> convert(p)).collect(Collectors.toList());
     }
 
     //Conversion Methods
