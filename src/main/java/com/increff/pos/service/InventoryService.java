@@ -1,6 +1,7 @@
 package com.increff.pos.service;
 
 import com.increff.pos.dao.InventoryDao;
+import com.increff.pos.helper.InventoryHelper;
 import com.increff.pos.pojo.InventoryPojo;
 import com.increff.pos.util.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,9 @@ public class InventoryService {
     }
 
     public InventoryPojo get(int id) throws ApiException {
-        return getInventoryId(id);
+        InventoryPojo p = getInventoryId(id);
+        InventoryHelper.validateId(p, id);
+        return p;
     }
 
     public List<InventoryPojo> getAll() {
@@ -41,15 +44,12 @@ public class InventoryService {
 
     public void update(int id, InventoryPojo p) throws ApiException {
         InventoryPojo bx = getInventoryId(id);
+        InventoryHelper.validateId(bx, id);
         bx.setQuantity(p.getQuantity());
         dao.update(p);
     }
 
-    public InventoryPojo getInventoryId(int id) throws ApiException {
-        InventoryPojo p = dao.selectById(id, InventoryPojo.class);
-        if (Objects.isNull(p)) {
-            throw new ApiException("Product with given ID does not exit, id: " + id);
-        }
-        return p;
+    public InventoryPojo getInventoryId(int id) {
+        return dao.selectById(id, InventoryPojo.class);
     }
 }

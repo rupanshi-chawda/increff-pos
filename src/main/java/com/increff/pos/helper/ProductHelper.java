@@ -17,7 +17,6 @@ public class ProductHelper {
         d.setBarcode(p.getBarcode());
         d.setId(p.getId());
         d.setName(p.getName());
-        d.setBrandCategory(p.getBrandCategory());
         d.setMrp(p.getMrp());
         return d;
     }
@@ -26,7 +25,6 @@ public class ProductHelper {
         ProductPojo p = new ProductPojo();
         p.setName(f.getName());
         p.setBarcode(f.getBarcode());
-        p.setBrandCategory(f.getBrandCategory());
         p.setMrp(f.getMrp());
         return p;
     }

@@ -5,6 +5,9 @@ import com.increff.pos.model.form.InventoryForm;
 import com.increff.pos.pojo.InventoryPojo;
 import com.increff.pos.util.ApiException;
 import com.increff.pos.util.StringUtil;
+import io.swagger.annotations.Api;
+
+import java.util.Objects;
 
 public class InventoryHelper {
 
@@ -33,6 +36,12 @@ public class InventoryHelper {
         }
         if(f.getQuantity()<=0) {
             throw new ApiException("Quantity cannot be empty or less than one");
+        }
+    }
+
+    public static void validateId(InventoryPojo p, int id) throws ApiException {
+        if (Objects.isNull(p)) {
+            throw new ApiException("Product with given ID does not exit, id: " + id);
         }
     }
 }
