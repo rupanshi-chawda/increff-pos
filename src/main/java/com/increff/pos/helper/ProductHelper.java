@@ -35,7 +35,7 @@ public class ProductHelper {
         f.setBarcode(StringUtil.toLowerCase(f.getBarcode()));
         f.setName(StringUtil.toLowerCase(f.getName()));
         NumberFormat formatter = new DecimalFormat("#0.00");
-        f.setMrp(Double.valueOf(formatter.format(f.getMrp())));
+        f.setMrp(Double.parseDouble(formatter.format(f.getMrp())));
     }
 
     public static void validate(ProductForm f) throws ApiException {

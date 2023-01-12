@@ -57,4 +57,14 @@ public class ProductService {
         }
         return p;
     }
+
+    public int getIdByBarcode(String barcode) {
+        ProductPojo p = dao.selectBarcode(barcode, ProductPojo.class);
+        return p.getId();
+    }
+
+    public String getBarcodeById(int id) {
+        ProductPojo p = dao.selectById(id, ProductPojo.class);
+        return p.getBarcode();
+    }
 }

@@ -15,30 +15,30 @@ import java.util.List;
 @RestController
 public class InventoryController {
 
-//    @Autowired
-//    private InventoryDto dto;
-//
-//    @ApiOperation(value = "Adds a Product Inventory")
-//    @PostMapping(path = "/api/inventory")
-//    public void addInventory(@RequestBody InventoryForm form) throws ApiException {
-//        dto.add(form);
-//    }
-//
-//    @ApiOperation(value = "Gets a Product Inventory by Id")
-//    @GetMapping(path = "/api/inventory/{id}")
-//    public InventoryData getInventory(@PathVariable int id) throws ApiException {
-//        return dto.get(id);
-//    }
-//
-//    @ApiOperation(value = "Gets list of all Product Inventories")
-//    @GetMapping(path = "/api/inventory")
-//    public List<InventoryData> getAllInventory() {
-//        return dto.getAll();
-//    }
-//
-//    @ApiOperation(value = "Updates a Product Inventory")
-//    @PutMapping(path = "/api/inventory/{id}")
-//    public void updateInventory(@PathVariable int id, @RequestBody InventoryForm f) throws ApiException {
-//        dto.update(id, f);
-//    }
+    @Autowired
+    private InventoryDto dto;
+
+    @ApiOperation(value = "Adds a Product Inventory")
+    @PostMapping(path = "/api/inventory")
+    public void addInventory(@RequestBody InventoryForm form) throws ApiException {
+        dto.add(form);
+    }
+
+    @ApiOperation(value = "Gets a Product Inventory by Id")
+    @GetMapping(path = "/api/inventory/{id}")
+    public InventoryData getInventory(@PathVariable int id) throws ApiException {
+        return dto.get(id);
+    }
+
+    @ApiOperation(value = "Gets list of all Product Inventories")
+    @GetMapping(path = "/api/inventory")
+    public List<InventoryData> getAllInventory() {
+        return dto.getAll();
+    }
+
+    @ApiOperation(value = "Updates a Product Inventory")
+    @PutMapping(path = "/api/inventory/{id}")
+    public void updateInventory(@PathVariable int id, @RequestBody InventoryForm f) throws ApiException {
+        dto.update(id, f);
+    }
 }
