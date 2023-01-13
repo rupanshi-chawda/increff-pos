@@ -6,12 +6,10 @@ import com.increff.pos.model.form.BrandForm;
 import com.increff.pos.pojo.BrandPojo;
 import com.increff.pos.util.ApiException;
 import com.increff.pos.service.BrandService;
-import com.increff.pos.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -27,7 +25,7 @@ public class BrandDto {
         BrandHelper.normalize(form);
         BrandHelper.validate(form);
         BrandPojo p = BrandHelper.convert(form);
-        p = service.getBrandCategory(p);
+        p = service.getCheckBrandCategory(p);
         service.add(p);
     }
 

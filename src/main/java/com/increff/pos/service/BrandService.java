@@ -44,7 +44,7 @@ public class BrandService {
         return p;
     }
 
-    public BrandPojo getBrandCategory(BrandPojo p) throws ApiException {
+    public BrandPojo getCheckBrandCategory(BrandPojo p) throws ApiException {
         BrandPojo b = dao.selectBrandCategory(p.getBrand(), p.getCategory());
         if(!Objects.isNull(b)) {
             throw new ApiException("Brand Category already exists");

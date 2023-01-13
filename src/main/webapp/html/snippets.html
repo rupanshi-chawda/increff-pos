@@ -17,7 +17,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-1" th:fragment="name_site_navbar">
   <a class="navbar-brand" th:href="@{/}">
-    <img th:src="@{/static/logo.jpg}" class="d-inline-block align-top" alt="">
+    <img th:src="@{/static/logo.png}" class="d-inline-block align-top" alt="" height="60">
   </a>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,7 +35,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light  mb-1" th:fragment="name_app_navbar">
   <a class="navbar-brand" th:href="@{/}">
-    <img th:src="@{/static/logo.jpg}" class="d-inline-block align-top" alt="">
+      <img th:src="@{/static/logo.png}" class="d-inline-block align-top" alt="" height="60">
   </a>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,6 +83,7 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script th:src="@{/static/app.js}"/></script>
 	<script th:src="@{/static/papaparse.min.js}"/></script>
+    <script th:src="@{/assets/izitoast/js/iziToast.min.js}"></script>
 	
 </footer>
 

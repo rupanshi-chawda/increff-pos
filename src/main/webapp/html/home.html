@@ -10,14 +10,25 @@
 
 <div class="container">
 
-<h3>Home</h3>
+	<div class="row">
+		<h3>Home</h3>
+	</div>
 
  <!-- Top row with form-->
-<div class="row">
-	 <div class="col-2">
-	 	<a th:href="@{/ui/admin}" title="Admin"> <i class="fas fa-cog"></i> </a>
-	 </div>	
-</div> 
+	<div class="row">
+		 <div class="col-2">
+			<a th:href="@{/ui/admin}" title="Admin"> <i class="fas fa-cog"></i> </a>
+		 </div>
+		<div class="col-2">
+			<a th:href="@{/ui/brands}" title="Brand"> <i class="fas fa-trademark"></i> </a>
+		</div>
+		<div class="col-2">
+			<a th:href="@{/ui/product}" title="Product"> <i class="fas fa-archive"></i></a>
+		</div>
+		<div class="col-2">
+			<a th:href="@{/ui/inventory}" title="Inventory"> <i class="fas fa-window-maximize"></i> </a>
+		</div>
+	</div>
 
 
 
