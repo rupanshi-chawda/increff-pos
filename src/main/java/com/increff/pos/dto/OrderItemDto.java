@@ -1,8 +1,6 @@
 package com.increff.pos.dto;
 
-import com.increff.pos.helper.InventoryHelper;
 import com.increff.pos.helper.OrderItemHelper;
-import com.increff.pos.model.data.InventoryData;
 import com.increff.pos.model.data.OrderItemData;
 import com.increff.pos.model.form.OrderItemForm;
 import com.increff.pos.pojo.InventoryPojo;
@@ -80,7 +78,15 @@ public class OrderItemDto {
         return list2;
     }
 
-
+    public List<OrderItemData> getByOrderId(int orderid) throws ApiException {
+        List<OrderItemPojo> list = service.getByOrderId(orderid);
+        List<OrderItemData> list2 = new ArrayList<OrderItemData>();
+        for(OrderItemPojo b : list) {
+            String barcode = productService.getBarcodeById(b.getProductId());
+            list2.add(OrderItemHelper.convert(b, barcode));
+        }
+        return list2;
+    }
 
     private void reduceInventory(String barcode, int quantity) throws ApiException {
         int id = productService.getIdByBarcode(barcode);

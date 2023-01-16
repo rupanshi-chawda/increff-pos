@@ -9,6 +9,7 @@
 <script src="https://kit.fontawesome.com/c30beb553f.js" crossorigin="anonymous"></script>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
 <link rel="stylesheet" th:href="@{/static/app.css}">
 
 </head>
@@ -43,9 +44,9 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" th:href="@{/ui/home}">Home</a>
-      </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/ui/home}">Home</a>
+        </li>
         <li class="nav-item">
             <a class="nav-link" th:href="@{/ui/brands}">Brands</a>
         </li>
@@ -55,9 +56,12 @@
         <li class="nav-item">
             <a class="nav-link" th:href="@{/ui/inventory}">Inventory</a>
         </li>
-      <li class="nav-item">
-        <a class="nav-link" th:href="@{/ui/admin}">Admin</a>
-      </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/ui/order}">Order</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/ui/admin}">Admin</a>
+        </li>
     </ul>
     
     <ul class="navbar-nav ml-auto">
@@ -83,7 +87,8 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script th:src="@{/static/app.js}"/></script>
 	<script th:src="@{/static/papaparse.min.js}"/></script>
-    <script th:src="@{/assets/izitoast/js/iziToast.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+    <script src="https://kit.fontawesome.com/4351c57b31.js" crossorigin="anonymous"></script>
 	
 </footer>
 

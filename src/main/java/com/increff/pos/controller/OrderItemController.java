@@ -36,6 +36,12 @@ public class OrderItemController {
         return dto.getAll();
     }
 
+    @ApiOperation(value = "Gets list of Order Items in an Order by Id")
+    @GetMapping(path = "/api/cartitems/{id}")
+    public List<OrderItemData> getOrderItemById(@PathVariable int id) throws ApiException {
+        return dto.getByOrderId(id);
+    }
+
 //    @ApiOperation(value = "Updates an OrderItem")
 //    @PutMapping(path = "/api/cart/{id}")
 //    public void updateOrderItem(@PathVariable int id, @RequestBody OrderItemForm f) throws ApiException {

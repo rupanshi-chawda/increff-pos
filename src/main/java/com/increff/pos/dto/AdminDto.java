@@ -2,10 +2,12 @@ package com.increff.pos.dto;
 
 import com.increff.pos.helper.BrandHelper;
 import com.increff.pos.model.data.UserData;
+import com.increff.pos.model.form.BrandForm;
 import com.increff.pos.model.form.UserForm;
 import com.increff.pos.pojo.UserPojo;
 import com.increff.pos.util.ApiException;
 import com.increff.pos.service.UserService;
+import com.increff.pos.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,15 @@ public class AdminDto {
     private UserService service;
 
     public void add(UserForm form) throws ApiException {
+        if(StringUtil.isEmpty(form.getEmail())) {
+            throw new ApiException("Email cannot be empty");
+        }
+        if(StringUtil.isEmpty(form.getPassword())) {
+            throw new ApiException("Password cannot be empty");
+        }
+        if(StringUtil.isEmpty(form.getRole())) {
+            throw new ApiException("Role cannot be empty");
+        }
         UserPojo p = convert(form);
         service.add(p);
     }

@@ -37,6 +37,10 @@ public class OrderItemService {
         return dao.selectAll(OrderItemPojo.class);
     }
 
+    public List<OrderItemPojo> getByOrderId(int orderid) {
+        return dao.selectByOrderId(orderid);
+    }
+
     private OrderItemPojo getOrderItemId(int id) {
         return dao.selectById(id, OrderItemPojo.class);
     }
