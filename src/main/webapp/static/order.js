@@ -59,10 +59,13 @@ function displayOrderItemList(data){
 	for(var i in wholeOrder)
 	{
         var e = wholeOrder[i];
+        var buttonHtml = '<button onclick="displayEditOrderItem(' + i + ')" class="btn btn-light"><i class="fa-solid fa-pen-to-square" style="color:blue"></i></button>'
+        buttonHtml += '<button onclick="deleteOrderItem(' + i + ')" class="btn btn-light"><i class="fa-solid fa-trash" style="color:blue"></i></button>'
         var row = '<tr>'
-            + '<td>' + JSON.parse(wholeOrder[i]).barcode + '</td>'
-            + '<td>' + JSON.parse(wholeOrder[i]).quantity + '</td>'
-            + '<td>' + JSON.parse(wholeOrder[i]).sellingPrice + '</td>'
+            + '<td>' + JSON.parse(e).barcode + '</td>'
+            + '<td>' + JSON.parse(e).quantity + '</td>'
+            + '<td>' + JSON.parse(e).sellingPrice + '</td>'
+            + '<td>' + buttonHtml + '</td>'
             + '</tr>';
 
         $tbody.append(row);
@@ -128,20 +131,16 @@ function getOrderList(){
    });
 }
 
-function checkSellingPrice(item) {
-    for(i in wholeOrder) {
-        var barcode = JSON.parse(wholeOrder[i]).barcode;
-        console.log(barcode);
-        var sp = parseInt(JSON.parse(wholeOrder[i]).sellingPrice);
-        console.log(sp);
-
-        var temp_barcode = item[0];
-        var temp_sp = item[2];
-        console.log(temp_barcode);
-        console.log(temp_sp)
-
-        if(temp_barcode == barcode && temp_sp == sp) {
+function checkSellingPrice(vars) {
+    var barcode = vars[0];
+    var sp = vars[2];
+    for (i in wholeOrder) {
+        var temp_barcode = JSON.parse(wholeOrder[i]).barcode;
+        if (temp_barcode == barcode) {
+            var cur_sp = parseInt(JSON.parse(wholeOrder[i]).sellingPrice);
+            if (cur_sp == sp) {
                 return true;
+            }
         }
     }
     return false;
@@ -230,9 +229,72 @@ function displayCart() {
     $tbody.empty();
 }
 
+function clearCart(event) {
+    console.log("inside clear cart");
+    wholeOrder = []
+    console.log(wholeOrder);
+}
+
 function getOrderItemList() {
     var jsonObj = $.parseJSON('[' + wholeOrder + ']');
 	console.log(jsonObj);
+}
+
+function deleteOrderItem(id) {
+    wholeOrder.splice(id, 1);
+    displayOrderItemList(wholeOrder);
+}
+
+//UPDATE METHODS
+// --------------------------------------------------------------------------------
+
+
+// var editItem=null;
+var editOrderItem = null;
+function updateOrderItem(event){
+    $('#edit-order-item-modal').modal('toggle');
+
+    var $form = $("#edit-order-item-form");
+    var json = toJson($form);
+    console.log(json);
+    var jsonObj = $.parseJSON(json);
+
+    var barcode = $("#edit-order-item-form input[name=barcode]").val();
+    var qty = $("#edit-order-item-form input[name=quantity]").val();
+    var sp =  $("#edit-order-item-form input[name=sellingPrice]").val();
+
+    if(sp < 1) {
+        toastr.error("Price cannot be negative or zero", "Error : ");
+    } else if(qty < 1) {
+        toastr.error("Quantity cannot be negative or zero", "Error : ");
+    } else {
+        console.log("inside order item");
+        let item = []
+
+        item.push(barcode);
+        item.push(qty);
+        item.push(sp)
+
+        console.log(item);
+
+        let data = {}
+        data["barcode"] = item[0];
+        data["quantity"] = item[1];
+        data["sellingPrice"] = item[2];
+
+        console.log(data);
+        console.log(editOrderItem);
+        wholeOrder[editOrderItem] = JSON.stringify(data);
+        console.log(wholeOrder);
+
+    }
+    //resetForm();
+    displayOrderItemList(wholeOrder);
+}
+
+function displayEditOrderItem(id) {
+    editOrderItem = id;
+    displayOrderItem(id);
 }
 
 //UI DISPLAY METHODS
@@ -312,6 +374,22 @@ function viewOrder(id)
      }
  }
 
+function displayOrderItem(i){
+    let data = {}
+    data["barcode"] = JSON.parse(wholeOrder[i]).barcode;
+    data["quantity"] = JSON.parse(wholeOrder[i]).quantity;
+    data["sellingPrice"] = JSON.parse(wholeOrder[i]).sellingPrice;
+
+   $("#edit-order-item-form input[name=barcode]").val(data.barcode);
+   console.log(data.barcode);
+   $("#edit-order-item-form input[name=quantity]").val(data.quantity);
+   console.log(data.quantity);
+   $("#edit-order-item-form input[name=sellingPrice]").val(data.sellingPrice);
+   console.log(data.sellingPrice);
+
+   $('#edit-order-item-modal').modal('toggle');
+}
+
 //INITIALIZATION CODE
 // --------------------------------------------------------------------------------
 
@@ -320,6 +398,8 @@ function init(){
    	$('#add-order-item').click(addOrderItem);
    	$('#place-order').click(placeOrder);
    	$('#refresh-data').click(getOrderList);
+    $('#update-order-item').click(updateOrderItem);
+    $('#clear-cart').click(clearCart);
 }
 
 $(document).ready(init);
