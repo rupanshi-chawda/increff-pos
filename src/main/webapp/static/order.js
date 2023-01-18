@@ -20,9 +20,9 @@ function resetForm() {
     element.reset()
 }
 
-function getProductUrl() {
+function getInventoryUrl() {
     var baseUrl = $("meta[name=baseUrl]").attr("content")
-    return baseUrl + "/api/product";
+    return baseUrl + "/api/inventory";
 }
 
 //BUTTON ACTIONS
@@ -146,22 +146,23 @@ function checkSellingPrice(vars) {
     return false;
 }
 
-var barcodeList = []
+const barcodeList = new Map();
 function getBarcode(data) {
     for (i in data) {
-        var b = data[i].barcode;
-        barcodeList.push(b);
+        var a = data[i].barcode;
+        var b = data[i].quantity;
+        barcodeList.set(a,b);
         console.log(barcodeList);
     }
 }
 
-function getProductList() {
-    var url = getProductUrl();
+function getInventoryList() {
+    var url = getInventoryUrl();
     $.ajax({
         url: url,
         type: 'GET',
         success: function(data) {
-            barcodeList = []
+            barcodeList.clear();
             getBarcode(data);
         },
         error: handleAjaxError
@@ -169,10 +170,15 @@ function getProductList() {
 }
 
 function checkBarcode(data) {
-    for (i in barcodeList) {
-        if (barcodeList[i] == data) {
-            return true;
-        }
+    if (barcodeList.has(data)) {
+        return true;
+    }
+    return false;
+}
+
+function checkInventory(barcode, qty) {
+    if (barcodeList.get(barcode) >= qty) {
+        return true;
     }
     return false;
 }
@@ -187,38 +193,53 @@ function addOrderItem(event){
    var qty = $("#order-item-form input[name=quantity]").val();
    var sp =  $("#order-item-form input[name=sellingPrice]").val();
 
-   if(sp < 1) {
-        toastr.error("Price cannot be negative or zero", "Error : ");
-   } else if(qty < 1) {
-        toastr.error("Quantity cannot be negative or zero", "Error : ");
-   } else if(checkOrderItemExist())
-   {
-        console.log("inside order item");
-        let item = []
-
-        var barcode = $("#order-item-form input[name=barcode]").val();
-        var quantity = $("#order-item-form input[name=quantity]").val();
-        var sp = $("#order-item-form input[name=sellingPrice]").val();
-
-        item.push(barcode);
-        item.push(quantity);
-        item.push(sp)
-        if (checkSellingPrice(item) == false) {
-            toastr.error("Selling Price cannot be different", "Error : ");
-        } else {
-            changeQuantity(item);
+    if (checkBarcode(barcode1) == false) {
+        //console.log("above");
+        toastr.error("Barcode does not exists", "Error : ");
+        //console.log("below");
+    } else
+    {
+        if(checkInventory(barcode1, qty) == false)
+        {
+            toastr.error("Quantity exceeds available inventory", "Error : ");
         }
-   }
-   else {
-        if (checkBarcode(barcode1) == false) {
-            console.log("above");
-            toastr.error("Barcode does not exists", "Error : ");
-            console.log("below");
-        } else {
-            wholeOrder.push(json)
-            toastr.success("Item Added to cart", "Success : ");
+        else
+        {
+            var new_qty = barcodeList.get(barcode1) - qty;
+            barcodeList.set(barcode1, new_qty);
+
+            if(sp < 1)
+            {
+               toastr.error("Price cannot be negative or zero", "Error : ");
+            } else if(qty < 1)
+            {
+               toastr.error("Quantity cannot be negative or zero", "Error : ");
+            } else if(checkOrderItemExist())
+            {
+                console.log("inside order item");
+                let item = []
+
+                var barcode = $("#order-item-form input[name=barcode]").val();
+                var quantity = $("#order-item-form input[name=quantity]").val();
+                var sp = $("#order-item-form input[name=sellingPrice]").val();
+
+                item.push(barcode);
+                item.push(quantity);
+                item.push(sp)
+                if (checkSellingPrice(item) == false)
+                {
+                    toastr.error("Selling Price cannot be different", "Error : ");
+                } else
+                {
+                    changeQuantity(item);
+                }
+            } else {
+                wholeOrder.push(json)
+                toastr.success("Item Added to cart", "Success : ");
+            }
         }
-   }
+    }
+
    resetForm();
    displayOrderItemList(wholeOrder)
 }
@@ -235,6 +256,12 @@ function clearCart(event) {
     wholeOrder = []
     console.log(wholeOrder);
     toastr.info("Cart Cleared", "Info : ");
+}
+
+function refreshCart(event) {
+    console.log("inside refresh cart");
+    getInventoryList();
+    toastr.info("Cart Refreshed", "Info : ");
 }
 
 function getOrderItemList() {
@@ -403,9 +430,10 @@ function init(){
    	$('#refresh-data').click(getOrderList);
     $('#update-order-item').click(updateOrderItem);
     $('#clear-cart').click(clearCart);
+    $('#refresh-cart').click(refreshCart);
 }
 
 $(document).ready(init);
 $(document).ready(getOrderList);
 $(document).ready(getOrderItemList);
-$(document).ready(getProductList);
+$(document).ready(getInventoryList);

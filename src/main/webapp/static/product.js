@@ -253,8 +253,6 @@ function displayCategoryOptions()
     $elC.append(`<option value="none" selected disabled hidden>select category</option>`);
     var a = getBrandOption();
     console.log(brandData[a]);
-    console.log(brandData[a].length);
-    var len = brandData[a].length;
     for(var i=0; i<len; i++)
         {
             $elC.append($("<option></option>")
