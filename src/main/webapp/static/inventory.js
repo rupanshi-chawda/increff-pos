@@ -95,6 +95,7 @@ function uploadRows(){
 	updateUploadDialog();
 	//If everything processed then return
 	if(processCount==fileData.length){
+	    toastr.success("Rows uploaded Successfully", "Success : ");
 		return;
 	}
 
@@ -115,7 +116,6 @@ function uploadRows(){
        },
 	   success: function(response) {
 	   		uploadRows();
-	   		toastr.success("Rows uploaded Successfully", "Success : ");
 	   },
 	   error: function(response){
 	   		row.error=response.responseText

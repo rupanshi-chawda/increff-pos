@@ -101,6 +101,7 @@ function uploadRows(){
    updateUploadDialog();
    //If everything processed then return
    if(processCount==fileData.length){
+      toastr.success("Rows uploaded Successfully", "Success : ");
       return;
    }
 
@@ -121,7 +122,6 @@ function uploadRows(){
        },
       success: function(response) {
              uploadRows();
-             toastr.success("Rows uploaded Successfully", "Success : ");
       },
       error: function(response){
              row.error=response.responseText
@@ -253,6 +253,7 @@ function displayCategoryOptions()
     $elC.append(`<option value="none" selected disabled hidden>select category</option>`);
     var a = getBrandOption();
     console.log(brandData[a]);
+    var len = brandData[a].length;
     for(var i=0; i<len; i++)
         {
             $elC.append($("<option></option>")

@@ -90,7 +90,8 @@ function uploadRows(){
    updateUploadDialog();
    //If everything processed then return
    if(processCount==fileData.length){
-      return;
+        toastr.success("Rows uploaded Successfully", "Success : ");
+        return;
    }
 
    //Process next row
@@ -110,7 +111,6 @@ function uploadRows(){
        },
       success: function(response) {
              uploadRows();
-             toastr.success("Rows uploaded Successfully", "Success : ");
       },
       error: function(response){
              row.error=response.responseText
@@ -202,7 +202,7 @@ function init(){
    $('#upload-data').click(displayUploadData);
    $('#process-data').click(processData);
    $('#download-errors').click(downloadErrors);
-    $('#brandFile').on('change', updateFileName)
+   $('#brandFile').on('change', updateFileName)
 }
 
 $(document).ready(init);
