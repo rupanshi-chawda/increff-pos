@@ -7,20 +7,25 @@ import com.increff.pos.pojo.UserPojo;
 import com.increff.pos.util.ApiException;
 import com.increff.pos.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
-@Configuration
+@Component
 @Service
 public class InitDto extends AbstractUiController {
 
     @Autowired
-    private UserService service;
+    private final UserService service;
     @Autowired
-    private InfoData info;
+    private final InfoData info;
+
+    public InitDto(UserService service, InfoData info) {
+        this.service = service;
+        this.info = info;
+    }
 
     public ModelAndView show(UserForm form) throws ApiException {
         info.setMessage("");

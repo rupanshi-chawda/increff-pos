@@ -12,15 +12,7 @@ import java.util.List;
 @Repository
 public class OrderItemDao extends AbstractDao{
 
-    @PersistenceContext
-    private EntityManager em;
-
     private static final String SELECT_BY_ORDER_ID = "select p from OrderItemPojo p where orderid=:orderid";
-
-    @Transactional
-    public void insert(OrderItemPojo op) {
-        em.persist(op);
-    }
 
     public void update(OrderItemPojo op){}
 

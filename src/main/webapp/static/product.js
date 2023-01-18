@@ -31,6 +31,7 @@ function addProduct(event){
        },
       success: function(response) {
              getProductList();
+             toastr.success("Product Added Successfully", "Success : ");
       },
       error: handleAjaxError
    });
@@ -57,6 +58,7 @@ function updateProduct(event){
        },
       success: function(response) {
              getProductList();
+             toastr.success("Product Updated Successfully", "Success : ");
       },
       error: handleAjaxError
    });
@@ -119,6 +121,7 @@ function uploadRows(){
        },
       success: function(response) {
              uploadRows();
+             toastr.success("Rows uploaded Successfully", "Success : ");
       },
       error: function(response){
              row.error=response.responseText
@@ -219,43 +222,46 @@ function getBrandList()
 
 function displayBrandOptions(data)
 {
-    console.log(data);
-    for(var i in data)
-        {
-            var a = data[i].brand;
-            var b = data[i].category;
-            if(!brandData.hasOwnProperty(a))
-                Object.assign(brandData, {[a]:[]});
-            brandData[a].push(b);
-        }
-    console.log(brandData);
-    var $elB = $("#inputBrand");
+   console.log(data);
+   for(var i in data)
+      {
+         var a = data[i].brand;
+         var b = data[i].category;
+         if(!brandData.hasOwnProperty(a))
+               Object.assign(brandData, {[a]:[]});
+         brandData[a].push(b);
+      }
+   console.log(brandData);
+   var $elB = $("#inputBrand");
+   $elB.empty();
+   $elB.append(`<option value="none" selected disabled hidden>select brand</option>`);
 
-    $elB.empty();
-    $.each(brandData, function(key,value) {
-        $elB.append($("<option></option>")
-        .attr("value", key).text(key));
-        });
-    displayCategoryOptions();
+   $.each(brandData, function(key,value) {
+            $elB.append($("<option></option>")
+               .attr("value", key).text(key));
+
+            });
+
+   displayCategoryOptions();
 }
 
 function displayCategoryOptions()
 {
     var $elC = $("#inputCategory");
-    $elC.empty();
 
+    $elC.empty();
+    $elC.append(`<option value="none" selected disabled hidden>select category</option>`);
     var a = getBrandOption();
     console.log(brandData[a]);
     console.log(brandData[a].length);
     var len = brandData[a].length;
     for(var i=0; i<len; i++)
-    {
-        $elC.append($("<option></option>")
-        .attr("value", brandData[a][i]).text(brandData[a][i]));
+        {
+            $elC.append($("<option></option>")
+                .attr("value", brandData[a][i]).text(brandData[a][i]));
 
-    }
+        }
 }
-
 
 //INITIALIZATION CODE
 function init(){

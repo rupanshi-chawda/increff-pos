@@ -115,6 +115,7 @@ function uploadRows(){
        },
 	   success: function(response) {
 	   		uploadRows();
+	   		toastr.success("Rows uploaded Successfully", "Success : ");
 	   },
 	   error: function(response){
 	   		row.error=response.responseText

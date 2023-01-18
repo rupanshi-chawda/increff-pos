@@ -6,6 +6,7 @@ import com.increff.pos.pojo.ProductPojo;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.util.List;
 
 public abstract class AbstractDao {
@@ -25,6 +26,11 @@ public abstract class AbstractDao {
 		return em;
 	}
 
+	@Transactional
+	public <T> void insert(T t){
+		em.persist(t);
+	}
+
 	public <T> T selectById(int id, Class<T> clazz) {
 		String SELECT_BY_ID = "select p from " + clazz.getName() + " p where id=:id";
 		TypedQuery<T> query = getQuery(SELECT_BY_ID, clazz);
@@ -36,12 +42,5 @@ public abstract class AbstractDao {
 		String SELECT_ALL = "select p from " + clazz.getName() + " p";
 		TypedQuery<T> query = getQuery(SELECT_ALL, clazz);
 		return query.getResultList();
-	}
-
-	public <T> T selectBarcode(String barcode, Class<T> clazz){
-		String SELECT_BY_BARCODE = "select p from " + clazz.getName() + " p where barcode=:barcode";
-		TypedQuery<T> query = getQuery(SELECT_BY_BARCODE, clazz);
-		query.setParameter("barcode", barcode);
-		return getSingle(query);
 	}
 }

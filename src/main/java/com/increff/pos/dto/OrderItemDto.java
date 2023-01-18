@@ -12,27 +12,34 @@ import com.increff.pos.service.OrderService;
 import com.increff.pos.service.ProductService;
 import com.increff.pos.util.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Configuration
+@Component
 @Service
 public class OrderItemDto {
 
     @Autowired
-    private OrderItemService service;
+    private final OrderItemService service;
 
     @Autowired
-    private ProductService productService;
+    private final ProductService productService;
 
     @Autowired
-    private InventoryService inventoryService;
+    private final InventoryService inventoryService;
 
     @Autowired
-    private OrderService orderService;
+    private final OrderService orderService;
+
+    public OrderItemDto(OrderItemService service, ProductService productService, InventoryService inventoryService, OrderService orderService) {
+        this.service = service;
+        this.productService = productService;
+        this.inventoryService = inventoryService;
+        this.orderService = orderService;
+    }
 
     public void add(List<OrderItemForm> forms) throws ApiException {
 

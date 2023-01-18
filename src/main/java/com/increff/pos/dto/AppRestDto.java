@@ -3,9 +3,10 @@ package com.increff.pos.dto;
 import com.increff.pos.model.data.MessageData;
 import com.increff.pos.util.ApiException;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Configuration
+@Component
 @Service
 public class AppRestDto {
 

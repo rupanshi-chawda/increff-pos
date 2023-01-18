@@ -7,19 +7,22 @@ import com.increff.pos.pojo.OrderPojo;
 import com.increff.pos.service.OrderService;
 import com.increff.pos.util.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Configuration
+@Component
 @Service
 public class OrderDto {
 
     @Autowired
-    private OrderService service;
+    private final OrderService service;
+
+    public OrderDto(OrderService service) {
+        this.service = service;
+    }
 
     public void add(OrderForm form) throws ApiException {
         OrderPojo p = OrderHelper.convert(form);

@@ -7,18 +7,22 @@ import com.increff.pos.pojo.ProductPojo;
 import com.increff.pos.service.ProductService;
 import com.increff.pos.util.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Configuration
+@Component
 @Service
 public class ProductDto {
 
     @Autowired
-    private ProductService service;
+    private final ProductService service;
+
+    public ProductDto(ProductService service) {
+        this.service = service;
+    }
 
     public void add(ProductForm form) throws ApiException {
         ProductHelper.normalize(form);

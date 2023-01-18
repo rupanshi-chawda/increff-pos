@@ -216,6 +216,7 @@ function addOrderItem(event){
             console.log("below");
         } else {
             wholeOrder.push(json)
+            toastr.success("Item Added to cart", "Success : ");
         }
    }
    resetForm();
@@ -233,6 +234,7 @@ function clearCart(event) {
     console.log("inside clear cart");
     wholeOrder = []
     console.log(wholeOrder);
+    toastr.info("Cart Cleared", "Info : ");
 }
 
 function getOrderItemList() {
@@ -289,6 +291,7 @@ function updateOrderItem(event){
 
     }
     //resetForm();
+    toastr.success("Item updated Successfully", "Success : ");
     displayOrderItemList(wholeOrder);
 }
 

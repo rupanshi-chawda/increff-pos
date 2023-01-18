@@ -10,12 +10,4 @@ import javax.transaction.Transactional;
 @Repository
 public class OrderDao extends AbstractDao {
 
-    @PersistenceContext
-    private EntityManager em;
-
-    @Transactional
-    public void insert(OrderPojo p) {
-        em.persist(p);
-    }
-
 }

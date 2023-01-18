@@ -51,7 +51,7 @@ public class ProductService {
     }
 
     public ProductPojo getProductBarcode(ProductPojo p) throws ApiException {
-        ProductPojo d = dao.selectBarcode(p.getBarcode(), ProductPojo.class);
+        ProductPojo d = dao.selectBarcode(p.getBarcode());
         if (!Objects.isNull(d)) {
             throw new ApiException("Product with given barcode already exists");
         }
@@ -59,7 +59,7 @@ public class ProductService {
     }
 
     public int getIdByBarcode(String barcode) {
-        ProductPojo p = dao.selectBarcode(barcode, ProductPojo.class);
+        ProductPojo p = dao.selectBarcode(barcode);
         return p.getId();
     }
 

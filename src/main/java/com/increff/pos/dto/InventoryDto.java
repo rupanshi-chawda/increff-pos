@@ -8,22 +8,26 @@ import com.increff.pos.service.InventoryService;
 import com.increff.pos.service.ProductService;
 import com.increff.pos.util.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-@Configuration
+@Component
 @Service
 public class InventoryDto {
     
     @Autowired
-    private InventoryService service;
+    private final InventoryService service;
 
     @Autowired
-    private ProductService productService;
+    private final ProductService productService;
+
+    public InventoryDto(InventoryService service, ProductService productService) {
+        this.service = service;
+        this.productService = productService;
+    }
 
 
     public void add(InventoryForm form) throws ApiException {
