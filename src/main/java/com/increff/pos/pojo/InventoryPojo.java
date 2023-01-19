@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -15,6 +16,7 @@ public class InventoryPojo {
     private int id;
 
     @NotNull(message = "Quantity cannot be empty")
+    @Min(value = 0)
     private int quantity;
 
 }

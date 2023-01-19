@@ -21,7 +21,7 @@ public class ProductPojo {
     @Size(max = 8, min = 8)
     private String barcode;
 
-    @NotNull
+    @NotNull(message = "Brand Category Id cannot be Empty")
     private int brandCategory;
 
     @NotNull(message = "Name cannot be Empty")

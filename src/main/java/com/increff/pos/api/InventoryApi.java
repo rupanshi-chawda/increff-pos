@@ -1,9 +1,8 @@
-package com.increff.pos.service;
+package com.increff.pos.api;
 
 import com.increff.pos.dao.InventoryDao;
 import com.increff.pos.helper.InventoryHelper;
 import com.increff.pos.pojo.InventoryPojo;
-import com.increff.pos.pojo.OrderItemPojo;
 import com.increff.pos.util.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +13,7 @@ import java.util.Objects;
 
 @Service
 @Transactional(rollbackOn = ApiException.class)
-public class InventoryService {
+public class InventoryApi {
 
     @Autowired
     private InventoryDao dao;
@@ -35,7 +34,7 @@ public class InventoryService {
 
     public InventoryPojo get(int id) throws ApiException {
         InventoryPojo p = getInventoryId(id);
-        InventoryHelper.validateId(p, id);
+        p = InventoryHelper.validateInventoryId(p, id);
         return p;
     }
 
@@ -43,9 +42,9 @@ public class InventoryService {
         return dao.selectAll(InventoryPojo.class);
     }
 
-    public void update(int id, InventoryPojo p) throws ApiException {
-        InventoryPojo bx = getInventoryId(id);
-        InventoryHelper.validateId(bx, id);
+    public void update(InventoryPojo p) throws ApiException {
+        InventoryPojo bx = getInventoryId(p.getId());
+        InventoryHelper.validateId(bx, p.getId());
         bx.setQuantity(p.getQuantity());
         dao.update(p);
     }

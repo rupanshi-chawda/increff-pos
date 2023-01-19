@@ -1,4 +1,4 @@
-package com.increff.pos.service;
+package com.increff.pos.api;
 
 import com.increff.pos.dao.BrandDao;
 import com.increff.pos.pojo.BrandPojo;
@@ -12,7 +12,7 @@ import java.util.Objects;
 
 @Service
 @Transactional(rollbackOn = ApiException.class)
-public class BrandService {
+public class BrandApi {
 
     @Autowired
     private BrandDao dao;

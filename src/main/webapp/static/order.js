@@ -2,12 +2,12 @@ var wholeOrder = []
 
 function getOrderItemUrl() {
     var baseUrl = $("meta[name=baseUrl]").attr("content")
-    return baseUrl + "/api/cart";
+    return baseUrl + "/api/order/cart";
 }
 
 function getOrderItemByIdUrl() {
     var baseUrl = $("meta[name=baseUrl]").attr("content")
-    return baseUrl + "/api/cartitems";
+    return baseUrl + "/api/order/cartitems";
 }
 
 function getOrderUrl() {
@@ -30,7 +30,12 @@ function getInventoryUrl() {
 
 function placeOrder(event){
     var url = getOrderItemUrl();
-
+    let len = wholeOrder.length;
+    console.log(len);
+    if (len == 0) {
+        toastr.error("Cart empty! Order cannot be placed.", "Error : ");
+    } else
+    {
        var jsonObj = arrayToJson();
        console.log(jsonObj);
        $.ajax({
@@ -48,7 +53,7 @@ function placeOrder(event){
            },
            error: handleAjaxError
        });
-
+    }
        return false;
 }
 
@@ -437,3 +442,14 @@ $(document).ready(init);
 $(document).ready(getOrderList);
 $(document).ready(getOrderItemList);
 $(document).ready(getInventoryList);
+
+$('#edit-order-item-modal').on('shown.bs.modal', function (e) {
+    console.log("hidden");
+    $("#add-order-item-modal").css({ opacity: 0.5 });
+})
+
+//when modal closes
+$('#edit-order-item-modal').on('hidden.bs.modal', function (e) {
+    console.log("shown");
+    $("#add-order-item-modal").css({ opacity: 1 });
+})

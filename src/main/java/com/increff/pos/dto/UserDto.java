@@ -1,7 +1,7 @@
 package com.increff.pos.dto;
 
 import com.increff.pos.pojo.UserPojo;
-import com.increff.pos.service.UserService;
+import com.increff.pos.api.UserApi;
 import com.increff.pos.util.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,16 +14,12 @@ import java.util.Objects;
 public class UserDto {
 
     @Autowired
-    private final UserService service;
-
-    public UserDto(UserService service) {
-        this.service = service;
-    }
+    private UserApi api;
 
     public void add(UserPojo p) throws ApiException {
         normalize(p);
         checkEmail(p);
-        service.add(p);
+        api.add(p);
     }
 
     //Checkers and normalizers
@@ -33,7 +29,7 @@ public class UserDto {
     }
 
     public void checkEmail(UserPojo p) throws ApiException {
-        UserPojo existing = service.getUserEmail(p);
+        UserPojo existing = api.getUserEmail(p);
         if (Objects.isNull(existing)) {
             throw new ApiException("User with given email already exists");
         }

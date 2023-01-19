@@ -13,31 +13,32 @@ import java.util.List;
 
 @Api
 @RestController
+@RequestMapping(path = "/api/brand")
 public class BrandController {
 
     @Autowired
     private BrandDto dto;
 
     @ApiOperation(value = "Adds a Brand")
-    @PostMapping(path = "/api/brand")
+    @PostMapping(path = "")
     public void addBrand(@RequestBody BrandForm form) throws ApiException {
         dto.add(form);
     }
 
     @ApiOperation(value = "Gets a Brand by Id")
-    @GetMapping(path = "/api/brand/{id}")
+    @GetMapping(path = "/{id}")
     public BrandData getBrand(@PathVariable int id) throws ApiException {
         return dto.get(id);
     }
 
     @ApiOperation(value = "Gets list of all Brands")
-    @GetMapping(path = "/api/brand")
+    @GetMapping(path = "")
     public List<BrandData> getAllBrand() {
         return dto.getAll();
     }
 
     @ApiOperation(value = "Updates a Brand")
-    @PutMapping(path = "/api/brand/{id}")
+    @PutMapping(path = "/{id}")
     public void updateBrand(@PathVariable int id, @RequestBody BrandForm f) throws ApiException {
         dto.update(id, f);
     }

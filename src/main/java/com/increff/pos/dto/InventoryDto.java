@@ -4,8 +4,8 @@ import com.increff.pos.helper.InventoryHelper;
 import com.increff.pos.model.data.InventoryData;
 import com.increff.pos.model.form.InventoryForm;
 import com.increff.pos.pojo.InventoryPojo;
-import com.increff.pos.service.InventoryService;
-import com.increff.pos.service.ProductService;
+import com.increff.pos.api.InventoryApi;
+import com.increff.pos.api.ProductApi;
 import com.increff.pos.util.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,46 +19,45 @@ import java.util.List;
 public class InventoryDto {
     
     @Autowired
-    private final InventoryService service;
+    private InventoryApi api;
 
     @Autowired
-    private final ProductService productService;
-
-    public InventoryDto(InventoryService service, ProductService productService) {
-        this.service = service;
-        this.productService = productService;
-    }
+    private ProductApi productApi;
 
 
     public void add(InventoryForm form) throws ApiException {
         InventoryHelper.normalize(form);
         InventoryHelper.validate(form);
+        productApi.checkProductBarcode(form.getBarcode());
         InventoryPojo p = InventoryHelper.convert(form);
-        p.setId(productService.getIdByBarcode(form.getBarcode()));
-        service.add(p);
+        p.setId(productApi.getIdByBarcode(form.getBarcode()));
+        api.add(p);
     }
 
-    public InventoryData get(int id) throws ApiException {
-        InventoryPojo p = service.get(id);
-        String barcode = productService.getBarcodeById(id);
+    public InventoryData get(String barcode) throws ApiException {
+        productApi.checkProductBarcode(barcode);
+        int id = productApi.getIdByBarcode(barcode);
+        InventoryPojo p = api.get(id);
         return InventoryHelper.convert(p, barcode);
     }
 
     public List<InventoryData> getAll() {
         //TODO: apply java stream method
-        List<InventoryPojo> list = service.getAll();
+        List<InventoryPojo> list = api.getAll();
         List<InventoryData> list2 = new ArrayList<InventoryData>();
         for(InventoryPojo b : list) {
-            String barcode = productService.getBarcodeById(b.getId());
+            String barcode = productApi.getBarcodeById(b.getId());
             list2.add(InventoryHelper.convert(b, barcode));
         }
         return list2;
     }
 
-    public void update(int id, InventoryForm f) throws ApiException {
+    public void update(String barcode, InventoryForm f) throws ApiException {
         InventoryHelper.normalize(f);
         InventoryHelper.validate(f);
+        productApi.checkProductBarcode(barcode);
         InventoryPojo p = InventoryHelper.convert(f);
-        service.update(id, p);
+        p.setId(productApi.getIdByBarcode(f.getBarcode()));
+        api.update(p);
     }
 }

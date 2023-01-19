@@ -1,4 +1,4 @@
-package com.increff.pos.service;
+package com.increff.pos.api;
 
 import com.increff.pos.dao.ProductDao;
 import com.increff.pos.pojo.ProductPojo;
@@ -12,17 +12,13 @@ import java.util.Objects;
 
 @Service
 @Transactional(rollbackOn = ApiException.class)
-public class ProductService {
+public class ProductApi {
 
     @Autowired
     private ProductDao dao;
 
-    @Autowired
-    private BrandService brandService;
-
-    public void add(ProductPojo p, String brand, String category) throws ApiException {
+    public void add(ProductPojo p) throws ApiException {
         p = getProductBarcode(p);
-        p.setBrandCategory(brandService.getBrandCategoryId(brand, category));
         dao.insert(p);
     }
 
@@ -56,6 +52,13 @@ public class ProductService {
             throw new ApiException("Product with given barcode already exists");
         }
         return p;
+    }
+
+    public void checkProductBarcode(String barcode) throws ApiException {
+        ProductPojo d = dao.selectBarcode(barcode);
+        if (Objects.isNull(d)) {
+            throw new ApiException("Product with given barcode does not exists");
+        }
     }
 
     public int getIdByBarcode(String barcode) {

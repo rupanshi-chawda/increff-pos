@@ -1,10 +1,11 @@
 package com.increff.pos.dto;
 
+import com.increff.pos.api.BrandApi;
+import com.increff.pos.api.ProductApi;
 import com.increff.pos.helper.ProductHelper;
 import com.increff.pos.model.data.ProductData;
 import com.increff.pos.model.form.ProductForm;
 import com.increff.pos.pojo.ProductPojo;
-import com.increff.pos.service.ProductService;
 import com.increff.pos.util.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,33 +19,33 @@ import java.util.stream.Collectors;
 public class ProductDto {
 
     @Autowired
-    private final ProductService service;
+    private ProductApi api;
 
-    public ProductDto(ProductService service) {
-        this.service = service;
-    }
+    @Autowired
+    private BrandApi brandApi;
 
     public void add(ProductForm form) throws ApiException {
         ProductHelper.normalize(form);
         ProductHelper.validate(form);
         ProductPojo p = ProductHelper.convert(form);
-        service.add(p, form.getBrand(), form.getCategory());
+        p.setBrandCategory(brandApi.getBrandCategoryId(form.getBrand(), form.getCategory()));
+        api.add(p);
     }
 
     public ProductData get(int id) throws ApiException {
-        ProductPojo p = service.get(id);
+        ProductPojo p = api.get(id);
         return ProductHelper.convert(p);
     }
 
     public List<ProductData> getAll() {
-        return service.getAll().stream().map(p -> ProductHelper.convert(p)).collect(Collectors.toList());
+        return api.getAll().stream().map(ProductHelper::convert).collect(Collectors.toList());
     }
 
     public void update(int id, ProductForm f) throws ApiException {
         ProductHelper.normalize(f);
         ProductHelper.validate(f);
         ProductPojo p = ProductHelper.convert(f);
-        service.update(id, p);
+        api.update(id, p);
     }
 
 }

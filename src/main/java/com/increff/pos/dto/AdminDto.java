@@ -4,7 +4,7 @@ import com.increff.pos.model.data.UserData;
 import com.increff.pos.model.form.UserForm;
 import com.increff.pos.pojo.UserPojo;
 import com.increff.pos.util.ApiException;
-import com.increff.pos.service.UserService;
+import com.increff.pos.api.UserApi;
 import com.increff.pos.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,10 +18,10 @@ import java.util.stream.Collectors;
 public class AdminDto {
 
     @Autowired
-    private final UserService service;
+    private final UserApi api;
 
-    public AdminDto(UserService service) {
-        this.service = service;
+    public AdminDto(UserApi api) {
+        this.api = api;
     }
 
     public void add(UserForm form) throws ApiException {
@@ -35,15 +35,15 @@ public class AdminDto {
             throw new ApiException("Role cannot be empty");
         }
         UserPojo p = convert(form);
-        service.add(p);
+        api.add(p);
     }
 
     public void delete(int id) {
-        service.delete(id);
+        api.delete(id);
     }
 
     public List<UserData> getAll(){
-        return service.getAll().stream().map(p -> convert(p)).collect(Collectors.toList());
+        return api.getAll().stream().map(p -> convert(p)).collect(Collectors.toList());
     }
 
     //Conversion Methods

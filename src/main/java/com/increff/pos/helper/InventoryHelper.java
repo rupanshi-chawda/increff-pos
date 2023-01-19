@@ -43,4 +43,15 @@ public class InventoryHelper {
             throw new ApiException("Product with given ID does not exit, id: " + id);
         }
     }
+
+    public static InventoryPojo validateInventoryId(InventoryPojo p, int id) {
+        if (Objects.isNull(p)) {
+            System.out.println("inside validate with no barcode in inventory");
+            InventoryPojo bx = new InventoryPojo();
+            bx.setId(id);
+            bx.setQuantity(0);
+            return bx;
+        }
+        return p;
+    }
 }
