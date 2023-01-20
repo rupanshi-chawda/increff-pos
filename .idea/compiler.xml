@@ -7,6 +7,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="increff-pos" />
+        <module name="pos" />
+        <module name="customer-invoice" />
       </profile>
     </annotationProcessing>
   </component>
