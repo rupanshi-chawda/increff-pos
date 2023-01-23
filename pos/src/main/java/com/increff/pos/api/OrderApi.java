@@ -67,4 +67,7 @@ public class OrderApi {
         return p;
     }
 
+    public List<OrderItemPojo> getOrderItemByOrderItem(int orderid) throws ApiException {
+        return itemDao.selectByOrderId(orderid);
+    }
 }

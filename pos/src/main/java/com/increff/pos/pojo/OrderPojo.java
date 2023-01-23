@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @Setter
 @Getter
-public class OrderPojo {
+public class OrderPojo extends AbstractVersionPojo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

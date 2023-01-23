@@ -25,6 +25,12 @@ function getInventoryUrl() {
     return baseUrl + "/api/inventory";
 }
 
+function getInvoiceUrl() {
+    var baseUrl = $("meta[name=baseUrl]").attr("content")
+    console.log(baseUrl);
+    return baseUrl + "/api/order/invoice";
+}
+
 //BUTTON ACTIONS
 // --------------------------------------------------------------------------------
 
@@ -342,6 +348,7 @@ function displayOrderList(data){
       var e = data[i];
       console.log(e);
       var buttonHtml = '<button onclick="viewOrder(' + e.id + ')" class="btn btn-light"><i class="fa-solid fa-eye" style="color:blue"></i></button>'
+      buttonHtml += '<button onclick="printOrder(' + e.id + ')" class="btn btn-light"><i class="fa-solid fa-print" style="color:blue"></i></button>'
       var row = '<tr>'
       + '<td>' + e.id + '</td>'
       + '<td>' + e.time + '</td>'
@@ -349,6 +356,10 @@ function displayOrderList(data){
       + '</tr>';
         $tbody.append(row);
    }
+}
+
+function printOrder(id) {
+    window.location.href = getInvoiceUrl() + "/" + id;
 }
 
 function getOrderList() {

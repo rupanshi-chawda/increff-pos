@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Getter
 @Setter
-public class ProductPojo {
+public class ProductPojo extends AbstractVersionPojo {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)

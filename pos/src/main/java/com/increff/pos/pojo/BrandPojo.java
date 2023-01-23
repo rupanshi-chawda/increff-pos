@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Getter
 @Setter
-public class BrandPojo {
+public class BrandPojo extends AbstractVersionPojo{
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

@@ -18,4 +18,9 @@ public class OrderItemDao extends AbstractDao{
         query.setParameter("orderid", orderid);
         return query.getResultList();
     }
+    public List<OrderItemPojo> selectOrderItemByOrderId(int orderId) {
+        TypedQuery<OrderItemPojo> query = getQuery(SELECT_BY_ORDER_ID, OrderItemPojo.class);
+        query.setParameter("orderId", orderId);
+        return query.getResultList();
+    }
 }

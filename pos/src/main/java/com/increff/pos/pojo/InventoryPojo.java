@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Getter
 @Setter
-public class InventoryPojo {
+public class InventoryPojo extends AbstractVersionPojo {
 
     @Id
     private int id;

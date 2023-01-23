@@ -35,9 +35,9 @@ public abstract class AbstractDao {
 		return getSingle(query);
 	}
 
-	public <T> List<T> selectAll(Class<T> clazz) {
-		String SELECT_ALL = "select p from " + clazz.getName() + " p";
-		TypedQuery<T> query = getQuery(SELECT_ALL, clazz);
+	public <T> List<T> selectAll(Class<T> z) {
+		String SELECT_ALL = "select p from " + z.getName() + " p";
+		TypedQuery<T> query = getQuery(SELECT_ALL, z);
 		return query.getResultList();
 	}
 }

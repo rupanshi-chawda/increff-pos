@@ -1,5 +1,7 @@
+com\increff\pos\invoice\InvoiceGenerator.class
 com\increff\pos\controller\InventoryController.class
 com\increff\pos\dto\OrderDto.class
+com\increff\pos\model\form\InvoiceForm.class
 com\increff\pos\pojo\OrderItemPojo.class
 com\increff\pos\helper\BrandHelper.class
 com\increff\pos\dao\InventoryDao.class
@@ -31,6 +33,8 @@ com\increff\pos\helper\OrderHelper.class
 com\increff\pos\dao\AbstractDao.class
 com\increff\pos\dto\AdminDto.class
 com\increff\pos\util\StringUtil.class
+com\increff\pos\model\data\OrderItem.class
+com\increff\pos\pojo\AbstractVersionPojo.class
 com\increff\pos\controller\AbstractUiController.class
 com\increff\pos\model\data\OrderItemData.class
 com\increff\pos\spring\SpringConfig.class

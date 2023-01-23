@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<invoice>
+    <order_id>2</order_id>
+    <order_date>2023-01-19 11:40:11.0</order_date>
+    <order_item>
+        <id>3</id>
+        <product_name>air jordan</product_name>
+        <quantity>2</quantity>
+        <selling_price>12000.0</selling_price>
+    </order_item>
+    <order_item>
+        <id>5</id>
+        <product_name>milkcake</product_name>
+        <quantity>2</quantity>
+        <selling_price>25.0</selling_price>
+    </order_item>
+    <amount>174550.0</amount>
+</invoice>
