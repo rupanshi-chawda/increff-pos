@@ -20,6 +20,7 @@
                 &nbsp;
                 <button type="button" class="btn btn-info" id="refresh-data">Refresh</button>
             </form>
+            &nbsp;
         </div>
     </div>
 
@@ -32,12 +33,12 @@
 
         <!-- Table -->
         <div class="col-12">
-            <table class="table table-striped" id="order-table">
-                <thead>
+            <table class="table" id="order-table">
+                <thead class="thead-light">
                 <tr>
                     <th scope="col">Order ID</th>
                     <th scope="col">Order Date</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col-md"> </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -93,7 +94,8 @@
                                     <input type="text" class="form-control" id="inputSellingPrice" name="sellingPrice" placeholder="enter Selling Price">
                                 </div>
                             </div>
-                            <div class="form-group col-md align-items-center">
+                            <div class="form-group col-md">
+                                <div class="form-group col-md"> &nbsp; </div>
                                 <button type="button" class="btn btn-primary" id="add-order-item"> <i class="fa-solid fa-plus"></i> </button>
                             </div>
                         </div>
@@ -105,13 +107,13 @@
 
                         <!-- Table -->
                         <div class="col-12">
-                            <table class="table table-striped" id="order-item-table">
-                                <thead>
+                            <table class="table" id="order-item-table">
+                                <thead class="thead-light">
                                 <tr>
                                     <th scope="col">Barcode</th>
                                     <th scope="col">Quantity</th>
                                     <th scope="col">Selling Price</th>
-                                    <th scope="col">Actions</th>
+                                    <th scope="col-md"> </th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -135,14 +137,15 @@
                                 </tr>
                                 </tbody>
                             </table>
-
                         </div>
                     </div>
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id="clear-cart">Cancel</button>
+                    &nbsp;
                     <button type="button" class="btn btn-info" id="refresh-cart">Refresh</button>
+                    &nbsp;
                     <button type="button" class="btn btn-primary" id="place-order">Order</button>
                 </div>
             </div>
@@ -164,8 +167,8 @@
                     <div class="row">
                         <!-- Table -->
                         <div class="col-12">
-                            <table class="table table-striped" id="view-order-item-table">
-                                <thead>
+                            <table class="table " id="view-order-item-table">
+                                <thead class="thead-light">
                                 <tr>
                                     <th scope="col">Barcode</th>
                                     <th scope="col">Quantity</th>

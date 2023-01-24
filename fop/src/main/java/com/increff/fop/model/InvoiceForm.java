@@ -10,6 +10,6 @@ import java.util.List;
 public class InvoiceForm {
     private Integer orderId;
     private String placeDate;
-    private List<OrderItem> orderItemList;
+    private List<OrderItemData> orderItemList;
     private Double amount;
 }

@@ -21,3 +21,14 @@ body {
 .fas{
     font-size: 4rem;
 }
+
+.table__button-group {
+  visibility: hidden;
+  transition: visibility 0.06s ease-in;
+}
+tr:hover > td .table__button-group {
+  visibility: visible;
+}
+tr:hover {
+  background-color: #f5f8fc;
+}

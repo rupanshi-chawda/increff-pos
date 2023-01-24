@@ -1,7 +1,7 @@
 package com.increff.fop.controller;
 
 import com.increff.fop.model.InvoiceForm;
-import com.increff.fop.service.GenerateInvoiceService;
+import com.increff.fop.service.InvoiceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +21,19 @@ import java.nio.file.Paths;
 
 @Api
 @RestController
-public class GenerateInvoiceController {
+public class InvoiceController {
 
     @Autowired
-    private GenerateInvoiceService service;
+    private InvoiceService service;
 
     @ApiOperation(value = "Generate Invoice")
     @RequestMapping(path = "/api/invoice", method = RequestMethod.POST)
     public ResponseEntity<byte[]> getPDF(@RequestBody InvoiceForm form) throws IOException {
 
         service.generateInvoice(form);
-        String _filename = "./Pdf/invoice.pdf";
+        String _filename = "./Pdf/invoice_"+ form.getOrderId() +".pdf";
+        //todo: add form.get and wrap in if-else
+
         Path pdfPath = Paths.get("./Pdf/invoice.pdf");
 
         byte[] contents = Files.readAllBytes(pdfPath);

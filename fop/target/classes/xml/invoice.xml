@@ -1,18 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<invoice>
-    <order_id>2</order_id>
-    <order_date>2023-01-19 11:40:11.0</order_date>
-    <order_item>
-        <id>3</id>
-        <product_name>air jordan</product_name>
-        <quantity>2</quantity>
-        <selling_price>12000.0</selling_price>
-    </order_item>
-    <order_item>
-        <id>5</id>
-        <product_name>milkcake</product_name>
-        <quantity>2</quantity>
-        <selling_price>25.0</selling_price>
-    </order_item>
-    <amount>174550.0</amount>
-</invoice>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><invoice><order_id>1</order_id><order_date>2023-01-20T15:44:19+05:30[Asia/Calcutta]</order_date><order_item><id>1</id><product_name>inverter 1.5 ton</product_name><quantity>25</quantity><selling_price>40000.0</selling_price></order_item><order_item><id>2</id><product_name>double 700</product_name><quantity>30</quantity><selling_price>60499.0</selling_price></order_item><amount>2814970.0</amount></invoice>

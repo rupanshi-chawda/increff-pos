@@ -74,7 +74,7 @@ public class OrderController {
     }
 
     @ApiOperation(value = "Download Invoice")
-    @GetMapping(path = "/invoice/{id}")
+    @GetMapping(path = "/invoice/{id}", produces =  "application/pdf")
     public ResponseEntity<byte[]> getPDF(@PathVariable int id) throws Exception{
         InvoiceForm invoiceForm = invoiceGenerator.generateInvoiceForOrder(id);
 
@@ -88,7 +88,9 @@ public class OrderController {
         headers.setContentType(MediaType.APPLICATION_PDF);
 
         String filename = "invoice.pdf";
-        headers.setContentDispositionFormData(filename, filename);
+        //headers.setContentDispositionFormData("inline", filename);
+        headers.add("Content-Disposition", "inline;filename=" + filename);
+
 
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
         ResponseEntity<byte[]> response = new ResponseEntity<>(contents, headers, HttpStatus.OK);

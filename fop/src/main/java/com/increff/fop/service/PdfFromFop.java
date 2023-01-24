@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
-public class PDFFromFOP {
+public class PdfFromFop {
     public void createPDF() {
         try {
             File xmlfile = new File("C:\\Users\\KIIT\\Downloads\\increff-pos\\fop\\src\\main\\resources\\xml\\invoice.xml");

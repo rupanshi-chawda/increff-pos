@@ -143,8 +143,7 @@ function displayProductList(data){
    $tbody.empty();
    for(var i in data){
       var e = data[i];
-      //var buttonHtml = ' <button onclick="displayEditProduct(' + e.id + ')">edit</button>'
-      var buttonHtml = '<button onclick="displayEditProduct(' + e.id + ')" class="btn btn-light"><i class="fa-solid fa-pen-to-square" style="color:blue"></i></button>'
+      var buttonHtml = '<button onclick="displayEditProduct(' + e.id + ')" class="btn table__button-group"><i class="fa-solid fa-pencil" style="color:blue"></i></button>'
       var row = '<tr>'
       + '<td>' + e.barcode + '</td>'
       + '<td>'  + e.name + '</td>'

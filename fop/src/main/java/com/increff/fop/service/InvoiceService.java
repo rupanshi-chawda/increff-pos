@@ -1,29 +1,29 @@
 package com.increff.fop.service;
 
 import com.increff.fop.model.InvoiceForm;
-import com.increff.fop.model.OrderItem;
+import com.increff.fop.model.OrderItemData;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class GenerateInvoiceService {
+public class InvoiceService {
     public void generateInvoice(InvoiceForm form)
     {
 
-        List<OrderItem> items = form.getOrderItemList();
+        List<OrderItemData> items = form.getOrderItemList();
         Double amt = 0.0;
-        for(OrderItem i : items) {
+        for(OrderItemData i : items) {
             Double cur = 0.0;
             cur = i.getSellingPrice() * i.getQuantity();
             amt+=cur;
         }
         form.setAmount(amt);
-        CreateXMLFileJava createXMLFileJava = new CreateXMLFileJava();
+        CreateXmlFile createXMLFileJava = new CreateXmlFile();
 
         createXMLFileJava.createXML(form);
 
-        PDFFromFOP pdfFromFOP = new PDFFromFOP();
+        PdfFromFop pdfFromFOP = new PdfFromFop();
 
         pdfFromFOP.createPDF();
     }
@@ -33,11 +33,11 @@ public class GenerateInvoiceService {
         System.out.println(form.getOrderId());
         System.out.println(form.getPlaceDate());
 
-        List<OrderItem> orderItemList = form.getOrderItemList();
+        List<OrderItemData> orderItemList = form.getOrderItemList();
 
         System.out.println(orderItemList.size());
 
-        for(OrderItem o :orderItemList)
+        for(OrderItemData o :orderItemList)
         {
             System.out.println(o.getProductName());
             System.out.println(o.getOrderItemId());

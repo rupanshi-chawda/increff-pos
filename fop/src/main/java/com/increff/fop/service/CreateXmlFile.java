@@ -15,7 +15,7 @@ import com.increff.fop.model.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-public class CreateXMLFileJava {
+public class CreateXmlFile {
 
     public static final String xmlFilePath = "C:\\Users\\KIIT\\Downloads\\increff-pos\\fop\\src\\main\\resources\\xml\\invoice.xml";
 
@@ -44,7 +44,7 @@ public class CreateXMLFileJava {
             root.appendChild(order_date);
 
             // order item element
-            for (OrderItem o : invoiceForm.getOrderItemList()){
+            for (OrderItemData o : invoiceForm.getOrderItemList()){
                 Element order_item = document.createElement("order_item");
 
                 root.appendChild(order_item);
