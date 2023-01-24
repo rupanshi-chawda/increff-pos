@@ -28,7 +28,7 @@ public class InvoiceGenerator {
         OrderPojo orderPojo = orderApi.getOrder(orderId);
 
         invoiceForm.setOrderId(orderPojo.getId());
-        invoiceForm.setPlaceDate(orderPojo.getCreatedAt().toString());
+        invoiceForm.setPlaceDate(orderPojo.getTime().toString());
 
         List<OrderItemPojo> orderItemPojoList = orderApi.getOrderItemByOrderItem(orderPojo.getId());
         List<OrderItem> orderItemList = new ArrayList<>();

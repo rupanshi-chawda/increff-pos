@@ -147,7 +147,8 @@ function displayProductList(data){
       var row = '<tr>'
       + '<td>' + e.barcode + '</td>'
       + '<td>'  + e.name + '</td>'
-      + '<td>'  + e.mrp + '</td>'
+      //+ '<td>'  + e.mrp + '</td>'
+      + '<td>'  + parseFloat(e.mrp).toFixed(2) + '</td>'
       + '<td>' + buttonHtml + '</td>'
       + '</tr>';
         $tbody.append(row);

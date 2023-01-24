@@ -1,9 +1,10 @@
 com\increff\fop\spring\SpringConfig.class
-com\increff\fop\service\InvoiceService.class
+com\increff\fop\api\CreateXmlFile.class
 com\increff\fop\spring\WebInitializer.class
 com\increff\fop\controller\InvoiceController.class
-com\increff\fop\service\PdfFromFop.class
+com\increff\fop\dto\InvoiceDto.class
+com\increff\fop\api\PdfFromFop.class
 com\increff\fop\spring\ControllerConfig.class
 com\increff\fop\model\OrderItemData.class
+com\increff\fop\api\InvoiceApi.class
 com\increff\fop\model\InvoiceForm.class
-com\increff\fop\service\CreateXmlFile.class

@@ -3,11 +3,17 @@ package com.increff.pos.api;
 import com.increff.pos.helper.OrderHelper;
 import com.increff.pos.dao.OrderDao;
 import com.increff.pos.dao.OrderItemDao;
+import com.increff.pos.model.form.InvoiceForm;
 import com.increff.pos.pojo.OrderItemPojo;
 import com.increff.pos.pojo.OrderPojo;
 import com.increff.pos.util.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -69,5 +75,26 @@ public class OrderApi {
 
     public List<OrderItemPojo> getOrderItemByOrderItem(int orderid) throws ApiException {
         return itemDao.selectByOrderId(orderid);
+    }
+
+    public ResponseEntity<byte[]> getPDF(InvoiceForm invoiceForm) {
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        String url = "http://localhost:8085/fop/api/invoice";
+
+        byte[] contents = restTemplate.postForEntity(url, invoiceForm, byte[].class).getBody();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+
+        String filename = "invoice.pdf";
+        //headers.setContentDispositionFormData("inline", filename);
+        headers.add("Content-Disposition", "inline;filename=" + filename);
+
+
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+        ResponseEntity<byte[]> response = new ResponseEntity<>(contents, headers, HttpStatus.OK);
+        return response;
     }
 }

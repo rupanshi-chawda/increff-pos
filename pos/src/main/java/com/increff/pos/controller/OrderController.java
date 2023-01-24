@@ -28,9 +28,6 @@ public class OrderController {
     @Autowired
     private OrderDto dto;
 
-    @Autowired
-    InvoiceGenerator invoiceGenerator;
-
     @ApiOperation(value = "Adds an Order")
     @PostMapping(path = "")
     public void addOrder(@RequestBody OrderForm form) throws ApiException {
@@ -76,25 +73,7 @@ public class OrderController {
     @ApiOperation(value = "Download Invoice")
     @GetMapping(path = "/invoice/{id}", produces =  "application/pdf")
     public ResponseEntity<byte[]> getPDF(@PathVariable int id) throws Exception{
-        InvoiceForm invoiceForm = invoiceGenerator.generateInvoiceForOrder(id);
-
-        RestTemplate restTemplate = new RestTemplate();
-
-        String url = "http://localhost:8085/fop/api/invoice";
-
-        byte[] contents = restTemplate.postForEntity(url, invoiceForm, byte[].class).getBody();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_PDF);
-
-        String filename = "invoice.pdf";
-        //headers.setContentDispositionFormData("inline", filename);
-        headers.add("Content-Disposition", "inline;filename=" + filename);
-
-
-        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-        ResponseEntity<byte[]> response = new ResponseEntity<>(contents, headers, HttpStatus.OK);
-        return response;
+        return dto.getPDF(id);
     }
 
 

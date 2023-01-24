@@ -75,7 +75,8 @@ function displayOrderItemList(data){
         var row = '<tr>'
             + '<td>' + JSON.parse(e).barcode + '</td>'
             + '<td>' + JSON.parse(e).quantity + '</td>'
-            + '<td>' + JSON.parse(e).sellingPrice + '</td>'
+            //+ '<td>' + JSON.parse(e).sellingPrice + '</td>'
+            + '<td>'  + parseFloat(JSON.parse(e).sellingPrice).toFixed(2) + '</td>'
             + '<td>' + buttonHtml + '</td>'
             + '</tr>';
 
@@ -415,7 +416,8 @@ function viewOrder(id)
          var row = '<tr>'
          + '<td>' + e.barcode + '</td>'
          + '<td>' + e.quantity + '</td>'
-         + '<td>' + e.sellingPrice + '</td>'
+         //+ '<td>' + e.sellingPrice + '</td>'
+         + '<td>'  + parseFloat(e.sellingPrice).toFixed(2) + '</td>'
          + '</tr>';
          $tbody.append(row);
      }

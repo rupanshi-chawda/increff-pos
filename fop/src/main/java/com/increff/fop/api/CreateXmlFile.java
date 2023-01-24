@@ -1,4 +1,4 @@
-package com.increff.fop.service;
+package com.increff.fop.api;
 
 
 import java.io.File;
@@ -68,6 +68,9 @@ public class CreateXmlFile {
                 sellingPrice.appendChild(document.createTextNode(o.getSellingPrice().toString()));
                 order_item.appendChild(sellingPrice);
 
+                Element multiplied = document.createElement("multiplied");
+                multiplied.appendChild(document.createTextNode(o.getMultiplied().toString()));
+                order_item.appendChild(multiplied);
             }
 
             Element amount = document.createElement("amount");

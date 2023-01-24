@@ -11,4 +11,5 @@ public class OrderItemData {
     private Double sellingPrice;
     private String productName;
     private Integer quantity;
+    private Double multiplied;
 }

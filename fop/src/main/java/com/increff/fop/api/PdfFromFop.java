@@ -1,4 +1,4 @@
-package com.increff.fop.service;
+package com.increff.fop.api;
 
 import org.apache.fop.apps.*;
 

@@ -4,6 +4,8 @@ import com.increff.pos.api.InventoryApi;
 import com.increff.pos.api.OrderApi;
 import com.increff.pos.api.ProductApi;
 import com.increff.pos.helper.OrderHelper;
+import com.increff.pos.invoice.InvoiceGenerator;
+import com.increff.pos.model.form.InvoiceForm;
 import com.increff.pos.pojo.InventoryPojo;
 import com.increff.pos.util.ApiException;
 import com.increff.pos.model.data.OrderData;
@@ -13,6 +15,7 @@ import com.increff.pos.model.form.OrderItemForm;
 import com.increff.pos.pojo.OrderItemPojo;
 import com.increff.pos.pojo.OrderPojo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +35,9 @@ public class OrderDto {
 
     @Autowired
     private InventoryApi inventoryApi;
+
+    @Autowired
+    InvoiceGenerator invoiceGenerator;
 
     public void addOrder(OrderForm form) throws ApiException {
         OrderPojo p = OrderHelper.convert(form);
@@ -100,6 +106,11 @@ public class OrderDto {
             list2.add(OrderHelper.convert(b, barcode));
         }
         return list2;
+    }
+
+    public ResponseEntity<byte[]> getPDF(int id) throws ApiException {
+        InvoiceForm invoiceForm = invoiceGenerator.generateInvoiceForOrder(id);
+        return orderApi.getPDF(invoiceForm);
     }
 
     private void reduceInventory(String barcode, int quantity) throws ApiException {
