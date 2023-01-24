@@ -1,11 +1,14 @@
 package com.increff.pos.helper;
 
+import com.increff.pos.model.commons.InventoryItem;
 import com.increff.pos.model.data.InventoryData;
 import com.increff.pos.model.form.InventoryForm;
 import com.increff.pos.pojo.InventoryPojo;
 import com.increff.pos.util.StringUtil;
 import com.increff.pos.util.ApiException;
+import javafx.util.Pair;
 
+import java.util.Map;
 import java.util.Objects;
 
 public class InventoryHelper {
@@ -53,5 +56,14 @@ public class InventoryHelper {
             return bx;
         }
         return p;
+    }
+
+    public static InventoryItem convertMapToItem(Map.Entry<Pair<String,String>,Integer> mapElement) {
+        Pair<String, String> p = mapElement.getKey();
+        InventoryItem inventoryItem = new InventoryItem();
+        inventoryItem.setBrand(p.getKey());
+        inventoryItem.setCategory(p.getValue());
+        inventoryItem.setQuantity(mapElement.getValue());
+        return inventoryItem;
     }
 }

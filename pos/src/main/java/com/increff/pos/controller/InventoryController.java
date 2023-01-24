@@ -9,6 +9,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @Api
@@ -41,5 +43,11 @@ public class InventoryController {
     @PutMapping(path = "/{barcode}")
     public void updateInventory(@PathVariable String barcode, @RequestBody InventoryForm f) throws ApiException {
         dto.update(barcode, f);
+    }
+
+    @ApiOperation(value = "Export Product Report to CSV")
+    @GetMapping(path = "/exportcsv")
+    public void exportToCSV(HttpServletResponse response) throws IOException, ApiException {
+        dto.generateCsv(response);
     }
 }

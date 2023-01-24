@@ -4,7 +4,7 @@ import com.increff.pos.api.InventoryApi;
 import com.increff.pos.api.OrderApi;
 import com.increff.pos.api.ProductApi;
 import com.increff.pos.helper.OrderHelper;
-import com.increff.pos.invoice.InvoiceGenerator;
+import com.increff.pos.util.InvoiceGenerator;
 import com.increff.pos.model.form.InvoiceForm;
 import com.increff.pos.pojo.InventoryPojo;
 import com.increff.pos.util.ApiException;

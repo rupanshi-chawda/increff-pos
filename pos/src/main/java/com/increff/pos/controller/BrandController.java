@@ -4,11 +4,14 @@ import com.increff.pos.dto.BrandDto;
 import com.increff.pos.model.data.BrandData;
 import com.increff.pos.model.form.BrandForm;
 import com.increff.pos.util.ApiException;
+import com.increff.pos.util.CsvFileGenerator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @Api
@@ -41,6 +44,12 @@ public class BrandController {
     @PutMapping(path = "/{id}")
     public void updateBrand(@PathVariable int id, @RequestBody BrandForm f) throws ApiException {
         dto.update(id, f);
+    }
+
+    @ApiOperation(value = "Export Brand Report to CSV")
+    @GetMapping(path = "/exportcsv")
+    public void exportToCSV(HttpServletResponse response) throws IOException {
+        dto.generateCsv(response);
     }
 
 }

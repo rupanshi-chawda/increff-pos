@@ -38,7 +38,7 @@ public class OrderApi {
     }
 
     public List<OrderPojo> getAllOrder() {
-        return orderDao.selectAll(OrderPojo.class);
+        return orderDao.selectAllDesc();
     }
     
     public void addItem(OrderItemPojo p, int pid, int oid) throws ApiException {

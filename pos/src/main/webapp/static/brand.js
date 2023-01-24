@@ -185,6 +185,10 @@ function displayUploadData(){
    $('#upload-brand-modal').modal('toggle');
 }
 
+function downloadCsv(){
+    window.location.href = getBrandUrl() + "/exportcsv";
+}
+
 function displayBrand(data){
    $("#brand-edit-form input[name=brand]").val(data.brand);
    $("#brand-edit-form input[name=category]").val(data.category);
@@ -201,7 +205,8 @@ function init(){
    $('#upload-data').click(displayUploadData);
    $('#process-data').click(processData);
    $('#download-errors').click(downloadErrors);
-   $('#brandFile').on('change', updateFileName)
+   $('#brandFile').on('change', updateFileName);
+   $('#download-csv').click(downloadCsv);
 }
 
 $(document).ready(init);

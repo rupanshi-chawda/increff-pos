@@ -1,4 +1,4 @@
-package com.increff.pos.invoice;
+package com.increff.pos.util;
 
 import com.increff.pos.model.data.OrderItem;
 import com.increff.pos.model.form.InvoiceForm;

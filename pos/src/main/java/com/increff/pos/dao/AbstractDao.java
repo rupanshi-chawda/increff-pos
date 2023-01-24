@@ -28,9 +28,9 @@ public abstract class AbstractDao {
 		em.persist(t);
 	}
 
-	public <T> T selectById(int id, Class<T> clazz) {
-		String SELECT_BY_ID = "select p from " + clazz.getName() + " p where id=:id";
-		TypedQuery<T> query = getQuery(SELECT_BY_ID, clazz);
+	public <T> T selectById(int id, Class<T> z) {
+		String SELECT_BY_ID = "select p from " + z.getName() + " p where id=:id";
+		TypedQuery<T> query = getQuery(SELECT_BY_ID, z);
 		query.setParameter("id", id);
 		return getSingle(query);
 	}

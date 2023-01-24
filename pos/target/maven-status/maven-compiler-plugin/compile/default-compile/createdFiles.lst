@@ -1,8 +1,9 @@
-com\increff\pos\invoice\InvoiceGenerator.class
 com\increff\pos\controller\InventoryController.class
 com\increff\pos\dto\OrderDto.class
 com\increff\pos\model\form\InvoiceForm.class
+com\increff\pos\util\InvoiceGenerator.class
 com\increff\pos\pojo\OrderItemPojo.class
+com\increff\pos\model\commons\InventoryItem.class
 com\increff\pos\helper\BrandHelper.class
 com\increff\pos\dao\InventoryDao.class
 com\increff\pos\dao\UserDao.class
@@ -55,6 +56,7 @@ com\increff\pos\dto\AppRestDto.class
 com\increff\pos\api\ProductApi.class
 com\increff\pos\pojo\UserPojo.class
 com\increff\pos\spring\DbConfig.class
+com\increff\pos\util\CsvFileGenerator.class
 com\increff\pos\model\data\BrandData.class
 com\increff\pos\model\data\InventoryData.class
 com\increff\pos\model\form\OrderForm.class
