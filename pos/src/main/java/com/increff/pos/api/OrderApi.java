@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -96,5 +97,13 @@ public class OrderApi {
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
         ResponseEntity<byte[]> response = new ResponseEntity<>(contents, headers, HttpStatus.OK);
         return response;
+    }
+
+    public List<OrderPojo> getOrderByDateFilter(ZonedDateTime startDate, ZonedDateTime endDate) {
+        return orderDao.selectOrderByDateFilter(startDate,endDate);
+    }
+
+    public List<OrderItemPojo> getOrderItemsByOrderId(int id) {
+        return itemDao.selectByOrderId(id);
     }
 }

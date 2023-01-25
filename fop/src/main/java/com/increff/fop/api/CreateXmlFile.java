@@ -2,6 +2,7 @@ package com.increff.fop.api;
 
 
 import java.io.File;
+import java.text.DecimalFormat;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -46,7 +47,7 @@ public class CreateXmlFile {
             // order item element
             for (OrderItemData o : invoiceForm.getOrderItemList()){
                 Element order_item = document.createElement("order_item");
-
+                DecimalFormat df = new DecimalFormat("#.##");
                 root.appendChild(order_item);
 
                 // set an attribute to staff element
@@ -65,16 +66,17 @@ public class CreateXmlFile {
                 order_item.appendChild(quantity);
 
                 Element sellingPrice = document.createElement("selling_price");
-                sellingPrice.appendChild(document.createTextNode(o.getSellingPrice().toString()));
+                sellingPrice.appendChild(document.createTextNode(Double.valueOf(df.format(o.getSellingPrice())).toString()));
                 order_item.appendChild(sellingPrice);
 
                 Element multiplied = document.createElement("multiplied");
-                multiplied.appendChild(document.createTextNode(o.getMultiplied().toString()));
+                multiplied.appendChild(document.createTextNode(Double.valueOf(df.format(o.getMultiplied())).toString()));
                 order_item.appendChild(multiplied);
             }
 
             Element amount = document.createElement("amount");
-            amount.appendChild(document.createTextNode(invoiceForm.getAmount().toString()));
+            DecimalFormat df = new DecimalFormat("#.##");
+            amount.appendChild(document.createTextNode(Double.valueOf(df.format(invoiceForm.getAmount())).toString()));
             root.appendChild(amount);
             // create the xml file
             //transform the DOM Object to an XML File

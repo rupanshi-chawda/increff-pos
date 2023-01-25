@@ -3,6 +3,7 @@
 <html lang="en">
 
 <head th:replace="snippets.html :: name_head"></head>
+<title>Home</title>
 
 <body>
 
@@ -10,9 +11,7 @@
 
 <div class="container">
 
-	<div class="row">
-		<h3>Home</h3>
-	</div>
+	<div class="row">&nbsp;</div>
 
  <!-- Top row with form-->
 	<div class="row">
@@ -30,6 +29,9 @@
 		</div>
 		<div class="col-2">
 			<a th:href="@{/ui/order}" title="Order"> <i class="fa-solid fa-cart-shopping fas"></i> </a>
+		</div>
+		<div class="col-2">
+			<a th:href="@{/ui/salesreport}" title="Sales-Report"> <i class="fa-solid fa-file fas"></i> </a>
 		</div>
 	</div>
 
