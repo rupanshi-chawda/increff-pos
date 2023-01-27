@@ -16,8 +16,7 @@
  <!-- Top row with form-->
 	<div class="row">
 		 <div class="col-sm">
-			<a th:href="@{/ui/admin}" title="Admin" > <i class="fa-solid fa-unlock fas"></i> </a>
-			 <label>Admin</label>
+			<a th:href="@{/ui/admin}" title="Admin"> <i class="fa-solid fa-unlock fas"></i> </a>
 		 </div>
 		<div class="col-sm">
 			<a th:href="@{/ui/brands}" title="Brand"> <i class="fa-sharp fa-solid fa-trademark fas"></i> </a>
@@ -39,6 +38,29 @@
 		</div>
 	</div>
 
+	<div class="row">
+		<div class="col-sm icon-label">
+			Admin
+		</div>
+		<div class="col-sm icon-label">
+			Brands
+		</div>
+		<div class="col-sm icon-label">
+			Products
+		</div>
+		<div class="col-sm icon-label">
+			Inventory
+		</div>
+		<div class="col-sm icon-label">
+			Orders
+		</div>
+		<div class="col-sm icon-label">
+			Sales Report
+		</div>
+		<div class="col-sm icon-label">
+			Daily Sales
+		</div>
+	</div>
 
 
 </div> <!-- Container end-->
@@ -46,6 +68,6 @@
 <footer th:replace="snippets.html :: name_footer"></footer>
 
 
-</body>	
+</body>
 
 </html>

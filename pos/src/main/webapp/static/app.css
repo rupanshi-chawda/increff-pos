@@ -32,3 +32,7 @@ tr:hover > td .table__button-group {
 tr:hover {
   background-color: #f5f8fc;
 }
+
+.icon-label {
+    color: #007BFF;
+}
