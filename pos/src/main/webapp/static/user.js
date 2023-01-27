@@ -65,8 +65,8 @@ function displayUserList(data){
 		var buttonHtml = '<button onclick="displayEditUser(' + e.id + ')" class="btn table__button-group"><i class="fa-solid fa-pencil" style="color:blue"></i></button>'
         buttonHtml += '<button onclick="deleteUser(' + e.id + ')" class="btn table__button-group"><i class="fa-solid fa-trash" style="color:blue"></i></button>'
 		var row = '<tr>'
-		+ '<td>' + e.id + '</td>'
 		+ '<td>' + e.email + '</td>'
+		+ '<td>' + e.role + '</td>'
 		+ '<td>' + buttonHtml + '</td>'
 		+ '</tr>';
         $tbody.append(row);

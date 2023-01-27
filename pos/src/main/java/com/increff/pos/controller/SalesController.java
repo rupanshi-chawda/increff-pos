@@ -19,15 +19,21 @@ public class SalesController {
     @Autowired
     private SalesDto dto;
 
-    @ApiOperation(value = "Gets all the sales done between dates")
-    @PostMapping(path = "/filter")
-    public List<SalesPojo> getAllBetweenDates(@RequestBody SalesForm salesForm){
-        return dto.getAllBetweenDates(salesForm);
-    }
-
-    @ApiOperation(value = "Gets all the Sales done")
+    @ApiOperation(value = "Gets all the Sales data")
     @GetMapping(path = "")
     public List<SalesPojo> getAll() throws ApiException {
         return dto.getAll();
+    }
+
+    @ApiOperation(value = "get all sales date between 2 dates")
+    @PostMapping(path = "/filter")
+    public List<SalesPojo> getAllByDate(@RequestBody SalesForm form){
+        return dto.getAllBetweenDates(form);
+    }
+
+    @ApiOperation(value = "Runs the scheduler")
+    @GetMapping(path = "/scheduler")
+    public void runScheduler() throws ApiException {
+        dto.createReport();
     }
 }

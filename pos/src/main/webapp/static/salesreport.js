@@ -176,10 +176,22 @@ function init() {
     $('#download-csv').click(downloadCsv);
 }
 
+function autoFillDate() {
+    var date = new Date();
+    var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
 
+    if (month < 10) month = "0" + month;
+    if (day < 10) day = "0" + day;
+
+    var today = year + "-" + month + "-" + day;
+    $("#inputED").attr("value", today);
+}
 
 
 $(document).ready(init);
 $(document).ready(getSalesList);
 $(document).ready(getBrandList);
 $(document).ready(initlists);
+$(document).ready(autoFillDate);

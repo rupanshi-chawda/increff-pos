@@ -9,7 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="increff-pos" />
         <module name="pos" />
-        <module name="fop" />
+        <module name="invoice" />
       </profile>
     </annotationProcessing>
   </component>

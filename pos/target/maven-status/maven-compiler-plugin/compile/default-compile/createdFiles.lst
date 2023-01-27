@@ -1,6 +1,7 @@
 com\increff\pos\controller\InventoryController.class
 com\increff\pos\dto\OrderDto.class
 com\increff\pos\model\form\InvoiceForm.class
+com\increff\pos\util\DailySalesScheduler.class
 com\increff\pos\util\InvoiceGenerator.class
 com\increff\pos\controller\SalesReportController.class
 com\increff\pos\pojo\OrderItemPojo.class
@@ -17,6 +18,7 @@ com\increff\pos\model\form\LoginForm.class
 com\increff\pos\dto\InventoryDto.class
 com\increff\pos\api\OrderApi.class
 com\increff\pos\util\ApiException.class
+com\increff\pos\spring\SchedulerConfig.class
 com\increff\pos\model\data\ProductData.class
 com\increff\pos\spring\WebInitializer.class
 com\increff\pos\model\data\SalesReportData.class
@@ -24,6 +26,7 @@ com\increff\pos\pojo\ProductPojo.class
 com\increff\pos\spring\SecurityConfig.class
 com\increff\pos\helper\InventoryHelper.class
 com\increff\pos\spring\SpringSecurityInitializer.class
+com\increff\pos\spring\SchedulerInitializer.class
 com\increff\pos\controller\AppUiController.class
 com\increff\pos\controller\OrderController.class
 com\increff\pos\dao\ProductDao.class

@@ -1,0 +1,106 @@
+<!doctype html>
+
+<html lang="en">
+
+<head th:replace="snippets.html :: name_head"></head>
+<title>Daily Sales Report</title>
+<body>
+
+<nav th:replace="snippets.html :: name_app_navbar"></nav>
+
+<div class="container">
+
+    <div class="row">&nbsp;</div>
+
+    <!-- Top row with form-->
+    <h5>Date Filters</h5>
+    <div class="row">
+        <div class="col-12">
+            <form class="form-inline" id="sales-form">
+                <div class="form-group">
+                    <label for="inputSD" class="col-sm-3 col-form-label">From</label>
+                    <div>
+                        <input type="date" id="inputSD" name="startDate" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputED" class="col-sm-2 col-form-label">To</label>
+                    <div>
+                        <input type="date" id="inputED" name="endDate" class="form-control">
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary" id="apply-filter">Apply</button>
+            </form>
+            &nbsp;
+        </div>
+    </div>
+
+    <div class="row">&nbsp;</div>
+
+<!--    <div class="row">-->
+<!--        <div class="col-12">-->
+<!--            <form class="form-inline" id="last-run">-->
+<!--                <div class="form-group">-->
+<!--                    <label for="lastRun" class="col-sm-2 col-form-label">LastRun</label>-->
+<!--                    <div class="col-sm-10">-->
+<!--                        <input type="text" class="form-control" name="lastRun" id="lastRun" disabled    >-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <button type="button" class="btn btn-primary" id="refresh-data">Refresh</button>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+
+
+    <!-- Blank Row -->
+    <div class="row">&nbsp;</div>
+
+    <div class="row">
+
+        <!-- Table -->
+        <div class="col-12">
+            <table class="table" id="Sales-table">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Order Count</th>
+                    <th scope="col">Item Count</th>
+                    <th scope="col">Revenue</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Date1</td>
+                    <td>30</td>
+                    <td>30</td>
+                    <td>30</td>
+                </tr>
+                <tr>
+                    <td>Date2</td>
+                    <td>31</td>
+                    <td>31</td>
+                    <td>31</td>
+                </tr>
+                <tr>
+                    <td>Date3</td>
+                    <td>7</td>
+                    <td>7</td>
+                    <td>7</td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+
+</div> <!-- Container end-->
+
+<footer th:replace="snippets.html :: name_footer"></footer>
+
+<script th:src="@{/static/scheduler.js}"/></script>
+
+</body>
+
+</html>
