@@ -39,7 +39,11 @@ function placeOrder(event){
     let len = wholeOrder.length;
     console.log(len);
     if (len == 0) {
-        toastr.error("Cart empty! Order cannot be placed.", "Error : ");
+        toastr.error("Cart empty! Order cannot be placed.", "Error : ", {
+                                                                    "closeButton": true,
+                                                                    "timeOut": "0",
+                                                                    "extendedTimeOut": "0",
+                                                            	});
     } else
     {
        var jsonObj = arrayToJson();
@@ -207,13 +211,21 @@ function addOrderItem(event){
 
     if (checkBarcode(barcode1) == false) {
         //console.log("above");
-        toastr.error("Barcode does not exists", "Error : ");
+        toastr.error("Barcode does not exists", "Error : ", {
+                                                        "closeButton": true,
+                                                        "timeOut": "0",
+                                                        "extendedTimeOut": "0",
+                                                	});
         //console.log("below");
     } else
     {
         if(checkInventory(barcode1, qty) == false)
         {
-            toastr.error("Quantity exceeds available inventory", "Error : ");
+            toastr.error("Quantity exceeds available inventory", "Error : ", {
+                                                                         "closeButton": true,
+                                                                         "timeOut": "0",
+                                                                         "extendedTimeOut": "0",
+                                                                 	});
         }
         else
         {
@@ -222,10 +234,18 @@ function addOrderItem(event){
 
             if(sp < 1)
             {
-               toastr.error("Price cannot be negative or zero", "Error : ");
+               toastr.error("Price cannot be negative or zero", "Error : ", {
+                                                                        "closeButton": true,
+                                                                        "timeOut": "0",
+                                                                        "extendedTimeOut": "0",
+                                                                	});
             } else if(qty < 1)
             {
-               toastr.error("Quantity cannot be negative or zero", "Error : ");
+               toastr.error("Quantity cannot be negative or zero", "Error : ", {
+                                                                           "closeButton": true,
+                                                                           "timeOut": "0",
+                                                                           "extendedTimeOut": "0",
+                                                                   	});
             } else if(checkOrderItemExist())
             {
                 console.log("inside order item");
@@ -240,20 +260,26 @@ function addOrderItem(event){
                 item.push(sp)
                 if (checkSellingPrice(item) == false)
                 {
-                    toastr.error("Selling Price cannot be different", "Error : ");
+                    toastr.error("Selling Price cannot be different", "Error : ", {
+                                                                              "closeButton": true,
+                                                                              "timeOut": "0",
+                                                                              "extendedTimeOut": "0",
+                                                                      	});
                 } else
                 {
                     changeQuantity(item);
+                    toastr.success("Item Exists, Quantity Updated", "Success : ");
+                    resetForm();
                 }
             } else {
                 wholeOrder.push(json)
                 toastr.success("Item Added to cart", "Success : ");
+                resetForm();
             }
         }
     }
 
-   resetForm();
-   displayOrderItemList(wholeOrder)
+    displayOrderItemList(wholeOrder)
 }
 
 function displayCart() {
@@ -305,9 +331,17 @@ function updateOrderItem(event){
     var sp =  $("#edit-order-item-form input[name=sellingPrice]").val();
 
     if(sp < 1) {
-        toastr.error("Price cannot be negative or zero", "Error : ");
+        toastr.error("Price cannot be negative or zero", "Error : ", {
+                                                                 "closeButton": true,
+                                                                 "timeOut": "0",
+                                                                 "extendedTimeOut": "0",
+                                                         	});
     } else if(qty < 1) {
-        toastr.error("Quantity cannot be negative or zero", "Error : ");
+        toastr.error("Quantity cannot be negative or zero", "Error : ", {
+                                                                    "closeButton": true,
+                                                                    "timeOut": "0",
+                                                                    "extendedTimeOut": "0",
+                                                            	});
     } else {
         console.log("inside order item");
         let item = []

@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,38 +18,31 @@ import java.util.List;
 @Service
 public class InvoiceApi {
     public ResponseEntity<byte[]> generateInvoice(InvoiceForm form) throws IOException {
-        List<OrderItemData> items = form.getOrderItemList();
-        Double amt = 0.0;
-        for(OrderItemData i : items) {
-            Double cur = 0.0;
-            cur = i.getSellingPrice() * i.getQuantity();
-            i.setMultiplied(cur);
-            amt+=cur;
+        String _filename = "./Pdf/invoice_"+ form.getOrderId() +".pdf";
+        File f = new File(_filename);
+        if(f.exists()){
+            System.out.println("inside exists");
         }
-        form.setAmount(amt);
-        CreateXmlFile createXMLFileJava = new CreateXmlFile();
-
-        createXMLFileJava.createXML(form);
-
-        PdfFromFop pdfFromFOP = new PdfFromFop();
-
-        pdfFromFOP.createPDF();
+        else {
+            CreateXmlFile createXMLFileJava = new CreateXmlFile();
+            createXMLFileJava.createXML(form);
+            System.out.println("inside NOT exists");
+        }
 
         return generateResponse(form);
     }
 
     private ResponseEntity<byte[]> generateResponse(InvoiceForm form) throws IOException {
         String _filename = "./Pdf/invoice_"+ form.getOrderId() +".pdf";
-        //todo: add form.get and wrap in if-else
 
-        Path pdfPath = Paths.get("./Pdf/invoice.pdf");
+        Path pdfPath = Paths.get("./Pdf/invoice_"+ form.getOrderId() +".pdf");
 
         byte[] contents = Files.readAllBytes(pdfPath);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
         // Here you have to set the actual filename of your pdf
-        String filename = "output.pdf";
+        String filename = "output\"+ form.getOrderId() +\".pdf";
         headers.setContentDispositionFormData(filename, filename);
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
         ResponseEntity<byte[]> response = new ResponseEntity<>(contents, headers, HttpStatus.OK);
@@ -70,7 +64,6 @@ public class InvoiceApi {
             System.out.println(o.getOrderItemId());
             System.out.println(o.getQuantity());
             System.out.println(o.getSellingPrice());
-            System.out.println(o.getMultiplied());
         }
     }
 

@@ -4,6 +4,11 @@ function getBrandUrl(){
    return baseUrl + "/api/brand";
 }
 
+function resetForm() {
+    var element = document.getElementById("brand-form");
+    element.reset()
+}
+
 //BUTTON ACTIONS
 function addBrand(event){
    //Set the values to update
@@ -21,6 +26,7 @@ function addBrand(event){
       success: function(response) {
              getBrandList();
              toastr.success("Brand Added Successfully", "Success : ");
+             resetForm();
       },
       error: handleAjaxError
    });

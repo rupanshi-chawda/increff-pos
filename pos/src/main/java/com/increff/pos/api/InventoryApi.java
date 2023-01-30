@@ -24,7 +24,6 @@ public class InventoryApi {
             dao.insert(p);
         }
         else {
-            //TODO: Add toaster message that the product already exists and that you are updating it.
             int prevQuantity = b.getQuantity();
             int newQuantity = prevQuantity + p.getQuantity();
             b.setQuantity(newQuantity);

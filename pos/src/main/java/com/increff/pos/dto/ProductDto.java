@@ -5,6 +5,7 @@ import com.increff.pos.api.BrandApi;
 import com.increff.pos.api.ProductApi;
 import com.increff.pos.helper.ProductHelper;
 import com.increff.pos.model.data.ProductData;
+import com.increff.pos.model.form.ProductUpdateForm;
 import com.increff.pos.pojo.ProductPojo;
 import com.increff.pos.util.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,6 @@ public class ProductDto {
 
     public void add(ProductForm form) throws ApiException {
         ProductHelper.normalize(form);
-        ProductHelper.validate(form);
         ProductPojo p = ProductHelper.convert(form);
         p.setBrandCategory(brandApi.getBrandCategoryId(form.getBrand(), form.getCategory()));
         api.add(p);
@@ -41,9 +41,8 @@ public class ProductDto {
         return api.getAll().stream().map(ProductHelper::convert).collect(Collectors.toList());
     }
 
-    public void update(int id, ProductForm f) throws ApiException {
+    public void update(int id, ProductUpdateForm f) throws ApiException {
         ProductHelper.normalize(f);
-        ProductHelper.validate(f);
         ProductPojo p = ProductHelper.convert(f);
         api.update(id, p);
     }

@@ -18,10 +18,11 @@ import org.w3c.dom.Element;
 
 public class CreateXmlFile {
 
-    public static final String xmlFilePath = "C:\\Users\\KIIT\\Downloads\\increff-pos\\invoice\\src\\main\\resources\\xml\\invoice.xml";
+    //public static final String xmlFilePath = "C:\\Users\\KIIT\\Downloads\\increff-pos\\invoice\\src\\main\\resources\\xml\\invoice.xml";
 
 
     public void createXML(InvoiceForm invoiceForm) {
+        Double totalAmount = 0.0;
 
         try {
 
@@ -69,35 +70,39 @@ public class CreateXmlFile {
                 sellingPrice.appendChild(document.createTextNode(Double.valueOf(df.format(o.getSellingPrice())).toString()));
                 order_item.appendChild(sellingPrice);
 
+                Double currentAmount = 0.0;
+                currentAmount = o.getSellingPrice() * o.getQuantity();
                 Element multiplied = document.createElement("multiplied");
-                multiplied.appendChild(document.createTextNode(Double.valueOf(df.format(o.getMultiplied())).toString()));
+                multiplied.appendChild(document.createTextNode(Double.valueOf(df.format(currentAmount)).toString()));
                 order_item.appendChild(multiplied);
+
+                totalAmount += currentAmount;
             }
 
             Element amount = document.createElement("amount");
             DecimalFormat df = new DecimalFormat("#.##");
-            amount.appendChild(document.createTextNode(Double.valueOf(df.format(invoiceForm.getAmount())).toString()));
+            amount.appendChild(document.createTextNode(Double.valueOf(df.format(totalAmount)).toString()));
             root.appendChild(amount);
             // create the xml file
             //transform the DOM Object to an XML File
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
+//            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+//            Transformer transformer = transformerFactory.newTransformer();
             DOMSource domSource = new DOMSource(document);
-            StreamResult streamResult = new StreamResult(new File(xmlFilePath));
+            //StreamResult streamResult = new StreamResult(new File(xmlFilePath));
 
             // If you use
             // StreamResult result = new StreamResult(System.out);
             // the output will be pushed to the standard output ...
             // You can use that for debugging
 
-            transformer.transform(domSource, streamResult);
+            //transformer.transform(domSource, streamResult);
 
             System.out.println("Done creating XML File");
+            PdfFromFop pdfFromFOP = new PdfFromFop();
+            pdfFromFOP.createPDF(invoiceForm, domSource);
 
         } catch (ParserConfigurationException pce) {
             pce.printStackTrace();
-        } catch (TransformerException tfe) {
-            tfe.printStackTrace();
         }
     }
 }

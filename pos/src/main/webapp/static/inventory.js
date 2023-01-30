@@ -3,13 +3,21 @@ function getInventoryUrl(){
 	var baseUrl = $("meta[name=baseUrl]").attr("content")
 	return baseUrl + "/api/inventory";
 }
+const inventoryList = new Map();
 
+function resetForm() {
+    var element = document.getElementById("inventory-form");
+    element.reset()
+}
 //BUTTON ACTIONS
 function addInventory(event){
 	//Set the values to update
 	var $form = $("#inventory-form");
 	var json = toJson($form);
 	var url = getInventoryUrl();
+
+	var barcodeInv = $("#inventory-form input[name=barcode]").val();
+    console.log(barcodeInv)
     console.log(url);
     console.log(json)
 	$.ajax({
@@ -22,7 +30,12 @@ function addInventory(event){
 	   success: function(response) {
 	    console.log(response);
 	   		getInventoryList();
-             toastr.success("Inventory Added Successfully", "Success : ");
+	   		if(inventoryList.has(barcodeInv)){
+	   		    toastr.success("Inventory available, Updated it successfully", "Success : ");
+	   		} else {
+                toastr.success("Inventory Added Successfully", "Success : ");
+	   		}
+	   		resetForm()
 	   },
 	   error: handleAjaxError
 	});
@@ -131,15 +144,15 @@ function downloadErrors(){
 }
 
 //UI DISPLAY METHODS
-
 function displayInventoryList(data){
 	var $tbody = $('#inventory-table').find('tbody');
 	$tbody.empty();
 	console.log(data);
 	for(var i in data){
 		var e = data[i];
-		console.log(e.barcode);
-		console.log(typeof e.barcode);
+//		console.log(e.barcode);
+//		console.log(typeof e.barcode);
+        inventoryList.set(e.barcode, e.quantity);
 		var buttonHtml = '<button onclick="displayEditInventory(\'' + e.barcode + '\')" class="btn table__button-group"><i class="fa-solid fa-pencil" style="color:blue"></i></button>'
         var row = '<tr>'
 		+ '<td>' + e.barcode + '</td>'

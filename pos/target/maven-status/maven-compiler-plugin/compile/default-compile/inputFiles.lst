@@ -24,7 +24,6 @@ C:\Users\KIIT\Downloads\increff-pos\pos\src\main\java\com\increff\pos\controller
 C:\Users\KIIT\Downloads\increff-pos\pos\src\main\java\com\increff\pos\controller\AbstractUiController.java
 C:\Users\KIIT\Downloads\increff-pos\pos\src\main\java\com\increff\pos\controller\SiteUiController.java
 C:\Users\KIIT\Downloads\increff-pos\pos\src\main\java\com\increff\pos\dto\InitDto.java
-C:\Users\KIIT\Downloads\increff-pos\pos\src\main\java\com\increff\pos\util\DailySalesScheduler.java
 C:\Users\KIIT\Downloads\increff-pos\pos\src\main\java\com\increff\pos\pojo\InventoryPojo.java
 C:\Users\KIIT\Downloads\increff-pos\pos\src\main\java\com\increff\pos\model\data\SalesReportData.java
 C:\Users\KIIT\Downloads\increff-pos\pos\src\main\java\com\increff\pos\dto\SalesDto.java
@@ -84,6 +83,7 @@ C:\Users\KIIT\Downloads\increff-pos\pos\src\main\java\com\increff\pos\dto\AdminD
 C:\Users\KIIT\Downloads\increff-pos\pos\src\main\java\com\increff\pos\model\data\BrandData.java
 C:\Users\KIIT\Downloads\increff-pos\pos\src\main\java\com\increff\pos\api\OrderApi.java
 C:\Users\KIIT\Downloads\increff-pos\pos\src\main\java\com\increff\pos\dao\AbstractDao.java
+C:\Users\KIIT\Downloads\increff-pos\pos\src\main\java\com\increff\pos\model\form\ProductUpdateForm.java
 C:\Users\KIIT\Downloads\increff-pos\pos\src\main\java\com\increff\pos\spring\SecurityConfig.java
 C:\Users\KIIT\Downloads\increff-pos\pos\src\main\java\com\increff\pos\dao\OrderDao.java
 C:\Users\KIIT\Downloads\increff-pos\pos\src\main\java\com\increff\pos\helper\ProductHelper.java

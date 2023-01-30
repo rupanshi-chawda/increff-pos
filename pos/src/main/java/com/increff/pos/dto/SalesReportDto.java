@@ -36,7 +36,7 @@ public class SalesReportDto {
     @Autowired
     private CsvFileGenerator csvGenerator;
 
-    protected List<SalesReportData> salesList = new ArrayList<>();
+    protected List<SalesReportData> salesListData = new ArrayList<>();
 
     public List<SalesReportData> getAll() throws ApiException {
         List<OrderPojo> list = orderApi.getAllOrder();
@@ -70,6 +70,7 @@ public class SalesReportDto {
             }
         }
 
+        List<SalesReportData> salesList = new ArrayList<>();
         for(Map.Entry<Integer, SalesReportData> entry: map.entrySet()) {
             BrandPojo bp = brandApi.get(entry.getKey());
             if((Objects.equals(brand,bp.getBrand()) || Objects.equals(brand,"all")) &&
@@ -82,15 +83,16 @@ public class SalesReportDto {
             }
         }
 
-        return salesList;
+        salesListData = salesList;
+        return salesListData;
     }
 
 
     public void generateCsv(HttpServletResponse response) throws IOException, ApiException {
         response.setContentType("text/csv");
         response.addHeader("Content-Disposition", "attachment; filename=\"salesReport.csv\"");
-        csvGenerator.writeSalesToCsv(salesList, response.getWriter());
-        salesList.clear();
+        csvGenerator.writeSalesToCsv(salesListData, response.getWriter());
+        salesListData.clear();
     }
 
 }

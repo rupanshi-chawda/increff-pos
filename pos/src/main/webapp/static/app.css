@@ -17,9 +17,13 @@ body {
 	background-color: #f5f5f5;
 }
 
+.fa{
+    color: #00295F !important;
+}
 
 .fas{
     font-size: 4rem;
+    color: #00295F;
 }
 
 .table__button-group {
@@ -34,5 +38,10 @@ tr:hover {
 }
 
 .icon-label {
-    color: #007BFF;
+    color: #00295F;
+}
+
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+    background-color: #00295F !important;
+    border-color: #00295F !important;
 }

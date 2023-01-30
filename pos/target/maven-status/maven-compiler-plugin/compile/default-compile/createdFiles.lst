@@ -1,7 +1,6 @@
 com\increff\pos\controller\InventoryController.class
 com\increff\pos\dto\OrderDto.class
 com\increff\pos\model\form\InvoiceForm.class
-com\increff\pos\util\DailySalesScheduler.class
 com\increff\pos\util\InvoiceGenerator.class
 com\increff\pos\controller\SalesReportController.class
 com\increff\pos\pojo\OrderItemPojo.class
@@ -84,6 +83,7 @@ com\increff\pos\controller\BrandController.class
 com\increff\pos\model\form\ProductForm.class
 com\increff\pos\controller\InitController.class
 com\increff\pos\api\InventoryApi.class
+com\increff\pos\model\form\ProductUpdateForm.class
 com\increff\pos\util\UserPrincipal.class
 com\increff\pos\model\form\UserForm.class
 com\increff\pos\util\SecurityUtil.class

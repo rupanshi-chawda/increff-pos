@@ -6,6 +6,6 @@ import org.springframework.context.support.AbstractApplicationContext;
 public class SchedulerInitializer {
 
     public void getSchedulerConfigClass(){
-        AbstractApplicationContext context = new AnnotationConfigApplicationContext(SchedulerConfig.class);
+        AbstractApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
     }
 }

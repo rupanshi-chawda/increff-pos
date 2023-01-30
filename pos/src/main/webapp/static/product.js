@@ -16,6 +16,11 @@ function getBrandOption() {
     return output;
 }
 
+function resetForm() {
+    var element = document.getElementById("product-form");
+    element.reset()
+}
+
 //BUTTON ACTIONS
 function addProduct(event){
    //Set the values to update
@@ -32,6 +37,7 @@ function addProduct(event){
       success: function(response) {
              getProductList();
              toastr.success("Product Added Successfully", "Success : ");
+             resetForm();
       },
       error: handleAjaxError
    });

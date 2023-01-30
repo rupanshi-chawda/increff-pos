@@ -2,6 +2,7 @@ package com.increff.pos.helper;
 
 import com.increff.pos.model.form.ProductForm;
 import com.increff.pos.model.data.ProductData;
+import com.increff.pos.model.form.ProductUpdateForm;
 import com.increff.pos.pojo.ProductPojo;
 import com.increff.pos.util.ApiException;
 import com.increff.pos.util.StringUtil;
@@ -29,22 +30,19 @@ public class ProductHelper {
         return p;
     }
 
+    public static ProductPojo convert(ProductUpdateForm f) {
+        ProductPojo p = new ProductPojo();
+        p.setName(f.getName());
+        p.setMrp(f.getMrp());
+        return p;
+    }
+
     public static void normalize(ProductForm f) {
         f.setBarcode(StringUtil.toLowerCase(f.getBarcode()));
         f.setName(StringUtil.toLowerCase(f.getName()));
-        //NumberFormat formatter = new DecimalFormat("#0.00");
-        //f.setMrp(Double.parseDouble(formatter.format(f.getMrp())));
+    }
+    public static void normalize(ProductUpdateForm f) {
+        f.setName(StringUtil.toLowerCase(f.getName()));
     }
 
-    public static void validate(ProductForm f) throws ApiException {
-        if(StringUtil.isEmpty(f.getBarcode())) {
-            throw new ApiException("Barcode cannot be empty");
-        }
-        if(StringUtil.isEmpty(f.getName())) {
-            throw new ApiException("Name cannot be empty");
-        }
-        if(f.getMrp()<1 || Objects.isNull(f.getMrp())) {
-            throw new ApiException("MRP cannot be empty or less than one");
-        }
-    }
 }

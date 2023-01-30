@@ -32,7 +32,6 @@ public class ProductApi {
 
     public void update(int id, ProductPojo p) throws ApiException {
         ProductPojo bx = getProductId(id);
-        bx.setBarcode(p.getBarcode());
         bx.setName(p.getName());
         bx.setMrp(p.getMrp());
         dao.update(p);

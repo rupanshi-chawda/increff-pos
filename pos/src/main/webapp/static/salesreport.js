@@ -31,6 +31,7 @@ function getFilteredList(event) {
         },
          success: function (response) {
             displaySalesList(response);
+            downloadCsv();
         },
         error: handleAjaxError
      });
@@ -173,7 +174,7 @@ function init() {
     $('#refresh-data').click(getSalesList);
     $('#apply-filter').click(getFilteredList);
     $('#inputBrand').on('change', displayCategoryOptions);
-    $('#download-csv').click(downloadCsv);
+    //$('#download-csv').click(downloadCsv);
 }
 
 function autoFillDate() {
