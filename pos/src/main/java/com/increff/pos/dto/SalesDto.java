@@ -32,7 +32,7 @@ public class SalesDto {
     }
 
     public List<SalesPojo> getAll() throws ApiException {
-        return api.getALL();
+        return api.getAll();
     }
 
     public void createReport() throws ApiException {

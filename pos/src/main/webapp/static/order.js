@@ -39,6 +39,7 @@ function placeOrder(event){
     let len = wholeOrder.length;
     console.log(len);
     if (len == 0) {
+
         toastr.error("Cart empty! Order cannot be placed.", "Error : ", {
                                                                     "closeButton": true,
                                                                     "timeOut": "0",
@@ -79,7 +80,6 @@ function displayOrderItemList(data){
         var row = '<tr>'
             + '<td>' + JSON.parse(e).barcode + '</td>'
             + '<td>' + JSON.parse(e).quantity + '</td>'
-            //+ '<td>' + JSON.parse(e).sellingPrice + '</td>'
             + '<td>'  + parseFloat(JSON.parse(e).sellingPrice).toFixed(2) + '</td>'
             + '<td>' + buttonHtml + '</td>'
             + '</tr>';
@@ -163,40 +163,52 @@ function checkSellingPrice(vars) {
 }
 
 const barcodeList = new Map();
-function getBarcode(data) {
-    for (i in data) {
-        var a = data[i].barcode;
-        var b = data[i].quantity;
-        barcodeList.set(a,b);
-        console.log(barcodeList);
-    }
-}
 
-function getInventoryList() {
-    var url = getInventoryUrl();
-    $.ajax({
-        url: url,
-        type: 'GET',
-        success: function(data) {
-            barcodeList.clear();
-            getBarcode(data);
-        },
-        error: handleAjaxError
-     });
-}
+function checkBarcode(barcode) {
 
-function checkBarcode(data) {
-    if (barcodeList.has(data)) {
-        return true;
+    if (barcodeList.has(barcode)) {
+            return true;
+    } else {
+        var url = getInventoryUrl() + "/" + barcode;
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function(data) {
+                var a = data.barcode;
+                var b = data.quantity;
+                barcodeList.set(a,b);
+                console.log(barcodeList);
+                return true;
+            },
+            error: function(data) {
+                return false;
+            }
+         });
     }
-    return false;
 }
 
 function checkInventory(barcode, qty) {
     if (barcodeList.get(barcode) >= qty) {
+        console.log(barcodeList.get(barcode))
+        console.log(qty)
         return true;
+    } else {
+        var url = getInventoryUrl() + "/" + barcode;
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function(data) {
+                var a = data.barcode;
+                var b = data.quantity;
+                barcodeList.set(a,b);
+                console.log(barcodeList);
+                return true;
+            },
+            error: function(data) {
+                return false;
+            }
+        });
     }
-    return false;
 }
 
 function addOrderItem(event){
@@ -211,6 +223,7 @@ function addOrderItem(event){
 
     if (checkBarcode(barcode1) == false) {
         //console.log("above");
+
         toastr.error("Barcode does not exists", "Error : ", {
                                                         "closeButton": true,
                                                         "timeOut": "0",
@@ -221,6 +234,7 @@ function addOrderItem(event){
     {
         if(checkInventory(barcode1, qty) == false)
         {
+
             toastr.error("Quantity exceeds available inventory", "Error : ", {
                                                                          "closeButton": true,
                                                                          "timeOut": "0",
@@ -234,6 +248,7 @@ function addOrderItem(event){
 
             if(sp < 1)
             {
+
                toastr.error("Price cannot be negative or zero", "Error : ", {
                                                                         "closeButton": true,
                                                                         "timeOut": "0",
@@ -241,6 +256,7 @@ function addOrderItem(event){
                                                                 	});
             } else if(qty < 1)
             {
+
                toastr.error("Quantity cannot be negative or zero", "Error : ", {
                                                                            "closeButton": true,
                                                                            "timeOut": "0",
@@ -289,17 +305,11 @@ function displayCart() {
     $tbody.empty();
 }
 
-function clearCart(event) {
+function clearCart() {
     console.log("inside clear cart");
     wholeOrder = []
     console.log(wholeOrder);
     toastr.info("Cart Cleared", "Info : ");
-}
-
-function refreshCart(event) {
-    console.log("inside refresh cart");
-    getInventoryList();
-    toastr.info("Cart Refreshed", "Info : ");
 }
 
 function getOrderItemList() {
@@ -331,12 +341,14 @@ function updateOrderItem(event){
     var sp =  $("#edit-order-item-form input[name=sellingPrice]").val();
 
     if(sp < 1) {
+
         toastr.error("Price cannot be negative or zero", "Error : ", {
                                                                  "closeButton": true,
                                                                  "timeOut": "0",
                                                                  "extendedTimeOut": "0",
                                                          	});
     } else if(qty < 1) {
+
         toastr.error("Quantity cannot be negative or zero", "Error : ", {
                                                                     "closeButton": true,
                                                                     "timeOut": "0",
@@ -482,22 +494,13 @@ function init(){
    	$('#place-order').click(placeOrder);
    	$('#refresh-data').click(getOrderList);
     $('#update-order-item').click(updateOrderItem);
-    $('#clear-cart').click(clearCart);
-    $('#refresh-cart').click(refreshCart);
 }
 
 $(document).ready(init);
 $(document).ready(getOrderList);
 $(document).ready(getOrderItemList);
-$(document).ready(getInventoryList);
-
-$('#edit-order-item-modal').on('shown.bs.modal', function (e) {
-    console.log("hidden");
-    $("#add-order-item-modal").css({ opacity: 0.5 });
-})
-
-//when modal closes
-$('#edit-order-item-modal').on('hidden.bs.modal', function (e) {
-    console.log("shown");
-    $("#add-order-item-modal").css({ opacity: 1 });
-})
+$(document).keypress(function(e) {
+    if(e.which == 13) {
+        addOrderItem();
+    }
+});

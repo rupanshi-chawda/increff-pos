@@ -45,3 +45,10 @@ tr:hover {
     background-color: #00295F !important;
     border-color: #00295F !important;
 }
+
+.over-modal:nth-of-type(even) {
+    z-index: 1052 !important;
+}
+.over-modal-backdrop.show:nth-of-type(even) {
+    z-index: 1051 !important;
+}

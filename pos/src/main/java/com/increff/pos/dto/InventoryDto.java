@@ -56,7 +56,6 @@ public class InventoryDto {
     }
 
     public List<InventoryData> getAll() {
-        //TODO: apply java stream method
         List<InventoryPojo> list = api.getAll();
         List<InventoryData> list2 = new ArrayList<InventoryData>();
         for(InventoryPojo b : list) {

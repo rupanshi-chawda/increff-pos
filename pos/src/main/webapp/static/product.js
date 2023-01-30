@@ -221,8 +221,18 @@ function displayProduct(data){
    $("#product-edit-form input[name=name]").val(data.name);
    $("#product-edit-form input[name=mrp]").val(data.mrp);
    $('#edit-product-modal').modal('toggle');
+   document.getElementById('update-product').disabled = true;
 }
 
+function checkform() {
+    var f = document.forms["product-form"].elements;
+    var cansubmit = true;
+    for (var i = 0; i < f.length; i++) {
+        if (f[i].value.length == 0)
+            cansubmit = false;
+    }
+    document.getElementById('add-product').disabled = !cansubmit;
+}
 function getBrandList()
 {
     var url = getBrandUrl();
@@ -278,6 +288,14 @@ function displayCategoryOptions()
         }
 }
 
+function displayAddProduct(data){
+   $('#add-product-modal').modal('toggle');
+}
+
+function enableUpdate(){
+    document.getElementById('update-product').disabled = false;
+}
+
 //INITIALIZATION CODE
 function init(){
    $('#add-product').click(addProduct);
@@ -289,6 +307,7 @@ function init(){
    $('#productFile').on('change', updateFileName)
    $('#inputBrand').change(displayCategoryOptions);
    $('#productFile').click(activateUpload);
+   $('#add-modal').click(displayAddProduct);
 }
 
 $(document).ready(init);

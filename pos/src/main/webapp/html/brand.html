@@ -13,39 +13,50 @@
 
     <div class="row">&nbsp;</div>
 
-    <!-- Top row with form-->
+
     <div class="row">
         <div class="col-12">
-            <form class="form-inline" id="brand-form">
-                <div class="form-group">
-                    <label for="inputBrand" class="col-sm-2 col-form-label">Brand</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="brand" id="inputBrand" placeholder="enter brand">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputCategory" class="col-sm-2 col-form-label">Category</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="category" id="inputCategory" placeholder="enter category">
-                    </div>
-                </div>
-                <button type="button" class="btn btn-primary" id="add-brand">Add</button>
-                &nbsp; &nbsp;
-                <button type="button" class="btn btn-info" id="refresh-data">Refresh</button>
-                &nbsp; &nbsp;
-                <button type="button" class="btn btn-primary" id="upload-data">Upload</button>
-            </form>
-            &nbsp;
+            <button type="button" class="btn btn-primary" id="add-modal">Add</button>
+            &nbsp; &nbsp;
+            <button type="button" class="btn btn-info" id="refresh-data">Refresh</button>
+            &nbsp; &nbsp;
+            <button type="button" class="btn btn-primary" id="upload-data">Upload</button>
+            &nbsp; &nbsp;
+            <button type="button" class="btn btn-primary" id="download-csv">Print Report</button>
         </div>
     </div>
 
-
-    <div class="row">
-        <div class="col-12">
-            <button type="button" class="btn btn-primary" id="download-csv">Print Report</button>
-        </div>
-        <div class="row">
-
+<!--    Brand Add Modal-->
+    <div class="modal" tabindex="-1" role="dialog" id="add-brand-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Brand</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form" id="brand-form">
+                        <div class="form-group">
+                            <label for="inputBrand" class="col-sm-2 col-form-label">Brand</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="brand" id="inputBrand" placeholder="enter brand" onKeyup="checkform()">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputCategory" class="col-sm-2 col-form-label">Category</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="category" id="inputCategory" placeholder="enter category" onKeyup="checkform()">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="add-brand" disabled="disabled">Add</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -101,16 +112,15 @@
                         <div class="form-group">
                             <label for="inputBrand" class="col-sm-2 col-form-label">Brand</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="brand" placeholder="enter brand">
+                                <input type="text" class="form-control" name="brand" placeholder="enter brand" onchange="enableUpdate()">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputCategory" class="col-sm-2 col-form-label">Category</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="category" placeholder="enter category">
+                                <input type="text" class="form-control" name="category" placeholder="enter category" onchange="enableUpdate()">
                             </div>
                         </div>
-                        <input type="hidden" name="id" >
                     </form>
                 </div>
                 <div class="modal-footer">

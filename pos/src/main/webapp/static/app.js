@@ -16,6 +16,8 @@ function toJson($form){
 function handleAjaxError(response){
 	var response = JSON.parse(response.responseText);
 	//alert(response.message);
+	//TODO:remove stack of errors
+
 	toastr.error(response.message, "Error : ", {
         "closeButton": true,
         "timeOut": "0",

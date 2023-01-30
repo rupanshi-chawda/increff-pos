@@ -226,10 +226,27 @@ function downloadCsv(){
 function displayInventory(data){
 	$("#inventory-edit-form input[name=barcode]").val(data.barcode);
 	$("#inventory-edit-form input[name=quantity]").val(data.quantity);
-//	$("#inventory-edit-form input[name=id]").val(data.id);
 	$('#edit-inventory-modal').modal('toggle');
+    document.getElementById('update-inventory').disabled = true;
 }
 
+function checkform() {
+    var f = document.forms["inventory-form"].elements;
+    var cansubmit = true;
+    for (var i = 0; i < f.length; i++) {
+        if (f[i].value.length == 0)
+            cansubmit = false;
+    }
+    document.getElementById('add-inventory').disabled = !cansubmit;
+}
+
+function displayAddInventory(data){
+   $('#add-inventory-modal').modal('toggle');
+}
+
+function enableUpdate(){
+    document.getElementById('update-inventory').disabled = false;
+}
 
 //INITIALIZATION CODE
 function init(){
@@ -242,6 +259,7 @@ function init(){
     $('#inventoryFile').on('change', updateFileName);
     $('#download-csv').click(downloadCsv);
     $('#inventoryFile').click(activateUpload);
+    $('#add-modal').click(displayAddInventory);
 }
 
 $(document).ready(init);

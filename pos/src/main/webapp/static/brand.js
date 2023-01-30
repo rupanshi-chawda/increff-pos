@@ -209,8 +209,25 @@ function displayBrand(data){
    $("#brand-edit-form input[name=category]").val(data.category);
    $("#brand-edit-form input[name=id]").val(data.id);
    $('#edit-brand-modal').modal('toggle');
+   document.getElementById('update-brand').disabled = true;
+}
+function checkform() {
+    var f = document.forms["brand-form"].elements;
+    var cansubmit = true;
+    for (var i = 0; i < f.length; i++) {
+        if (f[i].value.length == 0)
+            cansubmit = false;
+    }
+    document.getElementById('add-brand').disabled = !cansubmit;
 }
 
+function displayAddBrand(data){
+   $('#add-brand-modal').modal('toggle');
+}
+
+function enableUpdate(){
+    document.getElementById('update-brand').disabled = false;
+}
 
 //INITIALIZATION CODE
 function init(){
@@ -222,7 +239,8 @@ function init(){
    $('#download-errors').click(downloadErrors);
    $('#brandFile').on('change', updateFileName);
    $('#download-csv').click(downloadCsv);
-    $('#brandFile').click(activateUpload);
+   $('#brandFile').click(activateUpload);
+   $('#add-modal').click(displayAddBrand);
 }
 
 $(document).ready(init);

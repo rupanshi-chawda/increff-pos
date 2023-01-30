@@ -21,7 +21,7 @@ public class SalesApi {
     }
 
     @Transactional
-    public List<SalesPojo> getALL() {
+    public List<SalesPojo> getAll() {
         return dao.selectAll(SalesPojo.class);
     }
 

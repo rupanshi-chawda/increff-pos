@@ -20,10 +20,12 @@ public class PdfFromFop {
             File xsltfile = new File("C:\\Users\\KIIT\\Downloads\\increff-pos\\invoice\\src\\main\\resources\\xsl\\invoice.xsl");
             File pdfDir = new File("./Pdf");
 
+            //Creating the XML file here
             StreamResult streamResult = new StreamResult(new File(xmlFilePath));
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             transformer.transform(domSource, streamResult);
+            //TODO: change xml file to byte (bytestream)
 
             pdfDir.mkdirs();
             File pdfFile = new File(pdfDir, "invoice_"+ form.getOrderId() +".pdf");

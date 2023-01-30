@@ -88,7 +88,6 @@ public class OrderDto {
     }
 
     public List<OrderItemData> getAllItem() {
-        //TODO: apply java stream method
         List<OrderItemPojo> list = orderApi.getAllItem();
         List<OrderItemData> list2 = new ArrayList<OrderItemData>();
         for(OrderItemPojo b : list) {
