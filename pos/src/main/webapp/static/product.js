@@ -105,11 +105,15 @@ function readFileDataCallback(results){
 function uploadRows(){
    //Update progress
    updateUploadDialog();
+    $("#process-data").prop('disabled', true);
    //If everything processed then return
    if(processCount==fileData.length){
       toastr.success("Rows uploaded Successfully", "Success : ");
       return;
    }
+    if(errorData.length > 0){
+            $("#download-errors").prop('disabled', false);
+    }
 
    //Process next row
    var row = fileData[processCount];
@@ -149,7 +153,7 @@ function displayProductList(data){
    $tbody.empty();
    for(var i in data){
       var e = data[i];
-      var buttonHtml = '<button onclick="displayEditProduct(' + e.id + ')" class="btn table__button-group"><i class="fa-solid fa-pencil" style="color:blue"></i></button>'
+      var buttonHtml = '<button onclick="displayEditProduct(' + e.id + ')" class="btn table__button-group"><i class="fa-solid fa-pencil" style="color:#00295F"></i></button>'
       var row = '<tr>'
       + '<td>' + e.barcode + '</td>'
       + '<td>'  + e.name + '</td>'
@@ -204,6 +208,12 @@ function displayUploadData(){
     console.log("hello");
    resetUploadDialog();
    $('#upload-product-modal').modal('toggle');
+   $("#download-errors").prop('disabled', true);
+   $("#process-data").prop('disabled', true);
+}
+
+function activateUpload() {
+    $("#process-data").prop('disabled', false);
 }
 
 function displayProduct(data){
@@ -278,6 +288,7 @@ function init(){
    $('#download-errors').click(downloadErrors);
    $('#productFile').on('change', updateFileName)
    $('#inputBrand').change(displayCategoryOptions);
+   $('#productFile').click(activateUpload);
 }
 
 $(document).ready(init);

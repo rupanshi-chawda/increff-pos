@@ -94,12 +94,15 @@ function readFileDataCallback(results){
 function uploadRows(){
    //Update progress
    updateUploadDialog();
+    $("#process-data").prop('disabled', true);
    //If everything processed then return
    if(processCount==fileData.length){
-        toastr.success("Rows uploaded Successfully", "Success : ");
+        //toastr.success("Rows uploaded Successfully", "Success : ");
         return;
    }
-
+    if(errorData.length > 0){
+            $("#download-errors").prop('disabled', false);
+    }
    //Process next row
    var row = fileData[processCount];
    processCount++;
@@ -138,7 +141,7 @@ function displayBrandList(data){
    $tbody.empty();
    for(var i in data){
       var e = data[i];
-      var buttonHtml = '<button onclick="displayEditBrand(' + e.id + ')" class="btn table__button-group"><i class="fa-solid fa-pencil" style="color:blue"></i></button>'
+      var buttonHtml = '<button onclick="displayEditBrand(' + e.id + ')" class="btn table__button-group"><i class="fa-solid fa-pencil" style="color:#00295F"></i></button>'
       var row = '<tr>'
       + '<td>' + e.brand + '</td>'
       + '<td>'  + e.category + '</td>'
@@ -189,6 +192,12 @@ function displayUploadData(){
     console.log("hello");
    resetUploadDialog();
    $('#upload-brand-modal').modal('toggle');
+    $("#download-errors").prop('disabled', true);
+    $("#process-data").prop('disabled', true);
+}
+
+function activateUpload() {
+    $("#process-data").prop('disabled', false);
 }
 
 function downloadCsv(){
@@ -213,6 +222,7 @@ function init(){
    $('#download-errors').click(downloadErrors);
    $('#brandFile').on('change', updateFileName);
    $('#download-csv').click(downloadCsv);
+    $('#brandFile').click(activateUpload);
 }
 
 $(document).ready(init);

@@ -106,11 +106,15 @@ function readFileDataCallback(results){
 function uploadRows(){
 	//Update progress
 	updateUploadDialog();
+    $("#process-data").prop('disabled', true);
 	//If everything processed then return
 	if(processCount==fileData.length){
 	    toastr.success("Rows uploaded Successfully", "Success : ");
 		return;
 	}
+    if(errorData.length > 0){
+            $("#download-errors").prop('disabled', false);
+    }
 
 	//Process next row
 	var row = fileData[processCount];
@@ -153,7 +157,7 @@ function displayInventoryList(data){
 //		console.log(e.barcode);
 //		console.log(typeof e.barcode);
         inventoryList.set(e.barcode, e.quantity);
-		var buttonHtml = '<button onclick="displayEditInventory(\'' + e.barcode + '\')" class="btn table__button-group"><i class="fa-solid fa-pencil" style="color:blue"></i></button>'
+		var buttonHtml = '<button onclick="displayEditInventory(\'' + e.barcode + '\')" class="btn table__button-group"><i class="fa-solid fa-pencil" style="color:#00295F"></i></button>'
         var row = '<tr>'
 		+ '<td>' + e.barcode + '</td>'
 		+ '<td>'  + e.quantity + '</td>'
@@ -206,6 +210,12 @@ function displayUploadData(){
     console.log("hello");
  	resetUploadDialog();
 	$('#upload-inventory-modal').modal('toggle');
+    $("#download-errors").prop('disabled', true);
+    $("#process-data").prop('disabled', true);
+}
+
+function activateUpload() {
+    $("#process-data").prop('disabled', false);
 }
 
 function downloadCsv(){
@@ -231,6 +241,7 @@ function init(){
 	$('#download-errors').click(downloadErrors);
     $('#inventoryFile').on('change', updateFileName);
     $('#download-csv').click(downloadCsv);
+    $('#inventoryFile').click(activateUpload);
 }
 
 $(document).ready(init);
