@@ -16,7 +16,7 @@
 
 <!--NAVBAR SNIPPET-->
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-1" th:fragment="name_site_navbar">
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-1" th:fragment="name_signup_navbar">
   <a class="navbar-brand" th:href="@{/}">
     <img th:src="@{/static/logo.png}" class="d-inline-block align-top" alt="" height="60">
   </a>
@@ -24,15 +24,35 @@
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-<!--  <div class="collapse navbar-collapse" id="navbarNav">-->
-<!--    <ul class="navbar-nav ml-auto">-->
-<!--       <li class="nav-item">-->
-<!--        <a class="btn btn-primary" th:href="@{/site/login}">Login</a>-->
-<!--      </li>-->
-<!--    </ul>-->
-<!-- -->
-<!--  </div>-->
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto">
+       <li class="nav-item">
+        <a class="btn btn-primary" th:href="@{/site/init}">Signup</a>
+      </li>
+    </ul>
+
+  </div>
 </nav>
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-1" th:fragment="name_site_navbar">
+    <a class="navbar-brand" th:href="@{/}">
+        <img th:src="@{/static/logo.png}" class="d-inline-block align-top" alt="" height="60">
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="btn btn-primary" th:href="@{/site/login}">Login</a>
+            </li>
+        </ul>
+
+    </div>
+</nav>
+
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light  mb-1" th:fragment="name_app_navbar">
   <a class="navbar-brand" th:href="@{/}">
@@ -80,7 +100,6 @@
             <a class="nav-link btn btn-outline-secondary" th:href="@{/session/logout}">Logout</a>
         </li>
     </ul>
-<!--    TODO: logout not working-->
   </div>
 </nav>
 

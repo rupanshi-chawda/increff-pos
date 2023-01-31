@@ -8,6 +8,7 @@ import com.increff.pos.pojo.OrderItemPojo;
 import com.increff.pos.pojo.OrderPojo;
 import com.increff.pos.util.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,6 +30,9 @@ public class OrderApi {
 
     @Autowired
     private OrderItemDao itemDao;
+
+    @Value("${invoice.url}")
+    private String url;
     
     public void addOrder(OrderPojo p) throws ApiException {
         orderDao.insert(p);
@@ -81,8 +85,6 @@ public class OrderApi {
     public ResponseEntity<byte[]> getPDF(InvoiceForm invoiceForm) {
 
         RestTemplate restTemplate = new RestTemplate();
-
-        String url = "http://localhost:8085/fop/api/invoice";
 
         byte[] contents = restTemplate.postForEntity(url, invoiceForm, byte[].class).getBody();
 

@@ -10,7 +10,7 @@ public class SiteUiController extends AbstractUiController {
 	// WEBSITE PAGES
 	@RequestMapping(value = "")
 	public ModelAndView index() {
-		return mav("login.html");
+		return mav("init.html");
 	}
 
 	@RequestMapping(value = "/site/login")

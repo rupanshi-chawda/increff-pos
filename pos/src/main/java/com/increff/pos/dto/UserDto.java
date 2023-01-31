@@ -19,7 +19,7 @@ public class UserDto {
 
     public void add(UserPojo p) throws ApiException {
         normalize(p);
-        checkEmail(p);
+        checkEmail(p.getEmail());
         api.add(p);
     }
 
@@ -29,16 +29,19 @@ public class UserDto {
         p.setRole(p.getRole().toLowerCase().trim());
     }
 
-    public void checkEmail(UserPojo p) throws ApiException {
-        UserPojo existing = api.getUserEmail(p);
-        System.out.println("inside check email");
-        System.out.println(existing);
+    public void checkEmail(String email) throws ApiException {
+        UserPojo existing = api.getUserEmail(email);
         if (!Objects.isNull(existing)) {
             throw new ApiException("User with given email already exists");
         }
     }
 
-    public UserPojo getEmail(String email) throws ApiException {
+    public boolean checkEmailExists(String email) throws ApiException {
+        UserPojo existing = api.getUserEmail(email);
+        return !Objects.isNull(existing);
+    }
+
+    public UserPojo getUserByEmail(String email) throws ApiException {
         return api.get(email);
     }
 

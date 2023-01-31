@@ -15,17 +15,15 @@ import java.io.OutputStream;
 public class PdfFromFop {
     public void createPDF(InvoiceForm form, DOMSource domSource) {
         try {
-            String xmlFilePath = "C:\\Users\\KIIT\\Downloads\\increff-pos\\invoice\\src\\main\\resources\\xml\\invoice.xml";
-            File xmlfile = new File(xmlFilePath);
+
             File xsltfile = new File("C:\\Users\\KIIT\\Downloads\\increff-pos\\invoice\\src\\main\\resources\\xsl\\invoice.xsl");
             File pdfDir = new File("./Pdf");
 
             //Creating the XML file here
-            StreamResult streamResult = new StreamResult(new File(xmlFilePath));
+            StreamResult streamResult = new StreamResult(String.valueOf(domSource));
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             transformer.transform(domSource, streamResult);
-            //TODO: change xml file to byte (bytestream)
 
             pdfDir.mkdirs();
             File pdfFile = new File(pdfDir, "invoice_"+ form.getOrderId() +".pdf");
@@ -45,7 +43,7 @@ public class PdfFromFop {
                 TransformerFactory factory = TransformerFactory.newInstance();
                 transformer = factory.newTransformer(new StreamSource(xsltfile));
                 // Setup input for XSLT transformation
-                Source src = new StreamSource(xmlfile);
+                Source src = new StreamSource(String.valueOf(domSource));
                 // Resulting SAX events (the generated FO) must be piped through to FOP
                 Result res = new SAXResult(fop.getDefaultHandler());
                 // Start XSLT transformation and FOP processing

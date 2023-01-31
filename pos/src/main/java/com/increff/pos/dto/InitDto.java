@@ -5,13 +5,14 @@ import com.increff.pos.controller.AbstractUiController;
 import com.increff.pos.model.data.InfoData;
 import com.increff.pos.model.form.UserForm;
 import com.increff.pos.util.ApiException;
-import com.increff.pos.api.UserApi;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Objects;
 
 @Component
 @Service
@@ -19,23 +20,37 @@ public class InitDto extends AbstractUiController {
 
     @Autowired
     private UserDto dto;
+
     @Autowired
     private InfoData info;
 
-//    public ModelAndView show(UserForm form) throws ApiException {
-//        info.setMessage("");
-//        return mav("init.html");
-//    }
+    @Value("${app.admin_email}")
+    private String admin_email;
+
+    public ModelAndView show(UserForm form) throws ApiException {
+        info.setMessage("");
+        return mav("init.html");
+    }
 
     public ModelAndView init(UserForm form) throws ApiException {
         List<UserPojo> list = dto.getAll();
-        if (list.size() > 0) {
-            info.setMessage("Application already initialized. Please use existing credentials");
-        } else {
+
+        if (dto.checkEmailExists(form.getEmail())) {
+            info.setMessage("You already have an account, please use existing credentials");
+        }
+        else if(Objects.equals(form.getEmail(), admin_email))
+        {
             form.setRole("admin");
             UserPojo p = convert(form);
             dto.add(p);
-            info.setMessage("Application initialized");
+            info.setMessage("Signed Up Successfully, you can login now");
+        }
+        else
+        {
+            form.setRole("standard");
+            UserPojo p = convert(form);
+            dto.add(p);
+            info.setMessage("Signed Up Successfully, you can login now");
         }
         return mav("init.html");
     }

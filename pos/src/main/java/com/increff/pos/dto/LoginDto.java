@@ -4,7 +4,6 @@ import com.increff.pos.pojo.UserPojo;
 import com.increff.pos.model.data.InfoData;
 import com.increff.pos.model.form.LoginForm;
 import com.increff.pos.util.ApiException;
-import com.increff.pos.api.UserApi;
 import com.increff.pos.util.SecurityUtil;
 import com.increff.pos.util.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +30,7 @@ public class LoginDto {
     private InfoData info;
 
     public ModelAndView login(HttpServletRequest req, LoginForm f) throws ApiException {
-        UserPojo p = dto.getEmail(f.getEmail());
+        UserPojo p = dto.getUserByEmail(f.getEmail());
         boolean authenticated = (!Objects.isNull(p) && Objects.equals(p.getPassword(), f.getPassword()));
         if (!authenticated) {
             info.setMessage("Invalid username or password");

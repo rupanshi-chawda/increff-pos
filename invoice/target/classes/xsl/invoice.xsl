@@ -99,7 +99,7 @@
                             <fo:block>Selling Price</fo:block>
                         </fo:table-cell>
                         <fo:table-cell border="1px solid #b8b6b6">
-                            <fo:block>Amount</fo:block>
+                            <fo:block>Total</fo:block>
                         </fo:table-cell>
                     </fo:table-row>
                 </fo:table-header>

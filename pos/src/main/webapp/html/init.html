@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head th:replace="snippets.html :: name_head"></head>
-
+<title>Signup</title>
 <body>
 
 <nav th:replace="snippets.html :: name_site_navbar"></nav>
@@ -12,14 +12,13 @@
 <div class="container">
 
 <div class="row">
-<div class="col-6">
+<div class="col-12 d-flex justify-content-center">
 	
-	<div class="card">
+	<div class="card" style="width: 500px">
   	<div class="card-header">
-    	Initialize Application
+    	Signup
   	</div>
-  	<div class="card-body">
-  		Provide an email and password to be used as "admin"
+  	<div class="card-body" >
 		<form class="form" id="init-form" method="POST" th:action="@{/site/init}">
 			<div class="form-group">
 				<label for="email" class="col-sm-10 col-form-label">Email</label>
@@ -33,8 +32,10 @@
 			      <input type="text" class="form-control" name="password" id="password" placeholder="password">
 			    </div>
 			</div>
-			<input type="hidden" name="role" id="role" value="admin">
-			<button type="submit" class="btn btn-primary" id="login">Go</button>
+			<div class="d-flex justify-content-end">
+				<input type="hidden" name="role" id="role" value="admin">
+				<button type="submit" class="btn btn-primary" id="login">Submit</button>
+			</div>
 		</form>
 	</div>
 	<div class="card-footer text-danger">
