@@ -2,6 +2,7 @@ package com.increff.pos.spring;
 
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -19,13 +20,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http//
-			// Match only these URLs
+				// Match only these URLs
 				.requestMatchers()//
 				.antMatchers("/api/**")//
 				.antMatchers("/ui/**")//
 				.and().authorizeRequests()//
 				.antMatchers("/api/admin/**").hasAuthority("admin")//
+
+				.antMatchers(HttpMethod.GET, "/api/brand/**").hasAnyAuthority("admin", "standard")//
+				.antMatchers("/api/brand/**").hasAnyAuthority("admin")//
+				.antMatchers(HttpMethod.GET, "/api/product/**").hasAnyAuthority("admin", "standard")//
+				.antMatchers("/api/product/**").hasAnyAuthority("admin")//
+				.antMatchers(HttpMethod.GET, "/api/inventory/**").hasAnyAuthority("admin", "standard")//
+				.antMatchers("/api/inventory/**").hasAnyAuthority("admin")//
+				.antMatchers(HttpMethod.GET, "/api/order/**").hasAnyAuthority("admin", "standard")//
+				.antMatchers("/api/order/**").hasAnyAuthority("admin")//
 				.antMatchers("/api/**").hasAnyAuthority("admin", "standard")//
+
 				.antMatchers("/ui/admin/**").hasAuthority("admin")//
 				.antMatchers("/ui/**").hasAnyAuthority("admin", "standard")//
 				// Ignore CSRF and CORS

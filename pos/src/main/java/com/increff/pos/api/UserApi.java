@@ -20,7 +20,7 @@ public class UserApi {
 	public void add(UserPojo p) throws ApiException {
 		dao.insert(p);
 	}
-
+	//TODO: add supervisor from file in UserPojo
 	public UserPojo get(String email) throws ApiException {
 		return dao.selectByEmail(email);
 	}

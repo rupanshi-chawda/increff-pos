@@ -20,7 +20,7 @@ public class SalesPojo extends AbstractVersionPojo {
     @JsonFormat(pattern="yyyy-MM-dd ")
     @NotNull
     private LocalDate date;
-
+    //TODO: try to add zonedatetime instead of localdate
     @NotNull
     private Integer invoicedOrderCount;
 

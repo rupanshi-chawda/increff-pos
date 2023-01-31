@@ -121,6 +121,7 @@
                                 <input type="text" class="form-control" name="category" placeholder="enter category" onchange="enableUpdate()">
                             </div>
                         </div>
+                        <input type="hidden" name="id" >
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -150,7 +151,6 @@
                         <label class="custom-file-label" for="brandFile" id="brandFileName">Choose file</label>
                     </div>
                     <a th:href="@{/sample/brand.tsv}" target="_blank">Download Sample</a>
-<!--                    TODO: fix null point error occurring while trying to download sample-->
                     <br>
                     Rows: <span id="rowCount">0</span>,
                     Processed: <span id="processCount">0</span>,

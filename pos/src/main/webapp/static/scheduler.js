@@ -90,6 +90,12 @@ function autoFillDate() {
 
     var today = year + "-" + month + "-" + day;
     $("#inputED").attr("value", today);
+    $("#inputSD").attr("value", today);
+}
+
+function disableDate() {
+    var sd = $("#sales-form input[name=startDate]").val();
+    $('#inputED').attr('min',sd);
 }
 
 function init() {

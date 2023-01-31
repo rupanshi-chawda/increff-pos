@@ -20,11 +20,11 @@ public class InitController {
 	@Autowired
 	private InitDto dto;
 
-	@ApiOperation(value = "Initializes application")
-	@GetMapping(path = "")
-	public ModelAndView showPage(UserForm form) throws ApiException {
-		return dto.show(form);
-	}
+//	@ApiOperation(value = "Initializes application")
+//	@GetMapping(path = "")
+//	public ModelAndView showPage(UserForm form) throws ApiException {
+//		return dto.show(form);
+//	}
 
 	@ApiOperation(value = "Initializes application")
 	@PostMapping(path = "")

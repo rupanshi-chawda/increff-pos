@@ -59,6 +59,7 @@
         <li class="nav-item">
             <a class="nav-link" th:href="@{/ui/order}">Order</a>
         </li>
+<!--        TODO: rename sales and daily to more appropriate names-->
         <li class="nav-item">
             <a class="nav-link" th:href="@{/ui/salesreport}">Sales</a>
         </li>
@@ -71,12 +72,15 @@
     </ul>
     
     <ul class="navbar-nav ml-auto">
-	    <li class="nav-item">
-	    	<button class="nav-link btn btn-outline-secondary" th:href="@{/session/logout}">Logout</button>
-	    </li>
+        <li class="navbar-text">
+            <i class="fa-solid fa-circle-user fa-lg"></i>
+            [[${info.getEmail()}]] &nbsp;
+        </li>
+        <li class="nav-item">
+            <a class="nav-link btn btn-outline-secondary" th:href="@{/session/logout}">Logout</a>
+        </li>
     </ul>
-    
-        
+<!--    TODO: logout not working-->
   </div>
 </nav>
 

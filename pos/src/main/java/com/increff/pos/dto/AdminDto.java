@@ -18,11 +18,7 @@ import java.util.stream.Collectors;
 public class AdminDto {
 
     @Autowired
-    private final UserApi api;
-
-    public AdminDto(UserApi api) {
-        this.api = api;
-    }
+    private UserDto dto;
 
     public void add(UserForm form) throws ApiException {
         if(StringUtil.isEmpty(form.getEmail())) {
@@ -35,15 +31,15 @@ public class AdminDto {
             throw new ApiException("Role cannot be empty");
         }
         UserPojo p = convert(form);
-        api.add(p);
+        dto.add(p);
     }
 
     public void delete(int id) {
-        api.delete(id);
+        dto.delete(id);
     }
 
     public List<UserData> getAll(){
-        return api.getAll().stream().map(p -> convert(p)).collect(Collectors.toList());
+        return dto.getAll().stream().map(p -> convert(p)).collect(Collectors.toList());
     }
 
     //Conversion Methods

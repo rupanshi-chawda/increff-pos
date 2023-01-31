@@ -171,7 +171,6 @@ function downloadCsv()
 }
 
 function init() {
-    $('#refresh-data').click(getSalesList);
     $('#apply-filter').click(getFilteredList);
     $('#inputBrand').on('change', displayCategoryOptions);
     //$('#download-csv').click(downloadCsv);
@@ -188,8 +187,13 @@ function autoFillDate() {
 
     var today = year + "-" + month + "-" + day;
     $("#inputED").attr("value", today);
+    $("#inputSD").attr("value", today);
 }
 
+function disableDate() {
+    var sd = $("#sales-report-form input[name=startDate]").val();
+    $('#inputED').attr('min',sd);
+}
 
 $(document).ready(init);
 $(document).ready(getSalesList);

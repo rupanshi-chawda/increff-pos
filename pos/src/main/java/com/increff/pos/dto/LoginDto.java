@@ -26,12 +26,12 @@ import java.util.Objects;
 public class LoginDto {
 
     @Autowired
-    private UserApi api;
+    private UserDto dto;
     @Autowired
     private InfoData info;
 
     public ModelAndView login(HttpServletRequest req, LoginForm f) throws ApiException {
-        UserPojo p = api.get(f.getEmail());
+        UserPojo p = dto.getEmail(f.getEmail());
         boolean authenticated = (!Objects.isNull(p) && Objects.equals(p.getPassword(), f.getPassword()));
         if (!authenticated) {
             info.setMessage("Invalid username or password");

@@ -14,15 +14,20 @@ function toJson($form){
 
 
 function handleAjaxError(response){
-	var response = JSON.parse(response.responseText);
-	//alert(response.message);
-	//TODO:remove stack of errors
+    if (response.status == 403) {
+          toastr.warning("Access Forbidden, you cannot upload", "Warning: ");
+    }
+    else {
+    	var response = JSON.parse(response.responseText);
+    	//alert(response.message);
+    	//TODO:remove stack of errors
 
-	toastr.error(response.message, "Error : ", {
-        "closeButton": true,
-        "timeOut": "0",
-        "extendedTimeOut": "0",
-	});
+    	toastr.error(response.message, "Error : ", {
+            "closeButton": true,
+            "timeOut": "0",
+            "extendedTimeOut": "0",
+    	});
+    }
 }
 
 function readFileData(file, callback){

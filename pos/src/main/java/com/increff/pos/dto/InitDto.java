@@ -18,23 +18,23 @@ import java.util.List;
 public class InitDto extends AbstractUiController {
 
     @Autowired
-    private UserApi api;
+    private UserDto dto;
     @Autowired
     private InfoData info;
 
-    public ModelAndView show(UserForm form) throws ApiException {
-        info.setMessage("");
-        return mav("init.html");
-    }
+//    public ModelAndView show(UserForm form) throws ApiException {
+//        info.setMessage("");
+//        return mav("init.html");
+//    }
 
     public ModelAndView init(UserForm form) throws ApiException {
-        List<UserPojo> list = api.getAll();
+        List<UserPojo> list = dto.getAll();
         if (list.size() > 0) {
             info.setMessage("Application already initialized. Please use existing credentials");
         } else {
             form.setRole("admin");
             UserPojo p = convert(form);
-            api.add(p);
+            dto.add(p);
             info.setMessage("Application initialized");
         }
         return mav("init.html");
