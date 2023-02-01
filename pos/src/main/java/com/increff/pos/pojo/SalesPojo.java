@@ -18,15 +18,17 @@ public class SalesPojo extends AbstractVersionPojo {
     private int id;
 
     @JsonFormat(pattern="yyyy-MM-dd ")
-    @NotNull
+    @Column(nullable = false)
     private LocalDate date;
-    //TODO: try to add zonedatetime instead of localdate
-    @NotNull
+
+    @Column(nullable = false)
     private Integer invoicedOrderCount;
 
-    @NotNull
+    @Column(nullable = false)
     private Integer invoicedItemsCount;
 
-    @NotNull
+    @Column(nullable = false)
     private Double totalRevenue;
 }
+
+//TODO: try to add zonedatetime instead of localdate

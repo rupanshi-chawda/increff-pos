@@ -11,6 +11,7 @@ import com.increff.pos.api.InventoryApi;
 import com.increff.pos.api.ProductApi;
 import com.increff.pos.util.ApiException;
 import com.increff.pos.util.CsvFileGenerator;
+import com.increff.pos.util.ValidationUtil;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,7 +42,7 @@ public class InventoryDto {
 
     public void add(InventoryForm form) throws ApiException {
         InventoryHelper.normalize(form);
-        InventoryHelper.validate(form);
+        ValidationUtil.validateForms(form);
         productApi.checkProductBarcode(form.getBarcode());
         InventoryPojo p = InventoryHelper.convert(form);
         p.setId(productApi.getIdByBarcode(form.getBarcode()));
@@ -66,7 +67,7 @@ public class InventoryDto {
 
     public void update(String barcode, InventoryForm f) throws ApiException {
         InventoryHelper.normalize(f);
-        InventoryHelper.validate(f);
+        ValidationUtil.validateForms(f);
         productApi.checkProductBarcode(barcode);
         InventoryPojo p = InventoryHelper.convert(f);
         p.setId(productApi.getIdByBarcode(f.getBarcode()));

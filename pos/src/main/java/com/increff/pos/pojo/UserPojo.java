@@ -3,10 +3,7 @@ package com.increff.pos.pojo;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -18,13 +15,13 @@ public class UserPojo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@NotNull(message = "Email cannot be Empty")
+	@Column(nullable = false)
 	private String email;
 
-	@NotNull(message = "Password cannot be Empty")
+	@Column(nullable = false)
 	private String password;
 
-	@NotNull(message = "Role cannot be Empty")
+	@Column(nullable = false)
 	private String role;
 
 }

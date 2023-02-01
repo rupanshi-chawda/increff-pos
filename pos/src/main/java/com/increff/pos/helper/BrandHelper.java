@@ -37,4 +37,5 @@ public class BrandHelper {
             throw new ApiException("Category cannot be empty");
         }
     }
+    //todo: common validation and @notblank 
 }

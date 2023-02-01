@@ -92,6 +92,8 @@ function readFileDataCallback(results){
    uploadRows();
 }
 
+// todo: bulk upload
+
 function uploadRows(){
    //Update progress
    updateUploadDialog();

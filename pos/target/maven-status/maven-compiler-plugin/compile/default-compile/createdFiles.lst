@@ -88,3 +88,4 @@ com\increff\pos\util\UserPrincipal.class
 com\increff\pos\model\form\UserForm.class
 com\increff\pos\util\SecurityUtil.class
 com\increff\pos\model\form\InventoryForm.class
+com\increff\pos\util\ValidationUtil.class

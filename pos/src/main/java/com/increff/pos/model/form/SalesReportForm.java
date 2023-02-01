@@ -9,13 +9,16 @@ import javax.validation.constraints.NotBlank;
 @Setter
 public class SalesReportForm {
 
-    @NotBlank(message = "StartDate Cannot be Empty")
+    @NotBlank
     private String startDate;
-    @NotBlank(message = "EndDate Cannot be Empty")
+
+    @NotBlank
     private String endDate;
-    @NotBlank(message = "Brand Cannot be Empty")
+
+    @NotBlank
     private String brand;
-    @NotBlank(message = "Category Cannot be Empty")
+
+    @NotBlank
     private String category;
 
 }

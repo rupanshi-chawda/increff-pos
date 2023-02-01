@@ -15,7 +15,7 @@ public class InventoryPojo extends AbstractVersionPojo {
     @Id
     private int id;
 
-    @NotNull(message = "Quantity cannot be empty")
+    @Column(nullable = false)
     @Min(value = 0)
     private int quantity;
 

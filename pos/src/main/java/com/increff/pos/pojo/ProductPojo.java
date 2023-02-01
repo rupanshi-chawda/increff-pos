@@ -17,17 +17,17 @@ public class ProductPojo extends AbstractVersionPojo {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
 
-    @NotNull(message = "Barcode cannot be Empty")
+    @Column(nullable = false)
     @Size(max = 8, min = 8)
     private String barcode;
 
-    @NotNull(message = "Brand Category Id cannot be Empty")
+    @Column(nullable = false)
     private int brandCategory;
 
-    @NotNull(message = "Name cannot be Empty")
+    @Column(nullable = false)
     private String name;
 
-    @NotNull(message = "MRP cannot be Empty")
+    @Column(nullable = false)
     @Min(value = 1)
     private Double mrp;
 

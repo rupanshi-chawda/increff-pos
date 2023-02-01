@@ -5,19 +5,25 @@ import lombok.Setter;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
 public class ProductForm {
 
-    @NotBlank(message = "Barcode cannot be empty")
+    @NotBlank
+    @Size(min = 1, message = "Barcode must 8 character long")
     private String barcode;
+
     private String brand;
     private String category;
-    @NotBlank(message = "Name cannot be empty")
+
+    @NotBlank
     private String name;
-    @NotBlank(message = "MRP cannot be empty")
-    @Min(value = 1)
+
+    @NotNull
+    @Min(value = 1, message = "Mrp must be atleast 1")
     private Double mrp;
 
 }
