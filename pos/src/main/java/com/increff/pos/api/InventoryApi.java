@@ -3,6 +3,7 @@ package com.increff.pos.api;
 import com.increff.pos.dao.InventoryDao;
 import com.increff.pos.helper.InventoryHelper;
 import com.increff.pos.pojo.InventoryPojo;
+import com.increff.pos.pojo.ProductPojo;
 import com.increff.pos.util.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

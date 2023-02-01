@@ -49,7 +49,6 @@ public class InventoryDto {
     }
 
     public InventoryData get(String barcode) throws ApiException {
-        productApi.checkProductBarcode(barcode);
         int id = productApi.getIdByBarcode(barcode);
         InventoryPojo p = api.get(id);
         return InventoryHelper.convert(p, barcode);

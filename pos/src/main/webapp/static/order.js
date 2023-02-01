@@ -163,140 +163,211 @@ function checkSellingPrice(vars) {
 }
 
 const barcodeList = new Map();
+var inv_qty= null;
+var inv_barcode = null;
 
-function checkBarcode(barcode) {
-
-    if (barcodeList.has(barcode)) {
-            return true;
-    } else {
-        var url = getInventoryUrl() + "/" + barcode;
+function getInventory(barcode) {
+    var url = getInventoryUrl() + "/" + barcode;
         $.ajax({
             url: url,
             type: 'GET',
             success: function(data) {
-                var a = data.barcode;
-                var b = data.quantity;
-                barcodeList.set(a,b);
-                console.log(barcodeList);
-                return true;
+                inv_barcode = data.barcode;
+                inv_qty = data.qty;
+
+                barcodeList.set(data.barcode, data.qty);
+                addItem();
+                resetForm();
             },
             error: function(data) {
-                return false;
-            }
-         });
-    }
-}
-
-function checkInventory(barcode, qty) {
-    if (barcodeList.get(barcode) >= qty) {
-        console.log(barcodeList.get(barcode))
-        console.log(qty)
-        return true;
-    } else {
-        var url = getInventoryUrl() + "/" + barcode;
-        $.ajax({
-            url: url,
-            type: 'GET',
-            success: function(data) {
-                var a = data.barcode;
-                var b = data.quantity;
-                barcodeList.set(a,b);
-                console.log(barcodeList);
-                return true;
-            },
-            error: function(data) {
-                return false;
-            }
-        });
-    }
-}
-
-function addOrderItem(event){
-   //Set the values to update
-   var $form = $("#order-item-form");
-   var json = toJson($form);
-   var jsonObj = $.parseJSON(json);
-
-   var barcode1 = $("#order-item-form input[name=barcode]").val();
-   var qty = $("#order-item-form input[name=quantity]").val();
-   var sp =  $("#order-item-form input[name=sellingPrice]").val();
-
-    if (checkBarcode(barcode1) == false) {
-        //console.log("above");
-
-        toastr.error("Barcode does not exists", "Error : ", {
-                                                        "closeButton": true,
-                                                        "timeOut": "0",
-                                                        "extendedTimeOut": "0",
-                                                	});
-        //console.log("below");
-    } else
-    {
-        if(checkInventory(barcode1, qty) == false)
-        {
-
-            toastr.error("Quantity exceeds available inventory", "Error : ", {
-                                                                         "closeButton": true,
-                                                                         "timeOut": "0",
-                                                                         "extendedTimeOut": "0",
-                                                                 	});
-        }
-        else
-        {
-            var new_qty = barcodeList.get(barcode1) - qty;
-            barcodeList.set(barcode1, new_qty);
-
-            if(sp < 1)
-            {
-
-               toastr.error("Price cannot be negative or zero", "Error : ", {
-                                                                        "closeButton": true,
-                                                                        "timeOut": "0",
-                                                                        "extendedTimeOut": "0",
-                                                                	});
-            } else if(qty < 1)
-            {
-
-               toastr.error("Quantity cannot be negative or zero", "Error : ", {
-                                                                           "closeButton": true,
-                                                                           "timeOut": "0",
-                                                                           "extendedTimeOut": "0",
-                                                                   	});
-            } else if(checkOrderItemExist())
-            {
-                console.log("inside order item");
-                let item = []
-
-                var barcode = $("#order-item-form input[name=barcode]").val();
-                var quantity = $("#order-item-form input[name=quantity]").val();
-                var sp = $("#order-item-form input[name=sellingPrice]").val();
-
-                item.push(barcode);
-                item.push(quantity);
-                item.push(sp)
-                if (checkSellingPrice(item) == false)
-                {
-                    toastr.error("Selling Price cannot be different", "Error : ", {
-                                                                              "closeButton": true,
-                                                                              "timeOut": "0",
-                                                                              "extendedTimeOut": "0",
-                                                                      	});
-                } else
-                {
-                    changeQuantity(item);
-                    toastr.success("Item Exists, Quantity Updated", "Success : ");
-                    resetForm();
-                }
-            } else {
-                wholeOrder.push(json)
-                toastr.success("Item Added to cart", "Success : ");
+                toastr.error("Barcode does not exist in the Inventory");
                 resetForm();
             }
-        }
-    }
+         });
 
-    displayOrderItemList(wholeOrder)
 }
+
+function addItem() {
+        var $form = $("#order-item-form");
+            var json = toJson($form);
+            var jsonObj = $.parseJSON(json);
+        var barcode1 = $("#order-item-form input[name=barcode]").val();
+
+        var qty = $("#order-item-form input[name=quantity]").val();
+
+        console.log(check);
+
+            console.log(qty);
+            console.log(inv_qty);
+            if (qty > barcodeList.get(barcode1)) {
+                toastr.error("Quantity not present in inventory");
+                resetForm();
+            }
+            else {
+                var _qty = barcodeList.get(barcode1) - qty;
+                var sp = $("#order-item-form input[name=sellingPrice]").val();
+
+                if (sp <= 0) {
+                    toastr.error("Price cannot be negative or zero")
+                } else if (qty <= 0) {
+                    toastr.error("Quantity cannot be negative or zero")
+                }
+                else {
+                    if (checkOrderItemExist()) {
+                        console.log("inside check");
+                        let vars = []
+
+                        var barcode = $("#order-item-form input[name=barcode]").val();
+                        var qty = $("#order-item-form input[name=quantity]").val();
+                        var sp = $("#order-item-form input[name=sellingPrice]").val();
+
+                        vars.push(barcode);
+                        vars.push(qty);
+                        vars.push(sp);
+                        if (checkSellingPrice(vars) == false) {
+                            toastr.error("Selling price cannot be different");
+                        }
+                        else {
+                            changeQuantity(vars);
+                        }
+                    }
+                    else {
+                        wholeOrder.push(json)
+                    }
+                    resetForm();
+
+                    displayOrderItemList(wholeOrder)
+                }
+            }
+
+
+}
+
+function addOrderItem(event) {
+    check = 1;
+    var $form = $("#order-item-form");
+    var json = toJson($form);
+    var jsonObj = $.parseJSON(json);
+
+    var barcode1 = $("#order-item-form input[name=barcode]").val();
+    getInventory(barcode1)
+    var qty = $("#order-item-form input[name=quantity]").val();
+
+
+}
+
+//function checkBarcode(barcode) {
+//
+//        var url = getInventoryUrl() + "/" + barcode;
+//         $.ajax({
+//            url: url,
+//            type: 'GET',
+//           success: function(data)
+//           {
+//                   inv_barcode = data.barcode;
+//                   inv_qty = data.qty;
+//
+//                   barcodeList.set(data.barcode, data.qty);
+//                   addItem();
+//                   resetForm();
+//           },
+//           error: function(data)
+//           {
+//                  toastr.error("Barcode does not exists", "Error : ", {
+//                                                                          "closeButton": true,
+//                                                                          "timeOut": "0",
+//                                                                          "extendedTimeOut": "0",
+//                                                                  	});
+//                  resetForm();
+//           }
+//         });
+//}
+//
+//
+//
+//function addOrderItem(event){
+//   //Set the values to update
+//   var $form = $("#order-item-form");
+//   var json = toJson($form);
+//   var jsonObj = $.parseJSON(json);
+//
+//   var barcode1 = $("#order-item-form input[name=barcode]").val();
+//   checkBarcode(barcode1)
+//   var qty = $("#order-item-form input[name=quantity]").val();
+//}
+
+//function addItem() {
+//        var $form = $("#order-item-form");
+//            var json = toJson($form);
+//            var jsonObj = $.parseJSON(json);
+//        var barcode1 = $("#order-item-form input[name=barcode]").val();
+//
+//        var qty = $("#order-item-form input[name=quantity]").val();
+//
+//    console.log(barcodeList);
+//
+//    console.log(checkBarcode(barcode1));
+//    console.log(barcodeList);
+//
+//        if (qty > barcodeList.get(barcode1))
+//        {
+//            toastr.error("Quantity exceeds available inventory", "Error : ", {
+//                                                                         "closeButton": true,
+//                                                                         "timeOut": "0",
+//                                                                         "extendedTimeOut": "0",
+//                                                                 	});
+//        }
+//        else
+//        {
+//            var new_qty = barcodeList.get(barcode1) - qty;
+//            var sp =  $("#order-item-form input[name=sellingPrice]").val();
+//
+//            if (sp <= 0)
+//            {
+//                toastr.error("Price cannot be negative or zero")
+//            } else if (qty <= 0) {
+//                toastr.error("Quantity cannot be negative or zero")
+//
+////               toastr.error("Quantity cannot be negative or zero", "Error : ", {
+////                                                                           "closeButton": true,
+////                                                                           "timeOut": "0",
+////                                                                           "extendedTimeOut": "0",
+////                                                                   	});
+//            } else if(checkOrderItemExist())
+//            {
+//                console.log("inside order item");
+//                let item = []
+//
+//                var barcode = $("#order-item-form input[name=barcode]").val();
+//                var quantity = $("#order-item-form input[name=quantity]").val();
+//                var sp = $("#order-item-form input[name=sellingPrice]").val();
+//
+//                item.push(barcode);
+//                item.push(quantity);
+//                item.push(sp)
+//                if (checkSellingPrice(item) == false)
+//                {
+//                    toastr.error("Selling Price cannot be different", "Error : ", {
+//                                                                              "closeButton": true,
+//                                                                              "timeOut": "0",
+//                                                                              "extendedTimeOut": "0",
+//                                                                      	});
+//                } else
+//                {
+//                    changeQuantity(item);
+//                    toastr.success("Item Exists, Quantity Updated", "Success : ");
+//                    resetForm();
+//                }
+//            } else
+//            {
+//                wholeOrder.push(json)
+//                toastr.success("Item Added to cart", "Success : ");
+//                resetForm();
+//            }
+//        }
+//
+//    displayOrderItemList(wholeOrder)
+//}
 
 function displayCart() {
     $('#add-order-item-modal').modal('toggle');
@@ -494,13 +565,10 @@ function init(){
    	$('#place-order').click(placeOrder);
    	$('#refresh-data').click(getOrderList);
     $('#update-order-item').click(updateOrderItem);
+    barcodeList.clear();
 }
 
 $(document).ready(init);
 $(document).ready(getOrderList);
 $(document).ready(getOrderItemList);
-$(document).keypress(function(e) {
-    if(e.which == 13) {
-        addOrderItem();
-    }
-});
+

@@ -5,7 +5,6 @@ import com.increff.pos.util.StringUtil;
 import com.increff.pos.model.data.UserData;
 import com.increff.pos.model.form.UserForm;
 import com.increff.pos.util.ApiException;
-import com.increff.pos.api.UserApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -26,9 +25,6 @@ public class AdminDto {
         }
         if(StringUtil.isEmpty(form.getPassword())) {
             throw new ApiException("Password cannot be empty");
-        }
-        if(StringUtil.isEmpty(form.getRole())) {
-            throw new ApiException("Role cannot be empty");
         }
         UserPojo p = convert(form);
         dto.add(p);
@@ -55,7 +51,7 @@ public class AdminDto {
     private static UserPojo convert(UserForm f) {
         UserPojo p = new UserPojo();
         p.setEmail(f.getEmail());
-        p.setRole(f.getRole());
+        p.setRole("operator");
         p.setPassword(f.getPassword());
         return p;
     }

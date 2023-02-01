@@ -34,7 +34,7 @@ public class InitDto extends AbstractUiController {
     }
 
     public ModelAndView init(UserForm form) throws ApiException {
-        //List<UserPojo> list = dto.getAll();
+
         if(StringUtil.isEmpty(form.getEmail()) || StringUtil.isEmpty(form.getPassword())) {
             info.setMessage("Email or Password cannot be empty");
         }
@@ -43,15 +43,13 @@ public class InitDto extends AbstractUiController {
         }
         else if(Objects.equals(form.getEmail(), admin_email))
         {
-            form.setRole("supervisor");
-            UserPojo p = convert(form);
+            UserPojo p = convert(form,"supervisor");
             dto.add(p);
             info.setMessage("Signed Up Successfully, you can login now");
         }
         else
         {
-            form.setRole("operator");
-            UserPojo p = convert(form);
+            UserPojo p = convert(form, "operator");
             dto.add(p);
             info.setMessage("Signed Up Successfully, you can login now");
         }
@@ -59,10 +57,10 @@ public class InitDto extends AbstractUiController {
     }
 
     //Conversion Methods
-    private static UserPojo convert(UserForm f) {
+    private static UserPojo convert(UserForm f, String role) {
         UserPojo p = new UserPojo();
         p.setEmail(f.getEmail());
-        p.setRole(f.getRole());
+        p.setRole(role);
         p.setPassword(f.getPassword());
         return p;
     }

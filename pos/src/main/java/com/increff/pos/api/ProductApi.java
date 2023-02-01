@@ -69,4 +69,9 @@ public class ProductApi {
         ProductPojo p = dao.selectById(id, ProductPojo.class);
         return p.getBarcode();
     }
+
+    public String getProductBarcodeByItemBarcode(String barcode) {
+        ProductPojo p = dao.selectBarcode(barcode);
+        return p.getBarcode();
+    }
 }

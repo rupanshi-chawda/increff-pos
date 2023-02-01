@@ -4,6 +4,11 @@ function getUserUrl(){
 	return baseUrl + "/api/admin/user";
 }
 
+function resetForm() {
+    var element = document.getElementById("user-form");
+    element.reset()
+}
+
 //BUTTON ACTIONS
 function addUser(event){
 	//Set the values to update
@@ -21,6 +26,7 @@ function addUser(event){
 	   success: function(response) {
 	   		getUserList();
             toastr.success("User Added Successfully", "Success : ");
+            resetForm();
 	   },
 	   error: handleAjaxError
 	});
@@ -40,8 +46,15 @@ function getUserList(){
 	});
 }
 
-function deleteUser(id){
-	var url = getUserUrl() + "/" + id;
+var deleteid = 0;
+function displayDeleteUser(id){
+    deleteid = id;
+    $('#delete-user-modal').modal('toggle');
+}
+
+function deleteUser(event){
+	var url = getUserUrl() + "/" + deleteid;
+    $('#delete-user-modal').modal('toggle');
 
 	$.ajax({
 	   url: url,
@@ -62,20 +75,22 @@ function displayUserList(data){
 	$tbody.empty();
 	for(var i in data){
 		var e = data[i];
-		var buttonHtml = '<button onclick="deleteUser(' + e.id + ')" class="btn table__button-group"><i class="fa-solid fa-trash" style="color:#00295F"></i></button>'
+		var buttonHtml = '<button onclick="displayDeleteUser(' + e.id + ')" class="btn table__button-group"><i class="fa-solid fa-trash" style="color:#00295F"></i></button>'
 		var row = '<tr>'
+		+ '<td> <i class="fa-solid fa-circle-user" style="color:#00295F"></i> </td>'
 		+ '<td>' + e.email + '</td>'
+		+ '<td>' + e.role + '</td>'
 		+ '<td>' + buttonHtml + '</td>'
 		+ '</tr>';
         $tbody.append(row);
 	}
 }
-
+//Todo: implement delete modal
 
 //INITIALIZATION CODE
 function init(){
 	$('#add-user').click(addUser);
-	$('#refresh-data').click(getUserList);
+	$('#delete-user').click(deleteUser);
 }
 
 $(document).ready(init);

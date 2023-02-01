@@ -60,11 +60,17 @@ public class OrderDto {
             OrderHelper.normalize(f);
             OrderHelper.validate(f);
 
+            String barcode = productApi.getProductBarcodeByItemBarcode(f.getBarcode());
+            OrderHelper.validateBarcode(barcode);
+            System.out.println(barcode);
+
             int id = productApi.getIdByBarcode(f.getBarcode());
             OrderHelper.validateId(id);
+            System.out.println(id);
 
             int quantity = inventoryApi.getQuantityById(id);
             OrderHelper.validateInventory(f, quantity);
+            System.out.println(quantity);
         }
 
         // Place order
@@ -72,7 +78,7 @@ public class OrderDto {
         orderApi.addOrder(op);
 
         // Adding order item to table
-        for(OrderItemForm f : forms) {
+        for(    OrderItemForm f : forms) {
             OrderItemPojo p = OrderHelper.convert(f);
             //Reduce inventory
             reduceInventory(f.getBarcode(), f.getQuantity());

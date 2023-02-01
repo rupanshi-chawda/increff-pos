@@ -68,7 +68,7 @@ public class OrderHelper {
     }
 
     public static void validateId(int id) throws ApiException {
-        if (id <= 0) {
+        if (id<1) {
             throw new ApiException("Product with given ID does not exit, id: " + id);
         }
     }
@@ -76,6 +76,12 @@ public class OrderHelper {
     public static void validateInventory(OrderItemForm f, int quantity) throws ApiException {
         if (f.getQuantity() > quantity) {
             throw new ApiException("Product Quantity is more than available Inventory");
+        }
+    }
+
+    public static void validateBarcode(String barcode) throws ApiException {
+        if(Objects.isNull(barcode)) {
+            throw new ApiException("Product with given barcode does not exists");
         }
     }
 }

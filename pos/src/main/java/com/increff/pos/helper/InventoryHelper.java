@@ -47,13 +47,9 @@ public class InventoryHelper {
         }
     }
 
-    public static InventoryPojo validateInventoryId(InventoryPojo p, int id) {
+    public static InventoryPojo validateInventoryId(InventoryPojo p, int id) throws ApiException {
         if (Objects.isNull(p)) {
-            System.out.println("inside validate with no barcode in inventory");
-            InventoryPojo bx = new InventoryPojo();
-            bx.setId(id);
-            bx.setQuantity(0);
-            return bx;
+            throw new ApiException("Inventory for given barcode doesn't exists");
         }
         return p;
     }
