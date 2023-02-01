@@ -25,20 +25,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/api/**")//
 				.antMatchers("/ui/**")//
 				.and().authorizeRequests()//
-				.antMatchers("/api/admin/**").hasAuthority("admin")//
+				.antMatchers("/api/admin/**").hasAuthority("supervisor")//
 
-				.antMatchers(HttpMethod.GET, "/api/brand/**").hasAnyAuthority("admin", "standard")//
-				.antMatchers("/api/brand/**").hasAnyAuthority("admin")//
-				.antMatchers(HttpMethod.GET, "/api/product/**").hasAnyAuthority("admin", "standard")//
-				.antMatchers("/api/product/**").hasAnyAuthority("admin")//
-				.antMatchers(HttpMethod.GET, "/api/inventory/**").hasAnyAuthority("admin", "standard")//
-				.antMatchers("/api/inventory/**").hasAnyAuthority("admin")//
-				.antMatchers(HttpMethod.GET, "/api/order/**").hasAnyAuthority("admin", "standard")//
-				.antMatchers("/api/order/**").hasAnyAuthority("admin")//
-				.antMatchers("/api/**").hasAnyAuthority("admin", "standard")//
+				.antMatchers(HttpMethod.GET, "/api/brand/**").hasAnyAuthority("supervisor", "operator")//
+				.antMatchers("/api/brand/**").hasAnyAuthority("supervisor")//
+				.antMatchers(HttpMethod.GET, "/api/product/**").hasAnyAuthority("supervisor", "operator")//
+				.antMatchers("/api/product/**").hasAnyAuthority("supervisor")//
+				.antMatchers(HttpMethod.GET, "/api/inventory/**").hasAnyAuthority("supervisor", "operator")//
+				.antMatchers("/api/inventory/**").hasAnyAuthority("supervisor")//
+				.antMatchers(HttpMethod.GET, "/api/order/**").hasAnyAuthority("supervisor", "operator")//
+				.antMatchers("/api/order/**").hasAnyAuthority("supervisor")//
+				.antMatchers("/api/**").hasAnyAuthority("supervisor", "operator")//
 
-				.antMatchers("/ui/admin/**").hasAuthority("admin")//
-				.antMatchers("/ui/**").hasAnyAuthority("admin", "standard")//
+				.antMatchers("/ui/admin/**").hasAuthority("supervisor")//
+				.antMatchers("/ui/**").hasAnyAuthority("supervisor", "operator")//
 				// Ignore CSRF and CORS
 				.and().csrf().disable().cors().disable();
 		logger.info("Configuration complete");

@@ -5,6 +5,7 @@ import com.increff.pos.controller.AbstractUiController;
 import com.increff.pos.model.data.InfoData;
 import com.increff.pos.model.form.UserForm;
 import com.increff.pos.util.ApiException;
+import com.increff.pos.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -33,21 +34,23 @@ public class InitDto extends AbstractUiController {
     }
 
     public ModelAndView init(UserForm form) throws ApiException {
-        List<UserPojo> list = dto.getAll();
-
-        if (dto.checkEmailExists(form.getEmail())) {
+        //List<UserPojo> list = dto.getAll();
+        if(StringUtil.isEmpty(form.getEmail()) || StringUtil.isEmpty(form.getPassword())) {
+            info.setMessage("Email or Password cannot be empty");
+        }
+        else if (dto.checkEmailExists(form.getEmail())) {
             info.setMessage("You already have an account, please use existing credentials");
         }
         else if(Objects.equals(form.getEmail(), admin_email))
         {
-            form.setRole("admin");
+            form.setRole("supervisor");
             UserPojo p = convert(form);
             dto.add(p);
             info.setMessage("Signed Up Successfully, you can login now");
         }
         else
         {
-            form.setRole("standard");
+            form.setRole("operator");
             UserPojo p = convert(form);
             dto.add(p);
             info.setMessage("Signed Up Successfully, you can login now");
