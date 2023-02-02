@@ -115,12 +115,16 @@ function processData() {
 
 function readFileDataCallback(results) {
   fileData = results.data;
+  console.log(fileData);
   var filelen = fileData.length;
   	if(filelen > 5000) {
   	    toastr.error("file length exceeds 5000, Not Allowed");
   	}
   	else {
-
+//        for(var i in fileData)
+//        {
+//            if()
+//        }
   	    uploadRows();
   	}
 }
@@ -171,6 +175,8 @@ function uploadRows() {
         }
         else {
             var resp = JSON.parse(response.responseText);
+            console.log(resp.message);
+            console.log(typeof resp.message);
             var jsonObj = JSON.parse(resp.message);
             console.log(jsonObj);
             errorData = jsonObj;

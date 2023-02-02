@@ -44,7 +44,7 @@ public class BrandDto {
                 BrandHelper.normalize(f);
                 BrandPojo b = BrandHelper.convert(f);
                 api.getCheckBrandCategory(b);
-            } catch (ApiException e) {
+            } catch (Exception e) {
                 errorSize++;
                 brandErrorData.setMessage(e.getMessage());
             }
