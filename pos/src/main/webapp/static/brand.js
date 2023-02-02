@@ -1,3 +1,4 @@
+var wholeBrand = []
 function getBrandUrl() {
   var baseUrl = $("meta[name=baseUrl]").attr("content");
   return baseUrl + "/api/brand";
@@ -8,12 +9,25 @@ function resetForm() {
   element.reset();
 }
 
+function arrayToJson() {
+    let json = [];
+    for(i in wholeBrand) {
+        let data = {};
+        data["brand"]=JSON.parse(wholeBrand[i]).brand;
+        data["category"]=JSON.parse(wholeBrand[i]).category;
+        json.push(data);
+    }
+    return JSON.stringify(json);
+}
+
 //BUTTON ACTIONS
 function addBrand(event) {
   //Set the values to update
   var $form = $("#brand-form");
   var json = toJson($form);
+  wholeBrand.push(json)
   var url = getBrandUrl();
+  var jsonObj = arrayToJson();
   console.log(url);
   $.ajax({
     url: url,
@@ -23,11 +37,26 @@ function addBrand(event) {
       "Content-Type": "application/json",
     },
     success: function (response) {
+      wholeBrand=[];
+      resetForm();
       getBrandList();
       toastr.success("Brand Added Successfully", "Success : ");
-      resetForm();
     },
-    error: handleAjaxError,
+    error: function (response) {
+        resetForm();
+        console.log(response);
+        if(response.status == 403) {
+            toastr.error("Error: 403 unauthorized");
+        }
+        else {
+            var resp = JSON.parse(response.responseText);
+            //alert(response.message);
+            console.log(resp);
+            var jsonObj = JSON.parse(resp.message);
+            console.log(jsonObj);
+            toastr.error(jsonObj[0].message, "Error : ");
+        }
+    }
   });
 
   return false;
@@ -86,7 +115,14 @@ function processData() {
 
 function readFileDataCallback(results) {
   fileData = results.data;
-  uploadRows();
+  var filelen = fileData.length;
+  	if(filelen > 5000) {
+  	    toastr.error("file length exceeds 5000, Not Allowed");
+  	}
+  	else {
+
+  	    uploadRows();
+  	}
 }
 
 // todo: bulk upload
@@ -100,14 +136,14 @@ function uploadRows() {
     //toastr.success("Rows uploaded Successfully", "Success : ");
     return;
   }
-  if (errorData.length > 0) {
-    $("#download-errors").prop("disabled", false);
-  }
+//  if (errorData.length > 0) {
+//    $("#download-errors").prop("disabled", false);
+//  }
   //Process next row
-  var row = fileData[processCount];
-  processCount++;
+//  var row = fileData[processCount];
+//  processCount++;
 
-  var json = JSON.stringify(row);
+  var json = JSON.stringify(fileData);
   var url = getBrandUrl();
 
   //Make ajax call
@@ -119,12 +155,31 @@ function uploadRows() {
       "Content-Type": "application/json",
     },
     success: function (response) {
-      uploadRows();
+      //uploadRows();
+      console.log(response);
+      errorData = response;
+      resetForm();
+      getBrandList();
+      toastr.success("Brand Uploaded Successfully", "Success : ");
     },
     error: function (response) {
-      row.error = response.responseText;
-      errorData.push(row);
-      uploadRows();
+//      row.error = response.responseText;
+//      errorData.push(row);
+//      uploadRows();
+        if(response.status == 403){
+            toastr.error("403 Forbidden");
+        }
+        else {
+            var resp = JSON.parse(response.responseText);
+            var jsonObj = JSON.parse(resp.message);
+            console.log(jsonObj);
+            errorData = jsonObj;
+            processCount = fileData.length;
+            console.log(response);
+            $("#download-errors").prop('disabled', false);
+            resetForm();
+            toastr.error("There are errors in file, please Download Errors", "Error : ");
+        }
     },
   });
 }

@@ -18,7 +18,7 @@ public class BrandApi {
     private BrandDao dao;
 
     public void add(BrandPojo p) throws ApiException {
-        p = getCheckBrandCategory(p);
+        //p = getCheckBrandCategory(p);
         dao.insert(p);
     }
 

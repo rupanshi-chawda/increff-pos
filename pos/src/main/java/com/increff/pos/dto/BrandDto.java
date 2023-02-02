@@ -1,19 +1,21 @@
 package com.increff.pos.dto;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.increff.pos.api.BrandApi;
 import com.increff.pos.helper.BrandHelper;
+import com.increff.pos.model.data.BrandErrorData;
 import com.increff.pos.pojo.BrandPojo;
 import com.increff.pos.model.data.BrandData;
 import com.increff.pos.model.form.BrandForm;
-import com.increff.pos.util.ApiException;
-import com.increff.pos.util.CsvFileGenerator;
-import com.increff.pos.util.ValidationUtil;
+import com.increff.pos.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,12 +29,38 @@ public class BrandDto {
     @Autowired
     private CsvFileGenerator csvGenerator;
 
-    public void add(BrandForm form) throws ApiException {
-        BrandHelper.normalize(form);
-//        BrandHelper.validate(form);
-        ValidationUtil.validateForms(form);
-        BrandPojo p = BrandHelper.convert(form);
-        api.add(p);
+    public void add(List<BrandForm> forms) throws ApiException, JsonProcessingException {
+        List<BrandErrorData> errorData = new ArrayList<>();
+        errorData.clear();
+        int errorSize = 0;
+
+        for(BrandForm f: forms)
+        {
+            BrandErrorData brandErrorData = ConvertUtil.convert(f, BrandErrorData.class);
+            brandErrorData.setMessage("");
+            try
+            {
+                ValidationUtil.validateForms(f);
+                BrandHelper.normalize(f);
+                BrandPojo b = BrandHelper.convert(f);
+                api.getCheckBrandCategory(b);
+            } catch (ApiException e) {
+                errorSize++;
+                brandErrorData.setMessage(e.getMessage());
+            }
+            errorData.add(brandErrorData);
+        }
+        if (errorSize > 0) {
+            ErrorUtil.throwErrors(errorData);
+        }
+
+
+        bulkAdd(forms);
+
+//        BrandHelper.normalize(form);
+//        ValidationUtil.validateForms(form);
+//        BrandPojo p = BrandHelper.convert(form);
+//        api.add(p);
     }
 
     public BrandData get(int id) throws ApiException {
@@ -56,5 +84,13 @@ public class BrandDto {
         response.setContentType("text/csv");
         response.addHeader("Content-Disposition", "attachment; filename=\"brandReport.csv\"");
         csvGenerator.writeBrandsToCsv(api.getAll(), response.getWriter());
+    }
+
+    @Transactional(rollbackOn = ApiException.class)
+    private void bulkAdd(List<BrandForm> brandForms) throws ApiException {
+        for (BrandForm f: brandForms){
+            BrandPojo b = BrandHelper.convert(f);
+            api.add(b);
+        }
     }
 }
