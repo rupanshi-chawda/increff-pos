@@ -29,13 +29,13 @@ public class BrandHelper {
         f.setCategory(StringUtil.toLowerCase(f.getCategory()));
     }
 
-    public static void validate(BrandForm f) throws ApiException {
-        if(StringUtil.isEmpty(f.getBrand())) {
-            throw new ApiException("Brand cannot be empty");
-        }
-        if(StringUtil.isEmpty(f.getCategory())) {
-            throw new ApiException("Category cannot be empty");
-        }
-    }
+//    public static void validate(BrandForm f) throws ApiException {
+//        if(StringUtil.isEmpty(f.getBrand())) {
+//            throw new ApiException("Brand cannot be empty");
+//        }
+//        if(StringUtil.isEmpty(f.getCategory())) {
+//            throw new ApiException("Category cannot be empty");
+//        }
+//    }
     //todo: common validation and @notblank 
 }

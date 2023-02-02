@@ -7,6 +7,7 @@ import com.increff.pos.pojo.OrderItemPojo;
 import com.increff.pos.pojo.OrderPojo;
 import com.increff.pos.pojo.SalesPojo;
 import com.increff.pos.util.ApiException;
+import com.increff.pos.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,7 @@ public class SalesDto {
     public List<SalesPojo> getAllBetweenDates(SalesForm salesForm) {
         LocalDate startDate = LocalDate.parse(salesForm.getStartDate());
         LocalDate endDate = LocalDate.parse(salesForm.getEndDate());
+        ValidationUtil.validateForms(salesForm);
         return  api.getAllBetweenDates(startDate, endDate);
     }
 

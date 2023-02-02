@@ -11,6 +11,7 @@ import com.increff.pos.api.BrandApi;
 import com.increff.pos.api.OrderApi;
 import com.increff.pos.api.ProductApi;
 import com.increff.pos.util.CsvFileGenerator;
+import com.increff.pos.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -43,8 +44,22 @@ public class SalesReportDto {
         return getFilterSalesReport(list, "all", "all");
     }
 
-    public List<SalesReportData> getFilterAll(List<OrderPojo> list, String brand, String category) throws ApiException {
-        return getFilterSalesReport(list, brand, category);
+    public List<SalesReportData> getFilterAll(SalesReportForm form) throws ApiException {
+
+        ValidationUtil.validateForms(form);
+
+        String startDate = form.getStartDate() + " 00:00:00";
+        String endDate = form.getEndDate() + " 23:59:59";
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime sDate = LocalDateTime.parse(startDate, formatter);
+        LocalDateTime eDate = LocalDateTime.parse(endDate, formatter);
+
+        ZonedDateTime start = sDate.atZone(ZoneId.systemDefault());
+        ZonedDateTime end = eDate.atZone(ZoneId.systemDefault());;
+
+        List<OrderPojo> list = orderApi.getOrderByDateFilter(start, end);
+        return getFilterSalesReport(list, form.getBrand(), form.getCategory());
     }
 
     public List<SalesReportData> getFilterSalesReport(List<OrderPojo> list, String brand, String category) throws ApiException {

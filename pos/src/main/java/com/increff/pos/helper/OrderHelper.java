@@ -49,17 +49,17 @@ public class OrderHelper {
         f.setBarcode(StringUtil.toLowerCase(f.getBarcode()));
     }
 
-    public static void validate(OrderItemForm f) throws ApiException {
-        if(StringUtil.isEmpty(f.getBarcode())) {
-            throw new ApiException("Barcode cannot be empty");
-        }
-        if(f.getQuantity()<=0) {
-            throw new ApiException("Quantity cannot be empty or less than one");
-        }
-        if(f.getSellingPrice()<=0) {
-            throw new ApiException("Selling Price cannot be empty or less than one");
-        }
-    }
+//    public static void validate(OrderItemForm f) throws ApiException {
+//        if(StringUtil.isEmpty(f.getBarcode())) {
+//            throw new ApiException("Barcode cannot be empty");
+//        }
+//        if(f.getQuantity()<=0) {
+//            throw new ApiException("Quantity cannot be empty or less than one");
+//        }
+//        if(f.getSellingPrice()<=0) {
+//            throw new ApiException("Selling Price cannot be empty or less than one");
+//        }
+//    }
 
     public static void validateId(OrderItemPojo p, int id) throws ApiException {
         if (Objects.isNull(p)) {

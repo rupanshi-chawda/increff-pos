@@ -94,7 +94,6 @@ public class InventoryDto {
 
         for(Map.Entry<Pair<String,String>, Integer> mapElement : map.entrySet()) {
             inventoryItemList.add(InventoryHelper.convertMapToItem(mapElement));
-            //System.out.println(mapElement.getValue());
         }
         return inventoryItemList;
     }

@@ -14,6 +14,7 @@ import com.increff.pos.model.form.OrderForm;
 import com.increff.pos.model.form.OrderItemForm;
 import com.increff.pos.pojo.OrderItemPojo;
 import com.increff.pos.pojo.OrderPojo;
+import com.increff.pos.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -58,7 +59,8 @@ public class OrderDto {
         // Validating every order item before adding it.
         for(OrderItemForm f : forms) {
             OrderHelper.normalize(f);
-            OrderHelper.validate(f);
+//            OrderHelper.validate(f);
+            ValidationUtil.validateForms(f);
 
             String barcode = productApi.getProductBarcodeByItemBarcode(f.getBarcode());
             OrderHelper.validateBarcode(barcode);

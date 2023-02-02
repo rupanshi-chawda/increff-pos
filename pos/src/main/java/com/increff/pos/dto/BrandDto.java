@@ -7,6 +7,7 @@ import com.increff.pos.model.data.BrandData;
 import com.increff.pos.model.form.BrandForm;
 import com.increff.pos.util.ApiException;
 import com.increff.pos.util.CsvFileGenerator;
+import com.increff.pos.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,8 @@ public class BrandDto {
 
     public void add(BrandForm form) throws ApiException {
         BrandHelper.normalize(form);
-        BrandHelper.validate(form);
+//        BrandHelper.validate(form);
+        ValidationUtil.validateForms(form);
         BrandPojo p = BrandHelper.convert(form);
         api.add(p);
     }
@@ -44,7 +46,8 @@ public class BrandDto {
 
     public void update(int id, BrandForm f) throws ApiException {
         BrandHelper.normalize(f);
-        BrandHelper.validate(f);
+//        BrandHelper.validate(f);
+        ValidationUtil.validateForms(f);
         BrandPojo p = BrandHelper.convert(f);
         api.update(id, p);
     }
