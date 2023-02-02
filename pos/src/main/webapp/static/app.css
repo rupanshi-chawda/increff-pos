@@ -1,29 +1,29 @@
 html {
-	position: relative;
-	min-height: 100%;
+  position: relative;
+  min-height: 100%;
 }
 
 body {
-	margin-bottom: 60px; /* Margin bottom by footer height */
+  margin-bottom: 60px; /* Margin bottom by footer height */
 }
 
 .footer {
-	position: absolute;
-	bottom: 0;
-	width: 100%;
-	height: 60px; /* Set the fixed height of the footer here */
-	line-height: 60px; /* Vertically center the text there */
-	text-align: center;
-	background-color: #f5f5f5;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px; /* Set the fixed height of the footer here */
+  line-height: 60px; /* Vertically center the text there */
+  text-align: center;
+  background-color: #f5f5f5;
 }
 
-.fa{
-    color: #00295F !important;
+.fa {
+  color: #00295f !important;
 }
 
-.fas{
-    font-size: 4rem;
-    color: #00295F;
+.fas {
+  font-size: 4rem;
+  color: #00295f;
 }
 
 .table__button-group {
@@ -38,17 +38,20 @@ tr:hover {
 }
 
 .icon-label {
-    color: #00295F;
+  color: #00295f;
 }
 
-.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
-    background-color: #00295F !important;
-    border-color: #00295F !important;
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited {
+  background-color: #00295f !important;
+  border-color: #00295f !important;
 }
 
 .over-modal:nth-of-type(even) {
-    z-index: 1052 !important;
+  z-index: 1052 !important;
 }
 .over-modal-backdrop.show:nth-of-type(even) {
-    z-index: 1051 !important;
+  z-index: 1051 !important;
 }

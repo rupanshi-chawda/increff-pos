@@ -32,14 +32,6 @@ public class InventoryHelper {
         f.setBarcode(StringUtil.toLowerCase(f.getBarcode()));
     }
 
-//    public static void validate(InventoryForm f) throws ApiException {
-//        if(StringUtil.isEmpty(f.getBarcode())) {
-//            throw new ApiException("Barcode cannot be empty");
-//        }
-//        if(f.getQuantity()<=0) {
-//            throw new ApiException("Quantity cannot be empty or less than one");
-//        }
-//    }
 
     public static void validateId(InventoryPojo p, int id) throws ApiException {
         if (Objects.isNull(p)) {

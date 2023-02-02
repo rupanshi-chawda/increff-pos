@@ -10,7 +10,7 @@ import com.increff.pos.pojo.InventoryPojo;
 import com.increff.pos.util.ApiException;
 import com.increff.pos.model.data.OrderData;
 import com.increff.pos.model.data.OrderItemData;
-import com.increff.pos.model.form.OrderForm;
+//import com.increff.pos.model.form.OrderForm;
 import com.increff.pos.model.form.OrderItemForm;
 import com.increff.pos.pojo.OrderItemPojo;
 import com.increff.pos.pojo.OrderPojo;
@@ -40,10 +40,10 @@ public class OrderDto {
     @Autowired
     InvoiceGenerator invoiceGenerator;
 
-    public void addOrder(OrderForm form) throws ApiException {
-        OrderPojo p = OrderHelper.convert(form);
-        orderApi.addOrder(p);
-    }
+//    public void addOrder(OrderForm form) throws ApiException {
+//        OrderPojo p = OrderHelper.convert(form);
+//        orderApi.addOrder(p);
+//    }
 
     public OrderData getOrder(int id) throws ApiException {
         OrderPojo p = orderApi.getOrder(id);

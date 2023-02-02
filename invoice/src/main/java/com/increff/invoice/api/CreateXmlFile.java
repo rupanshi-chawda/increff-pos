@@ -3,6 +3,9 @@ package com.increff.invoice.api;
 
 import java.io.File;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -42,7 +45,12 @@ public class CreateXmlFile {
             root.appendChild(order_id);
 
             Element order_date = document.createElement("order_date");
-            order_date.appendChild(document.createTextNode(invoiceForm.getPlaceDate()));
+            String placed = invoiceForm.getPlaceDate();
+            ZonedDateTime zonedPlaced = ZonedDateTime.parse(placed);
+            LocalDateTime localPlaced = zonedPlaced.toLocalDateTime();
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            String formattedPlaced = localPlaced.format(dateTimeFormatter);
+            order_date.appendChild(document.createTextNode(formattedPlaced));
             root.appendChild(order_date);
 
             // order item element

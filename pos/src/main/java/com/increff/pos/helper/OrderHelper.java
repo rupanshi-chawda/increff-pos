@@ -3,7 +3,7 @@ package com.increff.pos.helper;
 import com.increff.pos.util.StringUtil;
 import com.increff.pos.model.data.OrderData;
 import com.increff.pos.model.data.OrderItemData;
-import com.increff.pos.model.form.OrderForm;
+//import com.increff.pos.model.form.OrderForm;
 import com.increff.pos.model.form.OrderItemForm;
 import com.increff.pos.pojo.OrderItemPojo;
 import com.increff.pos.pojo.OrderPojo;
@@ -18,14 +18,14 @@ public class OrderHelper {
     public static OrderData convert(OrderPojo p) {
         OrderData d = new OrderData();
         d.setId(p.getId());
-        d.setTime(LocalDateTime.ofInstant(p.getTime().toInstant(), ZoneOffset.ofHoursMinutes(5, 30)));
-        //d.setTime(p.getTime());
+        //d.setTime(LocalDateTime.ofInstant(p.getTime().toInstant(), ZoneOffset.ofHoursMinutes(5, 30)));
+        d.setTime(p.getTime());
         return d;
     }
 
-    public static OrderPojo convert(OrderForm form) {
-        return new OrderPojo();
-    }
+//    public static OrderPojo convert(OrderForm form) {
+//        return new OrderPojo();
+//    }
 
     public static OrderItemData convert(OrderItemPojo p, String barcode) {
         OrderItemData d = new OrderItemData();
@@ -49,17 +49,6 @@ public class OrderHelper {
         f.setBarcode(StringUtil.toLowerCase(f.getBarcode()));
     }
 
-//    public static void validate(OrderItemForm f) throws ApiException {
-//        if(StringUtil.isEmpty(f.getBarcode())) {
-//            throw new ApiException("Barcode cannot be empty");
-//        }
-//        if(f.getQuantity()<=0) {
-//            throw new ApiException("Quantity cannot be empty or less than one");
-//        }
-//        if(f.getSellingPrice()<=0) {
-//            throw new ApiException("Selling Price cannot be empty or less than one");
-//        }
-//    }
 
     public static void validateId(OrderItemPojo p, int id) throws ApiException {
         if (Objects.isNull(p)) {

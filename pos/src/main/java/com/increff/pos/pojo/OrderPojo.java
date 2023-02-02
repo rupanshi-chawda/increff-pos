@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Entity
 @Setter
@@ -20,6 +21,6 @@ public class OrderPojo extends AbstractVersionPojo {
 
     @CreationTimestamp
     @Column
-    private Timestamp time;
+    private ZonedDateTime time;
 
 }

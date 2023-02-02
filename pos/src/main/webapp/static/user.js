@@ -1,70 +1,69 @@
-
-function getUserUrl(){
-	var baseUrl = $("meta[name=baseUrl]").attr("content")
-	return baseUrl + "/api/admin/user";
+function getUserUrl() {
+  var baseUrl = $("meta[name=baseUrl]").attr("content");
+  return baseUrl + "/api/admin/user";
 }
 
 function resetForm() {
-    var element = document.getElementById("user-form");
-    element.reset()
+  var element = document.getElementById("user-form");
+  element.reset();
 }
 
 //BUTTON ACTIONS
-function addUser(event){
-	//Set the values to update
-	var $form = $("#user-form");
-	var json = toJson($form);
-	var url = getUserUrl();
+function addUser(event) {
+  //Set the values to update
+  var $form = $("#user-form");
+  var json = toJson($form);
+  var url = getUserUrl();
 
-	$.ajax({
-	   url: url,
-	   type: 'POST',
-	   data: json,
-	   headers: {
-       	'Content-Type': 'application/json'
-       },	   
-	   success: function(response) {
-	   		getUserList();
-            toastr.success("User Added Successfully", "Success : ");
-            resetForm();
-	   },
-	   error: handleAjaxError
-	});
+  $.ajax({
+    url: url,
+    type: "POST",
+    data: json,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    success: function (response) {
+      getUserList();
+      toastr.success("User Added Successfully", "Success : ");
+      resetForm();
+    },
+    error: handleAjaxError,
+  });
 
-	return false;
+  return false;
 }
 
-function getUserList(){
-	var url = getUserUrl();
-	$.ajax({
-	   url: url,
-	   type: 'GET',
-	   success: function(data) {
-	   		displayUserList(data);   
-	   },
-	   error: handleAjaxError
-	});
+function getUserList() {
+  var url = getUserUrl();
+  $.ajax({
+    url: url,
+    type: "GET",
+    success: function (data) {
+      displayUserList(data);
+    },
+    error: handleAjaxError,
+  });
 }
 
 var deleteid = 0;
-function displayDeleteUser(id){
-    deleteid = id;
-    $('#delete-user-modal').modal('toggle');
+function displayDeleteUser(id) {
+  deleteid = id;
+  $("#delete-user-modal").modal("toggle");
 }
 
-function deleteUser(event){
-	var url = getUserUrl() + "/" + deleteid;
-    $('#delete-user-modal').modal('toggle');
+function deleteUser(event) {
+  var url = getUserUrl() + "/" + deleteid;
+  $("#delete-user-modal").modal("toggle");
 
-	$.ajax({
-	   url: url,
-	   type: 'DELETE',
-	   success: function(data) {
-	   		getUserList();
-             toastr.success("User Deleted Successfully", "Success : ");
-	   },
-	   error: handleAjaxError
-	});
+  $.ajax({
+    url: url,
+    type: "DELETE",
+    success: function (data) {
+      getUserList();
+      toastr.success("User Deleted Successfully", "Success : ");
+    },
+    error: handleAjaxError,
+  });
 }
 
 //UI DISPLAY METHODS
@@ -75,7 +74,7 @@ function displayUserList(data){
 	$tbody.empty();
 	for(var i in data){
 		var e = data[i];
-		var buttonHtml = '<button onclick="displayDeleteUser(' + e.id + ')" class="btn table__button-group"><i class="fa-solid fa-trash" style="color:#00295F"></i></button>'
+		var buttonHtml = '<button onclick="displayDeleteUser(' + e.id + ')" class="btn table__button-group" id="delete-button"><i class="fa-solid fa-trash" style="color:#00295F"></i></button>'
 		var row = '<tr>'
 		+ '<td> <i class="fa-solid fa-circle-user" style="color:#00295F"></i> </td>'
 		+ '<td>' + e.email + '</td>'
@@ -83,16 +82,17 @@ function displayUserList(data){
 		+ '<td>' + buttonHtml + '</td>'
 		+ '</tr>';
         $tbody.append(row);
+        if (e.role == "supervisor") {
+              $("#delete-button").prop("disabled", true);
+        }
 	}
 }
-//Todo: implement delete modal
 
 //INITIALIZATION CODE
-function init(){
-	$('#add-user').click(addUser);
-	$('#delete-user').click(deleteUser);
+function init() {
+  $("#add-user").click(addUser);
+  $("#delete-user").click(deleteUser);
 }
 
 $(document).ready(init);
 $(document).ready(getUserList);
-

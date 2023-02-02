@@ -21,3 +21,4 @@ public class InventoryForm {
     private int quantity;
 
 }
+//todo: fix messages for int values (remove column name as it is repeated)

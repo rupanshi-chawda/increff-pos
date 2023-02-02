@@ -20,3 +20,4 @@ public class InventoryPojo extends AbstractVersionPojo {
     private int quantity;
 
 }
+//TODO: change int to Integer
