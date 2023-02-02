@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 public class ProductForm {
 
     @NotBlank
-    @Size(min = 1, message = "Barcode must 8 character long")
+    @Size(min = 1, message = "must 8 character long")
     private String barcode;
 
     private String brand;
@@ -23,7 +23,7 @@ public class ProductForm {
     private String name;
 
     @NotNull
-    @Min(value = 1, message = "Mrp must be atleast 1")
+    @Min(value = 1, message = "must be atleast 1")
     private Double mrp;
 
 }

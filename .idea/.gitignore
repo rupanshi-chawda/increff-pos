@@ -1,6 +1,3 @@
 # Default ignored files
 /shelf/
 /workspace.xml
-../.idea
-../invoice/Pdf
-../invoice/javax.xml.transform.dom.*

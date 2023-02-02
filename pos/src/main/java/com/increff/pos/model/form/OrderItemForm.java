@@ -14,15 +14,15 @@ public class OrderItemForm {
 
 
     @NotBlank
-    @Size(min = 8, max = 8, message = "Barcode must 8 character long")
+    @Size(min = 8, max = 8, message = "must 8 character long")
     private String barcode;
 
     @NotNull
-    @Min(value = 1, message = "Quantity must be atleast 1")
+    @Min(value = 1, message = "must be atleast 1")
     private int quantity;
 
     @NotNull
-    @Min(value = 1, message = "Selling Price must be atleast 1")
+    @Min(value = 1, message = "must be atleast 1")
     private Double sellingPrice;
 
 }
