@@ -75,6 +75,7 @@ com\increff\pos\api\UserApi.class
 com\increff\pos\util\IOUtil.class
 com\increff\pos\dto\AbstractUiDto.class
 com\increff\pos\util\ConvertUtil.class
+com\increff\pos\model\data\InventoryErrorData.class
 com\increff\pos\controller\SalesController.class
 com\increff\pos\pojo\OrderPojo.class
 com\increff\pos\model\form\SalesReportForm.class

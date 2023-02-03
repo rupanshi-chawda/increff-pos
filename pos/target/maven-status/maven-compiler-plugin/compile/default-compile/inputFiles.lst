@@ -16,6 +16,7 @@ C:\Users\KIIT\Downloads\increff-pos\pos\src\main\java\com\increff\pos\model\form
 C:\Users\KIIT\Downloads\increff-pos\pos\src\main\java\com\increff\pos\controller\OrderController.java
 C:\Users\KIIT\Downloads\increff-pos\pos\src\main\java\com\increff\pos\pojo\BrandPojo.java
 C:\Users\KIIT\Downloads\increff-pos\pos\src\main\java\com\increff\pos\dao\SalesDao.java
+C:\Users\KIIT\Downloads\increff-pos\pos\src\main\java\com\increff\pos\model\data\InventoryErrorData.java
 C:\Users\KIIT\Downloads\increff-pos\pos\src\main\java\com\increff\pos\model\data\OrderItemData.java
 C:\Users\KIIT\Downloads\increff-pos\pos\src\main\java\com\increff\pos\controller\InitController.java
 C:\Users\KIIT\Downloads\increff-pos\pos\src\main\java\com\increff\pos\spring\DbConfig.java

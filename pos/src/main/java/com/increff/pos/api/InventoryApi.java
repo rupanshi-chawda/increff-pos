@@ -21,6 +21,8 @@ public class InventoryApi {
 
     public void add(InventoryPojo p) throws ApiException {
         InventoryPojo b = getInventoryId(p.getId());
+        System.out.println(p.getId());
+        //System.out.println(b.getId());
         if(Objects.isNull(b)) {
             dao.insert(p);
         }

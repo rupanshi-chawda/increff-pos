@@ -60,6 +60,7 @@ public class ProductApi {
 
     public int getIdByBarcode(String barcode) {
         ProductPojo p = dao.selectBarcode(barcode);
+        System.out.println("inside get id by barcode");
         return p.getId();
     }
 

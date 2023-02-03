@@ -37,3 +37,4 @@ public class SalesController {
         dto.createReport();
     }
 }
+//todo: add check that end date must not be lesser than start date

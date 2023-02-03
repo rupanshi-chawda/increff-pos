@@ -1,5 +1,6 @@
 package com.increff.pos.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.increff.pos.dto.InventoryDto;
 import com.increff.pos.model.data.InventoryData;
 import com.increff.pos.model.form.InventoryForm;
@@ -23,8 +24,8 @@ public class InventoryController {
 
     @ApiOperation(value = "Adds a Product Inventory")
     @PostMapping(path = "")
-    public void addInventory(@RequestBody InventoryForm form) throws ApiException {
-        dto.add(form);
+    public void addInventory(@RequestBody List<InventoryForm> forms) throws ApiException, JsonProcessingException {
+        dto.add(forms);
     }
 
     @ApiOperation(value = "Gets a Product Inventory by barcode")

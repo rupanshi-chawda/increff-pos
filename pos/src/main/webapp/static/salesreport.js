@@ -182,3 +182,5 @@ $(document).ready(getSalesList);
 $(document).ready(getBrandList);
 $(document).ready(initlists);
 $(document).ready(autoFillDate);
+
+//todo: disable enddate until startdate is set
