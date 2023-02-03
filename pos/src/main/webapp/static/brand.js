@@ -125,7 +125,6 @@ function readFileDataCallback(results) {
   	}
 }
 
-// todo: bulk upload
 
 function uploadRows() {
   //Update progress

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -57,6 +58,7 @@ public class SalesReportDto {
 
         ZonedDateTime start = sDate.atZone(ZoneId.systemDefault());
         ZonedDateTime end = eDate.atZone(ZoneId.systemDefault());;
+        checkDates(start, end);
 
         List<OrderPojo> list = orderApi.getOrderByDateFilter(start, end);
         return getFilterSalesReport(list, form.getBrand(), form.getCategory());
@@ -110,4 +112,9 @@ public class SalesReportDto {
         salesListData.clear();
     }
 
+    private void checkDates(ZonedDateTime startDate, ZonedDateTime endDate) throws ApiException {
+        if(endDate.isBefore(startDate)) {
+            throw new ApiException("End date must not be before Start date");
+        }
+    }
 }

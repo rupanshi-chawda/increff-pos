@@ -66,7 +66,6 @@ public class ProductDto {
 //        p.setBrandCategory(brandApi.getBrandCategoryId(form.getBrand(), form.getCategory()));
 //        api.add(p);
     }
-//Todo: only throwing one error brand category doesnt exists even when other erros should be shown
 
     public ProductData get(int id) throws ApiException {
         ProductPojo p = api.get(id);

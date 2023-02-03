@@ -27,7 +27,7 @@ public class SalesController {
 
     @ApiOperation(value = "get all sales date between 2 dates")
     @PostMapping(path = "/filter")
-    public List<SalesPojo> getAllByDate(@RequestBody SalesForm form){
+    public List<SalesPojo> getAllByDate(@RequestBody SalesForm form) throws ApiException {
         return dto.getAllBetweenDates(form);
     }
 
@@ -37,4 +37,3 @@ public class SalesController {
         dto.createReport();
     }
 }
-//todo: add check that end date must not be lesser than start date

@@ -30,10 +30,12 @@ function getFilteredList(event) {
     success: function (response) {
       displaySalesList(response);
       downloadCsv();
+      toastr.success("Report Created Successfully", "Success : ");
     },
     error: handleAjaxError,
   });
 
+  document.getElementById("inputED").disabled = true;
   return false;
 }
 
@@ -169,11 +171,12 @@ function autoFillDate() {
 
   var today = year + "-" + month + "-" + day;
   $("#inputED").attr("value", today);
-  $("#inputSD").attr("value", today);
+  //$("#inputSD").attr("value", today);
 }
 
 function disableDate() {
   var sd = $("#sales-report-form input[name=startDate]").val();
+  document.getElementById("inputED").disabled = false;
   $("#inputED").attr("min", sd);
 }
 
@@ -182,5 +185,3 @@ $(document).ready(getSalesList);
 $(document).ready(getBrandList);
 $(document).ready(initlists);
 $(document).ready(autoFillDate);
-
-//todo: disable enddate until startdate is set

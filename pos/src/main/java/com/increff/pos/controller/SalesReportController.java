@@ -36,7 +36,7 @@ public class SalesReportController
         return dto.getAll();
     }
 
-    @ApiOperation(value = "Gets Filtered orders")
+    @ApiOperation(value = "Gets orders filtered by dates")
     @PostMapping(path = "/filter")
     public List<SalesReportData> getFilteredData(@RequestBody SalesReportForm form) throws ApiException {
         return dto.getFilterAll(form);
