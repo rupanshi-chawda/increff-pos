@@ -1,5 +1,6 @@
 package com.increff.pos.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.increff.pos.dto.ProductDto;
 import com.increff.pos.model.data.ProductData;
 import com.increff.pos.model.form.ProductForm;
@@ -22,8 +23,8 @@ public class ProductController {
 
     @ApiOperation(value = "Adds a Product")
     @PostMapping(path = "")
-    public void addProduct(@RequestBody ProductForm form) throws ApiException {
-        dto.add(form);
+    public void addProduct(@RequestBody List<ProductForm> forms) throws ApiException, JsonProcessingException {
+        dto.add(forms);
     }
 
     @ApiOperation(value = "Gets a Product by Id")

@@ -54,7 +54,6 @@ public class BrandDto {
             ErrorUtil.throwErrors(errorData);
         }
 
-
         bulkAdd(forms);
 
 //        BrandHelper.normalize(form);

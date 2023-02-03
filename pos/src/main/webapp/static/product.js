@@ -1,4 +1,5 @@
 var brandData = {};
+var wholeProduct = []
 
 function getBrandUrl() {
   var baseUrl = $("meta[name=baseUrl]").attr("content");
@@ -21,16 +22,34 @@ function resetForm() {
   element.reset();
 }
 
+function arrayToJson() {
+    let json = [];
+    for(i in wholeProduct) {
+        let data = {};
+        data["barcode"]=JSON.parse(wholeProduct[i]).barcode;
+        data["brand"]=JSON.parse(wholeProduct[i]).brand;
+        data["category"]=JSON.parse(wholeProduct[i]).category;
+        data["name"]=JSON.parse(wholeProduct[i]).name;
+        data["mrp"]=JSON.parse(wholeProduct[i]).mrp;
+        json.push(data);
+    }
+    return JSON.stringify(json);
+}
+
+
 //BUTTON ACTIONS
 function addProduct(event) {
   //Set the values to update
   var $form = $("#product-form");
   var json = toJson($form);
   var url = getProductUrl();
+  wholeProduct.push(json);
+  var jsonObj = arrayToJson();
+  console.log(url);
   $.ajax({
     url: url,
     type: "POST",
-    data: json,
+    data: jsonObj,
     headers: {
       "Content-Type": "application/json",
     },
@@ -38,8 +57,25 @@ function addProduct(event) {
       getProductList();
       toastr.success("Product Added Successfully", "Success : ");
       resetForm();
+      wholeProduct = [];
     },
-    error: handleAjaxError,
+    error: function (response) {
+             resetForm();
+             console.log(response);
+             if(response.status == 403) {
+                  toastr.error("Error: 403 unauthorized");
+             }
+             else {
+
+            var resp = JSON.parse(response.responseText);
+             //alert(response.message);
+                 console.log(resp);
+            var jsonObj = JSON.parse(resp.message);
+            console.log(jsonObj);
+              toastr.error(jsonObj[0].message, "Error : ");
+             }
+             wholeProduct=[];
+          }
   });
 
   return false;
@@ -97,7 +133,14 @@ function processData() {
 
 function readFileDataCallback(results) {
   fileData = results.data;
-  uploadRows();
+  console.log(fileData);
+  var filelen = fileData.length;
+  	if(filelen > 5000) {
+  	    toastr.error("file length exceeds 5000, Not Allowed");
+  	}
+  	else {
+  	    uploadRows();
+  	}
 }
 
 function uploadRows() {
@@ -106,18 +149,17 @@ function uploadRows() {
   $("#process-data").prop("disabled", true);
   //If everything processed then return
   if (processCount == fileData.length) {
-    toastr.success("Rows uploaded Successfully", "Success : ");
+    //toastr.success("Rows uploaded Successfully", "Success : ");
     return;
   }
-  if (errorData.length > 0) {
-    $("#download-errors").prop("disabled", false);
-  }
-
+//  if (errorData.length > 0) {
+//    $("#download-errors").prop("disabled", false);
+//  }
   //Process next row
-  var row = fileData[processCount];
-  processCount++;
+//  var row = fileData[processCount];
+//  processCount++;
 
-  var json = JSON.stringify(row);
+  var json = JSON.stringify(fileData);
   var url = getProductUrl();
 
   //Make ajax call
@@ -129,12 +171,33 @@ function uploadRows() {
       "Content-Type": "application/json",
     },
     success: function (response) {
-      uploadRows();
+      //uploadRows();
+      console.log(response);
+      errorData = response;
+      resetForm();
+      getProductList();
+      toastr.success("Products Uploaded Successfully", "Success : ");
     },
     error: function (response) {
-      row.error = response.responseText;
-      errorData.push(row);
-      uploadRows();
+//      row.error = response.responseText;
+//      errorData.push(row);
+//      uploadRows();
+        if(response.status == 403){
+            toastr.error("403 Forbidden");
+        }
+        else {
+            var resp = JSON.parse(response.responseText);
+            console.log(resp.message);
+            console.log(typeof resp.message);
+            var jsonObj = JSON.parse(resp.message);
+            console.log(jsonObj);
+            errorData = jsonObj;
+            processCount = fileData.length;
+            console.log(response);
+            $("#download-errors").prop('disabled', false);
+            resetForm();
+            toastr.error("There are errors in file, please Download Errors", "Error : ");
+        }
     },
   });
 }

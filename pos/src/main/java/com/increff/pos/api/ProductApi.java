@@ -18,7 +18,6 @@ public class ProductApi {
     private ProductDao dao;
 
     public void add(ProductPojo p) throws ApiException {
-        p = getProductBarcode(p);
         dao.insert(p);
     }
 
@@ -45,12 +44,11 @@ public class ProductApi {
         return p;
     }
 
-    public ProductPojo getProductBarcode(ProductPojo p) throws ApiException {
+    public void getProductBarcode(ProductPojo p) throws ApiException {
         ProductPojo d = dao.selectBarcode(p.getBarcode());
         if (!Objects.isNull(d)) {
             throw new ApiException("Product with given barcode already exists");
         }
-        return p;
     }
 
     public void checkProductBarcode(String barcode) throws ApiException {

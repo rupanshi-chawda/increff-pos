@@ -31,7 +31,7 @@ public class BrandApi {
     }
 
     public void update(int id, BrandPojo p) throws ApiException {
-        checkUpdate(p.getBrand(), p.getCategory());
+        getCheckBrandCategory(p);
         BrandPojo bx = getBrandId(id);
         bx.setCategory(p.getCategory());
         bx.setBrand(p.getBrand());
@@ -48,27 +48,27 @@ public class BrandApi {
         return p;
     }
 
-    public BrandPojo getCheckBrandCategory(BrandPojo p) throws ApiException {
-        BrandPojo b = dao.selectBrandCategory(p.getBrand(), p.getCategory());
+    public void getCheckBrandCategory(BrandPojo p) throws ApiException {
+        BrandPojo b = getBrandCategory(p.getBrand(),p.getCategory());
         if(!Objects.isNull(b)) {
             throw new ApiException("Brand Category already exists");
         }
-        return p;
+    }
+
+//    public int getBrandCategoryId(String brand, String category) {
+//        BrandPojo p = dao.selectBrandCategory(brand, category);
+//        return p.getId();
+//    }
+
+    public int checkBrandCategory(String brand, String category) throws ApiException {
+        BrandPojo b = getBrandCategory(brand, category);
+        if(Objects.isNull(b)) {
+            throw new ApiException("Brand and Category doesn't exist");
+        }
+        return b.getId();
     }
 
     public BrandPojo getBrandCategory(String brand, String category) {
         return dao.selectBrandCategory(brand, category);
-    }
-
-    public int getBrandCategoryId(String brand, String category) {
-        BrandPojo p = dao.selectBrandCategory(brand, category);
-        return p.getId();
-    }
-
-    public void checkUpdate(String brand, String category) throws ApiException {
-        BrandPojo b = getBrandCategory(brand, category);
-        if(!Objects.isNull(b)) {
-            throw new ApiException("Brand and Category already exist");
-        }
     }
 }

@@ -121,10 +121,6 @@ function readFileDataCallback(results) {
   	    toastr.error("file length exceeds 5000, Not Allowed");
   	}
   	else {
-//        for(var i in fileData)
-//        {
-//            if()
-//        }
   	    uploadRows();
   	}
 }
@@ -164,7 +160,7 @@ function uploadRows() {
       errorData = response;
       resetForm();
       getBrandList();
-      toastr.success("Brand Uploaded Successfully", "Success : ");
+      toastr.success("Brands Uploaded Successfully", "Success : ");
     },
     error: function (response) {
 //      row.error = response.responseText;
