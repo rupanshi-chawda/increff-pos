@@ -30,6 +30,7 @@ public class LoginDto {
     private InfoData info;
 
     public ModelAndView login(HttpServletRequest req, LoginForm f) throws ApiException {
+        info.setMessage("");
         UserPojo p = dto.getUserByEmail(f.getEmail());
         boolean authenticated = (!Objects.isNull(p) && Objects.equals(p.getPassword(), f.getPassword()));
         if (!authenticated) {

@@ -55,3 +55,7 @@ tr:hover {
 .over-modal-backdrop.show:nth-of-type(even) {
   z-index: 1051 !important;
 }
+
+.button-icon {
+  color: #FFFFFF;
+}

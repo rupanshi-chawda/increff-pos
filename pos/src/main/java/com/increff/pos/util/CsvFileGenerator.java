@@ -19,9 +19,9 @@ public class CsvFileGenerator {
     public void writeBrandsToCsv(List<BrandPojo> brands, Writer writer) {
         try {
             CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT);
-                printer.printRecord("ID","Brand","Category");
+                printer.printRecord("Brand","Category");
             for (BrandPojo b : brands) {
-                printer.printRecord(b.getId(), b.getBrand(), b.getCategory());
+                printer.printRecord(b.getBrand(), b.getCategory());
             }
         } catch (IOException e) {
             e.printStackTrace();

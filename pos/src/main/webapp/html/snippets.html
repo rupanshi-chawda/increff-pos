@@ -90,15 +90,26 @@
         </li>
     </ul>
     
-    <ul class="navbar-nav ml-auto">
-        <li class="navbar-text">
-            <i class="fa-solid fa-circle-user fa-lg"></i>
-            [[${info.getEmail()}]] &nbsp;
-        </li>
-        <li class="nav-item">
-            <a class="nav-link btn btn-outline-secondary" th:href="@{/session/logout}">Logout</a>
-        </li>
-    </ul>
+<!--    <ul class="navbar-nav ml-auto">-->
+<!--        <li class="navbar-text">-->
+<!--            <i class="fa-solid fa-circle-user fa-lg"></i>-->
+<!--            [[${info.getEmail()}]] &nbsp;-->
+<!--        </li>-->
+<!--        <li class="nav-item">-->
+<!--            <a class="nav-link btn btn-outline-secondary" th:href="@{/session/logout}">Logout</a>-->
+<!--        </li>-->
+<!--    </ul>-->
+      <div class="dropdown show navbar-nav ml-auto">
+          <a class="btn-md btn-light bg-transparent dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: white; text-color: black;">
+              <i class="fa-solid fa-circle-user fa-lg"></i>
+              [[${info.getEmail()}]]
+          </a>
+
+          <div class="dropdown-menu" style="max-width: 60px" aria-labelledby="dropdownMenuLink">
+              <a class="nav-link btn-md btn-outline-secondary" th:href="@{/session/logout}">Logout</a>
+          </div>
+      </div>
+
   </div>
 </nav>
 

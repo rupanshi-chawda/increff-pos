@@ -67,6 +67,7 @@ function placeOrder(event) {
 }
 
 function displayOrderItemList(data) {
+  document.getElementById("place-order").disabled = false;
   var $tbody = $("#order-item-table").find("tbody");
   $tbody.empty();
 

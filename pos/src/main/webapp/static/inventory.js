@@ -79,7 +79,6 @@ function addInventory(event) {
 }
 
 function updateInventory(event) {
-  $("#edit-inventory-modal").modal("toggle");
   //Get the ID
   var barcode = $("#inventory-edit-form input[name=barcode]").val();
   var url = getInventoryUrl() + "/" + barcode;
@@ -97,6 +96,7 @@ function updateInventory(event) {
       "Content-Type": "application/json",
     },
     success: function (response) {
+      $("#edit-inventory-modal").modal("toggle");
       getInventoryList();
       toastr.success("Inventory Updated Successfully", "Success : ");
     },
@@ -256,6 +256,7 @@ function updateFileName() {
   var $file = $("#inventoryFile");
   var fileName = $file.val();
   $("#inventoryFileName").html(fileName);
+  activateUpload();
 }
 
 function displayUploadData() {
@@ -315,9 +316,10 @@ function init() {
   $("#download-errors").click(downloadErrors);
   $("#inventoryFile").on("change", updateFileName);
   $("#download-csv").click(downloadCsv);
-  $("#inventoryFile").click(activateUpload);
+//  $("#inventoryFile").click(activateUpload);
   $("#add-modal").click(displayAddInventory);
 }
 
 $(document).ready(init);
 $(document).ready(getInventoryList);
+//todo: fix inventory export csv

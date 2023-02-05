@@ -34,7 +34,7 @@ public class InitDto extends AbstractUiController {
     }
 
     public ModelAndView init(UserForm form) throws ApiException {
-
+        info.setMessage("");
         if(StringUtil.isEmpty(form.getEmail()) || StringUtil.isEmpty(form.getPassword())) {
             info.setMessage("Email or Password cannot be empty");
         }

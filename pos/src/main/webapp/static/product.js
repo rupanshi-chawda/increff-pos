@@ -82,7 +82,6 @@ function addProduct(event) {
 }
 
 function updateProduct(event) {
-  $("#edit-product-modal").modal("toggle");
   //Get the ID
   var id = $("#product-edit-form input[name=id]").val();
   var url = getProductUrl() + "/" + editProduct;
@@ -99,6 +98,7 @@ function updateProduct(event) {
       "Content-Type": "application/json",
     },
     success: function (response) {
+      $("#edit-product-modal").modal("toggle");
       getProductList();
       toastr.success("Product Updated Successfully", "Success : ");
     },
@@ -262,6 +262,7 @@ function updateFileName() {
   var $file = $("#productFile");
   var fileName = $file.val();
   $("#productFileName").html(fileName);
+  activateUpload();
 }
 
 function displayUploadData() {
@@ -369,7 +370,7 @@ function init() {
   $("#download-errors").click(downloadErrors);
   $("#productFile").on("change", updateFileName);
   $("#inputBrand").change(displayCategoryOptions);
-  $("#productFile").click(activateUpload);
+//  $("#productFile").click(activateUpload);
   $("#add-modal").click(displayAddProduct);
 }
 

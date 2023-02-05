@@ -137,9 +137,6 @@ public class InventoryDto {
         for(InventoryForm f: inventoryForms){
             InventoryPojo p = InventoryHelper.convert(f);
             p.setId(productApi.getIdByBarcode(f.getBarcode()));
-
-            System.out.println(productApi.getIdByBarcode(f.getBarcode()));
-            System.out.println(p.getId());
             api.add(p);
         }
     }

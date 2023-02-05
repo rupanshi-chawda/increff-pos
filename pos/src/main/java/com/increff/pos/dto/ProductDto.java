@@ -87,6 +87,7 @@ public class ProductDto {
     private void bulkAdd(List<ProductForm> productForms) throws ApiException {
         for(ProductForm f: productForms){
             ProductPojo p = ProductHelper.convert(f);
+            p.setBrandCategory(brandApi.checkBrandCategory(f.getBrand(), f.getCategory()));
             api.add(p);
         }
     }

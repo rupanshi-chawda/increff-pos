@@ -88,10 +88,24 @@ function displayUserList(data){
 	}
 }
 
+function displayAddUser(data) {
+  $("#add-user-modal").modal("toggle");
+}
+
+function checkform() {
+  var f = document.forms["user-form"].elements;
+  var cansubmit = true;
+  for (var i = 0; i < f.length; i++) {
+    if (f[i].value.length == 0) cansubmit = false;
+  }
+  document.getElementById("add-user").disabled = !cansubmit;
+}
+
 //INITIALIZATION CODE
 function init() {
   $("#add-user").click(addUser);
   $("#delete-user").click(deleteUser);
+  $("#add-modal").click(displayAddUser);
 }
 
 $(document).ready(init);
