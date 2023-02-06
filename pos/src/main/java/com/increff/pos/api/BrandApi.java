@@ -23,7 +23,7 @@ public class BrandApi {
     }
 
     public BrandPojo get(int id) throws ApiException {
-        return getBrandId(id);
+        return getCheckBrandId(id);
     }
 
     public List<BrandPojo> getAll() {
@@ -32,7 +32,7 @@ public class BrandApi {
 
     public void update(int id, BrandPojo p) throws ApiException {
         getCheckBrandCategory(p);
-        BrandPojo bx = getBrandId(id);
+        BrandPojo bx = getCheckBrandId(id);
         bx.setCategory(p.getCategory());
         bx.setBrand(p.getBrand());
         dao.update(p);
@@ -40,7 +40,7 @@ public class BrandApi {
 
     // Business Logic Methods
 
-    public BrandPojo getBrandId(int id) throws ApiException {
+    public BrandPojo getCheckBrandId(int id) throws ApiException {
         BrandPojo p = dao.selectById(id, BrandPojo.class);
         if (Objects.isNull(p)) {
             throw new ApiException("Brand with given ID does not exit, id: " + id);

@@ -35,7 +35,7 @@ public class ProductController {
 
     @ApiOperation(value = "Gets list of all Products")
     @GetMapping(path = "")
-    public List<ProductData> getAllProduct() {
+    public List<ProductData> getAllProduct() throws ApiException {
         return dto.getAll();
     }
 

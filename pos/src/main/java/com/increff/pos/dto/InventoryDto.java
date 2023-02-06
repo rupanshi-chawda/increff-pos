@@ -68,16 +68,10 @@ public class InventoryDto {
         }
 
         bulkAdd(forms);
-
-//        InventoryHelper.normalize(form);
-//        ValidationUtil.validateForms(form);
-//        productApi.checkProductBarcode(form.getBarcode());
-//        InventoryPojo p = InventoryHelper.convert(form);
-//        p.setId(productApi.getIdByBarcode(form.getBarcode()));
-//        api.add(p);
     }
 
     public InventoryData get(String barcode) throws ApiException {
+        productApi.checkProductBarcode(barcode);
         int id = productApi.getIdByBarcode(barcode);
         InventoryPojo p = api.get(id);
         return InventoryHelper.convert(p, barcode);

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderApi.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pos</a> &gt; <a href="index.source.html" class="el_package">com.increff.pos.api</a> &gt; <span class="el_source">OrderApi.java</span></div><h1>OrderApi.java</h1><pre class="source lang-java linenums">package com.increff.pos.api;
+
+import com.increff.pos.helper.OrderHelper;
+import com.increff.pos.dao.OrderDao;
+import com.increff.pos.dao.OrderItemDao;
+import com.increff.pos.model.form.InvoiceForm;
+import com.increff.pos.pojo.OrderItemPojo;
+import com.increff.pos.pojo.OrderPojo;
+import com.increff.pos.util.ApiException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import javax.transaction.Transactional;
+import java.time.ZonedDateTime;
+import java.util.List;
+import java.util.Objects;
+
+@Service
+@Transactional(rollbackOn = ApiException.class)
+<span class="fc" id="L26">public class OrderApi {</span>
+    
+    @Autowired
+    private OrderDao orderDao;
+
+    @Autowired
+    private OrderItemDao itemDao;
+
+    @Value(&quot;${invoice.url}&quot;)
+    private String url;
+    
+    public void addOrder(OrderPojo p) throws ApiException {
+<span class="nc" id="L38">        orderDao.insert(p);</span>
+<span class="nc" id="L39">    }</span>
+    
+    public OrderPojo getOrder(int id) throws ApiException {
+<span class="nc" id="L42">        return getOrderId(id);</span>
+    }
+
+    public List&lt;OrderPojo&gt; getAllOrder() {
+<span class="nc" id="L46">        return orderDao.selectAllDesc();</span>
+    }
+    
+    public void addItem(OrderItemPojo p, int pid, int oid) throws ApiException {
+<span class="nc" id="L50">        p.setProductId(pid);</span>
+<span class="nc" id="L51">        p.setOrderId(oid);</span>
+<span class="nc" id="L52">        itemDao.insert(p);</span>
+<span class="nc" id="L53">    }</span>
+
+    public OrderItemPojo getItem(int id) throws ApiException {
+<span class="nc" id="L56">        OrderItemPojo p = getOrderItemId(id);</span>
+<span class="nc" id="L57">        OrderHelper.validateId(p, id);</span>
+<span class="nc" id="L58">        return p;</span>
+    }
+
+    public List&lt;OrderItemPojo&gt; getAllItem() {
+<span class="nc" id="L62">        return itemDao.selectAll(OrderItemPojo.class);</span>
+    }
+
+    public List&lt;OrderItemPojo&gt; getByOrderId(int orderid) {
+<span class="nc" id="L66">        return itemDao.selectByOrderId(orderid);</span>
+    }
+
+    private OrderItemPojo getOrderItemId(int id) {
+<span class="nc" id="L70">        return itemDao.selectById(id, OrderItemPojo.class);</span>
+    }
+
+    private OrderPojo getOrderId(int id) throws ApiException {
+<span class="nc" id="L74">        OrderPojo p = orderDao.selectById(id, OrderPojo.class);</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">        if (Objects.isNull(p)) {</span>
+<span class="nc" id="L76">            throw new ApiException(&quot;Order with given ID does not exit, id: &quot; + id);</span>
+        }
+<span class="nc" id="L78">        return p;</span>
+    }
+
+    public List&lt;OrderItemPojo&gt; getOrderItemByOrderItem(int orderid) throws ApiException {
+<span class="nc" id="L82">        return itemDao.selectByOrderId(orderid);</span>
+    }
+
+    public ResponseEntity&lt;byte[]&gt; getPDF(InvoiceForm invoiceForm) {
+
+<span class="nc" id="L87">        RestTemplate restTemplate = new RestTemplate();</span>
+
+<span class="nc" id="L89">        byte[] contents = restTemplate.postForEntity(url, invoiceForm, byte[].class).getBody();</span>
+
+<span class="nc" id="L91">        HttpHeaders headers = new HttpHeaders();</span>
+<span class="nc" id="L92">        headers.setContentType(MediaType.APPLICATION_PDF);</span>
+
+<span class="nc" id="L94">        String filename = &quot;invoice.pdf&quot;;</span>
+        //headers.setContentDispositionFormData(&quot;inline&quot;, filename);
+<span class="nc" id="L96">        headers.add(&quot;Content-Disposition&quot;, &quot;inline;filename=&quot; + filename);</span>
+
+
+<span class="nc" id="L99">        headers.setCacheControl(&quot;must-revalidate, post-check=0, pre-check=0&quot;);</span>
+<span class="nc" id="L100">        ResponseEntity&lt;byte[]&gt; response = new ResponseEntity&lt;&gt;(contents, headers, HttpStatus.OK);</span>
+<span class="nc" id="L101">        return response;</span>
+    }
+
+    public List&lt;OrderPojo&gt; getOrderByDateFilter(ZonedDateTime startDate, ZonedDateTime endDate) {
+<span class="nc" id="L105">        return orderDao.selectOrderByDateFilter(startDate,endDate);</span>
+    }
+
+    public List&lt;OrderItemPojo&gt; getOrderItemsByOrderId(int id) {
+<span class="nc" id="L109">        return itemDao.selectByOrderId(id);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

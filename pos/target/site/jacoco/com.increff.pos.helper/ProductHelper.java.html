@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProductHelper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pos</a> &gt; <a href="index.source.html" class="el_package">com.increff.pos.helper</a> &gt; <span class="el_source">ProductHelper.java</span></div><h1>ProductHelper.java</h1><pre class="source lang-java linenums">package com.increff.pos.helper;
+
+import com.increff.pos.model.form.ProductForm;
+import com.increff.pos.model.data.ProductData;
+import com.increff.pos.model.form.ProductUpdateForm;
+import com.increff.pos.pojo.BrandPojo;
+import com.increff.pos.pojo.ProductPojo;
+import com.increff.pos.util.ApiException;
+import com.increff.pos.util.StringUtil;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Objects;
+
+<span class="nc" id="L15">public class ProductHelper {</span>
+
+    public static ProductData convert(ProductPojo p, BrandPojo b) {
+<span class="fc" id="L18">        ProductData d = new ProductData();</span>
+<span class="fc" id="L19">        d.setBarcode(p.getBarcode());</span>
+<span class="fc" id="L20">        d.setId(p.getId());</span>
+<span class="fc" id="L21">        d.setName(p.getName());</span>
+<span class="fc" id="L22">        d.setMrp(p.getMrp());</span>
+<span class="fc" id="L23">        d.setBrand(b.getBrand());</span>
+<span class="fc" id="L24">        d.setCategory(b.getCategory());</span>
+<span class="fc" id="L25">        return d;</span>
+    }
+
+    public static ProductPojo convert(ProductForm f) {
+<span class="fc" id="L29">        ProductPojo p = new ProductPojo();</span>
+<span class="fc" id="L30">        p.setName(f.getName());</span>
+<span class="fc" id="L31">        p.setBarcode(f.getBarcode());</span>
+<span class="fc" id="L32">        p.setMrp(f.getMrp());</span>
+<span class="fc" id="L33">        return p;</span>
+    }
+
+    public static ProductPojo convert(ProductUpdateForm f) {
+<span class="fc" id="L37">        ProductPojo p = new ProductPojo();</span>
+<span class="fc" id="L38">        p.setName(f.getName());</span>
+<span class="fc" id="L39">        p.setMrp(f.getMrp());</span>
+<span class="fc" id="L40">        return p;</span>
+    }
+
+    public static void normalize(ProductForm f) {
+<span class="fc" id="L44">        f.setBarcode(StringUtil.toLowerCase(f.getBarcode()));</span>
+<span class="fc" id="L45">        f.setBrand(StringUtil.toLowerCase(f.getBrand()));</span>
+<span class="fc" id="L46">        f.setCategory(StringUtil.toLowerCase(f.getCategory()));</span>
+<span class="fc" id="L47">        f.setName(StringUtil.toLowerCase(f.getName()));</span>
+<span class="fc" id="L48">    }</span>
+    public static void normalize(ProductUpdateForm f) {
+<span class="fc" id="L50">        f.setName(StringUtil.toLowerCase(f.getName()));</span>
+<span class="fc" id="L51">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

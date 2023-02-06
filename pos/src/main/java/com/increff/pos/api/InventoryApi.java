@@ -3,7 +3,6 @@ package com.increff.pos.api;
 import com.increff.pos.dao.InventoryDao;
 import com.increff.pos.helper.InventoryHelper;
 import com.increff.pos.pojo.InventoryPojo;
-import com.increff.pos.pojo.ProductPojo;
 import com.increff.pos.util.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,7 @@ public class InventoryApi {
     private InventoryDao dao;
 
     public void add(InventoryPojo p) throws ApiException {
-        InventoryPojo b = getInventoryId(p.getId());
+        InventoryPojo b = getByInventoryId(p.getId());
         System.out.println(p.getId());
         //System.out.println(b.getId());
         if(Objects.isNull(b)) {
@@ -35,7 +34,7 @@ public class InventoryApi {
     }
 
     public InventoryPojo get(int id) throws ApiException {
-        InventoryPojo p = getInventoryId(id);
+        InventoryPojo p = getByInventoryId(id);
         p = InventoryHelper.validateInventoryId(p, id);
         return p;
     }
@@ -45,18 +44,18 @@ public class InventoryApi {
     }
 
     public void update(InventoryPojo p) throws ApiException {
-        InventoryPojo bx = getInventoryId(p.getId());
+        InventoryPojo bx = getByInventoryId(p.getId());
         InventoryHelper.validateId(bx, p.getId());
         bx.setQuantity(p.getQuantity());
         dao.update(p);
     }
 
-    public InventoryPojo getInventoryId(int id) {
+    public InventoryPojo getByInventoryId(int id) {
         return dao.selectById(id, InventoryPojo.class);
     }
 
     public int getQuantityById(int id) {
-        InventoryPojo p = getInventoryId(id);
+        InventoryPojo p = getByInventoryId(id);
         return p.getQuantity();
     }
 }

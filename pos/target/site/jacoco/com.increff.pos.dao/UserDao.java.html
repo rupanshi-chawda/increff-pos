@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserDao.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pos</a> &gt; <a href="index.source.html" class="el_package">com.increff.pos.dao</a> &gt; <span class="el_source">UserDao.java</span></div><h1>UserDao.java</h1><pre class="source lang-java linenums">package com.increff.pos.dao;
+
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+
+import com.increff.pos.pojo.UserPojo;
+import org.springframework.stereotype.Repository;
+
+@Repository
+<span class="fc" id="L10">public class UserDao extends AbstractDao {</span>
+
+	private static final String DELETE_BY_ID = &quot;delete from UserPojo p where id=:id&quot;;
+	private static final String SELECT_BY_EMAIL = &quot;select p from UserPojo p where email=:email&quot;;
+
+	public void deleteById(int id) {
+<span class="nc" id="L16">		Query query = em().createQuery(DELETE_BY_ID);</span>
+<span class="nc" id="L17">		query.setParameter(&quot;id&quot;, id);</span>
+<span class="nc" id="L18">		query.executeUpdate();</span>
+<span class="nc" id="L19">	}</span>
+
+	public UserPojo selectByEmail(String email) {
+<span class="nc" id="L22">		TypedQuery&lt;UserPojo&gt; query = getQuery(SELECT_BY_EMAIL, UserPojo.class);</span>
+<span class="nc" id="L23">		query.setParameter(&quot;email&quot;, email);</span>
+<span class="nc" id="L24">		return getSingle(query);</span>
+	}
+
+	public void update(UserPojo p) {
+<span class="nc" id="L28">	}</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

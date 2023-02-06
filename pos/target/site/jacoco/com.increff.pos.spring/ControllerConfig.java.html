@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ControllerConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pos</a> &gt; <a href="index.source.html" class="el_package">com.increff.pos.spring</a> &gt; <span class="el_source">ControllerConfig.java</span></div><h1>ControllerConfig.java</h1><pre class="source lang-java linenums">package com.increff.pos.spring;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.ser.ZonedDateTimeSerializer;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.thymeleaf.spring4.SpringTemplateEngine;
+import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.spring4.view.ThymeleafViewResolver;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ITemplateResolver;
+
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
+@Configuration
+@EnableWebMvc
+@EnableSwagger2
+<span class="fc" id="L33">public class ControllerConfig extends WebMvcConfigurerAdapter {</span>
+
+	public static final String PACKAGE_CONTROLLER = &quot;com.increff.pos.controller&quot;;
+
+
+	private ApplicationContext applicationContext;
+
+	public void setApplicationContext(ApplicationContext applicationContext) {
+<span class="nc" id="L41">		this.applicationContext = applicationContext;</span>
+<span class="nc" id="L42">	}</span>
+	
+	@Bean
+	public Docket api() {
+<span class="fc" id="L46">		return new Docket(DocumentationType.SWAGGER_2)//</span>
+<span class="fc" id="L47">				.useDefaultResponseMessages(false)//</span>
+<span class="fc" id="L48">				.select().apis(RequestHandlerSelectors.basePackage(PACKAGE_CONTROLLER))//</span>
+<span class="fc" id="L49">				.paths(PathSelectors.regex(&quot;/api/.*&quot;))//</span>
+<span class="fc" id="L50">				.build();</span>
+	}
+
+	// Add configuration for Swagger
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+<span class="fc" id="L56">		registry.addResourceHandler(&quot;/swagger-ui.html&quot;).</span>
+<span class="fc" id="L57">				addResourceLocations(&quot;classpath:/META-INF/resources/&quot;);</span>
+<span class="fc" id="L58">		registry.addResourceHandler(&quot;/webjars/**&quot;).</span>
+<span class="fc" id="L59">				addResourceLocations(&quot;classpath:/META-INF/resources/webjars/&quot;);</span>
+<span class="fc" id="L60">		registry.addResourceHandler(&quot;/static/**&quot;).</span>
+<span class="fc" id="L61">				addResourceLocations(&quot;/static/&quot;);</span>
+<span class="fc" id="L62">	}</span>
+
+	@Override
+	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+<span class="fc" id="L66">		configurer.enable();</span>
+<span class="fc" id="L67">	}</span>
+
+	@Bean
+	public SpringTemplateEngine templateEngine() {
+<span class="fc" id="L71">		SpringTemplateEngine engine = new SpringTemplateEngine();</span>
+<span class="fc" id="L72">		engine.setEnableSpringELCompiler(true);</span>
+<span class="fc" id="L73">		engine.setTemplateResolver(templateResolver());</span>
+<span class="fc" id="L74">		return engine;</span>
+	}
+
+	@Bean
+	public ThymeleafViewResolver viewResolver() {
+<span class="fc" id="L79">		ThymeleafViewResolver resolver = new ThymeleafViewResolver();</span>
+<span class="fc" id="L80">		resolver.setTemplateEngine(templateEngine());</span>
+<span class="fc" id="L81">		resolver.setCharacterEncoding(&quot;UTF-8&quot;);</span>
+<span class="fc" id="L82">		return resolver;</span>
+	}
+	
+	@Bean
+	public ITemplateResolver templateResolver() {
+<span class="fc" id="L87">		SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();</span>
+<span class="fc" id="L88">		resolver.setApplicationContext(applicationContext);</span>
+<span class="fc" id="L89">		resolver.setPrefix(&quot;/html/&quot;);</span>
+<span class="fc" id="L90">		resolver.setTemplateMode(TemplateMode.HTML);</span>
+<span class="fc" id="L91">		return resolver;</span>
+	}
+	
+	@Bean
+	public ObjectMapper objectMapper() {
+<span class="fc" id="L96">		JavaTimeModule javaTimeModule = new JavaTimeModule();</span>
+<span class="fc" id="L97">		javaTimeModule.addSerializer(ZonedDateTime.class, new ZonedDateTimeSerializer(DateTimeFormatter.ISO_DATE_TIME));</span>
+<span class="fc" id="L98">		return Jackson2ObjectMapperBuilder.json().featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)</span>
+<span class="fc" id="L99">				.modules(javaTimeModule).build();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

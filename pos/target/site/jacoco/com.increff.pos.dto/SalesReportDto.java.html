@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SalesReportDto.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pos</a> &gt; <a href="index.source.html" class="el_package">com.increff.pos.dto</a> &gt; <span class="el_source">SalesReportDto.java</span></div><h1>SalesReportDto.java</h1><pre class="source lang-java linenums">package com.increff.pos.dto;
+
+import com.increff.pos.model.data.SalesReportData;
+import com.increff.pos.model.form.SalesReportForm;
+import com.increff.pos.pojo.BrandPojo;
+import com.increff.pos.pojo.OrderItemPojo;
+import com.increff.pos.pojo.OrderPojo;
+import com.increff.pos.pojo.ProductPojo;
+import com.increff.pos.util.ApiException;
+import com.increff.pos.api.BrandApi;
+import com.increff.pos.api.OrderApi;
+import com.increff.pos.api.ProductApi;
+import com.increff.pos.util.CsvFileGenerator;
+import com.increff.pos.util.ValidationUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+
+@Component
+<span class="fc" id="L28">public class SalesReportDto {</span>
+    @Autowired
+    private OrderApi orderApi;
+
+    @Autowired
+    private BrandApi brandApi;
+
+    @Autowired
+    private ProductApi productApi;
+
+    @Autowired
+    private CsvFileGenerator csvGenerator;
+
+<span class="fc" id="L41">    protected List&lt;SalesReportData&gt; salesListData = new ArrayList&lt;&gt;();</span>
+
+    public List&lt;SalesReportData&gt; getAll() throws ApiException {
+<span class="nc" id="L44">        List&lt;OrderPojo&gt; list = orderApi.getAllOrder();</span>
+<span class="nc" id="L45">        return getFilterSalesReport(list, &quot;all&quot;, &quot;all&quot;);</span>
+    }
+
+    public List&lt;SalesReportData&gt; getFilterAll(SalesReportForm form) throws ApiException {
+
+<span class="nc" id="L50">        ValidationUtil.validateForms(form);</span>
+
+<span class="nc" id="L52">        String startDate = form.getStartDate() + &quot; 00:00:00&quot;;</span>
+<span class="nc" id="L53">        String endDate = form.getEndDate() + &quot; 23:59:59&quot;;</span>
+
+<span class="nc" id="L55">        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm:ss&quot;);</span>
+<span class="nc" id="L56">        LocalDateTime sDate = LocalDateTime.parse(startDate, formatter);</span>
+<span class="nc" id="L57">        LocalDateTime eDate = LocalDateTime.parse(endDate, formatter);</span>
+
+<span class="nc" id="L59">        ZonedDateTime start = sDate.atZone(ZoneId.systemDefault());</span>
+<span class="nc" id="L60">        ZonedDateTime end = eDate.atZone(ZoneId.systemDefault());;</span>
+<span class="nc" id="L61">        checkDates(start, end);</span>
+
+<span class="nc" id="L63">        List&lt;OrderPojo&gt; list = orderApi.getOrderByDateFilter(start, end);</span>
+<span class="nc" id="L64">        return getFilterSalesReport(list, form.getBrand(), form.getCategory());</span>
+    }
+
+    public List&lt;SalesReportData&gt; getFilterSalesReport(List&lt;OrderPojo&gt; list, String brand, String category) throws ApiException {
+<span class="nc" id="L68">        HashMap&lt;Integer, SalesReportData&gt; map = new HashMap&lt;Integer, SalesReportData&gt;();</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        for(OrderPojo orderPojo: list)</span>
+        {
+<span class="nc" id="L71">            List&lt;OrderItemPojo&gt; itemList = orderApi.getOrderItemsByOrderId(orderPojo.getId());</span>
+
+<span class="nc bnc" id="L73" title="All 2 branches missed.">            for (OrderItemPojo p: itemList)</span>
+            {
+<span class="nc" id="L75">                ProductPojo productPojo = productApi.get(p.getProductId());</span>
+<span class="nc" id="L76">                BrandPojo brandPojo = brandApi.get(productPojo.getBrandCategory());</span>
+
+<span class="nc bnc" id="L78" title="All 2 branches missed.">                if(!map.containsKey(brandPojo.getId())) {</span>
+<span class="nc" id="L79">                    map.put(brandPojo.getId(), new SalesReportData());</span>
+                }
+
+<span class="nc" id="L82">                SalesReportData salesReportData = map.get(brandPojo.getId());</span>
+
+<span class="nc" id="L84">                salesReportData.setQuantity(salesReportData.getQuantity() + p.getQuantity() );</span>
+<span class="nc" id="L85">                salesReportData.setRevenue(salesReportData.getRevenue() + (p.getQuantity() * p.getSellingPrice()));</span>
+
+<span class="nc" id="L87">            }</span>
+<span class="nc" id="L88">        }</span>
+
+<span class="nc" id="L90">        List&lt;SalesReportData&gt; salesList = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">        for(Map.Entry&lt;Integer, SalesReportData&gt; entry: map.entrySet()) {</span>
+<span class="nc" id="L92">            BrandPojo bp = brandApi.get(entry.getKey());</span>
+<span class="nc bnc" id="L93" title="All 4 branches missed.">            if((Objects.equals(brand,bp.getBrand()) || Objects.equals(brand,&quot;all&quot;)) &amp;&amp;</span>
+<span class="nc bnc" id="L94" title="All 4 branches missed.">                    (Objects.equals(category,bp.getCategory()) || Objects.equals(category,&quot;all&quot;)))</span>
+            {
+<span class="nc" id="L96">                SalesReportData d = entry.getValue();</span>
+<span class="nc" id="L97">                d.setBrand(bp.getBrand());</span>
+<span class="nc" id="L98">                d.setCategory(bp.getCategory());</span>
+<span class="nc" id="L99">                salesList.add(d);</span>
+            }
+<span class="nc" id="L101">        }</span>
+
+<span class="nc" id="L103">        salesListData = salesList;</span>
+<span class="nc" id="L104">        return salesListData;</span>
+    }
+
+
+    public void generateCsv(HttpServletResponse response) throws IOException, ApiException {
+<span class="nc" id="L109">        response.setContentType(&quot;text/csv&quot;);</span>
+<span class="nc" id="L110">        response.addHeader(&quot;Content-Disposition&quot;, &quot;attachment; filename=\&quot;salesReport.csv\&quot;&quot;);</span>
+<span class="nc" id="L111">        csvGenerator.writeSalesToCsv(salesListData, response.getWriter());</span>
+<span class="nc" id="L112">        salesListData.clear();</span>
+<span class="nc" id="L113">    }</span>
+
+    private void checkDates(ZonedDateTime startDate, ZonedDateTime endDate) throws ApiException {
+<span class="nc bnc" id="L116" title="All 2 branches missed.">        if(endDate.isBefore(startDate)) {</span>
+<span class="nc" id="L117">            throw new ApiException(&quot;End date must not be before Start date&quot;);</span>
+        }
+<span class="nc" id="L119">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

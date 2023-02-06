@@ -122,7 +122,7 @@ public class OrderDto {
 
     private void reduceInventory(String barcode, int quantity) throws ApiException {
         int id = productApi.getIdByBarcode(barcode);
-        InventoryPojo p = inventoryApi.getInventoryId(id);
+        InventoryPojo p = inventoryApi.getByInventoryId(id);
         int newQuantity = p.getQuantity() - quantity;
         p.setQuantity(newQuantity);
         inventoryApi.update(p);

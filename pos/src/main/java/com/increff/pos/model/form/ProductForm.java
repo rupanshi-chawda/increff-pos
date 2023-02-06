@@ -16,7 +16,10 @@ public class ProductForm {
     @Size(min = 1, message = "must 8 character long")
     private String barcode;
 
+    @NotBlank
     private String brand;
+
+    @NotBlank
     private String category;
 
     @NotBlank

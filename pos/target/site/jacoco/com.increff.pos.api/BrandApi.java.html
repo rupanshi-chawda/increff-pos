@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BrandApi.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pos</a> &gt; <a href="index.source.html" class="el_package">com.increff.pos.api</a> &gt; <span class="el_source">BrandApi.java</span></div><h1>BrandApi.java</h1><pre class="source lang-java linenums">package com.increff.pos.api;
+
+import com.increff.pos.pojo.BrandPojo;
+import com.increff.pos.dao.BrandDao;
+import com.increff.pos.util.ApiException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Objects;
+
+@Service
+@Transactional(rollbackOn = ApiException.class)
+<span class="fc" id="L15">public class BrandApi {</span>
+
+    @Autowired
+    private BrandDao dao;
+
+    public void add(BrandPojo p) throws ApiException {
+        //p = getCheckBrandCategory(p);
+<span class="fc" id="L22">        dao.insert(p);</span>
+<span class="fc" id="L23">    }</span>
+
+    public BrandPojo get(int id) throws ApiException {
+<span class="fc" id="L26">        return getCheckBrandId(id);</span>
+    }
+
+    public List&lt;BrandPojo&gt; getAll() {
+<span class="fc" id="L30">        return dao.selectAll(BrandPojo.class);</span>
+    }
+
+    public void update(int id, BrandPojo p) throws ApiException {
+<span class="fc" id="L34">        getCheckBrandCategory(p);</span>
+<span class="fc" id="L35">        BrandPojo bx = getCheckBrandId(id);</span>
+<span class="fc" id="L36">        bx.setCategory(p.getCategory());</span>
+<span class="fc" id="L37">        bx.setBrand(p.getBrand());</span>
+<span class="fc" id="L38">        dao.update(p);</span>
+<span class="fc" id="L39">    }</span>
+
+    // Business Logic Methods
+
+    public BrandPojo getCheckBrandId(int id) throws ApiException {
+<span class="fc" id="L44">        BrandPojo p = dao.selectById(id, BrandPojo.class);</span>
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">        if (Objects.isNull(p)) {</span>
+<span class="nc" id="L46">            throw new ApiException(&quot;Brand with given ID does not exit, id: &quot; + id);</span>
+        }
+<span class="fc" id="L48">        return p;</span>
+    }
+
+    public void getCheckBrandCategory(BrandPojo p) throws ApiException {
+<span class="fc" id="L52">        BrandPojo b = getBrandCategory(p.getBrand(),p.getCategory());</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        if(!Objects.isNull(b)) {</span>
+<span class="fc" id="L54">            throw new ApiException(&quot;Brand Category already exists&quot;);</span>
+        }
+<span class="fc" id="L56">    }</span>
+
+//    public int getBrandCategoryId(String brand, String category) {
+//        BrandPojo p = dao.selectBrandCategory(brand, category);
+//        return p.getId();
+//    }
+
+    public int checkBrandCategory(String brand, String category) throws ApiException {
+<span class="fc" id="L64">        BrandPojo b = getBrandCategory(brand, category);</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        if(Objects.isNull(b)) {</span>
+<span class="fc" id="L66">            throw new ApiException(&quot;Brand and Category doesn't exist&quot;);</span>
+        }
+<span class="fc" id="L68">        return b.getId();</span>
+    }
+
+    public BrandPojo getBrandCategory(String brand, String category) {
+<span class="fc" id="L72">        return dao.selectBrandCategory(brand, category);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

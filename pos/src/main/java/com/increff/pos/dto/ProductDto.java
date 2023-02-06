@@ -9,6 +9,7 @@ import com.increff.pos.api.ProductApi;
 import com.increff.pos.helper.ProductHelper;
 import com.increff.pos.model.data.ProductData;
 import com.increff.pos.model.form.ProductUpdateForm;
+import com.increff.pos.pojo.BrandPojo;
 import com.increff.pos.pojo.ProductPojo;
 import com.increff.pos.util.ApiException;
 import com.increff.pos.util.ConvertUtil;
@@ -69,11 +70,18 @@ public class ProductDto {
 
     public ProductData get(int id) throws ApiException {
         ProductPojo p = api.get(id);
-        return ProductHelper.convert(p);
+        BrandPojo b = brandApi.getCheckBrandId(p.getBrandCategory());
+        return ProductHelper.convert(p, b);
     }
 
-    public List<ProductData> getAll() {
-        return api.getAll().stream().map(ProductHelper::convert).collect(Collectors.toList());
+    public List<ProductData> getAll() throws ApiException {
+        List<ProductPojo> list = api.getAll();
+        List<ProductData> list2 = new ArrayList<>();
+        for(ProductPojo productPojo : list) {
+            BrandPojo brandPojo= brandApi.getCheckBrandId(productPojo.getBrandCategory());
+            list2.add(ProductHelper.convert(productPojo, brandPojo));
+        }
+        return list2;
     }
 
     public void update(int id, ProductUpdateForm f) throws ApiException {

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SalesDto.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pos</a> &gt; <a href="index.source.html" class="el_package">com.increff.pos.dto</a> &gt; <span class="el_source">SalesDto.java</span></div><h1>SalesDto.java</h1><pre class="source lang-java linenums">package com.increff.pos.dto;
+
+import com.increff.pos.api.OrderApi;
+import com.increff.pos.api.SalesApi;
+import com.increff.pos.model.form.SalesForm;
+import com.increff.pos.pojo.OrderItemPojo;
+import com.increff.pos.pojo.OrderPojo;
+import com.increff.pos.pojo.SalesPojo;
+import com.increff.pos.util.ApiException;
+import com.increff.pos.util.ValidationUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
+import java.time.*;
+import java.util.List;
+import java.util.Objects;
+
+@Component
+@Service
+<span class="fc" id="L21">public class SalesDto {</span>
+
+    @Autowired
+    private SalesApi api;
+
+    @Autowired
+    private OrderApi orderApi;
+
+    public List&lt;SalesPojo&gt; getAllBetweenDates(SalesForm salesForm) throws ApiException {
+<span class="nc" id="L30">        LocalDate startDate = LocalDate.parse(salesForm.getStartDate());</span>
+<span class="nc" id="L31">        LocalDate endDate = LocalDate.parse(salesForm.getEndDate());</span>
+<span class="nc" id="L32">        ValidationUtil.validateForms(salesForm);</span>
+<span class="nc" id="L33">        checkDates(startDate, endDate);</span>
+<span class="nc" id="L34">        return  api.getAllBetweenDates(startDate, endDate);</span>
+    }
+
+    public List&lt;SalesPojo&gt; getAll() throws ApiException {
+<span class="nc" id="L38">        return api.getAll();</span>
+    }
+
+    public void createReport() throws ApiException {
+<span class="nc" id="L42">        SalesPojo salesPojo = new SalesPojo();</span>
+
+<span class="nc" id="L44">        LocalDate date = LocalDate.now();</span>
+<span class="nc" id="L45">        int totalItems = 0;</span>
+<span class="nc" id="L46">        double totalRevenue = 0.0;</span>
+
+<span class="nc" id="L48">        ZonedDateTime startDate = date.atStartOfDay(ZoneId.systemDefault());</span>
+        //LocalDateTime eldt =  LocalDateTime.of(date, LocalTime.MAX);
+<span class="nc" id="L50">        ZonedDateTime endDate = startDate.with(LocalTime.MAX);</span>
+
+<span class="nc" id="L52">        List&lt;OrderPojo&gt; orderPojoList = orderApi.getOrderByDateFilter(startDate,endDate);</span>
+
+<span class="nc" id="L54">        Integer totalOrders = orderPojoList.size();</span>
+
+<span class="nc bnc" id="L56" title="All 2 branches missed.">        for (OrderPojo orderPojo : orderPojoList) {</span>
+<span class="nc" id="L57">            int id = orderPojo.getId();</span>
+<span class="nc" id="L58">            List&lt;OrderItemPojo&gt; orderItemPojoList = orderApi.getOrderItemsByOrderId(id);</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">            for (OrderItemPojo orderItemPojo: orderItemPojoList) {</span>
+<span class="nc" id="L60">                totalItems += orderItemPojo.getQuantity();</span>
+<span class="nc" id="L61">                totalRevenue += orderItemPojo.getQuantity() * orderItemPojo.getSellingPrice();</span>
+<span class="nc" id="L62">            }</span>
+<span class="nc" id="L63">        }</span>
+
+<span class="nc" id="L65">        salesPojo.setDate(date);</span>
+<span class="nc" id="L66">        salesPojo.setInvoicedItemsCount(totalItems);</span>
+<span class="nc" id="L67">        salesPojo.setTotalRevenue(totalRevenue);</span>
+<span class="nc" id="L68">        salesPojo.setInvoicedOrderCount(totalOrders);</span>
+
+<span class="nc" id="L70">        SalesPojo pojo = api.getByDate(date);</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">        if(Objects.isNull(pojo)){</span>
+<span class="nc" id="L72">            api.add(salesPojo);</span>
+        }
+        else {
+<span class="nc" id="L75">            api.update(date,salesPojo);</span>
+        }
+
+<span class="nc" id="L78">    }</span>
+
+    private void checkDates(LocalDate startDate, LocalDate endDate) throws ApiException {
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        if(endDate.isBefore(startDate)) {</span>
+<span class="nc" id="L82">            throw new ApiException(&quot;End date must not be before Start date&quot;);</span>
+        }
+<span class="nc" id="L84">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

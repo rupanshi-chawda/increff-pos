@@ -11,6 +11,7 @@ import com.increff.pos.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
@@ -55,11 +56,6 @@ public class BrandDto {
         }
 
         bulkAdd(forms);
-
-//        BrandHelper.normalize(form);
-//        ValidationUtil.validateForms(form);
-//        BrandPojo p = BrandHelper.convert(form);
-//        api.add(p);
     }
 
     public BrandData get(int id) throws ApiException {
@@ -83,6 +79,12 @@ public class BrandDto {
         response.setContentType("text/csv");
         response.addHeader("Content-Disposition", "attachment; filename=\"brandReport.csv\"");
         csvGenerator.writeBrandsToCsv(api.getAll(), response.getWriter());
+//
+//
+//        ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper(response);
+//        byte[] responseArray = responseWrapper.getContentAsByteArray();
+//        String responseStr = new String(responseArray, responseWrapper.getCharacterEncoding());
+//        System.out.println(responseStr);
     }
 
     @Transactional(rollbackOn = ApiException.class)

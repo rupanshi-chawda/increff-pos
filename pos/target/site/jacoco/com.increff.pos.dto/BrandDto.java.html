@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BrandDto.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pos</a> &gt; <a href="index.source.html" class="el_package">com.increff.pos.dto</a> &gt; <span class="el_source">BrandDto.java</span></div><h1>BrandDto.java</h1><pre class="source lang-java linenums">package com.increff.pos.dto;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.increff.pos.api.BrandApi;
+import com.increff.pos.helper.BrandHelper;
+import com.increff.pos.model.data.BrandErrorData;
+import com.increff.pos.pojo.BrandPojo;
+import com.increff.pos.model.data.BrandData;
+import com.increff.pos.model.form.BrandForm;
+import com.increff.pos.util.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.web.util.ContentCachingResponseWrapper;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Component
+@Service
+<span class="fc" id="L25">public class BrandDto {</span>
+
+    @Autowired
+    private BrandApi api;
+
+    @Autowired
+    private CsvFileGenerator csvGenerator;
+
+    public void add(List&lt;BrandForm&gt; forms) throws ApiException, JsonProcessingException {
+<span class="fc" id="L34">        List&lt;BrandErrorData&gt; errorData = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L35">        errorData.clear();</span>
+<span class="fc" id="L36">        int errorSize = 0;</span>
+
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        for(BrandForm f: forms)</span>
+        {
+<span class="fc" id="L40">            BrandErrorData brandErrorData = ConvertUtil.convert(f, BrandErrorData.class);</span>
+<span class="fc" id="L41">            brandErrorData.setMessage(&quot;&quot;);</span>
+            try
+            {
+<span class="fc" id="L44">                ValidationUtil.validateForms(f);</span>
+<span class="fc" id="L45">                BrandHelper.normalize(f);</span>
+<span class="fc" id="L46">                BrandPojo b = BrandHelper.convert(f);</span>
+<span class="fc" id="L47">                api.getCheckBrandCategory(b);</span>
+<span class="fc" id="L48">            } catch (Exception e) {</span>
+<span class="fc" id="L49">                errorSize++;</span>
+<span class="fc" id="L50">                brandErrorData.setMessage(e.getMessage());</span>
+<span class="fc" id="L51">            }</span>
+<span class="fc" id="L52">            errorData.add(brandErrorData);</span>
+<span class="fc" id="L53">        }</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        if (errorSize &gt; 0) {</span>
+<span class="nc" id="L55">            ErrorUtil.throwErrors(errorData);</span>
+        }
+
+<span class="fc" id="L58">        bulkAdd(forms);</span>
+<span class="fc" id="L59">    }</span>
+
+    public BrandData get(int id) throws ApiException {
+<span class="fc" id="L62">        BrandPojo p = api.get(id);</span>
+<span class="fc" id="L63">        return BrandHelper.convert(p);</span>
+    }
+
+    public List&lt;BrandData&gt; getAll() {
+<span class="fc" id="L67">        return api.getAll().stream().map(BrandHelper::convert).collect(Collectors.toList());</span>
+    }
+
+    public void update(int id, BrandForm f) throws ApiException {
+<span class="fc" id="L71">        BrandHelper.normalize(f);</span>
+//        BrandHelper.validate(f);
+<span class="fc" id="L73">        ValidationUtil.validateForms(f);</span>
+<span class="fc" id="L74">        BrandPojo p = BrandHelper.convert(f);</span>
+<span class="fc" id="L75">        api.update(id, p);</span>
+<span class="fc" id="L76">    }</span>
+
+    public void generateCsv(HttpServletResponse response) throws IOException {
+<span class="fc" id="L79">        response.setContentType(&quot;text/csv&quot;);</span>
+<span class="fc" id="L80">        response.addHeader(&quot;Content-Disposition&quot;, &quot;attachment; filename=\&quot;brandReport.csv\&quot;&quot;);</span>
+<span class="fc" id="L81">        csvGenerator.writeBrandsToCsv(api.getAll(), response.getWriter());</span>
+//
+//
+//        ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper(response);
+//        byte[] responseArray = responseWrapper.getContentAsByteArray();
+//        String responseStr = new String(responseArray, responseWrapper.getCharacterEncoding());
+//        System.out.println(responseStr);
+<span class="fc" id="L88">    }</span>
+
+    @Transactional(rollbackOn = ApiException.class)
+    private void bulkAdd(List&lt;BrandForm&gt; brandForms) throws ApiException {
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        for (BrandForm f: brandForms){</span>
+<span class="fc" id="L93">            BrandPojo b = BrandHelper.convert(f);</span>
+<span class="fc" id="L94">            api.add(b);</span>
+<span class="fc" id="L95">        }</span>
+<span class="fc" id="L96">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

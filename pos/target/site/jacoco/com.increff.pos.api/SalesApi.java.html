@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SalesApi.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pos</a> &gt; <a href="index.source.html" class="el_package">com.increff.pos.api</a> &gt; <span class="el_source">SalesApi.java</span></div><h1>SalesApi.java</h1><pre class="source lang-java linenums">package com.increff.pos.api;
+
+import com.increff.pos.dao.SalesDao;
+import com.increff.pos.pojo.SalesPojo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.util.List;
+
+@Service
+<span class="fc" id="L13">public class SalesApi {</span>
+
+    @Autowired
+    SalesDao dao;
+
+    @Transactional
+    public void add(SalesPojo salesPojo){
+<span class="nc" id="L20">        dao.insert(salesPojo);</span>
+<span class="nc" id="L21">    }</span>
+
+    @Transactional
+    public List&lt;SalesPojo&gt; getAll() {
+<span class="nc" id="L25">        return dao.selectAll(SalesPojo.class);</span>
+    }
+
+    @Transactional
+    public SalesPojo getByDate(LocalDate date) {
+<span class="nc" id="L30">        return dao.selectByDate(date);</span>
+    }
+
+    @Transactional
+    public void update(LocalDate date, SalesPojo newPojo)
+    {
+<span class="nc" id="L36">        SalesPojo pojo = dao.selectByDate(date);</span>
+<span class="nc" id="L37">        pojo.setInvoicedOrderCount(newPojo.getInvoicedOrderCount());</span>
+<span class="nc" id="L38">        pojo.setTotalRevenue(newPojo.getTotalRevenue());</span>
+<span class="nc" id="L39">        pojo.setInvoicedItemsCount(newPojo.getInvoicedItemsCount());</span>
+<span class="nc" id="L40">    }</span>
+
+    @Transactional
+    public List&lt;SalesPojo&gt; getAllBetweenDates(LocalDate startDate, LocalDate endDate) {
+<span class="nc" id="L44">        return dao.selectBetweenDates(startDate,endDate);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

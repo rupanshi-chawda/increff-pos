@@ -1,3 +1,5 @@
-com\increff\pos\api\SampleTest.class
-com\increff\pos\api\QaConfig.class
-com\increff\pos\api\AbstractUnitTest.class
+com\increff\pos\dto\InventoryDtoTest.class
+com\increff\pos\QaConfig.class
+com\increff\pos\dto\ProductDtoTest.class
+com\increff\pos\AbstractUnitTest.class
+com\increff\pos\dto\BrandDtoTest.class

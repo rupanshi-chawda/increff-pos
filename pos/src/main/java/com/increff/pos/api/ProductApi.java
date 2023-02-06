@@ -45,22 +45,21 @@ public class ProductApi {
     }
 
     public void getProductBarcode(ProductPojo p) throws ApiException {
-        ProductPojo d = dao.selectBarcode(p.getBarcode());
+        ProductPojo d = dao.selectByBarcode(p.getBarcode());
         if (!Objects.isNull(d)) {
             throw new ApiException("Product with given barcode already exists");
         }
     }
 
     public void checkProductBarcode(String barcode) throws ApiException {
-        ProductPojo d = dao.selectBarcode(barcode);
+        ProductPojo d = dao.selectByBarcode(barcode);
         if (Objects.isNull(d)) {
             throw new ApiException("Product with given barcode does not exists");
         }
     }
 
     public int getIdByBarcode(String barcode) {
-        ProductPojo p = dao.selectBarcode(barcode);
-        System.out.println("inside get id by barcode");
+        ProductPojo p = dao.selectByBarcode(barcode);
         return p.getId();
     }
 
@@ -70,7 +69,7 @@ public class ProductApi {
     }
 
     public String getProductBarcodeByItemBarcode(String barcode) {
-        ProductPojo p = dao.selectBarcode(barcode);
+        ProductPojo p = dao.selectByBarcode(barcode);
         return p.getBarcode();
     }
 }

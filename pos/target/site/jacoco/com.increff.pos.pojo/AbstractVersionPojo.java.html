@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractVersionPojo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pos</a> &gt; <a href="index.source.html" class="el_package">com.increff.pos.pojo</a> &gt; <span class="el_source">AbstractVersionPojo.java</span></div><h1>AbstractVersionPojo.java</h1><pre class="source lang-java linenums">package com.increff.pos.pojo;
+
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Version;
+import java.io.Serializable;
+import java.time.ZonedDateTime;
+
+@MappedSuperclass
+@Getter
+<span class="nc" id="L16">@Setter</span>
+<span class="fc" id="L17">public abstract class AbstractVersionPojo implements Serializable {</span>
+
+    @CreationTimestamp
+    @Column
+<span class="nc" id="L21">    private ZonedDateTime createdAt;</span>
+
+    @UpdateTimestamp
+    @Column
+<span class="nc" id="L25">    private ZonedDateTime updatedAt;</span>
+
+    @Version
+    @Column
+<span class="nc" id="L29">    private Integer version;</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserApi.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pos</a> &gt; <a href="index.source.html" class="el_package">com.increff.pos.api</a> &gt; <span class="el_source">UserApi.java</span></div><h1>UserApi.java</h1><pre class="source lang-java linenums">package com.increff.pos.api;
+
+import java.util.List;
+import javax.transaction.Transactional;
+
+import com.increff.pos.pojo.UserPojo;
+import com.increff.pos.util.ApiException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.increff.pos.dao.UserDao;
+
+@Service
+@Transactional(rollbackOn = ApiException.class)
+<span class="fc" id="L15">public class UserApi {</span>
+
+	@Autowired
+	private UserDao dao;
+
+	public void add(UserPojo p) throws ApiException {
+<span class="nc" id="L21">		dao.insert(p);</span>
+<span class="nc" id="L22">	}</span>
+	public UserPojo get(String email) throws ApiException {
+<span class="nc" id="L24">		return dao.selectByEmail(email);</span>
+	}
+
+	public List&lt;UserPojo&gt; getAll() {
+<span class="nc" id="L28">		return dao.selectAll(UserPojo.class);</span>
+	}
+
+	public void delete(int id) {
+<span class="nc" id="L32">		dao.deleteById(id);</span>
+<span class="nc" id="L33">	}</span>
+
+	public UserPojo getUserEmail(String email) {
+<span class="nc" id="L36">		return dao.selectByEmail(email);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

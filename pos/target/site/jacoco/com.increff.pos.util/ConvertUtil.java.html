@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConvertUtil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pos</a> &gt; <a href="index.source.html" class="el_package">com.increff.pos.util</a> &gt; <span class="el_source">ConvertUtil.java</span></div><h1>ConvertUtil.java</h1><pre class="source lang-java linenums">package com.increff.pos.util;
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
+<span class="nc" id="L7">public class ConvertUtil {</span>
+    public static &lt;T, R&gt; R convert(T fromClass, Class&lt;R&gt; toClass) {
+<span class="fc" id="L9">        ObjectMapper mapper = new ObjectMapper();</span>
+<span class="fc" id="L10">        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);</span>
+        // QUES : Where should this be added?
+<span class="fc" id="L12">        mapper.registerModule(new JavaTimeModule());</span>
+<span class="fc" id="L13">        R newObject = mapper.convertValue(fromClass, toClass);</span>
+<span class="fc" id="L14">        return newObject;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
