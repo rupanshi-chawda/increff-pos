@@ -110,7 +110,7 @@ public class CreateXmlFile {
             pdfFromFOP.createPDF(invoiceForm, domSource);
 
         } catch (ParserConfigurationException pce) {
-            pce.printStackTrace();
+            pce.printStackTrace(); //TODO throw api Exception
         }
     }
 }

@@ -32,7 +32,6 @@ public class BrandDto {
 
     public void add(List<BrandForm> forms) throws ApiException, JsonProcessingException {
         List<BrandErrorData> errorData = new ArrayList<>();
-        errorData.clear();
         int errorSize = 0;
 
         for(BrandForm f: forms)
@@ -75,16 +74,14 @@ public class BrandDto {
         api.update(id, p);
     }
 
-    public void generateCsv(HttpServletResponse response) throws IOException {
+    public void generateCsv(HttpServletResponse response) throws ApiException {
         response.setContentType("text/csv");
         response.addHeader("Content-Disposition", "attachment; filename=\"brandReport.csv\"");
-        csvGenerator.writeBrandsToCsv(api.getAll(), response.getWriter());
-//
-//
-//        ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper(response);
-//        byte[] responseArray = responseWrapper.getContentAsByteArray();
-//        String responseStr = new String(responseArray, responseWrapper.getCharacterEncoding());
-//        System.out.println(responseStr);
+        try {
+            csvGenerator.writeBrandsToCsv(api.getAll(), response.getWriter());
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage());
+        }
     }
 
     @Transactional(rollbackOn = ApiException.class)

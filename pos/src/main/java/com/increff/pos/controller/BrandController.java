@@ -49,7 +49,7 @@ public class BrandController {
 
     @ApiOperation(value = "Export Brand Report to CSV")
     @GetMapping(path = "/exportcsv")
-    public void exportToCSV(HttpServletResponse response) throws IOException {
+    public void exportToCSV(HttpServletResponse response) throws IOException, ApiException {
         dto.generateCsv(response);
     }
 

@@ -28,11 +28,12 @@ function addBrand(event) {
   wholeBrand.push(json)
   var url = getBrandUrl();
   var jsonObj = arrayToJson();
+  console.log(wholeBrand);
   console.log(url);
   $.ajax({
     url: url,
     type: "POST",
-    data: json,
+    data: jsonObj,
     headers: {
       "Content-Type": "application/json",
     },

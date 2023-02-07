@@ -45,6 +45,11 @@ public class OrderDto {
 //        orderApi.addOrder(p);
 //    }
 
+    //TODO general clean up
+    //1. remove system.out
+    //2. remove console.out
+    //3. log statements(info) and comments
+
     public OrderData getOrder(int id) throws ApiException {
         OrderPojo p = orderApi.getOrder(id);
         return OrderHelper.convert(p);

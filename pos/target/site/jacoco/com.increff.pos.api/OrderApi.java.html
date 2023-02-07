@@ -32,9 +32,9 @@ import java.util.Objects;
     private OrderItemDao itemDao;
 
     @Value(&quot;${invoice.url}&quot;)
-    private String url;
+    private String url;//TODO move this to application properties
     
-    public void addOrder(OrderPojo p) throws ApiException {
+    public void addOrder(OrderPojo p) throws ApiException {//TODO check and remove extra exceptions (TODO read about checked and unchecked exception)
 <span class="nc" id="L38">        orderDao.insert(p);</span>
 <span class="nc" id="L39">    }</span>
     
@@ -84,29 +84,28 @@ import java.util.Objects;
 
     public ResponseEntity&lt;byte[]&gt; getPDF(InvoiceForm invoiceForm) {
 
-<span class="nc" id="L87">        RestTemplate restTemplate = new RestTemplate();</span>
+<span class="nc" id="L87">        RestTemplate restTemplate = new RestTemplate();//TODO autowire this and use http connection pooling</span>
 
 <span class="nc" id="L89">        byte[] contents = restTemplate.postForEntity(url, invoiceForm, byte[].class).getBody();</span>
 
 <span class="nc" id="L91">        HttpHeaders headers = new HttpHeaders();</span>
 <span class="nc" id="L92">        headers.setContentType(MediaType.APPLICATION_PDF);</span>
 
-<span class="nc" id="L94">        String filename = &quot;invoice.pdf&quot;;</span>
+<span class="nc" id="L94">        String filename = &quot;invoice.pdf&quot;;//TODO append orderId</span>
         //headers.setContentDispositionFormData(&quot;inline&quot;, filename);
 <span class="nc" id="L96">        headers.add(&quot;Content-Disposition&quot;, &quot;inline;filename=&quot; + filename);</span>
 
 
 <span class="nc" id="L99">        headers.setCacheControl(&quot;must-revalidate, post-check=0, pre-check=0&quot;);</span>
-<span class="nc" id="L100">        ResponseEntity&lt;byte[]&gt; response = new ResponseEntity&lt;&gt;(contents, headers, HttpStatus.OK);</span>
-<span class="nc" id="L101">        return response;</span>
+<span class="nc" id="L100">        return new ResponseEntity&lt;&gt;(contents, headers, HttpStatus.OK);</span>
     }
 
     public List&lt;OrderPojo&gt; getOrderByDateFilter(ZonedDateTime startDate, ZonedDateTime endDate) {
-<span class="nc" id="L105">        return orderDao.selectOrderByDateFilter(startDate,endDate);</span>
+<span class="nc" id="L104">        return orderDao.selectOrderByDateFilter(startDate,endDate);</span>
     }
 
     public List&lt;OrderItemPojo&gt; getOrderItemsByOrderId(int id) {
-<span class="nc" id="L109">        return itemDao.selectByOrderId(id);</span>
+<span class="nc" id="L108">        return itemDao.selectByOrderId(id);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

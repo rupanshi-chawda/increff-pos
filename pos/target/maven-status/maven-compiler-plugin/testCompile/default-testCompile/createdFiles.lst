@@ -1,5 +1,8 @@
+com\increff\pos\helper\BrandTestHelper.class
+com\increff\pos\helper\ProductTestHelper.class
 com\increff\pos\dto\InventoryDtoTest.class
-com\increff\pos\QaConfig.class
 com\increff\pos\dto\ProductDtoTest.class
 com\increff\pos\AbstractUnitTest.class
+com\increff\pos\helper\InventoryTestHelper.class
+com\increff\pos\QaConfig.class
 com\increff\pos\dto\BrandDtoTest.class

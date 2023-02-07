@@ -26,7 +26,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 <span class="fc" id="L26">				.antMatchers(&quot;/ui/**&quot;)//</span>
 <span class="fc" id="L27">				.and().authorizeRequests()//</span>
 <span class="fc" id="L28">				.antMatchers(&quot;/api/admin/**&quot;).hasAuthority(&quot;supervisor&quot;)//</span>
-
+				//TODO check and move this to a csv file
 <span class="fc" id="L30">				.antMatchers(HttpMethod.GET, &quot;/api/brand/**&quot;).hasAnyAuthority(&quot;supervisor&quot;, &quot;operator&quot;)//</span>
 <span class="fc" id="L31">				.antMatchers(&quot;/api/brand/**&quot;).hasAnyAuthority(&quot;supervisor&quot;)//</span>
 <span class="fc" id="L32">				.antMatchers(HttpMethod.GET, &quot;/api/product/**&quot;).hasAnyAuthority(&quot;supervisor&quot;, &quot;operator&quot;)//</span>

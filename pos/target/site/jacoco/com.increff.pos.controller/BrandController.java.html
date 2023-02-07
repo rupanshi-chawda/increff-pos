@@ -49,7 +49,7 @@ import java.util.List;
 
     @ApiOperation(value = &quot;Export Brand Report to CSV&quot;)
     @GetMapping(path = &quot;/exportcsv&quot;)
-    public void exportToCSV(HttpServletResponse response) throws IOException {
+    public void exportToCSV(HttpServletResponse response) throws IOException, ApiException {
 <span class="nc" id="L53">        dto.generateCsv(response);</span>
 <span class="nc" id="L54">    }</span>
 

@@ -32,9 +32,9 @@ public class OrderApi {
     private OrderItemDao itemDao;
 
     @Value("${invoice.url}")
-    private String url;
+    private String url;//TODO move this to application properties
     
-    public void addOrder(OrderPojo p) throws ApiException {
+    public void addOrder(OrderPojo p) throws ApiException {//TODO check and remove extra exceptions (TODO read about checked and unchecked exception)
         orderDao.insert(p);
     }
     
@@ -84,21 +84,20 @@ public class OrderApi {
 
     public ResponseEntity<byte[]> getPDF(InvoiceForm invoiceForm) {
 
-        RestTemplate restTemplate = new RestTemplate();
+        RestTemplate restTemplate = new RestTemplate();//TODO autowire this and use http connection pooling
 
         byte[] contents = restTemplate.postForEntity(url, invoiceForm, byte[].class).getBody();
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
 
-        String filename = "invoice.pdf";
+        String filename = "invoice.pdf";//TODO append orderId
         //headers.setContentDispositionFormData("inline", filename);
         headers.add("Content-Disposition", "inline;filename=" + filename);
 
 
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-        ResponseEntity<byte[]> response = new ResponseEntity<>(contents, headers, HttpStatus.OK);
-        return response;
+        return new ResponseEntity<>(contents, headers, HttpStatus.OK);
     }
 
     public List<OrderPojo> getOrderByDateFilter(ZonedDateTime startDate, ZonedDateTime endDate) {

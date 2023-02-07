@@ -38,8 +38,8 @@ import java.util.Objects;
 
     public ProductPojo getProductId(int id) throws ApiException {
 <span class="fc" id="L40">        ProductPojo p = dao.selectById(id, ProductPojo.class);</span>
-<span class="pc bpc" id="L41" title="1 of 2 branches missed.">        if (Objects.isNull(p)) {</span>
-<span class="nc" id="L42">            throw new ApiException(&quot;Product with given ID does not exit, id: &quot; + id);</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        if (Objects.isNull(p)) {</span>
+<span class="fc" id="L42">            throw new ApiException(&quot;Product with given ID does not exit, id: &quot; + id);</span>
         }
 <span class="fc" id="L44">        return p;</span>
     }
