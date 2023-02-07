@@ -35,7 +35,7 @@ import java.util.Objects;
 
     public InventoryPojo get(int id) throws ApiException {
 <span class="fc" id="L37">        InventoryPojo p = getByInventoryId(id);</span>
-<span class="fc" id="L38">        p = InventoryHelper.validateInventoryId(p, id);</span>
+<span class="fc" id="L38">        InventoryHelper.validateInventoryId(p);</span>
 <span class="fc" id="L39">        return p;</span>
     }
 
@@ -55,8 +55,8 @@ import java.util.Objects;
     }
 
     public int getQuantityById(int id) {
-<span class="nc" id="L58">        InventoryPojo p = getByInventoryId(id);</span>
-<span class="nc" id="L59">        return p.getQuantity();</span>
+<span class="fc" id="L58">        InventoryPojo p = getByInventoryId(id);</span>
+<span class="fc" id="L59">        return p.getQuantity();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -35,22 +35,22 @@ import java.util.Objects;
     private String url;//TODO move this to application properties
     
     public void addOrder(OrderPojo p) throws ApiException {//TODO check and remove extra exceptions (TODO read about checked and unchecked exception)
-<span class="nc" id="L38">        orderDao.insert(p);</span>
-<span class="nc" id="L39">    }</span>
+<span class="fc" id="L38">        orderDao.insert(p);</span>
+<span class="fc" id="L39">    }</span>
     
     public OrderPojo getOrder(int id) throws ApiException {
-<span class="nc" id="L42">        return getOrderId(id);</span>
+<span class="nc" id="L42">        return getCheckByOrderId(id);</span>
     }
 
     public List&lt;OrderPojo&gt; getAllOrder() {
-<span class="nc" id="L46">        return orderDao.selectAllDesc();</span>
+<span class="fc" id="L46">        return orderDao.selectAllDesc();</span>
     }
     
     public void addItem(OrderItemPojo p, int pid, int oid) throws ApiException {
-<span class="nc" id="L50">        p.setProductId(pid);</span>
-<span class="nc" id="L51">        p.setOrderId(oid);</span>
-<span class="nc" id="L52">        itemDao.insert(p);</span>
-<span class="nc" id="L53">    }</span>
+<span class="fc" id="L50">        p.setProductId(pid);</span>
+<span class="fc" id="L51">        p.setOrderId(oid);</span>
+<span class="fc" id="L52">        itemDao.insert(p);</span>
+<span class="fc" id="L53">    }</span>
 
     public OrderItemPojo getItem(int id) throws ApiException {
 <span class="nc" id="L56">        OrderItemPojo p = getOrderItemId(id);</span>
@@ -63,14 +63,14 @@ import java.util.Objects;
     }
 
     public List&lt;OrderItemPojo&gt; getByOrderId(int orderid) {
-<span class="nc" id="L66">        return itemDao.selectByOrderId(orderid);</span>
+<span class="fc" id="L66">        return itemDao.selectByOrderId(orderid);</span>
     }
 
     private OrderItemPojo getOrderItemId(int id) {
 <span class="nc" id="L70">        return itemDao.selectById(id, OrderItemPojo.class);</span>
     }
 
-    private OrderPojo getOrderId(int id) throws ApiException {
+    private OrderPojo getCheckByOrderId(int id) throws ApiException {
 <span class="nc" id="L74">        OrderPojo p = orderDao.selectById(id, OrderPojo.class);</span>
 <span class="nc bnc" id="L75" title="All 2 branches missed.">        if (Objects.isNull(p)) {</span>
 <span class="nc" id="L76">            throw new ApiException(&quot;Order with given ID does not exit, id: &quot; + id);</span>
@@ -78,7 +78,7 @@ import java.util.Objects;
 <span class="nc" id="L78">        return p;</span>
     }
 
-    public List&lt;OrderItemPojo&gt; getOrderItemByOrderItem(int orderid) throws ApiException {
+    public List&lt;OrderItemPojo&gt; getOrderItemByOrderId(int orderid) throws ApiException {
 <span class="nc" id="L82">        return itemDao.selectByOrderId(orderid);</span>
     }
 

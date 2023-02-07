@@ -35,7 +35,7 @@ public class InventoryApi {
 
     public InventoryPojo get(int id) throws ApiException {
         InventoryPojo p = getByInventoryId(id);
-        p = InventoryHelper.validateInventoryId(p, id);
+        InventoryHelper.validateInventoryId(p);
         return p;
     }
 

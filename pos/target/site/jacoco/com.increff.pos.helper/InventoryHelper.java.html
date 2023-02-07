@@ -39,9 +39,9 @@ import java.util.Objects;
         }
 <span class="fc" id="L40">    }</span>
 
-    public static InventoryPojo validateInventoryId(InventoryPojo p, int id) throws ApiException {
-<span class="pc bpc" id="L43" title="1 of 2 branches missed.">        if (Objects.isNull(p)) {</span>
-<span class="nc" id="L44">            throw new ApiException(&quot;Inventory for given barcode doesn't exists&quot;);</span>
+    public static InventoryPojo validateInventoryId(InventoryPojo p) throws ApiException {
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        if (Objects.isNull(p)) {</span>
+<span class="fc" id="L44">            throw new ApiException(&quot;Inventory for given barcode doesn't exists&quot;);</span>
         }
 <span class="fc" id="L46">        return p;</span>
     }

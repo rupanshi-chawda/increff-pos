@@ -39,7 +39,7 @@ public class OrderApi {
     }
     
     public OrderPojo getOrder(int id) throws ApiException {
-        return getOrderId(id);
+        return getCheckByOrderId(id);
     }
 
     public List<OrderPojo> getAllOrder() {
@@ -70,7 +70,7 @@ public class OrderApi {
         return itemDao.selectById(id, OrderItemPojo.class);
     }
 
-    private OrderPojo getOrderId(int id) throws ApiException {
+    private OrderPojo getCheckByOrderId(int id) throws ApiException {
         OrderPojo p = orderDao.selectById(id, OrderPojo.class);
         if (Objects.isNull(p)) {
             throw new ApiException("Order with given ID does not exit, id: " + id);
@@ -78,7 +78,7 @@ public class OrderApi {
         return p;
     }
 
-    public List<OrderItemPojo> getOrderItemByOrderItem(int orderid) throws ApiException {
+    public List<OrderItemPojo> getOrderItemByOrderId(int orderid) throws ApiException {
         return itemDao.selectByOrderId(orderid);
     }
 

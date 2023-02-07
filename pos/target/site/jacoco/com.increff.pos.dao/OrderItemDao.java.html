@@ -14,9 +14,9 @@ import java.util.List;
 <span class="nc" id="L14">    public void update(OrderItemPojo op){}</span>
 
     public List&lt;OrderItemPojo&gt; selectByOrderId(int orderid) {
-<span class="nc" id="L17">        TypedQuery&lt;OrderItemPojo&gt; query = getQuery(SELECT_BY_ORDER_ID, OrderItemPojo.class);</span>
-<span class="nc" id="L18">        query.setParameter(&quot;orderid&quot;, orderid);</span>
-<span class="nc" id="L19">        return query.getResultList();</span>
+<span class="fc" id="L17">        TypedQuery&lt;OrderItemPojo&gt; query = getQuery(SELECT_BY_ORDER_ID, OrderItemPojo.class);</span>
+<span class="fc" id="L18">        query.setParameter(&quot;orderid&quot;, orderid);</span>
+<span class="fc" id="L19">        return query.getResultList();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

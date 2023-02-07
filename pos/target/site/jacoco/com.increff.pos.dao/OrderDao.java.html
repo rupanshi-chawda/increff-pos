@@ -14,8 +14,8 @@ import java.util.List;
     private static final String SELECT_BY_DATE_FILTER = &quot;select p from OrderPojo p where createdAt&gt;=:startDate and createdAt&lt;=:endDate&quot;;
 
     public List&lt;OrderPojo&gt; selectAllDesc() {
-<span class="nc" id="L17">        TypedQuery&lt;OrderPojo&gt; query = getQuery(SELECT_ALL_DESC, OrderPojo.class);</span>
-<span class="nc" id="L18">        return query.getResultList();</span>
+<span class="fc" id="L17">        TypedQuery&lt;OrderPojo&gt; query = getQuery(SELECT_ALL_DESC, OrderPojo.class);</span>
+<span class="fc" id="L18">        return query.getResultList();</span>
     }
 
     public List&lt;OrderPojo&gt; selectOrderByDateFilter(ZonedDateTime startDate, ZonedDateTime endDate) {

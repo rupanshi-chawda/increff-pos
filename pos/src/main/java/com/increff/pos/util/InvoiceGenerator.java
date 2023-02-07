@@ -4,7 +4,6 @@ import com.increff.pos.model.data.OrderItem;
 import com.increff.pos.model.form.InvoiceForm;
 import com.increff.pos.pojo.OrderItemPojo;
 import com.increff.pos.pojo.OrderPojo;
-import com.increff.pos.util.ApiException;
 import com.increff.pos.api.OrderApi;
 import com.increff.pos.api.ProductApi;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ public class InvoiceGenerator {
         invoiceForm.setOrderId(orderPojo.getId());
         invoiceForm.setPlaceDate(orderPojo.getTime().toString());
 
-        List<OrderItemPojo> orderItemPojoList = orderApi.getOrderItemByOrderItem(orderPojo.getId());
+        List<OrderItemPojo> orderItemPojoList = orderApi.getOrderItemByOrderId(orderPojo.getId());
         List<OrderItem> orderItemList = new ArrayList<>();
 
         for(OrderItemPojo p: orderItemPojoList)

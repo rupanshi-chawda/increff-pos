@@ -68,9 +68,4 @@ public class OrderHelper {
         }
     }
 
-    public static void validateBarcode(String barcode) throws ApiException {
-        if(Objects.isNull(barcode)) {
-            throw new ApiException("Product with given barcode does not exists");
-        }
-    }
 }

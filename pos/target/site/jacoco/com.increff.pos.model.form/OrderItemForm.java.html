@@ -9,21 +9,21 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Getter
-<span class="nc" id="L12">@Setter</span>
-<span class="nc" id="L13">public class OrderItemForm {</span>
+<span class="fc" id="L12">@Setter</span>
+<span class="fc" id="L13">public class OrderItemForm {</span>
 
 
     @NotBlank
     @Size(min = 8, max = 8, message = &quot;must 8 character long&quot;)
-<span class="nc" id="L18">    private String barcode;</span>
+<span class="fc" id="L18">    private String barcode;</span>
 
     @NotNull
     @Min(value = 1, message = &quot;must be atleast 1&quot;)
-<span class="nc" id="L22">    private int quantity;</span>
+<span class="fc" id="L22">    private int quantity;</span>
 
     @NotNull
     @Min(value = 1, message = &quot;must be atleast 1&quot;)
-<span class="nc" id="L26">    private Double sellingPrice;</span>
+<span class="fc" id="L26">    private Double sellingPrice;</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
