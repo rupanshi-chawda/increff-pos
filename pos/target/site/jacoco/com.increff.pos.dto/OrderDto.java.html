@@ -52,10 +52,10 @@ import java.util.stream.Collectors;
     //2. remove console.out
     //3. log statements(info) and comments
 
-    public OrderData getOrder(int id) throws ApiException {
-<span class="nc" id="L56">        OrderPojo p = orderApi.getOrder(id);</span>
-<span class="nc" id="L57">        return OrderHelper.convert(p);</span>
-    }
+//    public OrderData getOrder(int id) throws ApiException {
+//        OrderPojo p = orderApi.getOrder(id);
+//        return OrderHelper.convert(p);
+//    }
 
     public List&lt;OrderData&gt; getAllOrder() {
 <span class="fc" id="L61">        return orderApi.getAllOrder().stream().map(OrderHelper::convert).collect(Collectors.toList());</span>

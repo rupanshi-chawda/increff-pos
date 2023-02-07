@@ -26,7 +26,6 @@ public class BrandDtoTest extends AbstractUnitTest {
     @Autowired
     private BrandApi api;
 
-    //TODO make a test helper
     @Test
     public void addBrandTest() throws ApiException, JsonProcessingException {
         List<BrandForm> formList = new ArrayList<>();

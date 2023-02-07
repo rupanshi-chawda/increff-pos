@@ -32,7 +32,7 @@ import java.util.Objects;
     private OrderItemDao itemDao;
 
     @Value(&quot;${invoice.url}&quot;)
-    private String url;//TODO move this to application properties
+    private String url;
     
     public void addOrder(OrderPojo p) throws ApiException {//TODO check and remove extra exceptions (TODO read about checked and unchecked exception)
 <span class="fc" id="L38">        orderDao.insert(p);</span>

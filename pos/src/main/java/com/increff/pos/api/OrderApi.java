@@ -32,7 +32,7 @@ public class OrderApi {
     private OrderItemDao itemDao;
 
     @Value("${invoice.url}")
-    private String url;//TODO move this to application properties
+    private String url;
     
     public void addOrder(OrderPojo p) throws ApiException {//TODO check and remove extra exceptions (TODO read about checked and unchecked exception)
         orderDao.insert(p);
