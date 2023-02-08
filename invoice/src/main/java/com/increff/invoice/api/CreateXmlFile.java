@@ -1,15 +1,18 @@
 package com.increff.invoice.api;
 
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -23,7 +26,7 @@ import org.w3c.dom.Element;
 public class CreateXmlFile {
 
 
-    public void createXML(InvoiceForm invoiceForm) throws ApiException {
+    public String createXML(InvoiceForm invoiceForm) throws ApiException {
         Double totalAmount = 0.0;
 
         try {
@@ -92,13 +95,26 @@ public class CreateXmlFile {
             root.appendChild(amount);
             // create the xml file
             //transform the DOM Object to an XML File
-            DOMSource domSource = new DOMSource(document);
+            //DOMSource domSource = new DOMSource(document);
 
-            PdfFromFop pdfFromFOP = new PdfFromFop();
-            pdfFromFOP.createPDF(invoiceForm, domSource);
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            transformer.transform(new DOMSource(document), new StreamResult(bos));
+            byte[] xmlBytes = bos.toByteArray();
+            String encodedXML = Base64.getEncoder().encodeToString(xmlBytes);
+
+//            PdfFromFop pdfFromFOP = new PdfFromFop();
+//            pdfFromFOP.createPDF(invoiceForm, encodedXML);
+
+            return encodedXML;
 
         } catch (ParserConfigurationException pce) {
             throw new ApiException(pce.getMessage());
+        } catch (TransformerException e) {
+            e.printStackTrace();
         }
+        return null;
     }
 }

@@ -17,7 +17,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.ZonedDateTime;
+import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
 
@@ -62,8 +65,8 @@ public class OrderApi {
     }
 
 
-    public List<OrderItemPojo> getByOrderId(int orderid) {
-        return itemDao.selectByOrderId(orderid);
+    public List<OrderItemPojo> getByOrderId(int orderId) {
+        return itemDao.selectByOrderId(orderId);
     }
 
     private OrderItemPojo getOrderItemId(int id) {
@@ -78,13 +81,15 @@ public class OrderApi {
         return p;
     }
 
-    public List<OrderItemPojo> getOrderItemByOrderId(int orderid){
-        return itemDao.selectByOrderId(orderid);
+    public List<OrderItemPojo> getOrderItemByOrderId(int orderId){
+        return itemDao.selectByOrderId(orderId);
     }
 
     public ResponseEntity<byte[]> getPDF(InvoiceForm invoiceForm) {
 
-        byte[] contents = restTemplate.postForEntity(url, invoiceForm, byte[].class).getBody();
+        String base64 = restTemplate.postForObject(url, invoiceForm, String.class);
+        //Path pdfPath = Paths.get(PDF_PATH +id+"invoice.pdf");
+        byte[] contents = Base64.getDecoder().decode(base64);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);

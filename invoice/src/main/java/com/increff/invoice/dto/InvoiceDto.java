@@ -17,7 +17,7 @@ public class InvoiceDto {
     @Autowired
     private InvoiceApi api;
 
-    public ResponseEntity<byte[]> generateInvoice(InvoiceForm form) throws ApiException {
+    public String generateInvoice(InvoiceForm form) throws ApiException {
         return api.generateInvoice(form);
     }
 }
