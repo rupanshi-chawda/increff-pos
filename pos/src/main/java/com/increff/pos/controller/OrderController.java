@@ -22,18 +22,6 @@ public class OrderController {
     @Autowired
     private OrderDto dto;
 
-//    @ApiOperation(value = "Adds an Order")
-//    @PostMapping(path = "")
-//    public void addOrder(@RequestBody OrderForm form) throws ApiException {
-//        dto.addOrder(form);
-//    }
-
-//    @ApiOperation(value = "Gets an Order by Id")
-//    @GetMapping(path = "/{id}")
-//    public OrderData getOrder(@PathVariable int id) throws ApiException {
-//        return dto.getOrder(id);
-//    }
-
     @ApiOperation(value = "Gets list of all Orders")
     @GetMapping(path = "")
     public List<OrderData> getAllOrder() {
@@ -46,18 +34,6 @@ public class OrderController {
         dto.addItem(form);
     }
 
-//    @ApiOperation(value = "Gets an Order Item by Id")
-//    @GetMapping(path = "/cart/{id}")
-//    public OrderItemData getOrderItem(@PathVariable int id) throws ApiException {
-//        return dto.getItem(id);
-//    }
-
-//    @ApiOperation(value = "Gets list of all Order Items")
-//    @GetMapping(path = "/cart")
-//    public List<OrderItemData> getAllOrderItem() {
-//        return dto.getAllItem();
-//    }
-
     @ApiOperation(value = "Gets list of Order Items in an Order by Id")
     @GetMapping(path = "/cartitems/{id}")
     public List<OrderItemData> getOrderItemById(@PathVariable int id) throws ApiException {
@@ -66,9 +42,8 @@ public class OrderController {
 
     @ApiOperation(value = "Download Invoice")
     @GetMapping(path = "/invoice/{id}", produces =  "application/pdf")
-    public ResponseEntity<byte[]> getPDF(@PathVariable int id) throws Exception{
+    public ResponseEntity<byte[]> getPDF(@PathVariable int id) throws ApiException{
         return dto.getPDF(id);
     }
-
 
 }

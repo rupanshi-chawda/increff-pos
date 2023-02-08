@@ -42,125 +42,82 @@ import java.util.stream.Collectors;
     @Autowired
     private InvoiceGenerator invoiceGenerator;
 
-//    public void addOrder(OrderForm form) throws ApiException {
-//        OrderPojo p = OrderHelper.convert(form);
-//        orderApi.addOrder(p);
-//    }
-
     //TODO general clean up
     //1. remove system.out
     //2. remove console.out
     //3. log statements(info) and comments
 
-//    public OrderData getOrder(int id) throws ApiException {
-//        OrderPojo p = orderApi.getOrder(id);
-//        return OrderHelper.convert(p);
-//    }
-
     public List&lt;OrderData&gt; getAllOrder() {
-<span class="fc" id="L61">        return orderApi.getAllOrder().stream().map(OrderHelper::convert).collect(Collectors.toList());</span>
+<span class="fc" id="L51">        return orderApi.getAllOrder().stream().map(OrderHelper::convert).collect(Collectors.toList());</span>
     }
 
     public void addItem(List&lt;OrderItemForm&gt; forms) throws ApiException {
-
         // Validating every order item before adding it.
 
-<span class="fc" id="L68">        checkDuplicateItems(forms);</span>
-<span class="fc" id="L69">        validateItems(forms);</span>
-//        for(OrderItemForm f : forms) {
-//            OrderHelper.normalize(f);
-//            ValidationUtil.validateForms(f);
-//
-//            String barcode = productApi.getProductBarcodeByItemBarcode(f.getBarcode());
-//            OrderHelper.validateBarcode(barcode);
-//            System.out.println(barcode);
-//
-//            int id = productApi.getIdByBarcode(f.getBarcode());
-//            OrderHelper.validateId(id);
-//            System.out.println(id);
-//
-//            int quantity = inventoryApi.getQuantityById(id);
-//            OrderHelper.validateInventory(f, quantity);
-//            System.out.println(quantity);
-//        }
+<span class="fc" id="L57">        checkDuplicateItems(forms);</span>
+<span class="fc" id="L58">        validateItems(forms);</span>
 
         // Place order
-<span class="fc" id="L88">        OrderPojo op = new OrderPojo();</span>
-<span class="fc" id="L89">        orderApi.addOrder(op);</span>
+<span class="fc" id="L61">        OrderPojo op = new OrderPojo();</span>
+<span class="fc" id="L62">        orderApi.addOrder(op);</span>
 
         // Adding order item to table
-<span class="fc bfc" id="L92" title="All 2 branches covered.">        for(OrderItemForm f : forms) {</span>
-<span class="fc" id="L93">            OrderItemPojo p = OrderHelper.convert(f);</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        for(OrderItemForm f : forms) {</span>
+<span class="fc" id="L66">            OrderItemPojo p = OrderHelper.convert(f);</span>
             //Reduce inventory
-<span class="fc" id="L95">            reduceInventory(f.getBarcode(), f.getQuantity());</span>
-<span class="fc" id="L96">            int pid = productApi.getIdByBarcode(f.getBarcode());</span>
-<span class="fc" id="L97">            orderApi.addItem(p, pid, op.getId());</span>
-<span class="fc" id="L98">        }</span>
-<span class="fc" id="L99">    }</span>
+<span class="fc" id="L68">            reduceInventory(f.getBarcode(), f.getQuantity());</span>
+<span class="fc" id="L69">            int pid = productApi.getIdByBarcode(f.getBarcode());</span>
+<span class="fc" id="L70">            orderApi.addItem(p, pid, op.getId());</span>
+<span class="fc" id="L71">        }</span>
+<span class="fc" id="L72">    }</span>
 
-//    public OrderItemData getItem(int id) throws ApiException {
-//        OrderItemPojo p = orderApi.getItem(id);
-//        String barcode = productApi.getBarcodeById(p.getProductId());
-//        return OrderHelper.convert(p, barcode);
-//    }
-//
-//    public List&lt;OrderItemData&gt; getAllItem() {
-//        List&lt;OrderItemPojo&gt; list = orderApi.getAllItem();
-//        List&lt;OrderItemData&gt; list2 = new ArrayList&lt;OrderItemData&gt;();
-//        for(OrderItemPojo b : list) {
-//            String barcode = productApi.getBarcodeById(b.getProductId());
-//            list2.add(OrderHelper.convert(b, barcode));
-//        }
-//        return list2;
-//    }
-
-    public List&lt;OrderItemData&gt; getByOrderId(int orderId) throws ApiException {
-<span class="fc" id="L118">        List&lt;OrderItemPojo&gt; list = orderApi.getByOrderId(orderId);</span>
-<span class="fc" id="L119">        List&lt;OrderItemData&gt; list2 = new ArrayList&lt;OrderItemData&gt;();</span>
-<span class="fc bfc" id="L120" title="All 2 branches covered.">        for(OrderItemPojo b : list) {</span>
-<span class="fc" id="L121">            String barcode = productApi.getBarcodeById(b.getProductId());</span>
-<span class="fc" id="L122">            list2.add(OrderHelper.convert(b, barcode));</span>
-<span class="fc" id="L123">        }</span>
-<span class="fc" id="L124">        return list2;</span>
+    public List&lt;OrderItemData&gt; getByOrderId(int orderId) {
+<span class="fc" id="L75">        List&lt;OrderItemPojo&gt; list = orderApi.getByOrderId(orderId);</span>
+<span class="fc" id="L76">        List&lt;OrderItemData&gt; list2 = new ArrayList&lt;OrderItemData&gt;();</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        for(OrderItemPojo b : list) {</span>
+<span class="fc" id="L78">            String barcode = productApi.getBarcodeById(b.getProductId());</span>
+<span class="fc" id="L79">            list2.add(OrderHelper.convert(b, barcode));</span>
+<span class="fc" id="L80">        }</span>
+<span class="fc" id="L81">        return list2;</span>
     }
 
     public ResponseEntity&lt;byte[]&gt; getPDF(int id) throws ApiException {
-<span class="nc" id="L128">        InvoiceForm invoiceForm = invoiceGenerator.generateInvoiceForOrder(id);</span>
-<span class="nc" id="L129">        return orderApi.getPDF(invoiceForm);</span>
+<span class="nc" id="L85">        InvoiceForm invoiceForm = invoiceGenerator.generateInvoiceForOrder(id);</span>
+<span class="nc" id="L86">        return orderApi.getPDF(invoiceForm);</span>
     }
 
     private void reduceInventory(String barcode, int quantity) throws ApiException {
-<span class="fc" id="L133">        int id = productApi.getIdByBarcode(barcode);</span>
-<span class="fc" id="L134">        InventoryPojo p = inventoryApi.getByInventoryId(id);</span>
-<span class="fc" id="L135">        int newQuantity = p.getQuantity() - quantity;</span>
-<span class="fc" id="L136">        p.setQuantity(newQuantity);</span>
-<span class="fc" id="L137">        inventoryApi.update(p);</span>
-<span class="fc" id="L138">    }</span>
+<span class="fc" id="L90">        int id = productApi.getIdByBarcode(barcode);</span>
+<span class="fc" id="L91">        InventoryPojo p = inventoryApi.getByInventoryId(id);</span>
+<span class="fc" id="L92">        int newQuantity = p.getQuantity() - quantity;</span>
+<span class="fc" id="L93">        p.setQuantity(newQuantity);</span>
+<span class="fc" id="L94">        inventoryApi.update(p);</span>
+<span class="fc" id="L95">    }</span>
 
     private void validateItems(List&lt;OrderItemForm&gt; forms) throws ApiException {
-<span class="fc bfc" id="L141" title="All 2 branches covered.">        for(OrderItemForm f : forms) {</span>
-<span class="fc" id="L142">            productApi.checkProductBarcode(f.getBarcode());</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">        for(OrderItemForm f : forms) {</span>
+<span class="fc" id="L99">            productApi.checkProductBarcode(f.getBarcode());</span>
 
-<span class="fc" id="L144">            int id = productApi.getIdByBarcode(f.getBarcode());</span>
-<span class="fc" id="L145">            OrderHelper.validateId(id);</span>
+<span class="fc" id="L101">            int id = productApi.getIdByBarcode(f.getBarcode());</span>
+<span class="fc" id="L102">            OrderHelper.validateId(id);</span>
 
-<span class="fc" id="L147">            inventoryApi.get(id);</span>
+<span class="fc" id="L104">            inventoryApi.get(id);</span>
 
-<span class="fc" id="L149">            int quantity = inventoryApi.getQuantityById(id);</span>
-<span class="fc" id="L150">            OrderHelper.validateInventory(f, quantity);</span>
-<span class="fc" id="L151">        }</span>
-<span class="fc" id="L152">    }</span>
+<span class="fc" id="L106">            int quantity = inventoryApi.getQuantityById(id);</span>
+<span class="fc" id="L107">            OrderHelper.validateInventory(f, quantity);</span>
+<span class="fc" id="L108">        }</span>
+<span class="fc" id="L109">    }</span>
 
     private void checkDuplicateItems(List&lt;OrderItemForm&gt; forms) throws ApiException {
-<span class="fc" id="L155">        Set&lt;String&gt; set = new HashSet&lt;&gt;();</span>
-<span class="fc bfc" id="L156" title="All 2 branches covered.">        for(OrderItemForm f : forms) {</span>
-<span class="fc" id="L157">            ValidationUtil.validateForms(f);</span>
-<span class="fc" id="L158">            OrderHelper.normalize(f);</span>
-<span class="fc bfc" id="L159" title="All 2 branches covered.">            if(set.contains(f.getBarcode())) {</span>
-<span class="fc" id="L160">                throw new ApiException(&quot;Duplicate Barcode Detected&quot;);</span>
+<span class="fc" id="L112">        Set&lt;String&gt; set = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">        for(OrderItemForm f : forms) {</span>
+<span class="fc" id="L114">            ValidationUtil.validateForms(f);</span>
+<span class="fc" id="L115">            OrderHelper.normalize(f);</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">            if(set.contains(f.getBarcode())) {</span>
+<span class="fc" id="L117">                throw new ApiException(&quot;Duplicate Barcode Detected&quot;);</span>
             }
-<span class="fc" id="L162">            set.add(f.getBarcode());</span>
-<span class="fc" id="L163">        }</span>
-<span class="fc" id="L164">    }</span>
+<span class="fc" id="L119">            set.add(f.getBarcode());</span>
+<span class="fc" id="L120">        }</span>
+<span class="fc" id="L121">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

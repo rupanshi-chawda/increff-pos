@@ -8,27 +8,24 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Objects;
 
-/*
-https://stackoverflow.com/questions/4664893/how-to-manually-set-an-authenticated-user-in-spring-security-springmvc
-*/
-<span class="nc" id="L14">public class SecurityUtil {</span>
+<span class="nc" id="L11">public class SecurityUtil {</span>
 
 	public static void createContext(HttpSession session) {
-<span class="nc" id="L17">		SecurityContext securityContext = SecurityContextHolder.getContext();</span>
-<span class="nc" id="L18">		session.setAttribute(&quot;SPRING_SECURITY_CONTEXT&quot;, securityContext);</span>
-<span class="nc" id="L19">	}</span>
+<span class="nc" id="L14">		SecurityContext securityContext = SecurityContextHolder.getContext();</span>
+<span class="nc" id="L15">		session.setAttribute(&quot;SPRING_SECURITY_CONTEXT&quot;, securityContext);</span>
+<span class="nc" id="L16">	}</span>
 
 	public static void setAuthentication(Authentication token) {
-<span class="nc" id="L22">		SecurityContextHolder.getContext().setAuthentication(token);</span>
-<span class="nc" id="L23">	}</span>
+<span class="nc" id="L19">		SecurityContextHolder.getContext().setAuthentication(token);</span>
+<span class="nc" id="L20">	}</span>
 
 	public static Authentication getAuthentication() {
-<span class="nc" id="L26">		return SecurityContextHolder.getContext().getAuthentication();</span>
+<span class="nc" id="L23">		return SecurityContextHolder.getContext().getAuthentication();</span>
 	}
 
 	public static UserPrincipal getPrincipal() {
-<span class="nc" id="L30">		Authentication token = getAuthentication();</span>
-<span class="nc bnc" id="L31" title="All 2 branches missed.">		return Objects.isNull(token) ? null : (UserPrincipal) getAuthentication().getPrincipal();</span>
+<span class="nc" id="L27">		Authentication token = getAuthentication();</span>
+<span class="nc bnc" id="L28" title="All 2 branches missed.">		return Objects.isNull(token) ? null : (UserPrincipal) getAuthentication().getPrincipal();</span>
 	}
 
 }

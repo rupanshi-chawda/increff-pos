@@ -18,7 +18,6 @@ public class BrandApi {
     private BrandDao dao;
 
     public void add(BrandPojo p) throws ApiException {
-        //p = getCheckBrandCategory(p);
         dao.insert(p);
     }
 
@@ -54,12 +53,6 @@ public class BrandApi {
             throw new ApiException("Brand Category already exists");
         }
     }
-
-//    public int getBrandCategoryId(String brand, String category) {
-//        BrandPojo p = dao.selectBrandCategory(brand, category);
-//        return p.getId();
-//    }
-
     public int checkBrandCategory(String brand, String category) throws ApiException {
         BrandPojo b = getBrandCategory(brand, category);
         if(Objects.isNull(b)) {

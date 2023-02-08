@@ -60,12 +60,6 @@ public class ProductDto {
         }
 
         bulkAdd(forms);
-
-//        ProductHelper.normalize(form);
-//        ValidationUtil.validateForms(form);
-//        ProductPojo p = ProductHelper.convert(form);
-//        p.setBrandCategory(brandApi.getBrandCategoryId(form.getBrand(), form.getCategory()));
-//        api.add(p);
     }
 
     public ProductData get(int id) throws ApiException {

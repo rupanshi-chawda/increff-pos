@@ -16,15 +16,14 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import com.increff.invoice.model.*;
+import com.increff.invoice.util.ApiException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 public class CreateXmlFile {
 
-    //public static final String xmlFilePath = "C:\\Users\\KIIT\\Downloads\\increff-pos\\invoice\\src\\main\\resources\\xml\\invoice.xml";
 
-
-    public void createXML(InvoiceForm invoiceForm) {
+    public void createXML(InvoiceForm invoiceForm) throws ApiException {
         Double totalAmount = 0.0;
 
         try {
@@ -93,24 +92,13 @@ public class CreateXmlFile {
             root.appendChild(amount);
             // create the xml file
             //transform the DOM Object to an XML File
-//            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-//            Transformer transformer = transformerFactory.newTransformer();
             DOMSource domSource = new DOMSource(document);
-            //StreamResult streamResult = new StreamResult(new File(xmlFilePath));
 
-            // If you use
-            // StreamResult result = new StreamResult(System.out);
-            // the output will be pushed to the standard output ...
-            // You can use that for debugging
-
-            //transformer.transform(domSource, streamResult);
-
-            System.out.println("Done creating XML File");
             PdfFromFop pdfFromFOP = new PdfFromFop();
             pdfFromFOP.createPDF(invoiceForm, domSource);
 
         } catch (ParserConfigurationException pce) {
-            pce.printStackTrace(); //TODO throw api Exception
+            throw new ApiException(pce.getMessage());
         }
     }
 }

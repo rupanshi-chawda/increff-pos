@@ -1,5 +1,6 @@
 package com.increff.pos.dto;
 
+import com.increff.pos.helper.UserHelper;
 import com.increff.pos.pojo.UserPojo;
 import com.increff.pos.util.StringUtil;
 import com.increff.pos.model.data.UserData;
@@ -26,7 +27,7 @@ public class AdminDto {
         if(StringUtil.isEmpty(form.getPassword())) {
             throw new ApiException("Password cannot be empty");
         }
-        UserPojo p = convert(form);
+        UserPojo p = UserHelper.convert(form);
         dto.add(p);
     }
 
@@ -35,24 +36,7 @@ public class AdminDto {
     }
 
     public List<UserData> getAll(){
-        return dto.getAll().stream().map(p -> convert(p)).collect(Collectors.toList());
+        return dto.getAll().stream().map(UserHelper::convert).collect(Collectors.toList());
     }
 
-    //Conversion Methods
-
-    private static UserData convert(UserPojo p) {
-        UserData d = new UserData();
-        d.setEmail(p.getEmail());
-        d.setRole(p.getRole());
-        d.setId(p.getId());
-        return d;
-    }
-
-    private static UserPojo convert(UserForm f) {
-        UserPojo p = new UserPojo();
-        p.setEmail(f.getEmail());
-        p.setRole("operator");
-        p.setPassword(f.getPassword());
-        return p;
-    }
 }

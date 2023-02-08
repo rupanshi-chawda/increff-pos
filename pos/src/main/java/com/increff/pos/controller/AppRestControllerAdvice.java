@@ -32,9 +32,4 @@ public class AppRestControllerAdvice {
 		return dto.handle(e);
 	}
 
-//	@ExceptionHandler(ConstraintViolationException.class)
-//	@ResponseStatus(HttpStatus.BAD_REQUEST)
-//	public final MessageData handleConstraintViolation(ConstraintViolationException ex) {
-//		return dto.handleConstraintViolation(ex);
-//	}
 }

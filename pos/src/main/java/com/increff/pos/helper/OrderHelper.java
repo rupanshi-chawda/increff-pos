@@ -18,14 +18,9 @@ public class OrderHelper {
     public static OrderData convert(OrderPojo p) {
         OrderData d = new OrderData();
         d.setId(p.getId());
-        //d.setTime(LocalDateTime.ofInstant(p.getTime().toInstant(), ZoneOffset.ofHoursMinutes(5, 30)));
         d.setTime(p.getTime());
         return d;
     }
-
-//    public static OrderPojo convert(OrderForm form) {
-//        return new OrderPojo();
-//    }
 
     public static OrderItemData convert(OrderItemPojo p, String barcode) {
         OrderItemData d = new OrderItemData();

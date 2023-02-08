@@ -38,7 +38,7 @@ public class SalesDto {
         return api.getAll();
     }
 
-    public void createReport() throws ApiException {
+    public void createReport() {
         SalesPojo salesPojo = new SalesPojo();
 
         LocalDate date = LocalDate.now();
@@ -46,7 +46,6 @@ public class SalesDto {
         double totalRevenue = 0.0;
 
         ZonedDateTime startDate = date.atStartOfDay(ZoneId.systemDefault());
-        //LocalDateTime eldt =  LocalDateTime.of(date, LocalTime.MAX);
         ZonedDateTime endDate = startDate.with(LocalTime.MAX);
 
         List<OrderPojo> orderPojoList = orderApi.getOrderByDateFilter(startDate,endDate);

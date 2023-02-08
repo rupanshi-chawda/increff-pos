@@ -8,9 +8,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Objects;
 
-/*
-https://stackoverflow.com/questions/4664893/how-to-manually-set-an-authenticated-user-in-spring-security-springmvc
-*/
 public class SecurityUtil {
 
 	public static void createContext(HttpSession session) {

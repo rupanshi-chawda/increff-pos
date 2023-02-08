@@ -22,54 +22,29 @@ import java.util.List;
     @Autowired
     private OrderDto dto;
 
-//    @ApiOperation(value = &quot;Adds an Order&quot;)
-//    @PostMapping(path = &quot;&quot;)
-//    public void addOrder(@RequestBody OrderForm form) throws ApiException {
-//        dto.addOrder(form);
-//    }
-
-//    @ApiOperation(value = &quot;Gets an Order by Id&quot;)
-//    @GetMapping(path = &quot;/{id}&quot;)
-//    public OrderData getOrder(@PathVariable int id) throws ApiException {
-//        return dto.getOrder(id);
-//    }
-
     @ApiOperation(value = &quot;Gets list of all Orders&quot;)
     @GetMapping(path = &quot;&quot;)
     public List&lt;OrderData&gt; getAllOrder() {
-<span class="nc" id="L40">        return dto.getAllOrder();</span>
+<span class="nc" id="L28">        return dto.getAllOrder();</span>
     }
 
     @ApiOperation(value = &quot;Adds an Order Item&quot;)
     @PostMapping(path = &quot;/cart&quot;)
     public void addOrderItem(@RequestBody List&lt;OrderItemForm&gt; form) throws ApiException {
-<span class="nc" id="L46">        dto.addItem(form);</span>
-<span class="nc" id="L47">    }</span>
-
-//    @ApiOperation(value = &quot;Gets an Order Item by Id&quot;)
-//    @GetMapping(path = &quot;/cart/{id}&quot;)
-//    public OrderItemData getOrderItem(@PathVariable int id) throws ApiException {
-//        return dto.getItem(id);
-//    }
-
-//    @ApiOperation(value = &quot;Gets list of all Order Items&quot;)
-//    @GetMapping(path = &quot;/cart&quot;)
-//    public List&lt;OrderItemData&gt; getAllOrderItem() {
-//        return dto.getAllItem();
-//    }
+<span class="nc" id="L34">        dto.addItem(form);</span>
+<span class="nc" id="L35">    }</span>
 
     @ApiOperation(value = &quot;Gets list of Order Items in an Order by Id&quot;)
     @GetMapping(path = &quot;/cartitems/{id}&quot;)
     public List&lt;OrderItemData&gt; getOrderItemById(@PathVariable int id) throws ApiException {
-<span class="nc" id="L64">        return dto.getByOrderId(id);</span>
+<span class="nc" id="L40">        return dto.getByOrderId(id);</span>
     }
 
     @ApiOperation(value = &quot;Download Invoice&quot;)
     @GetMapping(path = &quot;/invoice/{id}&quot;, produces =  &quot;application/pdf&quot;)
-    public ResponseEntity&lt;byte[]&gt; getPDF(@PathVariable int id) throws Exception{
-<span class="nc" id="L70">        return dto.getPDF(id);</span>
+    public ResponseEntity&lt;byte[]&gt; getPDF(@PathVariable int id) throws ApiException{
+<span class="nc" id="L46">        return dto.getPDF(id);</span>
     }
-
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -39,11 +39,10 @@ public class InventoryHelper {
         }
     }
 
-    public static InventoryPojo validateInventoryId(InventoryPojo p) throws ApiException {
+    public static void validateInventoryId(InventoryPojo p) throws ApiException {
         if (Objects.isNull(p)) {
             throw new ApiException("Inventory for given barcode doesn't exists");
         }
-        return p;
     }
 
     public static InventoryItem convertMapToItem(Map.Entry<Pair<String,String>,Integer> mapElement) {

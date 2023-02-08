@@ -7,7 +7,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class SiteUiController extends AbstractUiController {
 
-	// WEBSITE PAGES
 	@RequestMapping(value = "")
 	public ModelAndView index() {
 		return mav("init.html");

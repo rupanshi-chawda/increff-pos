@@ -24,16 +24,4 @@ public class AppRestDto {
         data.setMessage("An unknown error has occurred - " + e.getMessage());
         return data;
     }
-
-//    public final MessageData handleConstraintViolation(ConstraintViolationException ex) {
-//        List<String> details = ex.getConstraintViolations()
-//                .parallelStream()
-//                .map(e -> e.getPropertyPath() +" "	+ e.getMessage())
-//                .collect(Collectors.toList());
-//
-//        MessageData data = new MessageData();
-//
-//        data.setMessage(details.toString());
-//        return data;
-//    }
 }

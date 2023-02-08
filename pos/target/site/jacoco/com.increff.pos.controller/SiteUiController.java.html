@@ -7,20 +7,19 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 <span class="fc" id="L8">public class SiteUiController extends AbstractUiController {</span>
 
-	// WEBSITE PAGES
 	@RequestMapping(value = &quot;&quot;)
 	public ModelAndView index() {
-<span class="nc" id="L13">		return mav(&quot;init.html&quot;);</span>
+<span class="nc" id="L12">		return mav(&quot;init.html&quot;);</span>
 	}
 
 	@RequestMapping(value = &quot;/site/login&quot;)
 	public ModelAndView login() {
-<span class="nc" id="L18">		return mav(&quot;login.html&quot;);</span>
+<span class="nc" id="L17">		return mav(&quot;login.html&quot;);</span>
 	}
 
 	@RequestMapping(value = &quot;/site/logout&quot;)
 	public ModelAndView logout() {
-<span class="nc" id="L23">		return mav(&quot;logout.html&quot;);</span>
+<span class="nc" id="L22">		return mav(&quot;logout.html&quot;);</span>
 	}
 
 }

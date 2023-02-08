@@ -42,47 +42,20 @@ public class OrderDto {
     @Autowired
     private InvoiceGenerator invoiceGenerator;
 
-//    public void addOrder(OrderForm form) throws ApiException {
-//        OrderPojo p = OrderHelper.convert(form);
-//        orderApi.addOrder(p);
-//    }
-
     //TODO general clean up
     //1. remove system.out
     //2. remove console.out
     //3. log statements(info) and comments
-
-//    public OrderData getOrder(int id) throws ApiException {
-//        OrderPojo p = orderApi.getOrder(id);
-//        return OrderHelper.convert(p);
-//    }
 
     public List<OrderData> getAllOrder() {
         return orderApi.getAllOrder().stream().map(OrderHelper::convert).collect(Collectors.toList());
     }
 
     public void addItem(List<OrderItemForm> forms) throws ApiException {
-
         // Validating every order item before adding it.
 
         checkDuplicateItems(forms);
         validateItems(forms);
-//        for(OrderItemForm f : forms) {
-//            OrderHelper.normalize(f);
-//            ValidationUtil.validateForms(f);
-//
-//            String barcode = productApi.getProductBarcodeByItemBarcode(f.getBarcode());
-//            OrderHelper.validateBarcode(barcode);
-//            System.out.println(barcode);
-//
-//            int id = productApi.getIdByBarcode(f.getBarcode());
-//            OrderHelper.validateId(id);
-//            System.out.println(id);
-//
-//            int quantity = inventoryApi.getQuantityById(id);
-//            OrderHelper.validateInventory(f, quantity);
-//            System.out.println(quantity);
-//        }
 
         // Place order
         OrderPojo op = new OrderPojo();
@@ -98,23 +71,7 @@ public class OrderDto {
         }
     }
 
-//    public OrderItemData getItem(int id) throws ApiException {
-//        OrderItemPojo p = orderApi.getItem(id);
-//        String barcode = productApi.getBarcodeById(p.getProductId());
-//        return OrderHelper.convert(p, barcode);
-//    }
-//
-//    public List<OrderItemData> getAllItem() {
-//        List<OrderItemPojo> list = orderApi.getAllItem();
-//        List<OrderItemData> list2 = new ArrayList<OrderItemData>();
-//        for(OrderItemPojo b : list) {
-//            String barcode = productApi.getBarcodeById(b.getProductId());
-//            list2.add(OrderHelper.convert(b, barcode));
-//        }
-//        return list2;
-//    }
-
-    public List<OrderItemData> getByOrderId(int orderId) throws ApiException {
+    public List<OrderItemData> getByOrderId(int orderId) {
         List<OrderItemPojo> list = orderApi.getByOrderId(orderId);
         List<OrderItemData> list2 = new ArrayList<OrderItemData>();
         for(OrderItemPojo b : list) {

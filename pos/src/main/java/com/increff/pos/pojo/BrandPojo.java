@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Getter
 @Setter
+@Table(indexes = @Index(name = "multiBrandIndex", columnList = "brand, category", unique = true))
 public class BrandPojo extends AbstractVersionPojo{
 
     @Id

@@ -5,15 +5,14 @@ import java.io.IOException;
 
 public class IOUtil {
 
-	public static void closeQuietly(Closeable c) {
+	public static void closeQuietly(Closeable c) throws ApiException {
 		if (c == null) {
 			return;
 		}
-
 		try {
 			c.close();
 		} catch (IOException e) {
-			// do nothing
+			throw new ApiException(e.getMessage());
 		}
 	}
 

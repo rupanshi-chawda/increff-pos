@@ -39,20 +39,19 @@ import java.util.Objects;
         }
 <span class="fc" id="L40">    }</span>
 
-    public static InventoryPojo validateInventoryId(InventoryPojo p) throws ApiException {
+    public static void validateInventoryId(InventoryPojo p) throws ApiException {
 <span class="fc bfc" id="L43" title="All 2 branches covered.">        if (Objects.isNull(p)) {</span>
 <span class="fc" id="L44">            throw new ApiException(&quot;Inventory for given barcode doesn't exists&quot;);</span>
         }
-<span class="fc" id="L46">        return p;</span>
-    }
+<span class="fc" id="L46">    }</span>
 
     public static InventoryItem convertMapToItem(Map.Entry&lt;Pair&lt;String,String&gt;,Integer&gt; mapElement) {
-<span class="fc" id="L50">        Pair&lt;String, String&gt; p = mapElement.getKey();</span>
-<span class="fc" id="L51">        InventoryItem inventoryItem = new InventoryItem();</span>
-<span class="fc" id="L52">        inventoryItem.setBrand(p.getKey());</span>
-<span class="fc" id="L53">        inventoryItem.setCategory(p.getValue());</span>
-<span class="fc" id="L54">        inventoryItem.setQuantity(mapElement.getValue());</span>
-<span class="fc" id="L55">        return inventoryItem;</span>
+<span class="fc" id="L49">        Pair&lt;String, String&gt; p = mapElement.getKey();</span>
+<span class="fc" id="L50">        InventoryItem inventoryItem = new InventoryItem();</span>
+<span class="fc" id="L51">        inventoryItem.setBrand(p.getKey());</span>
+<span class="fc" id="L52">        inventoryItem.setCategory(p.getValue());</span>
+<span class="fc" id="L53">        inventoryItem.setQuantity(mapElement.getValue());</span>
+<span class="fc" id="L54">        return inventoryItem;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

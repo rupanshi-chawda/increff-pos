@@ -23,36 +23,14 @@ import static org.hibernate.internal.util.io.StreamCopier.BUFFER_SIZE;
 @Controller
 public class SampleController {
 
-	//Spring ignores . (dot) in the path. So we need fileName:.+
-	//See https://stackoverflow.com/questions/16332092/spring-mvc-pathvariable-with-dot-is-getting-truncated
 	@GetMapping(value = "/sample/{fileName:.+}")
-	public StreamingResponseBody getFile(@PathVariable("fileName") String fileName, HttpServletResponse response) throws IOException {
+	public StreamingResponseBody getFile(@PathVariable("fileName") String fileName, HttpServletResponse response) {
 
 		response.setContentType("text/csv");
 		response.addHeader("Content-disposition:", "attachment; filename=" + fileName);
 		String fileClasspath = "C:\\Users\\KIIT\\Downloads\\increff-pos\\pos\\src\\main\\resources\\com.increff\\pos\\" + fileName;
-		System.out.println(fileClasspath);
 
 
-//		InputStream is = new FileInputStream(fileClasspath);
-//		File f = new File(fileClasspath);
-
-		// copy it to response's OutputStream
-//		try {
-//			IOUtils.copy(Objects.requireNonNull(is), response.getOutputStream());
-//			response.flushBuffer();
-//		} finally {
-//			IOUtil.closeQuietly(is);
-////		}
-//
-//		try {
-//			OutputStream out =  new FileOutputStream(fileClasspath);
-//			if(out != null){
-//				out.write(is.read());
-//			}
-//		} catch (IOException e) {
-//			throw e;
-//		}
 		return outputStream -> {
 			int bytesRead;
 			byte[] buffer = new byte[BUFFER_SIZE];

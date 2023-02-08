@@ -44,7 +44,7 @@ import java.util.List;
 
     @ApiOperation(value = &quot;Export Product Report to CSV&quot;)
     @GetMapping(path = &quot;/exportcsv&quot;)
-    public void exportToCSV(HttpServletResponse response) throws IOException, ApiException {
+    public void exportToCSV(HttpServletResponse response) throws ApiException {
 <span class="nc" id="L48">        dto.generateCsv(response);</span>
 <span class="nc" id="L49">    }</span>
 }

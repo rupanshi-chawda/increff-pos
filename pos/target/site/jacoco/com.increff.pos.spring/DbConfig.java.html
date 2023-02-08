@@ -38,7 +38,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 	@Bean(name = &quot;dataSource&quot;)
 	public DataSource getDataSource() {
-//		logger.info(&quot;jdbcDriver: &quot; + jdbcDriver + &quot;, jdbcUrl: &quot; + jdbcUrl + &quot;, jdbcUsername: &quot; + jdbcUsername);
+
 <span class="fc" id="L42">		BasicDataSource bean = new BasicDataSource();</span>
 <span class="fc" id="L43">		bean.setDriverClassName(jdbcDriver);</span>
 <span class="fc" id="L44">		bean.setUrl(jdbcUrl);</span>
@@ -46,7 +46,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 <span class="fc" id="L46">		bean.setPassword(jdbcPassword);</span>
 <span class="fc" id="L47">		bean.setInitialSize(2);</span>
 <span class="fc" id="L48">		bean.setDefaultAutoCommit(false);</span>
-		//bean.setMaxTotal(10);
+
 <span class="fc" id="L50">		bean.setMinIdle(2);</span>
 <span class="fc" id="L51">		bean.setValidationQuery(&quot;Select 1&quot;);</span>
 <span class="fc" id="L52">		bean.setTestWhileIdle(true);</span>
@@ -57,7 +57,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 	@Bean(name = &quot;entityManagerFactory&quot;)
 	@Autowired
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
-		//logger.info(&quot;hibernateDialect: &quot; + jdbcDriver + &quot;, hibernateHbm2ddl: &quot; + hibernateHbm2ddl);
+
 <span class="fc" id="L61">		LocalContainerEntityManagerFactoryBean bean = new LocalContainerEntityManagerFactoryBean();</span>
 <span class="fc" id="L62">		bean.setDataSource(dataSource);</span>
 <span class="fc" id="L63">		bean.setPackagesToScan(PACKAGE_POJO);</span>

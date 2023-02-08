@@ -4,6 +4,7 @@ import com.increff.pos.model.commons.InventoryItem;
 import com.increff.pos.model.data.SalesReportData;
 import com.increff.pos.pojo.BrandPojo;
 import com.increff.pos.pojo.InventoryPojo;
+import io.swagger.annotations.Api;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.springframework.stereotype.Component;
@@ -14,42 +15,42 @@ import java.io.Writer;
 import java.util.List;
 
 @Component
-<span class="fc" id="L17">public class CsvFileGenerator {</span>
+<span class="fc" id="L18">public class CsvFileGenerator {</span>
 
-    public void writeBrandsToCsv(List&lt;BrandPojo&gt; brands, Writer writer) {
+    public void writeBrandsToCsv(List&lt;BrandPojo&gt; brands, Writer writer) throws ApiException {
         try {
-<span class="fc" id="L21">            CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT);</span>
-<span class="fc" id="L22">                printer.printRecord(&quot;Brand&quot;,&quot;Category&quot;);</span>
-<span class="fc bfc" id="L23" title="All 2 branches covered.">            for (BrandPojo b : brands) {</span>
-<span class="fc" id="L24">                printer.printRecord(b.getBrand(), b.getCategory());</span>
-<span class="fc" id="L25">            }</span>
-<span class="nc" id="L26">        } catch (IOException e) {</span>
-<span class="nc" id="L27">            e.printStackTrace();</span>
-<span class="fc" id="L28">        }</span>
-<span class="fc" id="L29">    }</span>
+<span class="fc" id="L22">            CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT);</span>
+<span class="fc" id="L23">                printer.printRecord(&quot;Brand&quot;,&quot;Category&quot;);</span>
+<span class="fc bfc" id="L24" title="All 2 branches covered.">            for (BrandPojo b : brands) {</span>
+<span class="fc" id="L25">                printer.printRecord(b.getBrand(), b.getCategory());</span>
+<span class="fc" id="L26">            }</span>
+<span class="nc" id="L27">        } catch (IOException e) {</span>
+<span class="nc" id="L28">            throw new ApiException(e.getMessage());</span>
+<span class="fc" id="L29">        }</span>
+<span class="fc" id="L30">    }</span>
 
-    public void writeInventoryToCsv(List&lt;InventoryItem&gt; inventory, Writer writer) {
+    public void writeInventoryToCsv(List&lt;InventoryItem&gt; inventory, Writer writer) throws ApiException {
         try {
-<span class="fc" id="L33">            CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT);</span>
-<span class="fc" id="L34">            printer.printRecord(&quot;Brand&quot;,&quot;Category&quot;,&quot;Quantity&quot;);</span>
-<span class="fc bfc" id="L35" title="All 2 branches covered.">            for (InventoryItem i: inventory) {</span>
-<span class="fc" id="L36">                printer.printRecord(i.getBrand(), i.getCategory(), i.getQuantity());</span>
-<span class="fc" id="L37">            }</span>
-<span class="nc" id="L38">        } catch (IOException e) {</span>
-<span class="nc" id="L39">            e.printStackTrace();</span>
-<span class="fc" id="L40">        }</span>
-<span class="fc" id="L41">    }</span>
+<span class="fc" id="L34">            CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT);</span>
+<span class="fc" id="L35">            printer.printRecord(&quot;Brand&quot;,&quot;Category&quot;,&quot;Quantity&quot;);</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">            for (InventoryItem i: inventory) {</span>
+<span class="fc" id="L37">                printer.printRecord(i.getBrand(), i.getCategory(), i.getQuantity());</span>
+<span class="fc" id="L38">            }</span>
+<span class="nc" id="L39">        } catch (IOException e) {</span>
+<span class="nc" id="L40">            throw new ApiException(e.getMessage());</span>
+<span class="fc" id="L41">        }</span>
+<span class="fc" id="L42">    }</span>
 
-    public void writeSalesToCsv(List&lt;SalesReportData&gt; sales, PrintWriter writer) {
+    public void writeSalesToCsv(List&lt;SalesReportData&gt; sales, PrintWriter writer) throws ApiException{
         try {
-<span class="nc" id="L45">            CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT);</span>
-<span class="nc" id="L46">            printer.printRecord(&quot;Brand&quot;,&quot;Category&quot;,&quot;Quantity&quot;,&quot;Revenue&quot;);</span>
-<span class="nc bnc" id="L47" title="All 2 branches missed.">            for (SalesReportData i: sales) {</span>
-<span class="nc" id="L48">                printer.printRecord(i.getBrand(), i.getCategory(), i.getQuantity(), i.getRevenue());</span>
-<span class="nc" id="L49">            }</span>
-<span class="nc" id="L50">        } catch (IOException e) {</span>
-<span class="nc" id="L51">            e.printStackTrace();</span>
-<span class="nc" id="L52">        }</span>
-<span class="nc" id="L53">    }</span>
+<span class="fc" id="L46">            CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT);</span>
+<span class="fc" id="L47">            printer.printRecord(&quot;Brand&quot;,&quot;Category&quot;,&quot;Quantity&quot;,&quot;Revenue&quot;);</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">            for (SalesReportData i: sales) {</span>
+<span class="fc" id="L49">                printer.printRecord(i.getBrand(), i.getCategory(), i.getQuantity(), i.getRevenue());</span>
+<span class="fc" id="L50">            }</span>
+<span class="nc" id="L51">        } catch (IOException e) {</span>
+<span class="nc" id="L52">            throw new ApiException(e.getMessage());</span>
+<span class="fc" id="L53">        }</span>
+<span class="fc" id="L54">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

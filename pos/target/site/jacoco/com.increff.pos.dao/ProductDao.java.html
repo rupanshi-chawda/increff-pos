@@ -8,21 +8,14 @@ import javax.persistence.TypedQuery;
 @Repository
 <span class="fc" id="L9">public class ProductDao extends AbstractDao{</span>
 
-    private static final String SELECT_BY_BRAND_CATEGORY = &quot;select p from ProductPojo p where &quot; +
-            &quot;brandCategory=:brandCategory&quot;;
     private static final String SELECT_BY_BARCODE = &quot;select p from ProductPojo p where barcode=:barcode&quot;;
 
-    public ProductPojo selectByBrandCategory(int brandCategory){
-<span class="nc" id="L16">        TypedQuery&lt;ProductPojo&gt; query = getQuery(SELECT_BY_BRAND_CATEGORY, ProductPojo.class);</span>
-<span class="nc" id="L17">        query.setParameter(&quot;brandCategory&quot;, brandCategory);</span>
-<span class="nc" id="L18">        return getSingle(query);</span>
-    }
     public ProductPojo selectByBarcode(String barcode){
-<span class="fc" id="L21">        TypedQuery&lt;ProductPojo&gt; query = getQuery(SELECT_BY_BARCODE, ProductPojo.class);</span>
-<span class="fc" id="L22">        query.setParameter(&quot;barcode&quot;, barcode);</span>
-<span class="fc" id="L23">        return getSingle(query);</span>
+<span class="fc" id="L14">        TypedQuery&lt;ProductPojo&gt; query = getQuery(SELECT_BY_BARCODE, ProductPojo.class);</span>
+<span class="fc" id="L15">        query.setParameter(&quot;barcode&quot;, barcode);</span>
+<span class="fc" id="L16">        return getSingle(query);</span>
     }
 
-<span class="fc" id="L26">    public void update(ProductPojo p){}</span>
+<span class="fc" id="L19">    public void update(ProductPojo p){}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

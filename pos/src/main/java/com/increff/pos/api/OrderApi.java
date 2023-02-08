@@ -31,10 +31,13 @@ public class OrderApi {
     @Autowired
     private OrderItemDao itemDao;
 
+    @Autowired
+    private RestTemplate restTemplate;
+
     @Value("${invoice.url}")
     private String url;
     
-    public void addOrder(OrderPojo p) throws ApiException {//TODO check and remove extra exceptions (TODO read about checked and unchecked exception)
+    public void addOrder(OrderPojo p){//TODO read about checked and unchecked exception
         orderDao.insert(p);
     }
     
@@ -46,7 +49,7 @@ public class OrderApi {
         return orderDao.selectAllDesc();
     }
     
-    public void addItem(OrderItemPojo p, int pid, int oid) throws ApiException {
+    public void addItem(OrderItemPojo p, int pid, int oid){
         p.setProductId(pid);
         p.setOrderId(oid);
         itemDao.insert(p);
@@ -58,9 +61,6 @@ public class OrderApi {
         return p;
     }
 
-    public List<OrderItemPojo> getAllItem() {
-        return itemDao.selectAll(OrderItemPojo.class);
-    }
 
     public List<OrderItemPojo> getByOrderId(int orderid) {
         return itemDao.selectByOrderId(orderid);
@@ -78,13 +78,11 @@ public class OrderApi {
         return p;
     }
 
-    public List<OrderItemPojo> getOrderItemByOrderId(int orderid) throws ApiException {
+    public List<OrderItemPojo> getOrderItemByOrderId(int orderid){
         return itemDao.selectByOrderId(orderid);
     }
 
     public ResponseEntity<byte[]> getPDF(InvoiceForm invoiceForm) {
-
-        RestTemplate restTemplate = new RestTemplate();//TODO autowire this and use http connection pooling
 
         byte[] contents = restTemplate.postForEntity(url, invoiceForm, byte[].class).getBody();
 
@@ -92,7 +90,6 @@ public class OrderApi {
         headers.setContentType(MediaType.APPLICATION_PDF);
 
         String filename = "invoice.pdf";//TODO append orderId
-        //headers.setContentDispositionFormData("inline", filename);
         headers.add("Content-Disposition", "inline;filename=" + filename);
 
 

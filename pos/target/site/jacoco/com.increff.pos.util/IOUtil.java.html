@@ -5,17 +5,16 @@ import java.io.IOException;
 
 <span class="nc" id="L6">public class IOUtil {</span>
 
-	public static void closeQuietly(Closeable c) {
+	public static void closeQuietly(Closeable c) throws ApiException {
 <span class="nc bnc" id="L9" title="All 2 branches missed.">		if (c == null) {</span>
 <span class="nc" id="L10">			return;</span>
 		}
-
 		try {
-<span class="nc" id="L14">			c.close();</span>
-<span class="nc" id="L15">		} catch (IOException e) {</span>
-			// do nothing
-<span class="nc" id="L17">		}</span>
-<span class="nc" id="L18">	}</span>
+<span class="nc" id="L13">			c.close();</span>
+<span class="nc" id="L14">		} catch (IOException e) {</span>
+<span class="nc" id="L15">			throw new ApiException(e.getMessage());</span>
+<span class="nc" id="L16">		}</span>
+<span class="nc" id="L17">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

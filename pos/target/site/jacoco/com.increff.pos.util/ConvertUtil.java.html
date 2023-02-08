@@ -8,10 +8,9 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
     public static &lt;T, R&gt; R convert(T fromClass, Class&lt;R&gt; toClass) {
 <span class="fc" id="L9">        ObjectMapper mapper = new ObjectMapper();</span>
 <span class="fc" id="L10">        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);</span>
-        // QUES : Where should this be added?
-<span class="fc" id="L12">        mapper.registerModule(new JavaTimeModule());</span>
-<span class="fc" id="L13">        R newObject = mapper.convertValue(fromClass, toClass);</span>
-<span class="fc" id="L14">        return newObject;</span>
+<span class="fc" id="L11">        mapper.registerModule(new JavaTimeModule());</span>
+<span class="fc" id="L12">        R newObject = mapper.convertValue(fromClass, toClass);</span>
+<span class="fc" id="L13">        return newObject;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

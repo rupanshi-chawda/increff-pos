@@ -18,55 +18,50 @@ import java.util.Objects;
     public static OrderData convert(OrderPojo p) {
 <span class="fc" id="L19">        OrderData d = new OrderData();</span>
 <span class="fc" id="L20">        d.setId(p.getId());</span>
-        //d.setTime(LocalDateTime.ofInstant(p.getTime().toInstant(), ZoneOffset.ofHoursMinutes(5, 30)));
-<span class="fc" id="L22">        d.setTime(p.getTime());</span>
-<span class="fc" id="L23">        return d;</span>
+<span class="fc" id="L21">        d.setTime(p.getTime());</span>
+<span class="fc" id="L22">        return d;</span>
     }
 
-//    public static OrderPojo convert(OrderForm form) {
-//        return new OrderPojo();
-//    }
-
     public static OrderItemData convert(OrderItemPojo p, String barcode) {
-<span class="fc" id="L31">        OrderItemData d = new OrderItemData();</span>
-<span class="fc" id="L32">        d.setBarcode(barcode);</span>
-<span class="fc" id="L33">        d.setId(p.getId());</span>
-<span class="fc" id="L34">        d.setOrderId(p.getOrderId());</span>
-<span class="fc" id="L35">        d.setProductId(p.getProductId());</span>
-<span class="fc" id="L36">        d.setQuantity(p.getQuantity());</span>
-<span class="fc" id="L37">        d.setSellingPrice(p.getSellingPrice());</span>
-<span class="fc" id="L38">        return d;</span>
+<span class="fc" id="L26">        OrderItemData d = new OrderItemData();</span>
+<span class="fc" id="L27">        d.setBarcode(barcode);</span>
+<span class="fc" id="L28">        d.setId(p.getId());</span>
+<span class="fc" id="L29">        d.setOrderId(p.getOrderId());</span>
+<span class="fc" id="L30">        d.setProductId(p.getProductId());</span>
+<span class="fc" id="L31">        d.setQuantity(p.getQuantity());</span>
+<span class="fc" id="L32">        d.setSellingPrice(p.getSellingPrice());</span>
+<span class="fc" id="L33">        return d;</span>
     }
 
     public static OrderItemPojo convert(OrderItemForm f) {
-<span class="fc" id="L42">        OrderItemPojo p = new OrderItemPojo();</span>
-<span class="fc" id="L43">        p.setSellingPrice(f.getSellingPrice());</span>
-<span class="fc" id="L44">        p.setQuantity(f.getQuantity());</span>
-<span class="fc" id="L45">        return p;</span>
+<span class="fc" id="L37">        OrderItemPojo p = new OrderItemPojo();</span>
+<span class="fc" id="L38">        p.setSellingPrice(f.getSellingPrice());</span>
+<span class="fc" id="L39">        p.setQuantity(f.getQuantity());</span>
+<span class="fc" id="L40">        return p;</span>
     }
 
     public static void normalize(OrderItemForm f) {
-<span class="fc" id="L49">        f.setBarcode(StringUtil.toLowerCase(f.getBarcode()));</span>
-<span class="fc" id="L50">    }</span>
+<span class="fc" id="L44">        f.setBarcode(StringUtil.toLowerCase(f.getBarcode()));</span>
+<span class="fc" id="L45">    }</span>
 
 
     public static void validateId(OrderItemPojo p, int id) throws ApiException {
-<span class="nc bnc" id="L54" title="All 2 branches missed.">        if (Objects.isNull(p)) {</span>
-<span class="nc" id="L55">            throw new ApiException(&quot;Product with given ID does not exit, id: &quot; + id);</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        if (Objects.isNull(p)) {</span>
+<span class="nc" id="L50">            throw new ApiException(&quot;Product with given ID does not exit, id: &quot; + id);</span>
         }
-<span class="nc" id="L57">    }</span>
+<span class="nc" id="L52">    }</span>
 
     public static void validateId(int id) throws ApiException {
-<span class="pc bpc" id="L60" title="1 of 2 branches missed.">        if (id&lt;1) {</span>
-<span class="nc" id="L61">            throw new ApiException(&quot;Product with given ID does not exit, id: &quot; + id);</span>
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">        if (id&lt;1) {</span>
+<span class="nc" id="L56">            throw new ApiException(&quot;Product with given ID does not exit, id: &quot; + id);</span>
         }
-<span class="fc" id="L63">    }</span>
+<span class="fc" id="L58">    }</span>
 
     public static void validateInventory(OrderItemForm f, int quantity) throws ApiException {
-<span class="pc bpc" id="L66" title="1 of 2 branches missed.">        if (f.getQuantity() &gt; quantity) {</span>
-<span class="nc" id="L67">            throw new ApiException(&quot;Product Quantity is more than available Inventory&quot;);</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">        if (f.getQuantity() &gt; quantity) {</span>
+<span class="nc" id="L62">            throw new ApiException(&quot;Product Quantity is more than available Inventory&quot;);</span>
         }
-<span class="fc" id="L69">    }</span>
+<span class="fc" id="L64">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

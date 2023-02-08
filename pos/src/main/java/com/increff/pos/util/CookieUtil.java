@@ -15,7 +15,6 @@ public class CookieUtil {
 				return c.getValue();
 			}
 		}
-
 		return null;
 	}
 }

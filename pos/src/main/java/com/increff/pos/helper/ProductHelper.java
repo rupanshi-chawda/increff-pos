@@ -46,6 +46,7 @@ public class ProductHelper {
         f.setCategory(StringUtil.toLowerCase(f.getCategory()));
         f.setName(StringUtil.toLowerCase(f.getName()));
     }
+
     public static void normalize(ProductUpdateForm f) {
         f.setName(StringUtil.toLowerCase(f.getName()));
     }

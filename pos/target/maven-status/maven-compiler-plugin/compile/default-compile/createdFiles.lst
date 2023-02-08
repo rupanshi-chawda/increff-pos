@@ -69,6 +69,7 @@ com\increff\pos\pojo\AbstractVersionPojo.class
 com\increff\pos\controller\AbstractUiController.class
 com\increff\pos\model\data\OrderItemData.class
 com\increff\pos\pojo\BrandPojo.class
+com\increff\pos\helper\UserHelper.class
 com\increff\pos\dao\OrderDao.class
 com\increff\pos\model\form\SalesForm.class
 com\increff\pos\api\UserApi.class

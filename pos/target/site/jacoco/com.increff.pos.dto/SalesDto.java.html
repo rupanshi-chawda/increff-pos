@@ -38,7 +38,7 @@ import java.util.Objects;
 <span class="nc" id="L38">        return api.getAll();</span>
     }
 
-    public void createReport() throws ApiException {
+    public void createReport() {
 <span class="nc" id="L42">        SalesPojo salesPojo = new SalesPojo();</span>
 
 <span class="nc" id="L44">        LocalDate date = LocalDate.now();</span>
@@ -46,41 +46,40 @@ import java.util.Objects;
 <span class="nc" id="L46">        double totalRevenue = 0.0;</span>
 
 <span class="nc" id="L48">        ZonedDateTime startDate = date.atStartOfDay(ZoneId.systemDefault());</span>
-        //LocalDateTime eldt =  LocalDateTime.of(date, LocalTime.MAX);
-<span class="nc" id="L50">        ZonedDateTime endDate = startDate.with(LocalTime.MAX);</span>
+<span class="nc" id="L49">        ZonedDateTime endDate = startDate.with(LocalTime.MAX);</span>
 
-<span class="nc" id="L52">        List&lt;OrderPojo&gt; orderPojoList = orderApi.getOrderByDateFilter(startDate,endDate);</span>
+<span class="nc" id="L51">        List&lt;OrderPojo&gt; orderPojoList = orderApi.getOrderByDateFilter(startDate,endDate);</span>
 
-<span class="nc" id="L54">        Integer totalOrders = orderPojoList.size();</span>
+<span class="nc" id="L53">        Integer totalOrders = orderPojoList.size();</span>
 
-<span class="nc bnc" id="L56" title="All 2 branches missed.">        for (OrderPojo orderPojo : orderPojoList) {</span>
-<span class="nc" id="L57">            int id = orderPojo.getId();</span>
-<span class="nc" id="L58">            List&lt;OrderItemPojo&gt; orderItemPojoList = orderApi.getOrderItemsByOrderId(id);</span>
-<span class="nc bnc" id="L59" title="All 2 branches missed.">            for (OrderItemPojo orderItemPojo: orderItemPojoList) {</span>
-<span class="nc" id="L60">                totalItems += orderItemPojo.getQuantity();</span>
-<span class="nc" id="L61">                totalRevenue += orderItemPojo.getQuantity() * orderItemPojo.getSellingPrice();</span>
-<span class="nc" id="L62">            }</span>
-<span class="nc" id="L63">        }</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">        for (OrderPojo orderPojo : orderPojoList) {</span>
+<span class="nc" id="L56">            int id = orderPojo.getId();</span>
+<span class="nc" id="L57">            List&lt;OrderItemPojo&gt; orderItemPojoList = orderApi.getOrderItemsByOrderId(id);</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">            for (OrderItemPojo orderItemPojo: orderItemPojoList) {</span>
+<span class="nc" id="L59">                totalItems += orderItemPojo.getQuantity();</span>
+<span class="nc" id="L60">                totalRevenue += orderItemPojo.getQuantity() * orderItemPojo.getSellingPrice();</span>
+<span class="nc" id="L61">            }</span>
+<span class="nc" id="L62">        }</span>
 
-<span class="nc" id="L65">        salesPojo.setDate(date);</span>
-<span class="nc" id="L66">        salesPojo.setInvoicedItemsCount(totalItems);</span>
-<span class="nc" id="L67">        salesPojo.setTotalRevenue(totalRevenue);</span>
-<span class="nc" id="L68">        salesPojo.setInvoicedOrderCount(totalOrders);</span>
+<span class="nc" id="L64">        salesPojo.setDate(date);</span>
+<span class="nc" id="L65">        salesPojo.setInvoicedItemsCount(totalItems);</span>
+<span class="nc" id="L66">        salesPojo.setTotalRevenue(totalRevenue);</span>
+<span class="nc" id="L67">        salesPojo.setInvoicedOrderCount(totalOrders);</span>
 
-<span class="nc" id="L70">        SalesPojo pojo = api.getByDate(date);</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">        if(Objects.isNull(pojo)){</span>
-<span class="nc" id="L72">            api.add(salesPojo);</span>
+<span class="nc" id="L69">        SalesPojo pojo = api.getByDate(date);</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        if(Objects.isNull(pojo)){</span>
+<span class="nc" id="L71">            api.add(salesPojo);</span>
         }
         else {
-<span class="nc" id="L75">            api.update(date,salesPojo);</span>
+<span class="nc" id="L74">            api.update(date,salesPojo);</span>
         }
 
-<span class="nc" id="L78">    }</span>
+<span class="nc" id="L77">    }</span>
 
     private void checkDates(LocalDate startDate, LocalDate endDate) throws ApiException {
-<span class="nc bnc" id="L81" title="All 2 branches missed.">        if(endDate.isBefore(startDate)) {</span>
-<span class="nc" id="L82">            throw new ApiException(&quot;End date must not be before Start date&quot;);</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">        if(endDate.isBefore(startDate)) {</span>
+<span class="nc" id="L81">            throw new ApiException(&quot;End date must not be before Start date&quot;);</span>
         }
-<span class="nc" id="L84">    }</span>
+<span class="nc" id="L83">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

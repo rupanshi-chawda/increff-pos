@@ -4,6 +4,7 @@ import com.increff.pos.model.commons.InventoryItem;
 import com.increff.pos.model.data.SalesReportData;
 import com.increff.pos.pojo.BrandPojo;
 import com.increff.pos.pojo.InventoryPojo;
+import io.swagger.annotations.Api;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,7 @@ import java.util.List;
 @Component
 public class CsvFileGenerator {
 
-    public void writeBrandsToCsv(List<BrandPojo> brands, Writer writer) {
+    public void writeBrandsToCsv(List<BrandPojo> brands, Writer writer) throws ApiException {
         try {
             CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT);
                 printer.printRecord("Brand","Category");
@@ -24,11 +25,11 @@ public class CsvFileGenerator {
                 printer.printRecord(b.getBrand(), b.getCategory());
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new ApiException(e.getMessage());
         }
     }
 
-    public void writeInventoryToCsv(List<InventoryItem> inventory, Writer writer) {
+    public void writeInventoryToCsv(List<InventoryItem> inventory, Writer writer) throws ApiException {
         try {
             CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT);
             printer.printRecord("Brand","Category","Quantity");
@@ -36,11 +37,11 @@ public class CsvFileGenerator {
                 printer.printRecord(i.getBrand(), i.getCategory(), i.getQuantity());
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new ApiException(e.getMessage());
         }
     }
 
-    public void writeSalesToCsv(List<SalesReportData> sales, PrintWriter writer) {
+    public void writeSalesToCsv(List<SalesReportData> sales, PrintWriter writer) throws ApiException{
         try {
             CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT);
             printer.printRecord("Brand","Category","Quantity","Revenue");
@@ -48,7 +49,7 @@ public class CsvFileGenerator {
                 printer.printRecord(i.getBrand(), i.getCategory(), i.getQuantity(), i.getRevenue());
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new ApiException(e.getMessage());
         }
     }
 }

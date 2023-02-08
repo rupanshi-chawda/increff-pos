@@ -1,5 +1,6 @@
 package com.increff.pos.dto;
 
+import com.increff.pos.helper.UserHelper;
 import com.increff.pos.pojo.UserPojo;
 import com.increff.pos.controller.AbstractUiController;
 import com.increff.pos.model.data.InfoData;
@@ -28,7 +29,7 @@ public class InitDto extends AbstractUiController {
     @Value("${app.admin_email}")
     private String admin_email;
 
-    public ModelAndView show(UserForm form) throws ApiException {
+    public ModelAndView show(UserForm form) {
         info.setMessage("");
         return mav("init.html");
     }
@@ -43,25 +44,17 @@ public class InitDto extends AbstractUiController {
         }
         else if(Objects.equals(form.getEmail(), admin_email))
         {
-            UserPojo p = convert(form,"supervisor");
+            UserPojo p = UserHelper.convert(form,"supervisor");
             dto.add(p);
             info.setMessage("Signed Up Successfully, you can login now");
         }
         else
         {
-            UserPojo p = convert(form, "operator");
+            UserPojo p = UserHelper.convert(form, "operator");
             dto.add(p);
             info.setMessage("Signed Up Successfully, you can login now");
         }
         return mav("init.html");
     }
 
-    //Conversion Methods
-    private static UserPojo convert(UserForm f, String role) {
-        UserPojo p = new UserPojo();
-        p.setEmail(f.getEmail());
-        p.setRole(role);
-        p.setPassword(f.getPassword());
-        return p;
-    }
 }

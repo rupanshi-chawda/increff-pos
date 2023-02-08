@@ -67,10 +67,5 @@ import java.util.Objects;
 <span class="fc" id="L67">        ProductPojo p = dao.selectById(id, ProductPojo.class);</span>
 <span class="fc" id="L68">        return p.getBarcode();</span>
     }
-
-    public String getProductBarcodeByItemBarcode(String barcode) {
-<span class="fc" id="L72">        ProductPojo p = dao.selectByBarcode(barcode);</span>
-<span class="fc" id="L73">        return p.getBarcode();</span>
-    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

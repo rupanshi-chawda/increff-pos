@@ -68,7 +68,6 @@ public class BrandDto {
 
     public void update(int id, BrandForm f) throws ApiException {
         BrandHelper.normalize(f);
-//        BrandHelper.validate(f);
         ValidationUtil.validateForms(f);
         BrandPojo p = BrandHelper.convert(f);
         api.update(id, p);

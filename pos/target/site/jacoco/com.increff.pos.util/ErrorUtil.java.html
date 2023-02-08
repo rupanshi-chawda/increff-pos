@@ -7,22 +7,16 @@ import com.increff.pos.util.ApiException;
 import java.util.List;
 
 <span class="nc" id="L9">public class ErrorUtil {</span>
-//    public static  &lt;T&gt; void throwErrors(List&lt;T&gt; errors) throws ApiException, JsonProcessingException {
-//        ObjectMapper mapper = new ObjectMapper();
-//        String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(errors);
-//        throw new ApiException(json);
-//    }
-
 
     public static  &lt;T&gt; void throwErrors(List&lt;T&gt; errors) throws ApiException {
-<span class="fc" id="L18">        ObjectMapper mapper = new ObjectMapper();</span>
-<span class="fc" id="L19">        String json = null;</span>
+<span class="fc" id="L12">        ObjectMapper mapper = new ObjectMapper();</span>
+<span class="fc" id="L13">        String json = null;</span>
         try {
-<span class="fc" id="L21">            json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(errors);</span>
-<span class="nc" id="L22">        } catch (JsonProcessingException e) {</span>
-<span class="nc" id="L23">            throw new ApiException(e.getMessage());</span>
-<span class="fc" id="L24">        }</span>
-<span class="fc" id="L25">        throw new ApiException(json);</span>
+<span class="fc" id="L15">            json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(errors);</span>
+<span class="nc" id="L16">        } catch (JsonProcessingException e) {</span>
+<span class="nc" id="L17">            throw new ApiException(e.getMessage());</span>
+<span class="fc" id="L18">        }</span>
+<span class="fc" id="L19">        throw new ApiException(json);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

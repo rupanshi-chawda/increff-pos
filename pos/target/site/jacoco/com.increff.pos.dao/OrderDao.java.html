@@ -19,10 +19,10 @@ import java.util.List;
     }
 
     public List&lt;OrderPojo&gt; selectOrderByDateFilter(ZonedDateTime startDate, ZonedDateTime endDate) {
-<span class="nc" id="L22">        TypedQuery&lt;OrderPojo&gt; query = getQuery(SELECT_BY_DATE_FILTER, OrderPojo.class);</span>
-<span class="nc" id="L23">        query.setParameter(&quot;startDate&quot;, startDate);</span>
-<span class="nc" id="L24">        query.setParameter(&quot;endDate&quot;, endDate);</span>
-<span class="nc" id="L25">        return query.getResultList();</span>
+<span class="fc" id="L22">        TypedQuery&lt;OrderPojo&gt; query = getQuery(SELECT_BY_DATE_FILTER, OrderPojo.class);</span>
+<span class="fc" id="L23">        query.setParameter(&quot;startDate&quot;, startDate);</span>
+<span class="fc" id="L24">        query.setParameter(&quot;endDate&quot;, endDate);</span>
+<span class="fc" id="L25">        return query.getResultList();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

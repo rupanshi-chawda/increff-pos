@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -30,7 +31,7 @@ import java.time.format.DateTimeFormatter;
 @Configuration
 @EnableWebMvc
 @EnableSwagger2
-<span class="fc" id="L33">public class ControllerConfig extends WebMvcConfigurerAdapter {</span>
+<span class="fc" id="L34">public class ControllerConfig extends WebMvcConfigurerAdapter {</span>
 
 	public static final String PACKAGE_CONTROLLER = &quot;com.increff.pos.controller&quot;;
 
@@ -38,65 +39,70 @@ import java.time.format.DateTimeFormatter;
 	private ApplicationContext applicationContext;
 
 	public void setApplicationContext(ApplicationContext applicationContext) {
-<span class="nc" id="L41">		this.applicationContext = applicationContext;</span>
-<span class="nc" id="L42">	}</span>
+<span class="nc" id="L42">		this.applicationContext = applicationContext;</span>
+<span class="nc" id="L43">	}</span>
 	
 	@Bean
 	public Docket api() {
-<span class="fc" id="L46">		return new Docket(DocumentationType.SWAGGER_2)//</span>
-<span class="fc" id="L47">				.useDefaultResponseMessages(false)//</span>
-<span class="fc" id="L48">				.select().apis(RequestHandlerSelectors.basePackage(PACKAGE_CONTROLLER))//</span>
-<span class="fc" id="L49">				.paths(PathSelectors.regex(&quot;/api/.*&quot;))//</span>
-<span class="fc" id="L50">				.build();</span>
+<span class="fc" id="L47">		return new Docket(DocumentationType.SWAGGER_2)//</span>
+<span class="fc" id="L48">				.useDefaultResponseMessages(false)//</span>
+<span class="fc" id="L49">				.select().apis(RequestHandlerSelectors.basePackage(PACKAGE_CONTROLLER))//</span>
+<span class="fc" id="L50">				.paths(PathSelectors.regex(&quot;/api/.*&quot;))//</span>
+<span class="fc" id="L51">				.build();</span>
 	}
 
 	// Add configuration for Swagger
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-<span class="fc" id="L56">		registry.addResourceHandler(&quot;/swagger-ui.html&quot;).</span>
-<span class="fc" id="L57">				addResourceLocations(&quot;classpath:/META-INF/resources/&quot;);</span>
-<span class="fc" id="L58">		registry.addResourceHandler(&quot;/webjars/**&quot;).</span>
-<span class="fc" id="L59">				addResourceLocations(&quot;classpath:/META-INF/resources/webjars/&quot;);</span>
-<span class="fc" id="L60">		registry.addResourceHandler(&quot;/static/**&quot;).</span>
-<span class="fc" id="L61">				addResourceLocations(&quot;/static/&quot;);</span>
-<span class="fc" id="L62">	}</span>
+<span class="fc" id="L57">		registry.addResourceHandler(&quot;/swagger-ui.html&quot;).</span>
+<span class="fc" id="L58">				addResourceLocations(&quot;classpath:/META-INF/resources/&quot;);</span>
+<span class="fc" id="L59">		registry.addResourceHandler(&quot;/webjars/**&quot;).</span>
+<span class="fc" id="L60">				addResourceLocations(&quot;classpath:/META-INF/resources/webjars/&quot;);</span>
+<span class="fc" id="L61">		registry.addResourceHandler(&quot;/static/**&quot;).</span>
+<span class="fc" id="L62">				addResourceLocations(&quot;/static/&quot;);</span>
+<span class="fc" id="L63">	}</span>
 
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-<span class="fc" id="L66">		configurer.enable();</span>
-<span class="fc" id="L67">	}</span>
+<span class="fc" id="L67">		configurer.enable();</span>
+<span class="fc" id="L68">	}</span>
 
 	@Bean
 	public SpringTemplateEngine templateEngine() {
-<span class="fc" id="L71">		SpringTemplateEngine engine = new SpringTemplateEngine();</span>
-<span class="fc" id="L72">		engine.setEnableSpringELCompiler(true);</span>
-<span class="fc" id="L73">		engine.setTemplateResolver(templateResolver());</span>
-<span class="fc" id="L74">		return engine;</span>
+<span class="fc" id="L72">		SpringTemplateEngine engine = new SpringTemplateEngine();</span>
+<span class="fc" id="L73">		engine.setEnableSpringELCompiler(true);</span>
+<span class="fc" id="L74">		engine.setTemplateResolver(templateResolver());</span>
+<span class="fc" id="L75">		return engine;</span>
 	}
 
 	@Bean
 	public ThymeleafViewResolver viewResolver() {
-<span class="fc" id="L79">		ThymeleafViewResolver resolver = new ThymeleafViewResolver();</span>
-<span class="fc" id="L80">		resolver.setTemplateEngine(templateEngine());</span>
-<span class="fc" id="L81">		resolver.setCharacterEncoding(&quot;UTF-8&quot;);</span>
-<span class="fc" id="L82">		return resolver;</span>
+<span class="fc" id="L80">		ThymeleafViewResolver resolver = new ThymeleafViewResolver();</span>
+<span class="fc" id="L81">		resolver.setTemplateEngine(templateEngine());</span>
+<span class="fc" id="L82">		resolver.setCharacterEncoding(&quot;UTF-8&quot;);</span>
+<span class="fc" id="L83">		return resolver;</span>
 	}
 	
 	@Bean
 	public ITemplateResolver templateResolver() {
-<span class="fc" id="L87">		SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();</span>
-<span class="fc" id="L88">		resolver.setApplicationContext(applicationContext);</span>
-<span class="fc" id="L89">		resolver.setPrefix(&quot;/html/&quot;);</span>
-<span class="fc" id="L90">		resolver.setTemplateMode(TemplateMode.HTML);</span>
-<span class="fc" id="L91">		return resolver;</span>
+<span class="fc" id="L88">		SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();</span>
+<span class="fc" id="L89">		resolver.setApplicationContext(applicationContext);</span>
+<span class="fc" id="L90">		resolver.setPrefix(&quot;/html/&quot;);</span>
+<span class="fc" id="L91">		resolver.setTemplateMode(TemplateMode.HTML);</span>
+<span class="fc" id="L92">		return resolver;</span>
 	}
 	
 	@Bean
 	public ObjectMapper objectMapper() {
-<span class="fc" id="L96">		JavaTimeModule javaTimeModule = new JavaTimeModule();</span>
-<span class="fc" id="L97">		javaTimeModule.addSerializer(ZonedDateTime.class, new ZonedDateTimeSerializer(DateTimeFormatter.ISO_DATE_TIME));</span>
-<span class="fc" id="L98">		return Jackson2ObjectMapperBuilder.json().featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)</span>
-<span class="fc" id="L99">				.modules(javaTimeModule).build();</span>
+<span class="fc" id="L97">		JavaTimeModule javaTimeModule = new JavaTimeModule();</span>
+<span class="fc" id="L98">		javaTimeModule.addSerializer(ZonedDateTime.class, new ZonedDateTimeSerializer(DateTimeFormatter.ISO_DATE_TIME));</span>
+<span class="fc" id="L99">		return Jackson2ObjectMapperBuilder.json().featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)</span>
+<span class="fc" id="L100">				.modules(javaTimeModule).build();</span>
+	}
+
+	@Bean
+	public RestTemplate restTemplate( ) {
+<span class="fc" id="L105">		return new RestTemplate();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

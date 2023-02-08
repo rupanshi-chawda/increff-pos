@@ -16,8 +16,8 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
     SalesDto salesDto;
 
     @Async
-    @Scheduled(cron = &quot;40 40 18 * * *&quot;)
-    public void createReport() throws ApiException {
+    @Scheduled(cron = &quot;00 00 17 * * *&quot;)
+    public void createReport() {
 <span class="nc" id="L21">        salesDto.createReport();;</span>
 <span class="nc" id="L22">    }</span>
 }

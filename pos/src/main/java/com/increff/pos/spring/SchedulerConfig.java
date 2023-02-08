@@ -16,8 +16,8 @@ public class SchedulerConfig {
     SalesDto salesDto;
 
     @Async
-    @Scheduled(cron = "40 40 18 * * *")
-    public void createReport() throws ApiException {
+    @Scheduled(cron = "00 00 17 * * *")
+    public void createReport() {
         salesDto.createReport();;
     }
 }

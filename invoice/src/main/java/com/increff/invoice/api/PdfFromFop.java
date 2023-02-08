@@ -1,6 +1,7 @@
 package com.increff.invoice.api;
 
 import com.increff.invoice.model.InvoiceForm;
+import com.increff.invoice.util.ApiException;
 import org.apache.fop.apps.*;
 
 import javax.xml.transform.*;
@@ -13,7 +14,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 
 public class PdfFromFop {
-    public void createPDF(InvoiceForm form, DOMSource domSource) {
+    public void createPDF(InvoiceForm form, DOMSource domSource) throws ApiException {
         try {
 
             File xsltfile = new File("C:\\Users\\KIIT\\Downloads\\increff-pos\\invoice\\src\\main\\resources\\xsl\\invoice.xsl");
@@ -27,7 +28,6 @@ public class PdfFromFop {
 
             pdfDir.mkdirs();
             File pdfFile = new File(pdfDir, "invoice_"+ form.getOrderId() +".pdf");
-            System.out.println(pdfFile.getAbsolutePath());
             // configure fopFactory as desired
             final FopFactory fopFactory = FopFactory.newInstance(new File(".").toURI());
             FOUserAgent foUserAgent = fopFactory.newFOUserAgent();
@@ -49,12 +49,12 @@ public class PdfFromFop {
                 // Start XSLT transformation and FOP processing
                 transformer.transform(src, res);
             } catch (FOPException | TransformerException e) {
-                e.printStackTrace();
+                throw new ApiException(e.getMessage());
             } finally {
                 out.close();
             }
         } catch(Exception exp){
-            exp.printStackTrace();
+            throw new ApiException(exp.getMessage());
         }
     }
 

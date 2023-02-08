@@ -2,6 +2,7 @@ package com.increff.invoice.controller;
 
 import com.increff.invoice.dto.InvoiceDto;
 import com.increff.invoice.model.InvoiceForm;
+import com.increff.invoice.util.ApiException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class InvoiceController {
 
     @ApiOperation(value = "Generate Invoice")
     @RequestMapping(path = "/api/invoice", method = RequestMethod.POST)
-    public ResponseEntity<byte[]> getPDF(@RequestBody InvoiceForm form) throws IOException {
+    public ResponseEntity<byte[]> getPDF(@RequestBody InvoiceForm form) throws ApiException {
 
         return dto.generateInvoice(form);
     }

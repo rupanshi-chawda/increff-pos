@@ -24,17 +24,5 @@ import java.util.stream.Collectors;
 <span class="nc" id="L24">        data.setMessage(&quot;An unknown error has occurred - &quot; + e.getMessage());</span>
 <span class="nc" id="L25">        return data;</span>
     }
-
-//    public final MessageData handleConstraintViolation(ConstraintViolationException ex) {
-//        List&lt;String&gt; details = ex.getConstraintViolations()
-//                .parallelStream()
-//                .map(e -&gt; e.getPropertyPath() +&quot; &quot;	+ e.getMessage())
-//                .collect(Collectors.toList());
-//
-//        MessageData data = new MessageData();
-//
-//        data.setMessage(details.toString());
-//        return data;
-//    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

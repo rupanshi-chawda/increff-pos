@@ -105,10 +105,14 @@ public class SalesReportDto {
     }
 
 
-    public void generateCsv(HttpServletResponse response) throws IOException, ApiException {
+    public void generateCsv(HttpServletResponse response) throws ApiException {
         response.setContentType("text/csv");
         response.addHeader("Content-Disposition", "attachment; filename=\"salesReport.csv\"");
-        csvGenerator.writeSalesToCsv(salesListData, response.getWriter());
+        try {
+            csvGenerator.writeSalesToCsv(salesListData, response.getWriter());
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage());
+        }
         salesListData.clear();
     }
 

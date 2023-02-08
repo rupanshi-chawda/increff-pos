@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AdminDto.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pos</a> &gt; <a href="index.source.html" class="el_package">com.increff.pos.dto</a> &gt; <span class="el_source">AdminDto.java</span></div><h1>AdminDto.java</h1><pre class="source lang-java linenums">package com.increff.pos.dto;
 
+import com.increff.pos.helper.UserHelper;
 import com.increff.pos.pojo.UserPojo;
 import com.increff.pos.util.StringUtil;
 import com.increff.pos.model.data.UserData;
@@ -14,46 +15,29 @@ import java.util.stream.Collectors;
 
 @Component
 @Service
-<span class="fc" id="L17">public class AdminDto {</span>
+<span class="fc" id="L18">public class AdminDto {</span>
 
     @Autowired
     private UserDto dto;
 
     public void add(UserForm form) throws ApiException {
-<span class="nc bnc" id="L23" title="All 2 branches missed.">        if(StringUtil.isEmpty(form.getEmail())) {</span>
-<span class="nc" id="L24">            throw new ApiException(&quot;Email cannot be empty&quot;);</span>
+<span class="nc bnc" id="L24" title="All 2 branches missed.">        if(StringUtil.isEmpty(form.getEmail())) {</span>
+<span class="nc" id="L25">            throw new ApiException(&quot;Email cannot be empty&quot;);</span>
         }
-<span class="nc bnc" id="L26" title="All 2 branches missed.">        if(StringUtil.isEmpty(form.getPassword())) {</span>
-<span class="nc" id="L27">            throw new ApiException(&quot;Password cannot be empty&quot;);</span>
+<span class="nc bnc" id="L27" title="All 2 branches missed.">        if(StringUtil.isEmpty(form.getPassword())) {</span>
+<span class="nc" id="L28">            throw new ApiException(&quot;Password cannot be empty&quot;);</span>
         }
-<span class="nc" id="L29">        UserPojo p = convert(form);</span>
-<span class="nc" id="L30">        dto.add(p);</span>
-<span class="nc" id="L31">    }</span>
+<span class="nc" id="L30">        UserPojo p = UserHelper.convert(form);</span>
+<span class="nc" id="L31">        dto.add(p);</span>
+<span class="nc" id="L32">    }</span>
 
     public void delete(int id) {
-<span class="nc" id="L34">        dto.delete(id);</span>
-<span class="nc" id="L35">    }</span>
+<span class="nc" id="L35">        dto.delete(id);</span>
+<span class="nc" id="L36">    }</span>
 
     public List&lt;UserData&gt; getAll(){
-<span class="nc" id="L38">        return dto.getAll().stream().map(p -&gt; convert(p)).collect(Collectors.toList());</span>
+<span class="nc" id="L39">        return dto.getAll().stream().map(UserHelper::convert).collect(Collectors.toList());</span>
     }
 
-    //Conversion Methods
-
-    private static UserData convert(UserPojo p) {
-<span class="nc" id="L44">        UserData d = new UserData();</span>
-<span class="nc" id="L45">        d.setEmail(p.getEmail());</span>
-<span class="nc" id="L46">        d.setRole(p.getRole());</span>
-<span class="nc" id="L47">        d.setId(p.getId());</span>
-<span class="nc" id="L48">        return d;</span>
-    }
-
-    private static UserPojo convert(UserForm f) {
-<span class="nc" id="L52">        UserPojo p = new UserPojo();</span>
-<span class="nc" id="L53">        p.setEmail(f.getEmail());</span>
-<span class="nc" id="L54">        p.setRole(&quot;operator&quot;);</span>
-<span class="nc" id="L55">        p.setPassword(f.getPassword());</span>
-<span class="nc" id="L56">        return p;</span>
-    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

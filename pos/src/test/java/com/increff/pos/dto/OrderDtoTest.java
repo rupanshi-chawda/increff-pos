@@ -26,7 +26,10 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.core.AnyOf.anyOf;
+import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.junit.runner.Request.method;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -213,8 +216,9 @@ public class OrderDtoTest extends AbstractUnitTest {
         }
         catch(ApiException e)
         {
-            String exception = "[barcode must 8 character long, barcode must not be blank]";
-            assertEquals(exception, e.getMessage());
+            String exception1 = "[barcode must 8 character long, barcode must not be blank]";
+            String exception2 = "[barcode must not be blank, barcode must 8 character long]";
+            assertThat(e.getMessage(), anyOf(containsString(exception1),containsString(exception2)));
             throw e;
         }
         try {
