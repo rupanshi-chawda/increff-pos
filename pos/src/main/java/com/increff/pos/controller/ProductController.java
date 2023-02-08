@@ -23,7 +23,7 @@ public class ProductController {
 
     @ApiOperation(value = "Adds a Product")
     @PostMapping(path = "")
-    public void addProduct(@RequestBody List<ProductForm> forms) throws ApiException, JsonProcessingException {
+    public void addProduct(@RequestBody List<ProductForm> forms) throws ApiException {
         dto.add(forms);
     }
 

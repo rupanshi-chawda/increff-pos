@@ -34,7 +34,7 @@ public class ProductDto {
     @Autowired
     private BrandApi brandApi;
 
-    public void add(List<ProductForm> forms) throws ApiException, JsonProcessingException {
+    public void add(List<ProductForm> forms) throws ApiException {
         List<ProductErrorData> errorData = new ArrayList<>();
         errorData.clear();
         int errorSize = 0;

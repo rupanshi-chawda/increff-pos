@@ -24,7 +24,7 @@ public class InventoryController {
 
     @ApiOperation(value = "Adds a Product Inventory")
     @PostMapping(path = "")
-    public void addInventory(@RequestBody List<InventoryForm> forms) throws ApiException, JsonProcessingException {
+    public void addInventory(@RequestBody List<InventoryForm> forms) throws ApiException {
         dto.add(forms);
     }
 
@@ -48,7 +48,7 @@ public class InventoryController {
 
     @ApiOperation(value = "Export Product Report to CSV")
     @GetMapping(path = "/exportcsv")
-    public void exportToCSV(HttpServletResponse response) throws IOException, ApiException {
+    public void exportToCSV(HttpServletResponse response) throws ApiException {
         dto.generateCsv(response);
     }
 }

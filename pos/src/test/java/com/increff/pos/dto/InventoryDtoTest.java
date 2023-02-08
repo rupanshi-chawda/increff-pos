@@ -1,6 +1,5 @@
 package com.increff.pos.dto;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.increff.pos.AbstractUnitTest;
 import com.increff.pos.api.InventoryApi;
 import com.increff.pos.helper.BrandTestHelper;
@@ -16,7 +15,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import javax.validation.ConstraintViolationException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +36,7 @@ public class InventoryDtoTest extends AbstractUnitTest {
     private BrandDto brandDto;
 
     @Test
-    public void addInventoryTest() throws ApiException, JsonProcessingException {
+    public void addInventoryTest() throws ApiException {
         List<BrandForm> brandFormList = new ArrayList<>();
         BrandForm brandForm = BrandTestHelper.createForm("Dyson ", " hair");
         brandFormList.add(brandForm);
@@ -65,7 +63,7 @@ public class InventoryDtoTest extends AbstractUnitTest {
     }
 
     @Test(expected = ApiException.class)
-    public void addIllegalInventory() throws JsonProcessingException, ApiException {
+    public void addIllegalInventory() throws ApiException {
         try {
             List<BrandForm> brandFormList = new ArrayList<>();
             BrandForm brandForm = BrandTestHelper.createForm("Dyson ", " hair");
@@ -94,7 +92,7 @@ public class InventoryDtoTest extends AbstractUnitTest {
     }
 
     @Test()
-    public void addDuplicateInventory() throws JsonProcessingException, ApiException {
+    public void addDuplicateInventory() throws ApiException {
 
         List<BrandForm> brandFormList = new ArrayList<>();
         BrandForm brandForm = BrandTestHelper.createForm("Dyson ", " hair");
@@ -123,7 +121,7 @@ public class InventoryDtoTest extends AbstractUnitTest {
     }
 
     @Test(expected = ApiException.class)
-    public void addEmptyInventory() throws JsonProcessingException, ApiException {
+    public void addEmptyInventory() throws ApiException {
         try {
             List<BrandForm> brandFormList = new ArrayList<>();
             BrandForm brandForm = BrandTestHelper.createForm("Dyson ", " hair");
@@ -145,7 +143,7 @@ public class InventoryDtoTest extends AbstractUnitTest {
         }
         catch (ApiException e)
         {
-            String exception = "[ {\r\n  \"barcode\" : \"ab23fg4\",\r\n  \"quantity\" : 3,\r\n  \"message\" : \"barcode: must 8 character long\"\r\n} ]";
+            String exception = "[ {\r\n  \"barcode\" : \"ab23fg4\",\r\n  \"quantity\" : 3,\r\n  \"message\" : \"[barcode must 8 character long]\"\r\n} ]";
             assertEquals(exception, e.getMessage());
             throw e;
         }
@@ -170,14 +168,14 @@ public class InventoryDtoTest extends AbstractUnitTest {
         }
         catch (ApiException e)
         {
-            String exception = "[ {\r\n  \"barcode\" : \"a1b2c3d4\",\r\n  \"quantity\" : -17,\r\n  \"message\" : \"quantity: must be atleast 1\"\r\n} ]";
+            String exception = "[ {\r\n  \"barcode\" : \"a1b2c3d4\",\r\n  \"quantity\" : -17,\r\n  \"message\" : \"[quantity must be atleast 1]\"\r\n} ]";
             assertEquals(exception, e.getMessage());
             throw e;
         }
     }
 
     @Test
-    public void getAllInventoryTest() throws ApiException, JsonProcessingException {
+    public void getAllInventoryTest() throws ApiException {
 
         List<BrandForm> brandFormList = new ArrayList<>();
         BrandForm brandForm = BrandTestHelper.createForm("Dyson ", " hair");
@@ -205,7 +203,7 @@ public class InventoryDtoTest extends AbstractUnitTest {
     }
 
     @Test
-    public void updateInventoryTest() throws ApiException, JsonProcessingException {
+    public void updateInventoryTest() throws ApiException {
         List<BrandForm> brandFormList = new ArrayList<>();
         BrandForm brandForm = BrandTestHelper.createForm("Dyson ", " hair");
         brandFormList.add(brandForm);
@@ -235,8 +233,8 @@ public class InventoryDtoTest extends AbstractUnitTest {
         assertEquals(expectedQty, pojo.getQuantity());
     }
 
-    @Test(expected = ConstraintViolationException.class)
-    public void updateIllegalInventory() throws ApiException, JsonProcessingException {
+    @Test(expected = ApiException.class)
+    public void updateIllegalInventory() throws ApiException {
         try {
             List<BrandForm> brandFormList = new ArrayList<>();
             BrandForm brandForm = BrandTestHelper.createForm("Dyson ", " hair");
@@ -261,9 +259,9 @@ public class InventoryDtoTest extends AbstractUnitTest {
             InventoryData data = dto.get(expectedBarcode);
             dto.update(data.getBarcode(), inventoryForm1);
         }
-        catch (ApiException | JsonProcessingException | ConstraintViolationException e)
+        catch (ApiException e)
         {
-            String exception = "quantity: must be atleast 1";
+            String exception = "[quantity must be atleast 1]";
             assertEquals(exception, e.getMessage());
             throw e;
         }
@@ -271,7 +269,7 @@ public class InventoryDtoTest extends AbstractUnitTest {
 
 
     @Test
-    public void testInventoryReportCsv() throws IOException, ApiException {
+    public void testInventoryReportCsv() throws ApiException {
         List<BrandForm> brandFormList = new ArrayList<>();
         BrandForm brandForm = BrandTestHelper.createForm("Dyson ", " hair");
         brandFormList.add(brandForm);

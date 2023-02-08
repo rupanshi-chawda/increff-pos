@@ -27,7 +27,7 @@ public class BrandDtoTest extends AbstractUnitTest {
     private BrandApi api;
 
     @Test
-    public void addBrandTest() throws ApiException, JsonProcessingException {
+    public void addBrandTest() throws ApiException {
         List<BrandForm> formList = new ArrayList<>();
         BrandForm f = BrandTestHelper.createForm("Dyson ", " hair");
         formList.add(f);
@@ -42,7 +42,7 @@ public class BrandDtoTest extends AbstractUnitTest {
     }
 
     @Test(expected = ApiException.class)
-    public void addDuplicateBrand() throws ApiException, JsonProcessingException {
+    public void addDuplicateBrand() throws ApiException {
         try {
             List<BrandForm> formList = new ArrayList<>();
             BrandForm form = BrandTestHelper.createForm("Dyson ", " hair");
@@ -51,7 +51,7 @@ public class BrandDtoTest extends AbstractUnitTest {
             dto.add(formList);
             dto.add(formList);
         }
-        catch(ApiException | JsonProcessingException e)
+        catch(ApiException e)
         {
             String exception = "[ {\r\n  \"brand\" : \"dyson\",\r\n  \"category\" : \"hair\",\r\n  \"message\" : \"Brand Category already exists\"\r\n} ]";
             assertEquals(exception, e.getMessage());
@@ -61,7 +61,7 @@ public class BrandDtoTest extends AbstractUnitTest {
 
 
     @Test(expected = ApiException.class)
-    public void addEmptyBrandTest() throws ApiException, JsonProcessingException {
+    public void addEmptyBrandTest() throws ApiException {
         try {
             List<BrandForm> formList = new ArrayList<>();
             BrandForm form = BrandTestHelper.createForm("dyson", "");
@@ -70,9 +70,9 @@ public class BrandDtoTest extends AbstractUnitTest {
             dto.add(formList);
             dto.add(formList);
         }
-        catch(ApiException | JsonProcessingException e)
+        catch(ApiException e)
         {
-            String exception = "[ {\r\n  \"brand\" : \"dyson\",\r\n  \"category\" : \"\",\r\n  \"message\" : \"category: must not be blank\"\r\n} ]";
+            String exception = "[ {\r\n  \"brand\" : \"dyson\",\r\n  \"category\" : \"\",\r\n  \"message\" : \"[category must not be blank]\"\r\n} ]";
             assertEquals(exception, e.getMessage());
             throw e;
         }
@@ -84,9 +84,9 @@ public class BrandDtoTest extends AbstractUnitTest {
             dto.add(formList);
             dto.add(formList);
         }
-        catch(ApiException | JsonProcessingException e)
+        catch(ApiException e)
         {
-            String exception = "[ {\r\n  \"brand\" : \"\",\r\n  \"category\" : \"hair\",\r\n  \"message\" : \"brand: must not be blank\"\r\n} ]";
+            String exception = "[ {\r\n  \"brand\" : \"\",\r\n  \"category\" : \"hair\",\r\n  \"message\" : \"[brand must not be blank]\"\r\n} ]";
             assertEquals(exception, e.getMessage());
             throw e;
         }
@@ -94,7 +94,7 @@ public class BrandDtoTest extends AbstractUnitTest {
 
 
     @Test
-    public void getBrandByIdTest() throws ApiException, JsonProcessingException {
+    public void getBrandByIdTest() throws ApiException {
         List<BrandForm> formList = new ArrayList<>();
         BrandForm form = BrandTestHelper.createForm("Dyson ", " hair");
         formList.add(form);
@@ -111,7 +111,7 @@ public class BrandDtoTest extends AbstractUnitTest {
     }
 
     @Test
-    public  void getAllBrandTest() throws ApiException, JsonProcessingException {
+    public  void getAllBrandTest() throws ApiException {
         List<BrandForm> formList = new ArrayList<>();
         BrandForm form = BrandTestHelper.createForm("Dyson ", " hair");
         formList.add(form);
@@ -126,7 +126,7 @@ public class BrandDtoTest extends AbstractUnitTest {
     }
 
     @Test
-    public void updateBrandTest() throws ApiException, JsonProcessingException {
+    public void updateBrandTest() throws ApiException {
         List<BrandForm> formList = new ArrayList<>();
         BrandForm form = BrandTestHelper.createForm("Dyson ", " hair");
         formList.add(form);
@@ -150,7 +150,7 @@ public class BrandDtoTest extends AbstractUnitTest {
     }
 
     @Test(expected = ApiException.class)
-    public void updateDuplicateBrand() throws ApiException, JsonProcessingException {
+    public void updateDuplicateBrand() throws ApiException {
         try {
             List<BrandForm> formList = new ArrayList<>();
             BrandForm form = BrandTestHelper.createForm("Dyson ", " hair");
@@ -169,7 +169,7 @@ public class BrandDtoTest extends AbstractUnitTest {
             form.setCategory(newCategory);
             dto.update(p.getId(),form);
         }
-        catch(ApiException | JsonProcessingException e)
+        catch(ApiException e)
         {
             String exception = "Brand Category already exists";
             assertEquals(exception, e.getMessage());
@@ -178,7 +178,7 @@ public class BrandDtoTest extends AbstractUnitTest {
     }
 
     @Test(expected = ApiException.class)
-    public void updateIllegalBrand() throws ApiException, JsonProcessingException {
+    public void updateIllegalBrand() throws ApiException {
         try {
             List<BrandForm> formList = new ArrayList<>();
             BrandForm form = BrandTestHelper.createForm("Dyson ", " hair");
@@ -197,7 +197,7 @@ public class BrandDtoTest extends AbstractUnitTest {
             form.setCategory(newCategory);
             dto.update(98,form);
         }
-        catch(ApiException | JsonProcessingException e)
+        catch(ApiException e)
         {
             String exception = "Brand with given ID does not exit, id: 98";
             assertEquals(exception, e.getMessage());
@@ -205,8 +205,8 @@ public class BrandDtoTest extends AbstractUnitTest {
         }
     }
 
-    @Test(expected = ConstraintViolationException.class)
-    public void updateEmptyBrand() throws ApiException, JsonProcessingException {
+    @Test(expected = ApiException.class)
+    public void updateEmptyBrand() throws ApiException {
         try {
             List<BrandForm> formList = new ArrayList<>();
             BrandForm form = BrandTestHelper.createForm("Dyson ", " hair");
@@ -225,9 +225,9 @@ public class BrandDtoTest extends AbstractUnitTest {
             form.setCategory(newCategory);
             dto.update(98,form);
         }
-        catch(ApiException | JsonProcessingException | ConstraintViolationException e)
+        catch(ApiException e)
         {
-            String exception = "brand: must not be blank";
+            String exception = "[brand must not be blank]";
             assertEquals(exception, e.getMessage());
             throw e;
         }
@@ -249,16 +249,16 @@ public class BrandDtoTest extends AbstractUnitTest {
             form.setCategory(newCategory);
             dto.update(98,form);
         }
-        catch(ApiException | JsonProcessingException | ConstraintViolationException e)
+        catch(ApiException e)
         {
-            String exception = "category: must not be blank";
+            String exception = "[category must not be blank]";
             assertEquals(exception, e.getMessage());
             throw e;
         }
     }
 
     @Test
-    public void testBrandReportCsv() throws ApiException, JsonProcessingException {
+    public void testBrandReportCsv() throws ApiException {
         List<BrandForm> formList = new ArrayList<>();
         BrandForm form = BrandTestHelper.createForm("Dyson ", " hair");
         formList.add(form);

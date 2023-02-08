@@ -25,7 +25,7 @@ public class BrandController {
 
     @ApiOperation(value = "Adds a Brand")
     @PostMapping(path = "")
-    public void addBrand(@RequestBody List<BrandForm> forms) throws ApiException, JsonProcessingException {
+    public void addBrand(@RequestBody List<BrandForm> forms) throws ApiException{
         dto.add(forms);
     }
 
@@ -49,7 +49,7 @@ public class BrandController {
 
     @ApiOperation(value = "Export Brand Report to CSV")
     @GetMapping(path = "/exportcsv")
-    public void exportToCSV(HttpServletResponse response) throws IOException, ApiException {
+    public void exportToCSV(HttpServletResponse response) throws ApiException {
         dto.generateCsv(response);
     }
 

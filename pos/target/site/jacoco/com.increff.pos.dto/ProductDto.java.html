@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
     @Autowired
     private BrandApi brandApi;
 
-    public void add(List&lt;ProductForm&gt; forms) throws ApiException, JsonProcessingException {
+    public void add(List&lt;ProductForm&gt; forms) throws ApiException {
 <span class="fc" id="L38">        List&lt;ProductErrorData&gt; errorData = new ArrayList&lt;&gt;();</span>
 <span class="fc" id="L39">        errorData.clear();</span>
 <span class="fc" id="L40">        int errorSize = 0;</span>

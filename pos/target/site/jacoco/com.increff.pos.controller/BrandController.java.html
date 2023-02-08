@@ -25,7 +25,7 @@ import java.util.List;
 
     @ApiOperation(value = &quot;Adds a Brand&quot;)
     @PostMapping(path = &quot;&quot;)
-    public void addBrand(@RequestBody List&lt;BrandForm&gt; forms) throws ApiException, JsonProcessingException {
+    public void addBrand(@RequestBody List&lt;BrandForm&gt; forms) throws ApiException{
 <span class="nc" id="L29">        dto.add(forms);</span>
 <span class="nc" id="L30">    }</span>
 
@@ -49,7 +49,7 @@ import java.util.List;
 
     @ApiOperation(value = &quot;Export Brand Report to CSV&quot;)
     @GetMapping(path = &quot;/exportcsv&quot;)
-    public void exportToCSV(HttpServletResponse response) throws IOException, ApiException {
+    public void exportToCSV(HttpServletResponse response) throws ApiException {
 <span class="nc" id="L53">        dto.generateCsv(response);</span>
 <span class="nc" id="L54">    }</span>
 

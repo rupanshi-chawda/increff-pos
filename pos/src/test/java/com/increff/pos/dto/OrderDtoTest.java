@@ -1,18 +1,14 @@
 package com.increff.pos.dto;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.increff.pos.AbstractUnitTest;
-import com.increff.pos.api.OrderApi;
 import com.increff.pos.helper.BrandTestHelper;
 import com.increff.pos.helper.InventoryTestHelper;
 import com.increff.pos.helper.OrderTestHelper;
 import com.increff.pos.helper.ProductTestHelper;
 import com.increff.pos.model.data.OrderData;
 import com.increff.pos.model.data.OrderItemData;
-import com.increff.pos.model.data.ProductData;
 import com.increff.pos.model.form.*;
 import com.increff.pos.util.ApiException;
-import io.swagger.annotations.Api;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +22,6 @@ import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.client.match.MockRestRequestMatchers;
 import org.springframework.web.client.RestTemplate;
 
-import javax.validation.ConstraintViolationException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +53,7 @@ public class OrderDtoTest extends AbstractUnitTest {
     private MockRestServiceServer mockServer;
 
     @Test
-    public void addOrderTest() throws JsonProcessingException, ApiException {
+    public void addOrderTest() throws ApiException {
         List<BrandForm> brandFormList = new ArrayList<>();
         BrandForm brandForm = BrandTestHelper.createForm("Dyson ", " hair");
         brandFormList.add(brandForm);
@@ -92,7 +87,7 @@ public class OrderDtoTest extends AbstractUnitTest {
     }
 
     @Test(expected = ApiException.class)
-    public void addDuplicateOrderItem() throws JsonProcessingException, ApiException {
+    public void addDuplicateOrderItem() throws ApiException {
         try {
             List<BrandForm> brandFormList = new ArrayList<>();
             BrandForm brandForm = BrandTestHelper.createForm("Dyson ", " hair");
@@ -124,7 +119,7 @@ public class OrderDtoTest extends AbstractUnitTest {
     }
 
     @Test(expected = ApiException.class)
-    public void addIllegalOrderItem() throws JsonProcessingException, ApiException {
+    public void addIllegalOrderItem() throws ApiException {
         try {
             List<BrandForm> brandFormList = new ArrayList<>();
             BrandForm brandForm = BrandTestHelper.createForm("Dyson ", " hair");
@@ -193,8 +188,8 @@ public class OrderDtoTest extends AbstractUnitTest {
         }
     }
 
-    @Test(expected = ConstraintViolationException.class)
-    public void addEmptyOrderItem() throws JsonProcessingException, ApiException {
+    @Test(expected = ApiException.class)
+    public void addEmptyOrderItem() throws ApiException {
         try {
             List<BrandForm> brandFormList = new ArrayList<>();
             BrandForm brandForm = BrandTestHelper.createForm("Dyson ", " hair");
@@ -216,9 +211,9 @@ public class OrderDtoTest extends AbstractUnitTest {
             orderItemFormList.add(orderItemForm);
             dto.addItem(orderItemFormList);
         }
-        catch(ApiException | ConstraintViolationException e)
+        catch(ApiException e)
         {
-            String exception = "barcode: must 8 character long, barcode: must not be blank";
+            String exception = "[barcode must 8 character long, barcode must not be blank]";
             assertEquals(exception, e.getMessage());
             throw e;
         }
@@ -243,16 +238,16 @@ public class OrderDtoTest extends AbstractUnitTest {
             orderItemFormList.add(orderItemForm);
             dto.addItem(orderItemFormList);
         }
-        catch(ApiException | ConstraintViolationException e)
+        catch(ApiException e)
         {
-            String exception = "quantity: must be atleast 1, sellingPrice: must be atleast 1";
+            String exception = "[quantity must be atleast 1, sellingPrice must be atleast 1]";
             assertEquals(exception, e.getMessage());
             throw e;
         }
     }
 
     @Test
-    public void getOrderTest() throws JsonProcessingException, ApiException {
+    public void getOrderTest() throws ApiException {
         List<BrandForm> brandFormList = new ArrayList<>();
         BrandForm brandForm = BrandTestHelper.createForm("Dyson ", " hair");
         brandFormList.add(brandForm);

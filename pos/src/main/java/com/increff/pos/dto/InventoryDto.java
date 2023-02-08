@@ -42,7 +42,7 @@ public class InventoryDto {
     @Autowired
     private CsvFileGenerator csvGenerator;
 
-    public void add(List<InventoryForm> forms) throws ApiException, JsonProcessingException {
+    public void add(List<InventoryForm> forms) throws ApiException {
         List<InventoryErrorData> errorData = new ArrayList<>();
         errorData.clear();
         int errorSize = 0;
@@ -120,10 +120,14 @@ public class InventoryDto {
         return inventoryItemList;
     }
 
-    public void generateCsv(HttpServletResponse response) throws IOException, ApiException {
+    public void generateCsv(HttpServletResponse response) throws ApiException {
         response.setContentType("text/csv");
         response.addHeader("Content-Disposition", "attachment; filename=\"inventoryReport.csv\"");
-        csvGenerator.writeInventoryToCsv(getAllItem(), response.getWriter());
+        try {
+            csvGenerator.writeInventoryToCsv(getAllItem(), response.getWriter());
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage());
+        }
     }
 
     @Transactional(rollbackOn = ApiException.class)

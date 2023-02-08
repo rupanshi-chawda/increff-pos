@@ -30,7 +30,7 @@ public class BrandDto {
     @Autowired
     private CsvFileGenerator csvGenerator;
 
-    public void add(List<BrandForm> forms) throws ApiException, JsonProcessingException {
+    public void add(List<BrandForm> forms) throws ApiException {
         List<BrandErrorData> errorData = new ArrayList<>();
         int errorSize = 0;
 

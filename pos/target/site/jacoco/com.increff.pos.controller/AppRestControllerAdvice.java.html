@@ -32,10 +32,10 @@ import java.util.stream.Collectors;
 <span class="nc" id="L32">		return dto.handle(e);</span>
 	}
 
-	@ExceptionHandler(ConstraintViolationException.class)
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public final MessageData handleConstraintViolation(ConstraintViolationException ex) {
-<span class="nc" id="L38">		return dto.handleConstraintViolation(ex);</span>
-	}
+//	@ExceptionHandler(ConstraintViolationException.class)
+//	@ResponseStatus(HttpStatus.BAD_REQUEST)
+//	public final MessageData handleConstraintViolation(ConstraintViolationException ex) {
+//		return dto.handleConstraintViolation(ex);
+//	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

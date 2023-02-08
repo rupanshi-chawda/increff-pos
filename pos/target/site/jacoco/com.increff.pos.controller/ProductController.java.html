@@ -23,7 +23,7 @@ import java.util.List;
 
     @ApiOperation(value = &quot;Adds a Product&quot;)
     @PostMapping(path = &quot;&quot;)
-    public void addProduct(@RequestBody List&lt;ProductForm&gt; forms) throws ApiException, JsonProcessingException {
+    public void addProduct(@RequestBody List&lt;ProductForm&gt; forms) throws ApiException {
 <span class="nc" id="L27">        dto.add(forms);</span>
 <span class="nc" id="L28">    }</span>
 
