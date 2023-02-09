@@ -176,6 +176,7 @@ function uploadRows() {
       errorData = response;
       resetForm();
       getInventoryList();
+      toastr.success("Inventory Uploaded Successfully", "Success : ");
     },
     error: function (response) {
         if(response.status == 403){
@@ -190,6 +191,7 @@ function uploadRows() {
 			console.log(response);
 			$("#download-errors").prop('disabled', false);
 			resetForm();
+            toastr.error("There are errors in file, please Download Errors", "Error : ");
 		}
     }
   });

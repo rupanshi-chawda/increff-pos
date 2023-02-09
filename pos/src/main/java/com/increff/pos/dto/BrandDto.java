@@ -25,7 +25,7 @@ public class BrandDto {
     private BrandApi api;
 
     @Autowired
-    private BrandFlowApi flow;
+    private BrandFlow flow;
 
     @Autowired
     private CsvFileGenerator csvGenerator;
@@ -54,7 +54,6 @@ public class BrandDto {
             ErrorUtil.throwErrors(errorData);
         }
 
-        // bulkAdd(forms);
         flow.add(forms, errorData);
     }
 
@@ -83,12 +82,4 @@ public class BrandDto {
             throw new ApiException(e.getMessage());
         }
     }
-
-//    @Transactional(rollbackOn = ApiException.class)
-//    private void bulkAdd(List<BrandForm> brandForms) throws ApiException {
-//        for (BrandForm f: brandForms){
-//            BrandPojo b = BrandHelper.convert(f);
-//            api.add(b);
-//        }
-//    }
 }

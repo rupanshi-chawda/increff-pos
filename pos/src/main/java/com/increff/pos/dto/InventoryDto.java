@@ -40,6 +40,9 @@ public class InventoryDto {
     private BrandApi brandApi;
 
     @Autowired
+    private InventoryFlow flow;
+
+    @Autowired
     private CsvFileGenerator csvGenerator;
 
     public void add(List<InventoryForm> forms) throws ApiException {
@@ -57,7 +60,7 @@ public class InventoryDto {
                 InventoryHelper.normalize(f);
                 productApi.checkProductBarcode(f.getBarcode());
 
-            } catch (Exception e) {
+            } catch (ApiException e) {
                 errorSize++;
                 inventoryErrorData.setMessage(e.getMessage());
             }
@@ -67,7 +70,8 @@ public class InventoryDto {
             ErrorUtil.throwErrors(errorData);
         }
 
-        bulkAdd(forms);
+        //bulkAdd(forms);
+        flow.add(forms, errorData);
     }
 
     public InventoryData get(String barcode) throws ApiException {
@@ -130,12 +134,12 @@ public class InventoryDto {
         }
     }
 
-    @Transactional(rollbackOn = ApiException.class)
-    private void bulkAdd(List<InventoryForm> inventoryForms) throws ApiException {
-        for(InventoryForm f: inventoryForms){
-            InventoryPojo p = InventoryHelper.convert(f);
-            p.setId(productApi.getIdByBarcode(f.getBarcode()));
-            api.add(p);
-        }
-    }
+//    @Transactional(rollbackOn = ApiException.class)
+//    private void bulkAdd(List<InventoryForm> inventoryForms) throws ApiException {
+//        for(InventoryForm f: inventoryForms){
+//            InventoryPojo p = InventoryHelper.convert(f);
+//            p.setId(productApi.getIdByBarcode(f.getBarcode()));
+//            api.add(p);
+//        }
+//    }
 }

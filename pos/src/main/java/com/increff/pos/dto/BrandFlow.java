@@ -8,18 +8,16 @@ import com.increff.pos.pojo.BrandPojo;
 import com.increff.pos.util.ApiException;
 import com.increff.pos.util.ConvertUtil;
 import com.increff.pos.util.ErrorUtil;
-import com.increff.pos.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
 @Service
-public class BrandFlowApi {
+public class BrandFlow {
 
     @Autowired
     private BrandApi api;
@@ -41,7 +39,6 @@ public class BrandFlowApi {
             catch (ApiException e) {
                 errorSize++;
                 brandErrorData.setMessage(e.getMessage());
-                System.out.println(e.getMessage());
             }
             errorData.get(i).setMessage(brandErrorData.getMessage());
             i++;
