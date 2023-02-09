@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="10" failures="0" name="com.increff.pos.dto.BrandDtoTest" time="1.355" errors="0" skipped="0">
+<testsuite tests="10" failures="0" name="com.increff.pos.dto.BrandDtoTest" time="0.615" errors="0" skipped="0">
   <properties>
     <property name="idea.version" value="2021.3.3"/>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
@@ -64,14 +64,14 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="com.increff.pos.dto.BrandDtoTest" name="addDuplicateBrand" time="0.992"/>
-  <testcase classname="com.increff.pos.dto.BrandDtoTest" name="updateDuplicateBrand" time="0.033"/>
+  <testcase classname="com.increff.pos.dto.BrandDtoTest" name="addDuplicateBrand" time="0.258"/>
+  <testcase classname="com.increff.pos.dto.BrandDtoTest" name="updateDuplicateBrand" time="0.04"/>
   <testcase classname="com.increff.pos.dto.BrandDtoTest" name="addBrandTest" time="0.025"/>
-  <testcase classname="com.increff.pos.dto.BrandDtoTest" name="addEmptyBrandTest" time="0.052"/>
-  <testcase classname="com.increff.pos.dto.BrandDtoTest" name="updateIllegalBrand" time="0.043"/>
-  <testcase classname="com.increff.pos.dto.BrandDtoTest" name="getBrandByIdTest" time="0.027"/>
-  <testcase classname="com.increff.pos.dto.BrandDtoTest" name="testBrandReportCsv" time="0.052"/>
-  <testcase classname="com.increff.pos.dto.BrandDtoTest" name="updateBrandTest" time="0.056"/>
-  <testcase classname="com.increff.pos.dto.BrandDtoTest" name="updateEmptyBrand" time="0.036"/>
-  <testcase classname="com.increff.pos.dto.BrandDtoTest" name="getAllBrandTest" time="0.039"/>
+  <testcase classname="com.increff.pos.dto.BrandDtoTest" name="addEmptyBrandTest" time="0.053"/>
+  <testcase classname="com.increff.pos.dto.BrandDtoTest" name="updateIllegalBrand" time="0.047"/>
+  <testcase classname="com.increff.pos.dto.BrandDtoTest" name="getBrandByIdTest" time="0.031"/>
+  <testcase classname="com.increff.pos.dto.BrandDtoTest" name="testBrandReportCsv" time="0.043"/>
+  <testcase classname="com.increff.pos.dto.BrandDtoTest" name="updateBrandTest" time="0.049"/>
+  <testcase classname="com.increff.pos.dto.BrandDtoTest" name="updateEmptyBrand" time="0.032"/>
+  <testcase classname="com.increff.pos.dto.BrandDtoTest" name="getAllBrandTest" time="0.037"/>
 </testsuite>

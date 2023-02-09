@@ -32,6 +32,11 @@ public class LoginDto {
     public ModelAndView login(HttpServletRequest req, LoginForm f) throws ApiException {
         info.setMessage("");
         UserPojo p = dto.getUserByEmail(f.getEmail());
+        if(Objects.isNull(p)){
+            info.setMessage("Invalid username");
+            return new ModelAndView("redirect:/site/login");
+        }
+        info.setRole(p.getRole());
         boolean authenticated = (!Objects.isNull(p) && Objects.equals(p.getPassword(), f.getPassword()));
         if (!authenticated) {
             info.setMessage("Invalid username or password");
@@ -61,6 +66,7 @@ public class LoginDto {
         UserPrincipal principal = new UserPrincipal();
         principal.setEmail(p.getEmail());
         principal.setId(p.getId());
+        principal.setRole(p.getRole());
 
         // Create Authorities
         ArrayList<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();

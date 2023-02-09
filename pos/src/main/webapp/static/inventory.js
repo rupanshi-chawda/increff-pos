@@ -322,4 +322,3 @@ function init() {
 
 $(document).ready(init);
 $(document).ready(getInventoryList);
-//todo: fix inventory export csv

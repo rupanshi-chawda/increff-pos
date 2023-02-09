@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 @Entity
 @Getter
-<span class="nc" id="L13">@Setter</span>
+<span class="pc" id="L13">@Setter</span>
 <span class="fc" id="L14">public class SalesPojo extends AbstractVersionPojo {</span>
 
     @Id
@@ -22,13 +22,13 @@ import java.time.LocalDate;
 <span class="nc" id="L22">    private LocalDate date;</span>
 
     @Column(nullable = false)
-<span class="nc" id="L25">    private Integer invoicedOrderCount;</span>
+<span class="fc" id="L25">    private Integer invoicedOrderCount;</span>
 
     @Column(nullable = false)
-<span class="nc" id="L28">    private Integer invoicedItemsCount;</span>
+<span class="fc" id="L28">    private Integer invoicedItemsCount;</span>
 
     @Column(nullable = false)
-<span class="nc" id="L31">    private Double totalRevenue;</span>
+<span class="fc" id="L31">    private Double totalRevenue;</span>
 }
 
 //TODO: try to add zonedatetime instead of localdate

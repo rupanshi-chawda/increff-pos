@@ -45,5 +45,5 @@ public class OrderController {
     public ResponseEntity<byte[]> getPDF(@PathVariable int id) throws ApiException{
         return dto.getPDF(id);
     }
-
+// todo: move invoice saving to pos and add filepath column to orderpojo
 }

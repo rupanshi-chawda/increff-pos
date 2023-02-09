@@ -19,34 +19,34 @@ import java.util.Objects;
     private UserApi api;
 
     public void add(UserPojo p) throws ApiException {
-<span class="nc" id="L22">        UserHelper.normalize(p);</span>
-<span class="nc" id="L23">        checkEmail(p.getEmail());</span>
-<span class="nc" id="L24">        api.add(p);</span>
-<span class="nc" id="L25">    }</span>
+<span class="fc" id="L22">        UserHelper.normalize(p);</span>
+<span class="fc" id="L23">        checkEmail(p.getEmail());</span>
+<span class="fc" id="L24">        api.add(p);</span>
+<span class="fc" id="L25">    }</span>
 
     //Checkers
     public void checkEmail(String email) throws ApiException {
-<span class="nc" id="L29">        UserPojo existing = api.getUserEmail(email);</span>
-<span class="nc bnc" id="L30" title="All 2 branches missed.">        if (!Objects.isNull(existing)) {</span>
-<span class="nc" id="L31">            throw new ApiException(&quot;User with given email already exists&quot;);</span>
+<span class="fc" id="L29">        UserPojo existing = getUserByEmail(email);</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        if (!Objects.isNull(existing)) {</span>
+<span class="fc" id="L31">            throw new ApiException(&quot;User with given email already exists&quot;);</span>
         }
-<span class="nc" id="L33">    }</span>
+<span class="fc" id="L33">    }</span>
 
-    public boolean checkEmailExists(String email) {
-<span class="nc" id="L36">        UserPojo existing = api.getUserEmail(email);</span>
-<span class="nc bnc" id="L37" title="All 2 branches missed.">        return !Objects.isNull(existing);</span>
+    public boolean checkEmailExists(String email) throws ApiException {
+<span class="fc" id="L36">        UserPojo existing = getUserByEmail(email);</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">        return !Objects.isNull(existing);</span>
     }
 
     public UserPojo getUserByEmail(String email) throws ApiException {
-<span class="nc" id="L41">        return api.get(email);</span>
+<span class="fc" id="L41">        return api.get(email);</span>
     }
 
     public List&lt;UserPojo&gt; getAll() {
-<span class="nc" id="L45">        return api.getAll();</span>
+<span class="fc" id="L45">        return api.getAll();</span>
     }
 
     public void delete(int id) {
-<span class="nc" id="L49">        api.delete(id);</span>
-<span class="nc" id="L50">    }</span>
+<span class="fc" id="L49">        api.delete(id);</span>
+<span class="fc" id="L50">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

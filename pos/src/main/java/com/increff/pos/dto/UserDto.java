@@ -26,14 +26,14 @@ public class UserDto {
 
     //Checkers
     public void checkEmail(String email) throws ApiException {
-        UserPojo existing = api.getUserEmail(email);
+        UserPojo existing = getUserByEmail(email);
         if (!Objects.isNull(existing)) {
             throw new ApiException("User with given email already exists");
         }
     }
 
-    public boolean checkEmailExists(String email) {
-        UserPojo existing = api.getUserEmail(email);
+    public boolean checkEmailExists(String email) throws ApiException {
+        UserPojo existing = getUserByEmail(email);
         return !Objects.isNull(existing);
     }
 

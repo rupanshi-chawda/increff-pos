@@ -25,6 +25,7 @@ public class AbstractUiDto {
         // Get current user
         UserPrincipal principal = SecurityUtil.getPrincipal();
         info.setEmail(Objects.isNull(principal) ? "" : principal.getEmail());
+        info.setRole(Objects.isNull(principal) ? "" : principal.getRole());
 
         // Set info
         ModelAndView mav = new ModelAndView(page);

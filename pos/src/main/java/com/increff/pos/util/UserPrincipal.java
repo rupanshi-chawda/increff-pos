@@ -9,5 +9,6 @@ public class UserPrincipal {
 
 	private int id;
 	private String email;
+    private String role;
 
 }

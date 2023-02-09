@@ -7,6 +7,7 @@ com\increff\pos\model\data\MessageData.class
 com\increff\pos\util\CookieUtil.class
 com\increff\pos\model\data\UserData.class
 com\increff\pos\pojo\InventoryPojo.class
+com\increff\pos\dto\BrandFlowApi.class
 com\increff\pos\dto\InventoryDto.class
 com\increff\pos\util\ApiException.class
 com\increff\pos\spring\SchedulerConfig.class
@@ -18,6 +19,7 @@ com\increff\pos\spring\SpringSecurityInitializer.class
 com\increff\pos\spring\SchedulerInitializer.class
 com\increff\pos\model\data\InfoData.class
 com\increff\pos\helper\ProductHelper.class
+com\increff\pos\dto\ProductFlowApi.class
 com\increff\pos\dto\AdminDto.class
 com\increff\pos\api\SalesApi.class
 com\increff\pos\dto\SalesReportDto.class

@@ -32,7 +32,7 @@ public class UserApi {
 		dao.deleteById(id);
 	}
 
-	public UserPojo getUserEmail(String email) {
-		return dao.selectByEmail(email);
-	}
+//	public UserPojo getUserEmail(String email) {
+//		return dao.selectByEmail(email);
+//	}
 }

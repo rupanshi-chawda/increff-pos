@@ -50,11 +50,9 @@ import java.util.Objects;
 <span class="nc" id="L50">        }</span>
         else
         {
-<span class="nc" id="L53">            UserPojo p = UserHelper.convert(form, &quot;operator&quot;);</span>
-<span class="nc" id="L54">            dto.add(p);</span>
-<span class="nc" id="L55">            info.setMessage(&quot;Signed Up Successfully, you can login now&quot;);</span>
+<span class="nc" id="L53">            info.setMessage(&quot;Unautorized access&quot;);</span>
         }
-<span class="nc" id="L57">        return mav(&quot;init.html&quot;);</span>
+<span class="nc" id="L55">        return mav(&quot;init.html&quot;);</span>
     }
 
 }

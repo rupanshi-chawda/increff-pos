@@ -21,7 +21,7 @@ public class InventoryController {
 
     @Autowired
     private InventoryDto dto;
-
+//todo rename apioperation values to better description
     @ApiOperation(value = "Adds a Product Inventory")
     @PostMapping(path = "")
     public void addInventory(@RequestBody List<InventoryForm> forms) throws ApiException {

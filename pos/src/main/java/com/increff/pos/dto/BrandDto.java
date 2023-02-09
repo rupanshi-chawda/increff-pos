@@ -1,6 +1,5 @@
 package com.increff.pos.dto;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.increff.pos.api.BrandApi;
 import com.increff.pos.helper.BrandHelper;
 import com.increff.pos.model.data.BrandErrorData;
@@ -11,10 +10,8 @@ import com.increff.pos.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +23,9 @@ public class BrandDto {
 
     @Autowired
     private BrandApi api;
+
+    @Autowired
+    private BrandFlowApi flow;
 
     @Autowired
     private CsvFileGenerator csvGenerator;
@@ -42,11 +42,11 @@ public class BrandDto {
             {
                 ValidationUtil.validateForms(f);
                 BrandHelper.normalize(f);
-                BrandPojo b = BrandHelper.convert(f);
-                api.getCheckBrandCategory(b);
-            } catch (Exception e) {
+            }
+            catch (ApiException e) {
                 errorSize++;
                 brandErrorData.setMessage(e.getMessage());
+                System.out.println(e.getMessage());
             }
             errorData.add(brandErrorData);
         }
@@ -54,7 +54,8 @@ public class BrandDto {
             ErrorUtil.throwErrors(errorData);
         }
 
-        bulkAdd(forms);
+        // bulkAdd(forms);
+        flow.add(forms, errorData);
     }
 
     public BrandData get(int id) throws ApiException {
@@ -75,7 +76,7 @@ public class BrandDto {
 
     public void generateCsv(HttpServletResponse response) throws ApiException {
         response.setContentType("text/csv");
-        response.addHeader("Content-Disposition", "attachment; filename=\"brandReport.csv\"");
+        response.addHeader("Content-Disposition", "attachment; filename=\"brandReport.csv\""); //todo rename file to add suffix with identifier like datetime
         try {
             csvGenerator.writeBrandsToCsv(api.getAll(), response.getWriter());
         } catch (IOException e) {
@@ -83,11 +84,11 @@ public class BrandDto {
         }
     }
 
-    @Transactional(rollbackOn = ApiException.class)
-    private void bulkAdd(List<BrandForm> brandForms) throws ApiException {
-        for (BrandForm f: brandForms){
-            BrandPojo b = BrandHelper.convert(f);
-            api.add(b);
-        }
-    }
+//    @Transactional(rollbackOn = ApiException.class)
+//    private void bulkAdd(List<BrandForm> brandForms) throws ApiException {
+//        for (BrandForm f: brandForms){
+//            BrandPojo b = BrandHelper.convert(f);
+//            api.add(b);
+//        }
+//    }
 }

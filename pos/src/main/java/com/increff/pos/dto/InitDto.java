@@ -50,9 +50,7 @@ public class InitDto extends AbstractUiController {
         }
         else
         {
-            UserPojo p = UserHelper.convert(form, "operator");
-            dto.add(p);
-            info.setMessage("Signed Up Successfully, you can login now");
+            info.setMessage("Unautorized access");
         }
         return mav("init.html");
     }

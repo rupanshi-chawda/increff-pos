@@ -17,13 +17,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.ZonedDateTime;
+import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
 
 @Service
 @Transactional(rollbackOn = ApiException.class)
-<span class="fc" id="L26">public class OrderApi {</span>
+<span class="fc" id="L29">public class OrderApi {</span>
     
     @Autowired
     private OrderDao orderDao;
@@ -38,71 +41,73 @@ import java.util.Objects;
     private String url;
     
     public void addOrder(OrderPojo p){//TODO read about checked and unchecked exception
-<span class="fc" id="L41">        orderDao.insert(p);</span>
-<span class="fc" id="L42">    }</span>
+<span class="fc" id="L44">        orderDao.insert(p);</span>
+<span class="fc" id="L45">    }</span>
     
     public OrderPojo getOrder(int id) throws ApiException {
-<span class="nc" id="L45">        return getCheckByOrderId(id);</span>
+<span class="nc" id="L48">        return getCheckByOrderId(id);</span>
     }
 
     public List&lt;OrderPojo&gt; getAllOrder() {
-<span class="fc" id="L49">        return orderDao.selectAllDesc();</span>
+<span class="fc" id="L52">        return orderDao.selectAllDesc();</span>
     }
     
     public void addItem(OrderItemPojo p, int pid, int oid){
-<span class="fc" id="L53">        p.setProductId(pid);</span>
-<span class="fc" id="L54">        p.setOrderId(oid);</span>
-<span class="fc" id="L55">        itemDao.insert(p);</span>
-<span class="fc" id="L56">    }</span>
+<span class="fc" id="L56">        p.setProductId(pid);</span>
+<span class="fc" id="L57">        p.setOrderId(oid);</span>
+<span class="fc" id="L58">        itemDao.insert(p);</span>
+<span class="fc" id="L59">    }</span>
 
     public OrderItemPojo getItem(int id) throws ApiException {
-<span class="nc" id="L59">        OrderItemPojo p = getOrderItemId(id);</span>
-<span class="nc" id="L60">        OrderHelper.validateId(p, id);</span>
-<span class="nc" id="L61">        return p;</span>
+<span class="nc" id="L62">        OrderItemPojo p = getOrderItemId(id);</span>
+<span class="nc" id="L63">        OrderHelper.validateId(p, id);</span>
+<span class="nc" id="L64">        return p;</span>
     }
 
 
-    public List&lt;OrderItemPojo&gt; getByOrderId(int orderid) {
-<span class="fc" id="L66">        return itemDao.selectByOrderId(orderid);</span>
+    public List&lt;OrderItemPojo&gt; getByOrderId(int orderId) {
+<span class="fc" id="L69">        return itemDao.selectByOrderId(orderId);</span>
     }
 
     private OrderItemPojo getOrderItemId(int id) {
-<span class="nc" id="L70">        return itemDao.selectById(id, OrderItemPojo.class);</span>
+<span class="nc" id="L73">        return itemDao.selectById(id, OrderItemPojo.class);</span>
     }
 
     private OrderPojo getCheckByOrderId(int id) throws ApiException {
-<span class="nc" id="L74">        OrderPojo p = orderDao.selectById(id, OrderPojo.class);</span>
-<span class="nc bnc" id="L75" title="All 2 branches missed.">        if (Objects.isNull(p)) {</span>
-<span class="nc" id="L76">            throw new ApiException(&quot;Order with given ID does not exit, id: &quot; + id);</span>
+<span class="nc" id="L77">        OrderPojo p = orderDao.selectById(id, OrderPojo.class);</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">        if (Objects.isNull(p)) {</span>
+<span class="nc" id="L79">            throw new ApiException(&quot;Order with given ID does not exit, id: &quot; + id);</span>
         }
-<span class="nc" id="L78">        return p;</span>
+<span class="nc" id="L81">        return p;</span>
     }
 
-    public List&lt;OrderItemPojo&gt; getOrderItemByOrderId(int orderid){
-<span class="nc" id="L82">        return itemDao.selectByOrderId(orderid);</span>
+    public List&lt;OrderItemPojo&gt; getOrderItemByOrderId(int orderId){
+<span class="nc" id="L85">        return itemDao.selectByOrderId(orderId);</span>
     }
 
     public ResponseEntity&lt;byte[]&gt; getPDF(InvoiceForm invoiceForm) {
 
-<span class="nc" id="L87">        byte[] contents = restTemplate.postForEntity(url, invoiceForm, byte[].class).getBody();</span>
+<span class="nc" id="L90">        String base64 = restTemplate.postForObject(url, invoiceForm, String.class);</span>
+        //Path pdfPath = Paths.get(PDF_PATH +id+&quot;invoice.pdf&quot;);
+<span class="nc" id="L92">        byte[] contents = Base64.getDecoder().decode(base64);</span>
 
-<span class="nc" id="L89">        HttpHeaders headers = new HttpHeaders();</span>
-<span class="nc" id="L90">        headers.setContentType(MediaType.APPLICATION_PDF);</span>
+<span class="nc" id="L94">        HttpHeaders headers = new HttpHeaders();</span>
+<span class="nc" id="L95">        headers.setContentType(MediaType.APPLICATION_PDF);</span>
 
-<span class="nc" id="L92">        String filename = &quot;invoice.pdf&quot;;//TODO append orderId</span>
-<span class="nc" id="L93">        headers.add(&quot;Content-Disposition&quot;, &quot;inline;filename=&quot; + filename);</span>
+<span class="nc" id="L97">        String filename = &quot;invoice.pdf&quot;;//TODO append orderId</span>
+<span class="nc" id="L98">        headers.add(&quot;Content-Disposition&quot;, &quot;inline;filename=&quot; + filename);</span>
 
 
-<span class="nc" id="L96">        headers.setCacheControl(&quot;must-revalidate, post-check=0, pre-check=0&quot;);</span>
-<span class="nc" id="L97">        return new ResponseEntity&lt;&gt;(contents, headers, HttpStatus.OK);</span>
+<span class="nc" id="L101">        headers.setCacheControl(&quot;must-revalidate, post-check=0, pre-check=0&quot;);</span>
+<span class="nc" id="L102">        return new ResponseEntity&lt;&gt;(contents, headers, HttpStatus.OK);</span>
     }
 
     public List&lt;OrderPojo&gt; getOrderByDateFilter(ZonedDateTime startDate, ZonedDateTime endDate) {
-<span class="fc" id="L101">        return orderDao.selectOrderByDateFilter(startDate,endDate);</span>
+<span class="fc" id="L106">        return orderDao.selectOrderByDateFilter(startDate,endDate);</span>
     }
 
     public List&lt;OrderItemPojo&gt; getOrderItemsByOrderId(int id) {
-<span class="fc" id="L105">        return itemDao.selectByOrderId(id);</span>
+<span class="fc" id="L110">        return itemDao.selectByOrderId(id);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

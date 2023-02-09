@@ -8,5 +8,8 @@ com\increff\pos\dto\BrandDtoTest.class
 com\increff\pos\helper\BrandTestHelper.class
 com\increff\pos\helper\ProductTestHelper.class
 com\increff\pos\dto\SalesReportDtoTest.class
+com\increff\pos\helper\UserTestHelper.class
 com\increff\pos\helper\InventoryTestHelper.class
+com\increff\pos\dto\AdminDtoTest.class
 com\increff\pos\QaConfig.class
+com\increff\pos\dto\SalesDtoTest.class

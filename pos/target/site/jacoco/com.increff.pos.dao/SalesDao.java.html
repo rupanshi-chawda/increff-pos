@@ -16,16 +16,16 @@ import java.util.List;
     private static final String SELECT_BY_DATE = &quot;select p from SalesPojo p where date=:date&quot;;
 
     public List&lt;SalesPojo&gt; selectBetweenDates(LocalDate startDate, LocalDate endDate) {
-<span class="nc" id="L19">        TypedQuery&lt;SalesPojo&gt; query = getQuery(SELECT_BTW_DATES, SalesPojo.class);</span>
-<span class="nc" id="L20">        query.setParameter(&quot;startDate&quot;, startDate);</span>
-<span class="nc" id="L21">        query.setParameter(&quot;endDate&quot;, endDate);</span>
-<span class="nc" id="L22">        return query.getResultList();</span>
+<span class="fc" id="L19">        TypedQuery&lt;SalesPojo&gt; query = getQuery(SELECT_BTW_DATES, SalesPojo.class);</span>
+<span class="fc" id="L20">        query.setParameter(&quot;startDate&quot;, startDate);</span>
+<span class="fc" id="L21">        query.setParameter(&quot;endDate&quot;, endDate);</span>
+<span class="fc" id="L22">        return query.getResultList();</span>
     }
 
     public SalesPojo selectByDate(LocalDate date) {
-<span class="nc" id="L26">        TypedQuery&lt;SalesPojo&gt; query = getQuery(SELECT_BY_DATE, SalesPojo.class);</span>
-<span class="nc" id="L27">        query.setParameter(&quot;date&quot;, date);</span>
-<span class="nc" id="L28">        return query.getResultStream().findFirst().orElse(null);</span>
+<span class="fc" id="L26">        TypedQuery&lt;SalesPojo&gt; query = getQuery(SELECT_BY_DATE, SalesPojo.class);</span>
+<span class="fc" id="L27">        query.setParameter(&quot;date&quot;, date);</span>
+<span class="fc" id="L28">        return query.getResultStream().findFirst().orElse(null);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

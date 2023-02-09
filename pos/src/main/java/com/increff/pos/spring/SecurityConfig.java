@@ -26,18 +26,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/ui/**")//
 				.and().authorizeRequests()//
 				.antMatchers("/api/admin/**").hasAuthority("supervisor")//
-				//TODO check and move this to a csv file
-				.antMatchers(HttpMethod.GET, "/api/brand/**").hasAnyAuthority("supervisor", "operator")//
+				//TODO check for reports of brand and inventory
+				.antMatchers(HttpMethod.GET, "/api/brand").hasAnyAuthority("supervisor", "operator")//
+				.antMatchers(HttpMethod.GET, "/api/brand/{id}").hasAnyAuthority("supervisor", "operator")//
 				.antMatchers("/api/brand/**").hasAnyAuthority("supervisor")//
 				.antMatchers(HttpMethod.GET, "/api/product/**").hasAnyAuthority("supervisor", "operator")//
 				.antMatchers("/api/product/**").hasAnyAuthority("supervisor")//
-				.antMatchers(HttpMethod.GET, "/api/inventory/**").hasAnyAuthority("supervisor", "operator")//
+				.antMatchers(HttpMethod.GET, "/api/inventory").hasAnyAuthority("supervisor", "operator")//
+				.antMatchers(HttpMethod.GET, "/api/inventory/{barcode}").hasAnyAuthority("supervisor", "operator")//
 				.antMatchers("/api/inventory/**").hasAnyAuthority("supervisor")//
-				.antMatchers(HttpMethod.GET, "/api/order/**").hasAnyAuthority("supervisor", "operator")//
-				.antMatchers("/api/order/**").hasAnyAuthority("supervisor")//
+				.antMatchers("/api/order/**").hasAnyAuthority("supervisor","operator")//
 				.antMatchers("/api/**").hasAnyAuthority("supervisor", "operator")//
 
 				.antMatchers("/ui/admin/**").hasAuthority("supervisor")//
+				.antMatchers("/ui/sales/**").hasAuthority("supervisor")//
+				.antMatchers("/ui/salesreport/**").hasAuthority("supervisor")//
 				.antMatchers("/ui/**").hasAnyAuthority("supervisor", "operator")//
 				// Ignore CSRF and CORS
 				.and().csrf().disable().cors().disable();

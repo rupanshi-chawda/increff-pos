@@ -18,22 +18,22 @@ import com.increff.pos.dao.UserDao;
 	private UserDao dao;
 
 	public void add(UserPojo p) throws ApiException {
-<span class="nc" id="L21">		dao.insert(p);</span>
-<span class="nc" id="L22">	}</span>
+<span class="fc" id="L21">		dao.insert(p);</span>
+<span class="fc" id="L22">	}</span>
 	public UserPojo get(String email) throws ApiException {
-<span class="nc" id="L24">		return dao.selectByEmail(email);</span>
+<span class="fc" id="L24">		return dao.selectByEmail(email);</span>
 	}
 
 	public List&lt;UserPojo&gt; getAll() {
-<span class="nc" id="L28">		return dao.selectAll(UserPojo.class);</span>
+<span class="fc" id="L28">		return dao.selectAll(UserPojo.class);</span>
 	}
 
 	public void delete(int id) {
-<span class="nc" id="L32">		dao.deleteById(id);</span>
-<span class="nc" id="L33">	}</span>
+<span class="fc" id="L32">		dao.deleteById(id);</span>
+<span class="fc" id="L33">	}</span>
 
-	public UserPojo getUserEmail(String email) {
-<span class="nc" id="L36">		return dao.selectByEmail(email);</span>
-	}
+//	public UserPojo getUserEmail(String email) {
+//		return dao.selectByEmail(email);
+//	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

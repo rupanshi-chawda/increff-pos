@@ -53,8 +53,6 @@ public class OrderDtoTest extends AbstractUnitTest {
     @Autowired
     private BrandDto brandDto;
 
-    private MockRestServiceServer mockServer;
-
     @Test
     public void addOrderTest() throws ApiException {
         List<BrandForm> brandFormList = new ArrayList<>();
@@ -315,18 +313,9 @@ public class OrderDtoTest extends AbstractUnitTest {
         List<OrderData> list = dto.getAllOrder();
         InvoiceForm invoiceForm = new InvoiceForm();
 
-//        byte[] expectedBytes = "expected byte array".getBytes();
-//        RestTemplate restTemplate = mock(RestTemplate.class);
-//        when(restTemplate.postForEntity(url, invoiceForm, byte[].class)).thenReturn(expectedBytes);
+        RestTemplate restTemplate = mock(RestTemplate.class);
+        when(restTemplate.postForEntity(url, invoiceForm, byte[].class)).thenReturn(new ResponseEntity<byte[]>(HttpStatus.OK));
 
-//        mockServer = MockRestServiceServer.createServer(restTemplate);
-//        mockServer.expect(ExpectedCount.once(),
-//                        requestTo(new URI(url)))
-//                .andExpect(MockRestRequestMatchers.method(HttpMethod.POST))
-//                .andRespond(withStatus(HttpStatus.OK)
-//                        .contentType(MediaType.APPLICATION_PDF)
-//                );
-//        mockServer.verify();
     }
 
 }

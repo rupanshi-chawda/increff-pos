@@ -103,5 +103,5 @@ public class ControllerConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public RestTemplate restTemplate( ) {
 		return new RestTemplate();
-	}
+	} //todo; add HttpConnectionPoolingManager
 }

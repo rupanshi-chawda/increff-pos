@@ -13,15 +13,15 @@ import org.springframework.stereotype.Repository;
 	private static final String SELECT_BY_EMAIL = &quot;select p from UserPojo p where email=:email&quot;;
 
 	public void deleteById(int id) {
-<span class="nc" id="L16">		Query query = em().createQuery(DELETE_BY_ID);</span>
-<span class="nc" id="L17">		query.setParameter(&quot;id&quot;, id);</span>
-<span class="nc" id="L18">		query.executeUpdate();</span>
-<span class="nc" id="L19">	}</span>
+<span class="fc" id="L16">		Query query = em().createQuery(DELETE_BY_ID);</span>
+<span class="fc" id="L17">		query.setParameter(&quot;id&quot;, id);</span>
+<span class="fc" id="L18">		query.executeUpdate();</span>
+<span class="fc" id="L19">	}</span>
 
 	public UserPojo selectByEmail(String email) {
-<span class="nc" id="L22">		TypedQuery&lt;UserPojo&gt; query = getQuery(SELECT_BY_EMAIL, UserPojo.class);</span>
-<span class="nc" id="L23">		query.setParameter(&quot;email&quot;, email);</span>
-<span class="nc" id="L24">		return getSingle(query);</span>
+<span class="fc" id="L22">		TypedQuery&lt;UserPojo&gt; query = getQuery(SELECT_BY_EMAIL, UserPojo.class);</span>
+<span class="fc" id="L23">		query.setParameter(&quot;email&quot;, email);</span>
+<span class="fc" id="L24">		return getSingle(query);</span>
 	}
 
 	public void update(UserPojo p) {

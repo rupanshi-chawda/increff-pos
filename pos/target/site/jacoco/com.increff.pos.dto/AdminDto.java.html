@@ -21,22 +21,22 @@ import java.util.stream.Collectors;
     private UserDto dto;
 
     public void add(UserForm form) throws ApiException {
-<span class="nc bnc" id="L24" title="All 2 branches missed.">        if(StringUtil.isEmpty(form.getEmail())) {</span>
-<span class="nc" id="L25">            throw new ApiException(&quot;Email cannot be empty&quot;);</span>
+<span class="fc bfc" id="L24" title="All 2 branches covered.">        if(StringUtil.isEmpty(form.getEmail())) {</span>
+<span class="fc" id="L25">            throw new ApiException(&quot;Email cannot be empty&quot;);</span>
         }
-<span class="nc bnc" id="L27" title="All 2 branches missed.">        if(StringUtil.isEmpty(form.getPassword())) {</span>
+<span class="pc bpc" id="L27" title="1 of 2 branches missed.">        if(StringUtil.isEmpty(form.getPassword())) {</span>
 <span class="nc" id="L28">            throw new ApiException(&quot;Password cannot be empty&quot;);</span>
         }
-<span class="nc" id="L30">        UserPojo p = UserHelper.convert(form);</span>
-<span class="nc" id="L31">        dto.add(p);</span>
-<span class="nc" id="L32">    }</span>
+<span class="fc" id="L30">        UserPojo p = UserHelper.convert(form);</span>
+<span class="fc" id="L31">        dto.add(p);</span>
+<span class="fc" id="L32">    }</span>
 
     public void delete(int id) {
-<span class="nc" id="L35">        dto.delete(id);</span>
-<span class="nc" id="L36">    }</span>
+<span class="fc" id="L35">        dto.delete(id);</span>
+<span class="fc" id="L36">    }</span>
 
     public List&lt;UserData&gt; getAll(){
-<span class="nc" id="L39">        return dto.getAll().stream().map(UserHelper::convert).collect(Collectors.toList());</span>
+<span class="fc" id="L39">        return dto.getAll().stream().map(UserHelper::convert).collect(Collectors.toList());</span>
     }
 
 }

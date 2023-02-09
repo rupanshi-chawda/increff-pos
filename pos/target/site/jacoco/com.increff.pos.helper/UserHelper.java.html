@@ -7,24 +7,24 @@ import com.increff.pos.pojo.UserPojo;
 <span class="nc" id="L7">public class UserHelper {</span>
 
     public static void normalize(UserPojo p) {
-<span class="nc" id="L10">        p.setEmail(p.getEmail().toLowerCase().trim());</span>
-<span class="nc" id="L11">        p.setRole(p.getRole().toLowerCase().trim());</span>
-<span class="nc" id="L12">    }</span>
+<span class="fc" id="L10">        p.setEmail(p.getEmail().toLowerCase().trim());</span>
+<span class="fc" id="L11">        p.setRole(p.getRole().toLowerCase().trim());</span>
+<span class="fc" id="L12">    }</span>
 
     public static UserData convert(UserPojo p) {
-<span class="nc" id="L15">        UserData d = new UserData();</span>
-<span class="nc" id="L16">        d.setEmail(p.getEmail());</span>
-<span class="nc" id="L17">        d.setRole(p.getRole());</span>
-<span class="nc" id="L18">        d.setId(p.getId());</span>
-<span class="nc" id="L19">        return d;</span>
+<span class="fc" id="L15">        UserData d = new UserData();</span>
+<span class="fc" id="L16">        d.setEmail(p.getEmail());</span>
+<span class="fc" id="L17">        d.setRole(p.getRole());</span>
+<span class="fc" id="L18">        d.setId(p.getId());</span>
+<span class="fc" id="L19">        return d;</span>
     }
 
     public static UserPojo convert(UserForm f) {
-<span class="nc" id="L23">        UserPojo p = new UserPojo();</span>
-<span class="nc" id="L24">        p.setEmail(f.getEmail());</span>
-<span class="nc" id="L25">        p.setRole(&quot;operator&quot;);</span>
-<span class="nc" id="L26">        p.setPassword(f.getPassword());</span>
-<span class="nc" id="L27">        return p;</span>
+<span class="fc" id="L23">        UserPojo p = new UserPojo();</span>
+<span class="fc" id="L24">        p.setEmail(f.getEmail());</span>
+<span class="fc" id="L25">        p.setRole(&quot;operator&quot;);</span>
+<span class="fc" id="L26">        p.setPassword(f.getPassword());</span>
+<span class="fc" id="L27">        return p;</span>
     }
 
     public static UserPojo convert(UserForm f, String role) {

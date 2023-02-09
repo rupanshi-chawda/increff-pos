@@ -17,7 +17,7 @@ public class InventoryApi {
 
     @Autowired
     private InventoryDao dao;
-
+//todo- rename this to add update
     public void add(InventoryPojo p) throws ApiException {
         InventoryPojo b = getByInventoryId(p.getId());
         if(Objects.isNull(b)) {
@@ -40,7 +40,7 @@ public class InventoryApi {
     public List<InventoryPojo> getAll() {
         return dao.selectAll(InventoryPojo.class);
     }
-
+//todo do we need update? we can use add update directly?
     public void update(InventoryPojo p) throws ApiException {
         InventoryPojo bx = getByInventoryId(p.getId());
         InventoryHelper.validateId(bx, p.getId());

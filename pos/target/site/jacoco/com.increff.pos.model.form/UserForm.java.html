@@ -8,16 +8,16 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Getter
-<span class="nc" id="L11">@Setter</span>
-<span class="nc" id="L12">public class UserForm {</span>
+<span class="fc" id="L11">@Setter</span>
+<span class="fc" id="L12">public class UserForm {</span>
 
 	@Email
 	@NotBlank
-<span class="nc" id="L16">	private String email;</span>
+<span class="fc" id="L16">	private String email;</span>
 
 	@NotBlank
 	@Size(min = 6, message = &quot;must be atleast 6 character!&quot;)
-<span class="nc" id="L20">	private String password;</span>
+<span class="fc" id="L20">	private String password;</span>
 
 	@NotBlank
 <span class="nc" id="L23">	private String role;</span>
