@@ -1,5 +1,7 @@
 package com.increff.pos.helper;
 
+import com.increff.pos.model.data.ProductData;
+import com.increff.pos.util.ConvertUtil;
 import com.increff.pos.util.StringUtil;
 import com.increff.pos.model.data.OrderData;
 import com.increff.pos.model.data.OrderItemData;
@@ -16,39 +18,21 @@ import java.util.Objects;
 public class OrderHelper {
 
     public static OrderData convert(OrderPojo p) {
-        OrderData d = new OrderData();
-        d.setId(p.getId());
-        d.setTime(p.getTime());
-        return d;
+        return ConvertUtil.convert(p, OrderData.class);
     }
 
     public static OrderItemData convert(OrderItemPojo p, String barcode) {
-        OrderItemData d = new OrderItemData();
+        OrderItemData d =  ConvertUtil.convert(p, OrderItemData.class);;
         d.setBarcode(barcode);
-        d.setId(p.getId());
-        d.setOrderId(p.getOrderId());
-        d.setProductId(p.getProductId());
-        d.setQuantity(p.getQuantity());
-        d.setSellingPrice(p.getSellingPrice());
         return d;
     }
 
     public static OrderItemPojo convert(OrderItemForm f) {
-        OrderItemPojo p = new OrderItemPojo();
-        p.setSellingPrice(f.getSellingPrice());
-        p.setQuantity(f.getQuantity());
-        return p;
+        return ConvertUtil.convert(f, OrderItemPojo.class);
     }
 
     public static void normalize(OrderItemForm f) {
         f.setBarcode(StringUtil.toLowerCase(f.getBarcode()));
-    }
-
-
-    public static void validateId(OrderItemPojo p, int id) throws ApiException {
-        if (Objects.isNull(p)) {
-            throw new ApiException("Product with given ID does not exit, id: " + id);
-        }
     }
 
     public static void validateId(int id) throws ApiException {

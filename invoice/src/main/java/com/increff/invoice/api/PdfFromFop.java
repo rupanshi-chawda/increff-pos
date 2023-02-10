@@ -22,22 +22,14 @@ public class PdfFromFop {
             File xsltfile = new File("C:\\Users\\KIIT\\Downloads\\increff-pos\\invoice\\src\\main\\resources\\xsl\\invoice.xsl");
             File pdfDir = new File("./Pdf");
 
-            //Creating the XML file here
-//            StreamResult streamResult = new StreamResult(String.valueOf(domSource));
-//            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-//            Transformer transformer = transformerFactory.newTransformer();
-//            transformer.transform(domSource, streamResult);
-
             pdfDir.mkdirs();
             File pdfFile = new File(pdfDir, "invoice_"+ form.getOrderId() +".pdf");
             // configure fopFactory as desired
             final FopFactory fopFactory = FopFactory.newInstance(new File(".").toURI());
             FOUserAgent foUserAgent = fopFactory.newFOUserAgent();
-            // configure foUserAgent as desired
-//            // Setup output
-//            OutputStream out = new FileOutputStream(pdfFile);
-//            out = new java.io.BufferedOutputStream(out);
 
+            // configure foUserAgent as desired
+            // Setup output
             OutputStream outfile = new FileOutputStream(pdfFile);
             outfile = new java.io.BufferedOutputStream(outfile);
             ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -50,7 +42,6 @@ public class PdfFromFop {
                 TransformerFactory factory = TransformerFactory.newInstance();
                 Transformer transformer = factory.newTransformer(new StreamSource(xsltfile));
                 // Setup input for XSLT transformation
-//                Source src = new StreamSource(String.valueOf(domSource));
                 Source src = convert(xmlEncodedString);
                 // Resulting SAX events (the generated FO) must be piped through to FOP
                 Result res = new SAXResult(fop.getDefaultHandler());

@@ -60,7 +60,7 @@ public class OrderApi {
 
     public OrderItemPojo getItem(int id) throws ApiException {
         OrderItemPojo p = getOrderItemId(id);
-        OrderHelper.validateId(p, id);
+        OrderHelper.validateId(id);
         return p;
     }
 

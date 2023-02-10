@@ -1,8 +1,10 @@
 package com.increff.pos.helper;
 
+import com.increff.pos.model.data.ProductData;
 import com.increff.pos.model.data.UserData;
 import com.increff.pos.model.form.UserForm;
 import com.increff.pos.pojo.UserPojo;
+import com.increff.pos.util.ConvertUtil;
 
 public class UserHelper {
 
@@ -12,26 +14,18 @@ public class UserHelper {
     }
 
     public static UserData convert(UserPojo p) {
-        UserData d = new UserData();
-        d.setEmail(p.getEmail());
-        d.setRole(p.getRole());
-        d.setId(p.getId());
-        return d;
+        return  ConvertUtil.convert(p, UserData.class);
     }
 
     public static UserPojo convert(UserForm f) {
-        UserPojo p = new UserPojo();
-        p.setEmail(f.getEmail());
+        UserPojo p = ConvertUtil.convert(f, UserPojo.class);
         p.setRole("operator");
-        p.setPassword(f.getPassword());
         return p;
     }
 
     public static UserPojo convert(UserForm f, String role) {
-        UserPojo p = new UserPojo();
-        p.setEmail(f.getEmail());
+        UserPojo p = ConvertUtil.convert(f, UserPojo.class);
         p.setRole(role);
-        p.setPassword(f.getPassword());
         return p;
     }
 }

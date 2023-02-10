@@ -4,6 +4,7 @@ import com.increff.pos.model.commons.InventoryItem;
 import com.increff.pos.model.data.InventoryData;
 import com.increff.pos.model.form.InventoryForm;
 import com.increff.pos.pojo.InventoryPojo;
+import com.increff.pos.util.ConvertUtil;
 import com.increff.pos.util.StringUtil;
 import com.increff.pos.util.ApiException;
 import javafx.util.Pair;
@@ -15,17 +16,13 @@ public class InventoryHelper {
 
 
     public static InventoryData convert(InventoryPojo p, String barcode) {
-        InventoryData d = new InventoryData();
+        InventoryData d = ConvertUtil.convert(p, InventoryData.class);
         d.setBarcode(barcode);
-        d.setId(p.getId());
-        d.setQuantity(p.getQuantity());
         return d;
     }
 
     public static InventoryPojo convert(InventoryForm f) {
-        InventoryPojo p = new InventoryPojo();
-        p.setQuantity(f.getQuantity());
-        return p;
+        return ConvertUtil.convert(f, InventoryPojo.class);
     }
 
     public static void normalize(InventoryForm f) {
