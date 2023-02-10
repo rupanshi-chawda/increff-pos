@@ -4,18 +4,26 @@ import com.increff.pos.pojo.OrderItemPojo;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Repository
-public class OrderItemDao extends AbstractDao{
-
-    private static final String SELECT_BY_ORDER_ID = "select p from OrderItemPojo p where orderid=:orderid";
+public class OrderItemDao extends AbstractDao {
 
     public void update(OrderItemPojo op){}
 
-    public List<OrderItemPojo> selectByOrderId(int orderid) {
-        TypedQuery<OrderItemPojo> query = getQuery(SELECT_BY_ORDER_ID, OrderItemPojo.class);
-        query.setParameter("orderid", orderid);
+    public List<OrderItemPojo> selectByOrderId(int orderId) {
+        CriteriaBuilder cb = em().getCriteriaBuilder();
+        CriteriaQuery<OrderItemPojo> q = cb.createQuery(OrderItemPojo.class);
+        Root<OrderItemPojo> c = q.from(OrderItemPojo.class);
+        ParameterExpression<Integer> p = cb.parameter(Integer.class);
+        q.select(c).where(cb.equal(c.get("orderId"), p));
+
+        TypedQuery<OrderItemPojo> query = em().createQuery(q);
+        query.setParameter(p, orderId);
         return query.getResultList();
     }
 }

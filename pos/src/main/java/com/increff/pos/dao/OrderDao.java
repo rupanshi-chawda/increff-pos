@@ -1,27 +1,44 @@
 package com.increff.pos.dao;
 
 import com.increff.pos.pojo.OrderPojo;
+import com.increff.pos.pojo.OrderPojo;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 import java.time.ZonedDateTime;
 import java.util.List;
 
 @Repository
 public class OrderDao extends AbstractDao {
 
-    private static final String SELECT_ALL_DESC = "select p from OrderPojo p order by time desc";
-    private static final String SELECT_BY_DATE_FILTER = "select p from OrderPojo p where createdAt>=:startDate and createdAt<=:endDate";
-
     public List<OrderPojo> selectAllDesc() {
-        TypedQuery<OrderPojo> query = getQuery(SELECT_ALL_DESC, OrderPojo.class);
+        CriteriaBuilder cb = em().getCriteriaBuilder();
+        CriteriaQuery<OrderPojo> q = cb.createQuery(OrderPojo.class);
+        Root<OrderPojo> c = q.from(OrderPojo.class);
+        q.select(c);
+        q.orderBy(cb.desc(c.get("time")));
+
+        TypedQuery<OrderPojo> query = em().createQuery(q);
         return query.getResultList();
     }
 
     public List<OrderPojo> selectOrderByDateFilter(ZonedDateTime startDate, ZonedDateTime endDate) {
-        TypedQuery<OrderPojo> query = getQuery(SELECT_BY_DATE_FILTER, OrderPojo.class);
-        query.setParameter("startDate", startDate);
-        query.setParameter("endDate", endDate);
+        CriteriaBuilder cb = em().getCriteriaBuilder();
+        CriteriaQuery<OrderPojo> q = cb.createQuery(OrderPojo.class);
+        Root<OrderPojo> c = q.from(OrderPojo.class);
+
+        q.select(c);
+        ParameterExpression<ZonedDateTime> p = cb.parameter(ZonedDateTime.class);
+        ParameterExpression<ZonedDateTime> a = cb.parameter(ZonedDateTime.class);
+        q.where(cb.between(c.get("createdAt"), p, a));
+
+        TypedQuery<OrderPojo> query = em().createQuery(q);
+        query.setParameter(p, startDate);
+        query.setParameter(a, endDate);
         return query.getResultList();
     }
 }

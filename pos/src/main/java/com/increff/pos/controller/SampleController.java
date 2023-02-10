@@ -29,7 +29,7 @@ public class SampleController {
 		response.setContentType("text/csv");
 		response.addHeader("Content-disposition:", "attachment; filename=" + fileName);
 		String fileClasspath = "C:\\Users\\KIIT\\Downloads\\increff-pos\\pos\\src\\main\\resources\\com.increff\\pos\\" + fileName;
-
+		//todo: remove all absolute paths
 
 		return outputStream -> {
 			int bytesRead;

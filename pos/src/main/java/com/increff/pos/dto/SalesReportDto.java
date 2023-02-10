@@ -64,6 +64,7 @@ public class SalesReportDto {
         return getFilterSalesReport(list, form.getBrand(), form.getCategory());
     }
 
+    //todo: optimise this function to reduce api calls
     public List<SalesReportData> getFilterSalesReport(List<OrderPojo> list, String brand, String category) throws ApiException {
         HashMap<Integer, SalesReportData> map = new HashMap<Integer, SalesReportData>();
         for(OrderPojo orderPojo: list)

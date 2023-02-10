@@ -15,7 +15,7 @@ import java.time.ZonedDateTime;
 @Getter
 @Setter
 public abstract class AbstractVersionPojo implements Serializable {
-
+//todo: add nullable false
     @CreationTimestamp
     @Column
     private ZonedDateTime createdAt;

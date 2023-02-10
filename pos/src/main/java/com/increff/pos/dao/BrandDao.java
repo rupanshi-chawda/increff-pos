@@ -4,24 +4,42 @@ import com.increff.pos.pojo.BrandPojo;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Repository
 public class BrandDao extends AbstractDao {
 
-    private static final String SELECT_BY_BRAND_AND_CATEGORY = "select p from BrandPojo p where brand=:brand and " +
-            "category=:category";
-    private static final String SELECT_ALL = "select p from BrandPojo p order by brand asc, category asc";
-
     public BrandPojo selectBrandCategory(String brand, String category) {
-        TypedQuery<BrandPojo> query = getQuery(SELECT_BY_BRAND_AND_CATEGORY, BrandPojo.class);
-        query.setParameter("brand", brand); 
-        query.setParameter("category", category);
+        CriteriaBuilder cb = em().getCriteriaBuilder();
+        CriteriaQuery<BrandPojo> q = cb.createQuery(BrandPojo.class);
+        Root<BrandPojo> c = q.from(BrandPojo.class);
+
+        q.select(c);
+        ParameterExpression<String> p = cb.parameter(String.class);
+        ParameterExpression<String> a = cb.parameter(String.class);
+        q.where(
+                cb.equal(c.get("brand"), p),
+                cb.equal(c.get("category"), a)
+        );
+
+        TypedQuery<BrandPojo> query = em().createQuery(q);
+        query.setParameter(p, brand);
+        query.setParameter(a, category);
         return getSingle(query);
     }
 
     public List<BrandPojo> selectAllSorted() {
-        TypedQuery<BrandPojo> query = getQuery(SELECT_ALL, BrandPojo.class);
+        CriteriaBuilder cb = em().getCriteriaBuilder();
+        CriteriaQuery<BrandPojo> q = cb.createQuery(BrandPojo.class);
+        Root<BrandPojo> c = q.from(BrandPojo.class);
+        q.select(c);
+        q.orderBy(cb.asc(c.get("brand")), cb.asc(c.get("category")));
+        
+        TypedQuery<BrandPojo> query = em().createQuery(q);
         return query.getResultList();
     }
 

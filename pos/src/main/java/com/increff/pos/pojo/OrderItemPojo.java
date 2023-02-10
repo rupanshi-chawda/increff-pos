@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 public class OrderItemPojo extends AbstractVersionPojo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //TODO y do we use this
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(nullable = false)

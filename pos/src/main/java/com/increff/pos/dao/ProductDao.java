@@ -4,15 +4,23 @@ import com.increff.pos.pojo.ProductPojo;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 
 @Repository
 public class ProductDao extends AbstractDao{
 
-    private static final String SELECT_BY_BARCODE = "select p from ProductPojo p where barcode=:barcode";
+    public ProductPojo selectByBarcode(String barcode) {
+        CriteriaBuilder cb = em().getCriteriaBuilder();
+        CriteriaQuery<ProductPojo> q = cb.createQuery(ProductPojo.class);
+        Root<ProductPojo> c = q.from(ProductPojo.class);
+        ParameterExpression<String > p = cb.parameter(String.class);
+        q.select(c).where(cb.equal(c.get("barcode"), p));
 
-    public ProductPojo selectByBarcode(String barcode){
-        TypedQuery<ProductPojo> query = getQuery(SELECT_BY_BARCODE, ProductPojo.class);
-        query.setParameter("barcode", barcode);
+        TypedQuery<ProductPojo> query = em().createQuery(q);
+        query.setParameter(p, barcode);
         return getSingle(query);
     }
 

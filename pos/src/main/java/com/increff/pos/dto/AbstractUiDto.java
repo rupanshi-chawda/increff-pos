@@ -16,7 +16,7 @@ import java.util.Objects;
 public class AbstractUiDto {
 
     @Autowired
-    private InfoData info;
+    private InfoData info; //todo why is this autowired?
 
     @Value("${app.baseUrl}")
     private String baseUrl;

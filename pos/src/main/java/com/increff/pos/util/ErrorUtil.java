@@ -19,3 +19,4 @@ public class ErrorUtil {
         throw new ApiException(json);
     }
 }
+//todo: check all the error messages as there are grammar errors

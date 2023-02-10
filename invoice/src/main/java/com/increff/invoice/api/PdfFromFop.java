@@ -14,7 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
-
+//todo: remove two try catches
 public class PdfFromFop {
     public String createPDF(InvoiceForm form, String xmlEncodedString) throws ApiException {
         try {
@@ -62,7 +62,7 @@ public class PdfFromFop {
                 transformer.transform(src, res);
 
             } catch (FOPException | TransformerException e) {
-                throw new ApiException(e.getMessage());
+                throw new ApiException(e.getMessage());// todo fix error massages to show general error, not the internal message
             } finally {
                 byte[] pdf = out.toByteArray();
                 String base64 = Base64.getEncoder().encodeToString(pdf);

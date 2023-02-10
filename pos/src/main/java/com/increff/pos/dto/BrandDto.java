@@ -43,6 +43,7 @@ public class BrandDto {
             brandErrorData.setMessage("");
             try
             {
+                //todo: validation is kept above as it checks blank and null but if we keep it down @notnull will not be check. how to do this?
                 BrandHelper.normalize(f);
                 ValidationUtil.validateForms(f);
             }
@@ -90,3 +91,5 @@ public class BrandDto {
         }
     }
 }
+
+//todo: rename check and validation functions

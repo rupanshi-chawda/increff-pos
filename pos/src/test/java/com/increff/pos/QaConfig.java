@@ -11,7 +11,7 @@ import com.increff.pos.spring.SpringConfig;
 
 @Configuration
 @ComponentScan(//
-		basePackages = { "com.increff.pos" }, //TODO move this to contsants
+		basePackages = { "com.increff.pos" }, //
 		excludeFilters = @Filter(type = FilterType.ASSIGNABLE_TYPE, value = { SpringConfig.class })//
 )
 @PropertySources({ //

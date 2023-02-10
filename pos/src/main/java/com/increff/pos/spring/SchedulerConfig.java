@@ -18,6 +18,6 @@ public class SchedulerConfig {
     @Async
     @Scheduled(cron = "00 00 17 * * *")
     public void createReport() {
-        salesDto.createReport();;
+        salesDto.createReport();; //todo: add on off
     }
 }
