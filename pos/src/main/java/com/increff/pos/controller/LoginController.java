@@ -1,7 +1,6 @@
 package com.increff.pos.controller;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import com.increff.pos.dto.LoginDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +30,8 @@ public class LoginController {
 	}
 
 	@GetMapping(path = "/logout")
-	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) {
-		return dto.logout(request, response);
+	public ModelAndView logout(HttpServletRequest request) {
+		return dto.logout(request);
 	}
 
 }

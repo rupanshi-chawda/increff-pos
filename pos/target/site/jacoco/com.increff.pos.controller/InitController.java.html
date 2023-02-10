@@ -22,8 +22,8 @@ import io.swagger.annotations.ApiOperation;
 
 	@ApiOperation(value = &quot;Initializes application&quot;)
 	@GetMapping(path = &quot;&quot;)
-	public ModelAndView showPage(UserForm form) throws ApiException {
-<span class="nc" id="L26">		return dto.show(form);</span>
+	public ModelAndView showPage() throws ApiException {
+<span class="nc" id="L26">		return dto.show();</span>
 	}
 
 	@ApiOperation(value = &quot;Initializes application&quot;)

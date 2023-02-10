@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LoginController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pos</a> &gt; <a href="index.source.html" class="el_package">com.increff.pos.controller</a> &gt; <span class="el_source">LoginController.java</span></div><h1>LoginController.java</h1><pre class="source lang-java linenums">package com.increff.pos.controller;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import com.increff.pos.dto.LoginDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ import io.swagger.annotations.ApiOperation;
 
 @Controller
 @RequestMapping(path = &quot;/session&quot;)
-<span class="fc" id="L22">public class LoginController {</span>
+<span class="fc" id="L21">public class LoginController {</span>
 
 	@Autowired
 	private LoginDto dto;
@@ -27,12 +26,12 @@ import io.swagger.annotations.ApiOperation;
 	@ApiOperation(value = &quot;Logs in a user&quot;)
 	@PostMapping(path = &quot;/login&quot;, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public ModelAndView login(HttpServletRequest req, LoginForm f) throws ApiException {
-<span class="nc" id="L30">		return dto.login(req, f);</span>
+<span class="nc" id="L29">		return dto.login(req, f);</span>
 	}
 
 	@GetMapping(path = &quot;/logout&quot;)
-	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) {
-<span class="nc" id="L35">		return dto.logout(request, response);</span>
+	public ModelAndView logout(HttpServletRequest request) {
+<span class="nc" id="L34">		return dto.logout(request);</span>
 	}
 
 }

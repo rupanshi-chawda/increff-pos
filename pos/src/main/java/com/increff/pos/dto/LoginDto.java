@@ -26,6 +26,7 @@ public class LoginDto {
 
     @Autowired
     private UserDto dto;
+
     @Autowired
     private InfoData info;
 
@@ -39,7 +40,7 @@ public class LoginDto {
         info.setRole(p.getRole());
         boolean authenticated = (!Objects.isNull(p) && Objects.equals(p.getPassword(), f.getPassword()));
         if (!authenticated) {
-            info.setMessage("Invalid username or password");
+            info.setMessage("Invalid password");
             return new ModelAndView("redirect:/site/login");
         }
 
@@ -55,7 +56,7 @@ public class LoginDto {
         return new ModelAndView("redirect:/ui/home");
     }
 
-    public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView logout(HttpServletRequest request) {
         request.getSession().invalidate();
         return new ModelAndView("redirect:/site/logout");
     }

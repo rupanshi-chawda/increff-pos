@@ -29,7 +29,7 @@ public class InitDto extends AbstractUiController {
     @Value("${app.admin_email}")
     private String admin_email;
 
-    public ModelAndView show(UserForm form) {
+    public ModelAndView show() {
         info.setMessage("");
         return mav("init.html");
     }
@@ -50,7 +50,7 @@ public class InitDto extends AbstractUiController {
         }
         else
         {
-            info.setMessage("Unautorized access");
+            info.setMessage("Unauthorized access");
         }
         return mav("init.html");
     }

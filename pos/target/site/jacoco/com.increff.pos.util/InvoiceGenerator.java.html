@@ -23,29 +23,29 @@ import java.util.List;
 
     public InvoiceForm generateInvoiceForOrder(int orderId) throws ApiException
     {
-<span class="nc" id="L26">        InvoiceForm invoiceForm = new InvoiceForm();</span>
-<span class="nc" id="L27">        OrderPojo orderPojo = orderApi.getOrder(orderId);</span>
+<span class="fc" id="L26">        InvoiceForm invoiceForm = new InvoiceForm();</span>
+<span class="fc" id="L27">        OrderPojo orderPojo = orderApi.getOrder(orderId);</span>
 
-<span class="nc" id="L29">        invoiceForm.setOrderId(orderPojo.getId());</span>
-<span class="nc" id="L30">        invoiceForm.setPlaceDate(orderPojo.getTime().toString());</span>
+<span class="fc" id="L29">        invoiceForm.setOrderId(orderPojo.getId());</span>
+<span class="fc" id="L30">        invoiceForm.setPlaceDate(orderPojo.getTime().toString());</span>
 
-<span class="nc" id="L32">        List&lt;OrderItemPojo&gt; orderItemPojoList = orderApi.getOrderItemByOrderId(orderPojo.getId());</span>
-<span class="nc" id="L33">        List&lt;OrderItem&gt; orderItemList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L32">        List&lt;OrderItemPojo&gt; orderItemPojoList = orderApi.getOrderItemByOrderId(orderPojo.getId());</span>
+<span class="fc" id="L33">        List&lt;OrderItem&gt; orderItemList = new ArrayList&lt;&gt;();</span>
 
-<span class="nc bnc" id="L35" title="All 2 branches missed.">        for(OrderItemPojo p: orderItemPojoList)</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">        for(OrderItemPojo p: orderItemPojoList)</span>
         {
-<span class="nc" id="L37">            OrderItem orderItem = new OrderItem();</span>
-<span class="nc" id="L38">            orderItem.setOrderItemId(p.getId());</span>
-<span class="nc" id="L39">            String productName = productApi.get(p.getProductId()).getName();</span>
-<span class="nc" id="L40">            orderItem.setProductName(productName);</span>
-<span class="nc" id="L41">            orderItem.setQuantity(p.getQuantity());</span>
-<span class="nc" id="L42">            orderItem.setSellingPrice(p.getSellingPrice());</span>
-<span class="nc" id="L43">            orderItemList.add(orderItem);</span>
-<span class="nc" id="L44">        }</span>
+<span class="fc" id="L37">            OrderItem orderItem = new OrderItem();</span>
+<span class="fc" id="L38">            orderItem.setOrderItemId(p.getId());</span>
+<span class="fc" id="L39">            String productName = productApi.get(p.getProductId()).getName();</span>
+<span class="fc" id="L40">            orderItem.setProductName(productName);</span>
+<span class="fc" id="L41">            orderItem.setQuantity(p.getQuantity());</span>
+<span class="fc" id="L42">            orderItem.setSellingPrice(p.getSellingPrice());</span>
+<span class="fc" id="L43">            orderItemList.add(orderItem);</span>
+<span class="fc" id="L44">        }</span>
 
-<span class="nc" id="L46">        invoiceForm.setOrderItemList(orderItemList);</span>
+<span class="fc" id="L46">        invoiceForm.setOrderItemList(orderItemList);</span>
 
-<span class="nc" id="L48">        return invoiceForm;</span>
+<span class="fc" id="L48">        return invoiceForm;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

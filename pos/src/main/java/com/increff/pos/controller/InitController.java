@@ -22,8 +22,8 @@ public class InitController {
 
 	@ApiOperation(value = "Initializes application")
 	@GetMapping(path = "")
-	public ModelAndView showPage(UserForm form) throws ApiException {
-		return dto.show(form);
+	public ModelAndView showPage() throws ApiException {
+		return dto.show();
 	}
 
 	@ApiOperation(value = "Initializes application")

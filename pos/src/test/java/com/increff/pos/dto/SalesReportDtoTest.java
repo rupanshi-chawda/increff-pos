@@ -96,7 +96,7 @@ public class SalesReportDtoTest extends AbstractUnitTest {
         orderDto.addItem(orderItemFormList);
 
         LocalDate date = LocalDate.now();
-        SalesReportForm salesReportForm = SalesReportTestHelper.createForm(date.toString(), date.toString(), "all","all");
+        SalesReportForm salesReportForm = SalesReportTestHelper.createForm(date.toString(), date.toString(), "dyson","hair");
         List<SalesReportData> list = dto.getFilterAll(salesReportForm);
 
         assertEquals(1, list.size());

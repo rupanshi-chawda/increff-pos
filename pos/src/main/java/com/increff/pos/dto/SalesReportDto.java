@@ -107,7 +107,12 @@ public class SalesReportDto {
 
     public void generateCsv(HttpServletResponse response) throws ApiException {
         response.setContentType("text/csv");
-        response.addHeader("Content-Disposition", "attachment; filename=\"salesReport.csv\"");
+
+        LocalDateTime lt = LocalDateTime.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd.HH:mm");
+        String identifier = lt.format(dateTimeFormatter);
+
+        response.addHeader("Content-Disposition", "attachment; filename=\"salesReport"+identifier+".csv\"");
         try {
             csvGenerator.writeSalesToCsv(salesListData, response.getWriter());
         } catch (IOException e) {

@@ -42,7 +42,7 @@ public class AdminDtoTest extends AbstractUnitTest {
             throw e;
         }
         try {
-            UserForm userForm = UserTestHelper.createForm("fake@gmail.com", " ", " ");
+            UserForm userForm = UserTestHelper.createForm("fake@gmail.com", "", " ");
             dto.add(userForm);
         }
         catch(ApiException e)

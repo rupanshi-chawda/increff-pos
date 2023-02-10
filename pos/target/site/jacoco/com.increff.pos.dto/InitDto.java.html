@@ -29,30 +29,30 @@ import java.util.Objects;
     @Value(&quot;${app.admin_email}&quot;)
     private String admin_email;
 
-    public ModelAndView show(UserForm form) {
-<span class="nc" id="L33">        info.setMessage(&quot;&quot;);</span>
-<span class="nc" id="L34">        return mav(&quot;init.html&quot;);</span>
+    public ModelAndView show() {
+<span class="fc" id="L33">        info.setMessage(&quot;&quot;);</span>
+<span class="fc" id="L34">        return mav(&quot;init.html&quot;);</span>
     }
 
     public ModelAndView init(UserForm form) throws ApiException {
-<span class="nc" id="L38">        info.setMessage(&quot;&quot;);</span>
-<span class="nc bnc" id="L39" title="All 4 branches missed.">        if(StringUtil.isEmpty(form.getEmail()) || StringUtil.isEmpty(form.getPassword())) {</span>
-<span class="nc" id="L40">            info.setMessage(&quot;Email or Password cannot be empty&quot;);</span>
+<span class="fc" id="L38">        info.setMessage(&quot;&quot;);</span>
+<span class="pc bpc" id="L39" title="1 of 4 branches missed.">        if(StringUtil.isEmpty(form.getEmail()) || StringUtil.isEmpty(form.getPassword())) {</span>
+<span class="fc" id="L40">            info.setMessage(&quot;Email or Password cannot be empty&quot;);</span>
         }
-<span class="nc bnc" id="L42" title="All 2 branches missed.">        else if (dto.checkEmailExists(form.getEmail())) {</span>
-<span class="nc" id="L43">            info.setMessage(&quot;You already have an account, please use existing credentials&quot;);</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        else if (dto.checkEmailExists(form.getEmail())) {</span>
+<span class="fc" id="L43">            info.setMessage(&quot;You already have an account, please use existing credentials&quot;);</span>
         }
-<span class="nc bnc" id="L45" title="All 2 branches missed.">        else if(Objects.equals(form.getEmail(), admin_email))</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        else if(Objects.equals(form.getEmail(), admin_email))</span>
         {
-<span class="nc" id="L47">            UserPojo p = UserHelper.convert(form,&quot;supervisor&quot;);</span>
-<span class="nc" id="L48">            dto.add(p);</span>
-<span class="nc" id="L49">            info.setMessage(&quot;Signed Up Successfully, you can login now&quot;);</span>
-<span class="nc" id="L50">        }</span>
+<span class="fc" id="L47">            UserPojo p = UserHelper.convert(form,&quot;supervisor&quot;);</span>
+<span class="fc" id="L48">            dto.add(p);</span>
+<span class="fc" id="L49">            info.setMessage(&quot;Signed Up Successfully, you can login now&quot;);</span>
+<span class="fc" id="L50">        }</span>
         else
         {
-<span class="nc" id="L53">            info.setMessage(&quot;Unautorized access&quot;);</span>
+<span class="fc" id="L53">            info.setMessage(&quot;Unauthorized access&quot;);</span>
         }
-<span class="nc" id="L55">        return mav(&quot;init.html&quot;);</span>
+<span class="fc" id="L55">        return mav(&quot;init.html&quot;);</span>
     }
 
 }

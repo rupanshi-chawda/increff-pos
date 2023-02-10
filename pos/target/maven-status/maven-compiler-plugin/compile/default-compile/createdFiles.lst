@@ -28,7 +28,6 @@ com\increff\pos\dao\OrderItemDao.class
 com\increff\pos\dto\BrandDto.class
 com\increff\pos\controller\SampleController.class
 com\increff\pos\controller\SiteUiController.class
-com\increff\pos\dto\AppRestDto.class
 com\increff\pos\api\ProductApi.class
 com\increff\pos\pojo\UserPojo.class
 com\increff\pos\model\data\BrandData.class

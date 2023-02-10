@@ -9,8 +9,8 @@ public class SalesReportTestHelper {
         SalesReportForm salesReportForm = new SalesReportForm();
         salesReportForm.setStartDate(startDate);
         salesReportForm.setEndDate(endDate);
-        salesReportForm.setCategory(brand);
-        salesReportForm.setBrand(category);
+        salesReportForm.setCategory(category);
+        salesReportForm.setBrand(brand);
         return salesReportForm;
     }
 }

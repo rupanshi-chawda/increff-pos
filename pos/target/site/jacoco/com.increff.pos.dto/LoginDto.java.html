@@ -26,57 +26,58 @@ import java.util.Objects;
 
     @Autowired
     private UserDto dto;
+
     @Autowired
     private InfoData info;
 
     public ModelAndView login(HttpServletRequest req, LoginForm f) throws ApiException {
-<span class="nc" id="L33">        info.setMessage(&quot;&quot;);</span>
-<span class="nc" id="L34">        UserPojo p = dto.getUserByEmail(f.getEmail());</span>
-<span class="nc bnc" id="L35" title="All 2 branches missed.">        if(Objects.isNull(p)){</span>
-<span class="nc" id="L36">            info.setMessage(&quot;Invalid username&quot;);</span>
-<span class="nc" id="L37">            return new ModelAndView(&quot;redirect:/site/login&quot;);</span>
+<span class="fc" id="L34">        info.setMessage(&quot;&quot;);</span>
+<span class="fc" id="L35">        UserPojo p = dto.getUserByEmail(f.getEmail());</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        if(Objects.isNull(p)){</span>
+<span class="fc" id="L37">            info.setMessage(&quot;Invalid username&quot;);</span>
+<span class="fc" id="L38">            return new ModelAndView(&quot;redirect:/site/login&quot;);</span>
         }
-<span class="nc" id="L39">        info.setRole(p.getRole());</span>
-<span class="nc bnc" id="L40" title="All 4 branches missed.">        boolean authenticated = (!Objects.isNull(p) &amp;&amp; Objects.equals(p.getPassword(), f.getPassword()));</span>
-<span class="nc bnc" id="L41" title="All 2 branches missed.">        if (!authenticated) {</span>
-<span class="nc" id="L42">            info.setMessage(&quot;Invalid username or password&quot;);</span>
-<span class="nc" id="L43">            return new ModelAndView(&quot;redirect:/site/login&quot;);</span>
+<span class="fc" id="L40">        info.setRole(p.getRole());</span>
+<span class="pc bpc" id="L41" title="1 of 4 branches missed.">        boolean authenticated = (!Objects.isNull(p) &amp;&amp; Objects.equals(p.getPassword(), f.getPassword()));</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        if (!authenticated) {</span>
+<span class="fc" id="L43">            info.setMessage(&quot;Invalid password&quot;);</span>
+<span class="fc" id="L44">            return new ModelAndView(&quot;redirect:/site/login&quot;);</span>
         }
 
         // Create authentication object
-<span class="nc" id="L47">        Authentication authentication = convert(p);</span>
+<span class="fc" id="L48">        Authentication authentication = convert(p);</span>
         // Create new session
-<span class="nc" id="L49">        HttpSession session = req.getSession(true);</span>
+<span class="fc" id="L50">        HttpSession session = req.getSession(true);</span>
         // Attach Spring SecurityContext to this new session
-<span class="nc" id="L51">        SecurityUtil.createContext(session);</span>
+<span class="fc" id="L52">        SecurityUtil.createContext(session);</span>
         // Attach Authentication object to the Security Context
-<span class="nc" id="L53">        SecurityUtil.setAuthentication(authentication);</span>
+<span class="fc" id="L54">        SecurityUtil.setAuthentication(authentication);</span>
 
-<span class="nc" id="L55">        return new ModelAndView(&quot;redirect:/ui/home&quot;);</span>
+<span class="fc" id="L56">        return new ModelAndView(&quot;redirect:/ui/home&quot;);</span>
     }
 
-    public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) {
-<span class="nc" id="L59">        request.getSession().invalidate();</span>
-<span class="nc" id="L60">        return new ModelAndView(&quot;redirect:/site/logout&quot;);</span>
+    public ModelAndView logout(HttpServletRequest request) {
+<span class="fc" id="L60">        request.getSession().invalidate();</span>
+<span class="fc" id="L61">        return new ModelAndView(&quot;redirect:/site/logout&quot;);</span>
     }
 
     //Conversion Methods
     private static Authentication convert(UserPojo p) {
         // Create principal
-<span class="nc" id="L66">        UserPrincipal principal = new UserPrincipal();</span>
-<span class="nc" id="L67">        principal.setEmail(p.getEmail());</span>
-<span class="nc" id="L68">        principal.setId(p.getId());</span>
-<span class="nc" id="L69">        principal.setRole(p.getRole());</span>
+<span class="fc" id="L67">        UserPrincipal principal = new UserPrincipal();</span>
+<span class="fc" id="L68">        principal.setEmail(p.getEmail());</span>
+<span class="fc" id="L69">        principal.setId(p.getId());</span>
+<span class="fc" id="L70">        principal.setRole(p.getRole());</span>
 
         // Create Authorities
-<span class="nc" id="L72">        ArrayList&lt;SimpleGrantedAuthority&gt; authorities = new ArrayList&lt;SimpleGrantedAuthority&gt;();</span>
-<span class="nc" id="L73">        authorities.add(new SimpleGrantedAuthority(p.getRole()));</span>
+<span class="fc" id="L73">        ArrayList&lt;SimpleGrantedAuthority&gt; authorities = new ArrayList&lt;SimpleGrantedAuthority&gt;();</span>
+<span class="fc" id="L74">        authorities.add(new SimpleGrantedAuthority(p.getRole()));</span>
         // you can add more roles if required
 
         // Create Authentication
-<span class="nc" id="L77">        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(principal, null,</span>
+<span class="fc" id="L78">        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(principal, null,</span>
                 authorities);
-<span class="nc" id="L79">        return token;</span>
+<span class="fc" id="L80">        return token;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

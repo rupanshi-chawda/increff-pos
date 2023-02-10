@@ -28,8 +28,7 @@ import java.util.List;
 
 import static org.hamcrest.core.AnyOf.anyOf;
 import static org.hamcrest.core.StringContains.containsString;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 import static org.junit.runner.Request.method;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -315,6 +314,9 @@ public class OrderDtoTest extends AbstractUnitTest {
 
         RestTemplate restTemplate = mock(RestTemplate.class);
         when(restTemplate.postForEntity(url, invoiceForm, byte[].class)).thenReturn(new ResponseEntity<byte[]>(HttpStatus.OK));
+
+        ResponseEntity<byte[]> response = dto.getPDF(list.get(0).getId());
+        assertNotEquals(null, response);
 
     }
 
