@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,13 +43,12 @@ public class BrandDto {
             brandErrorData.setMessage("");
             try
             {
-                ValidationUtil.validateForms(f);
                 BrandHelper.normalize(f);
+                ValidationUtil.validateForms(f);
             }
             catch (ApiException e) {
                 errorSize++;
                 brandErrorData.setMessage(e.getMessage());
-                System.out.println(e.getMessage());
             }
             errorData.add(brandErrorData);
         }
@@ -75,9 +77,14 @@ public class BrandDto {
 
     public void generateCsv(HttpServletResponse response) throws ApiException {
         response.setContentType("text/csv");
-        response.addHeader("Content-Disposition", "attachment; filename=\"brandReport.csv\""); //todo rename file to add suffix with identifier like datetime
+
+        LocalDateTime lt = LocalDateTime.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd.HH:mm");
+        String identifier = lt.format(dateTimeFormatter);
+
+        response.addHeader("Content-Disposition", "attachment; filename=\"brandReport"+identifier+".csv");
         try {
-            csvGenerator.writeBrandsToCsv(api.getAll(), response.getWriter());
+            csvGenerator.writeBrandsToCsv(api.getAllSorted(), response.getWriter());
         } catch (IOException e) {
             throw new ApiException(e.getMessage());
         }

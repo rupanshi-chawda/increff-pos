@@ -26,7 +26,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/ui/**")//
 				.and().authorizeRequests()//
 				.antMatchers("/api/admin/**").hasAuthority("supervisor")//
-				//TODO check for reports of brand and inventory
 				.antMatchers(HttpMethod.GET, "/api/brand").hasAnyAuthority("supervisor", "operator")//
 				.antMatchers(HttpMethod.GET, "/api/brand/{id}").hasAnyAuthority("supervisor", "operator")//
 				.antMatchers("/api/brand/**").hasAnyAuthority("supervisor")//

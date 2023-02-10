@@ -2,13 +2,10 @@ com\increff\pos\controller\InventoryController.class
 com\increff\pos\util\InvoiceGenerator.class
 com\increff\pos\model\commons\InventoryItem.class
 com\increff\pos\helper\BrandHelper.class
-com\increff\pos\dao\InventoryDao.class
 com\increff\pos\model\data\MessageData.class
 com\increff\pos\util\CookieUtil.class
 com\increff\pos\model\data\UserData.class
-com\increff\pos\pojo\InventoryPojo.class
 com\increff\pos\dto\InventoryDto.class
-com\increff\pos\util\ApiException.class
 com\increff\pos\spring\SchedulerConfig.class
 com\increff\pos\model\data\ProductData.class
 com\increff\pos\spring\WebInitializer.class
@@ -39,7 +36,6 @@ com\increff\pos\model\data\InventoryData.class
 com\increff\pos\dao\SalesDao.class
 com\increff\pos\dto\SalesDto.class
 com\increff\pos\dto\LoginDto.class
-com\increff\pos\dao\BrandDao.class
 com\increff\pos\model\data\BrandErrorData.class
 com\increff\pos\controller\InitController.class
 com\increff\pos\util\UserPrincipal.class
@@ -61,17 +57,13 @@ com\increff\pos\spring\SecurityConfig.class
 com\increff\pos\controller\AppUiController.class
 com\increff\pos\controller\OrderController.class
 com\increff\pos\dao\ProductDao.class
-com\increff\pos\api\BrandApi.class
 com\increff\pos\model\form\OrderItemForm.class
 com\increff\pos\controller\LoginController.class
 com\increff\pos\helper\OrderHelper.class
-com\increff\pos\dao\AbstractDao.class
 com\increff\pos\util\StringUtil.class
 com\increff\pos\model\data\OrderItem.class
-com\increff\pos\pojo\AbstractVersionPojo.class
 com\increff\pos\controller\AbstractUiController.class
 com\increff\pos\model\data\OrderItemData.class
-com\increff\pos\pojo\BrandPojo.class
 com\increff\pos\helper\UserHelper.class
 com\increff\pos\dao\OrderDao.class
 com\increff\pos\model\form\SalesForm.class
@@ -94,6 +86,5 @@ com\increff\pos\pojo\SalesPojo.class
 com\increff\pos\dto\UserDto.class
 com\increff\pos\controller\BrandController.class
 com\increff\pos\model\form\ProductForm.class
-com\increff\pos\api\InventoryApi.class
 com\increff\pos\model\form\ProductUpdateForm.class
 com\increff\pos\util\ValidationUtil.class

@@ -26,36 +26,35 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 <span class="fc" id="L26">				.antMatchers(&quot;/ui/**&quot;)//</span>
 <span class="fc" id="L27">				.and().authorizeRequests()//</span>
 <span class="fc" id="L28">				.antMatchers(&quot;/api/admin/**&quot;).hasAuthority(&quot;supervisor&quot;)//</span>
-				//TODO check for reports of brand and inventory
-<span class="fc" id="L30">				.antMatchers(HttpMethod.GET, &quot;/api/brand&quot;).hasAnyAuthority(&quot;supervisor&quot;, &quot;operator&quot;)//</span>
-<span class="fc" id="L31">				.antMatchers(HttpMethod.GET, &quot;/api/brand/{id}&quot;).hasAnyAuthority(&quot;supervisor&quot;, &quot;operator&quot;)//</span>
-<span class="fc" id="L32">				.antMatchers(&quot;/api/brand/**&quot;).hasAnyAuthority(&quot;supervisor&quot;)//</span>
-<span class="fc" id="L33">				.antMatchers(HttpMethod.GET, &quot;/api/product/**&quot;).hasAnyAuthority(&quot;supervisor&quot;, &quot;operator&quot;)//</span>
-<span class="fc" id="L34">				.antMatchers(&quot;/api/product/**&quot;).hasAnyAuthority(&quot;supervisor&quot;)//</span>
-<span class="fc" id="L35">				.antMatchers(HttpMethod.GET, &quot;/api/inventory&quot;).hasAnyAuthority(&quot;supervisor&quot;, &quot;operator&quot;)//</span>
-<span class="fc" id="L36">				.antMatchers(HttpMethod.GET, &quot;/api/inventory/{barcode}&quot;).hasAnyAuthority(&quot;supervisor&quot;, &quot;operator&quot;)//</span>
-<span class="fc" id="L37">				.antMatchers(&quot;/api/inventory/**&quot;).hasAnyAuthority(&quot;supervisor&quot;)//</span>
-<span class="fc" id="L38">				.antMatchers(&quot;/api/order/**&quot;).hasAnyAuthority(&quot;supervisor&quot;,&quot;operator&quot;)//</span>
-<span class="fc" id="L39">				.antMatchers(&quot;/api/**&quot;).hasAnyAuthority(&quot;supervisor&quot;, &quot;operator&quot;)//</span>
+<span class="fc" id="L29">				.antMatchers(HttpMethod.GET, &quot;/api/brand&quot;).hasAnyAuthority(&quot;supervisor&quot;, &quot;operator&quot;)//</span>
+<span class="fc" id="L30">				.antMatchers(HttpMethod.GET, &quot;/api/brand/{id}&quot;).hasAnyAuthority(&quot;supervisor&quot;, &quot;operator&quot;)//</span>
+<span class="fc" id="L31">				.antMatchers(&quot;/api/brand/**&quot;).hasAnyAuthority(&quot;supervisor&quot;)//</span>
+<span class="fc" id="L32">				.antMatchers(HttpMethod.GET, &quot;/api/product/**&quot;).hasAnyAuthority(&quot;supervisor&quot;, &quot;operator&quot;)//</span>
+<span class="fc" id="L33">				.antMatchers(&quot;/api/product/**&quot;).hasAnyAuthority(&quot;supervisor&quot;)//</span>
+<span class="fc" id="L34">				.antMatchers(HttpMethod.GET, &quot;/api/inventory&quot;).hasAnyAuthority(&quot;supervisor&quot;, &quot;operator&quot;)//</span>
+<span class="fc" id="L35">				.antMatchers(HttpMethod.GET, &quot;/api/inventory/{barcode}&quot;).hasAnyAuthority(&quot;supervisor&quot;, &quot;operator&quot;)//</span>
+<span class="fc" id="L36">				.antMatchers(&quot;/api/inventory/**&quot;).hasAnyAuthority(&quot;supervisor&quot;)//</span>
+<span class="fc" id="L37">				.antMatchers(&quot;/api/order/**&quot;).hasAnyAuthority(&quot;supervisor&quot;,&quot;operator&quot;)//</span>
+<span class="fc" id="L38">				.antMatchers(&quot;/api/**&quot;).hasAnyAuthority(&quot;supervisor&quot;, &quot;operator&quot;)//</span>
 
-<span class="fc" id="L41">				.antMatchers(&quot;/ui/admin/**&quot;).hasAuthority(&quot;supervisor&quot;)//</span>
-<span class="fc" id="L42">				.antMatchers(&quot;/ui/sales/**&quot;).hasAuthority(&quot;supervisor&quot;)//</span>
-<span class="fc" id="L43">				.antMatchers(&quot;/ui/salesreport/**&quot;).hasAuthority(&quot;supervisor&quot;)//</span>
-<span class="fc" id="L44">				.antMatchers(&quot;/ui/**&quot;).hasAnyAuthority(&quot;supervisor&quot;, &quot;operator&quot;)//</span>
+<span class="fc" id="L40">				.antMatchers(&quot;/ui/admin/**&quot;).hasAuthority(&quot;supervisor&quot;)//</span>
+<span class="fc" id="L41">				.antMatchers(&quot;/ui/sales/**&quot;).hasAuthority(&quot;supervisor&quot;)//</span>
+<span class="fc" id="L42">				.antMatchers(&quot;/ui/salesreport/**&quot;).hasAuthority(&quot;supervisor&quot;)//</span>
+<span class="fc" id="L43">				.antMatchers(&quot;/ui/**&quot;).hasAnyAuthority(&quot;supervisor&quot;, &quot;operator&quot;)//</span>
 				// Ignore CSRF and CORS
-<span class="fc" id="L46">				.and().csrf().disable().cors().disable();</span>
-<span class="fc" id="L47">		logger.info(&quot;Configuration complete&quot;);</span>
-<span class="fc" id="L48">	}</span>
+<span class="fc" id="L45">				.and().csrf().disable().cors().disable();</span>
+<span class="fc" id="L46">		logger.info(&quot;Configuration complete&quot;);</span>
+<span class="fc" id="L47">	}</span>
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-<span class="fc" id="L52">		web.ignoring().antMatchers(&quot;/v2/api-docs&quot;,</span>
+<span class="fc" id="L51">		web.ignoring().antMatchers(&quot;/v2/api-docs&quot;,</span>
 				&quot;/configuration/ui&quot;,
 				&quot;/swagger-resources&quot;,
 				&quot;/configuration/security&quot;,
 				&quot;/swagger-ui.html&quot;,
 				&quot;/webjars/**&quot;);
-<span class="fc" id="L58">	}</span>
+<span class="fc" id="L57">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

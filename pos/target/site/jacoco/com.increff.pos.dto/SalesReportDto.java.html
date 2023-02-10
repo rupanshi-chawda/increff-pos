@@ -90,8 +90,8 @@ import java.util.*;
 <span class="fc" id="L90">        List&lt;SalesReportData&gt; salesList = new ArrayList&lt;&gt;();</span>
 <span class="fc bfc" id="L91" title="All 2 branches covered.">        for(Map.Entry&lt;Integer, SalesReportData&gt; entry: map.entrySet()) {</span>
 <span class="fc" id="L92">            BrandPojo bp = brandApi.get(entry.getKey());</span>
-<span class="pc bpc" id="L93" title="1 of 4 branches missed.">            if((Objects.equals(brand,bp.getBrand()) || Objects.equals(brand,&quot;all&quot;)) &amp;&amp;</span>
-<span class="pc bpc" id="L94" title="1 of 4 branches missed.">                    (Objects.equals(category,bp.getCategory()) || Objects.equals(category,&quot;all&quot;)))</span>
+<span class="pc bpc" id="L93" title="2 of 4 branches missed.">            if((Objects.equals(brand,bp.getBrand()) || Objects.equals(brand,&quot;all&quot;)) &amp;&amp;</span>
+<span class="pc bpc" id="L94" title="2 of 4 branches missed.">                    (Objects.equals(category,bp.getCategory()) || Objects.equals(category,&quot;all&quot;)))</span>
             {
 <span class="fc" id="L96">                SalesReportData d = entry.getValue();</span>
 <span class="fc" id="L97">                d.setBrand(bp.getBrand());</span>

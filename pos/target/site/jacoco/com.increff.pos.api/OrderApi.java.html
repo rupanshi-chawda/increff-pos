@@ -40,7 +40,7 @@ import java.util.Objects;
     @Value(&quot;${invoice.url}&quot;)
     private String url;
     
-    public void addOrder(OrderPojo p){//TODO read about checked and unchecked exception
+    public void addOrder(OrderPojo p) {
 <span class="fc" id="L44">        orderDao.insert(p);</span>
 <span class="fc" id="L45">    }</span>
     

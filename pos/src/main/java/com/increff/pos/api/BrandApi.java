@@ -29,6 +29,10 @@ public class BrandApi {
         return dao.selectAll(BrandPojo.class);
     }
 
+    public List<BrandPojo> getAllSorted() {
+        return dao.selectAllSorted();
+    }
+
     public void update(int id, BrandPojo p) throws ApiException {
         getCheckBrandCategory(p);
         BrandPojo bx = getCheckBrandId(id);

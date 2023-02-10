@@ -25,12 +25,13 @@ import java.util.Objects;
         // Get current user
 <span class="nc" id="L26">        UserPrincipal principal = SecurityUtil.getPrincipal();</span>
 <span class="nc bnc" id="L27" title="All 2 branches missed.">        info.setEmail(Objects.isNull(principal) ? &quot;&quot; : principal.getEmail());</span>
+<span class="nc bnc" id="L28" title="All 2 branches missed.">        info.setRole(Objects.isNull(principal) ? &quot;&quot; : principal.getRole());</span>
 
         // Set info
-<span class="nc" id="L30">        ModelAndView mav = new ModelAndView(page);</span>
-<span class="nc" id="L31">        mav.addObject(&quot;info&quot;, info);</span>
-<span class="nc" id="L32">        mav.addObject(&quot;baseUrl&quot;, baseUrl);</span>
-<span class="nc" id="L33">        return mav;</span>
+<span class="nc" id="L31">        ModelAndView mav = new ModelAndView(page);</span>
+<span class="nc" id="L32">        mav.addObject(&quot;info&quot;, info);</span>
+<span class="nc" id="L33">        mav.addObject(&quot;baseUrl&quot;, baseUrl);</span>
+<span class="nc" id="L34">        return mav;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

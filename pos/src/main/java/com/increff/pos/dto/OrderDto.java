@@ -111,8 +111,8 @@ public class OrderDto {
     private void checkDuplicateItems(List<OrderItemForm> forms) throws ApiException {
         Set<String> set = new HashSet<>();
         for(OrderItemForm f : forms) {
-            ValidationUtil.validateForms(f);
             OrderHelper.normalize(f);
+            ValidationUtil.validateForms(f);
             if(set.contains(f.getBarcode())) {
                 throw new ApiException("Duplicate Barcode Detected");
             }

@@ -21,7 +21,7 @@ import java.util.List;
 
     @Autowired
     private InventoryDto dto;
-
+//todo rename apioperation values to better description
     @ApiOperation(value = &quot;Adds a Product Inventory&quot;)
     @PostMapping(path = &quot;&quot;)
     public void addInventory(@RequestBody List&lt;InventoryForm&gt; forms) throws ApiException {

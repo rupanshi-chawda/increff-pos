@@ -35,6 +35,7 @@ public class ProductDto {
 
     public void add(List<ProductForm> forms) throws ApiException {
         List<ProductErrorData> errorData = new ArrayList<>();
+        errorData.clear();
         int errorSize = 0;
 
         for(ProductForm f: forms)
@@ -43,13 +44,12 @@ public class ProductDto {
             productErrorData.setMessage("");
             try
             {
-                ValidationUtil.validateForms(f);
                 ProductHelper.normalize(f);
+                ValidationUtil.validateForms(f);
             }
             catch (ApiException e) {
                 errorSize++;
                 productErrorData.setMessage(e.getMessage());
-                System.out.println(e.getMessage());
             }
             errorData.add(productErrorData);
         }

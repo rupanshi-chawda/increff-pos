@@ -111,8 +111,8 @@ import java.util.stream.Collectors;
     private void checkDuplicateItems(List&lt;OrderItemForm&gt; forms) throws ApiException {
 <span class="fc" id="L112">        Set&lt;String&gt; set = new HashSet&lt;&gt;();</span>
 <span class="fc bfc" id="L113" title="All 2 branches covered.">        for(OrderItemForm f : forms) {</span>
-<span class="fc" id="L114">            ValidationUtil.validateForms(f);</span>
-<span class="fc" id="L115">            OrderHelper.normalize(f);</span>
+<span class="fc" id="L114">            OrderHelper.normalize(f);</span>
+<span class="fc" id="L115">            ValidationUtil.validateForms(f);</span>
 <span class="fc bfc" id="L116" title="All 2 branches covered.">            if(set.contains(f.getBarcode())) {</span>
 <span class="fc" id="L117">                throw new ApiException(&quot;Duplicate Barcode Detected&quot;);</span>
             }

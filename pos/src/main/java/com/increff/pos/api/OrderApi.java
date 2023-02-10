@@ -40,7 +40,7 @@ public class OrderApi {
     @Value("${invoice.url}")
     private String url;
     
-    public void addOrder(OrderPojo p){//TODO read about checked and unchecked exception
+    public void addOrder(OrderPojo p) {
         orderDao.insert(p);
     }
     

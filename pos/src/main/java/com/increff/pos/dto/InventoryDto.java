@@ -21,6 +21,8 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,7 +49,6 @@ public class InventoryDto {
 
     public void add(List<InventoryForm> forms) throws ApiException {
         List<InventoryErrorData> errorData = new ArrayList<>();
-        errorData.clear();
         int errorSize = 0;
 
         for(InventoryForm f: forms)
@@ -56,11 +57,10 @@ public class InventoryDto {
             inventoryErrorData.setMessage("");
             try
             {
-                ValidationUtil.validateForms(f);
                 InventoryHelper.normalize(f);
-                productApi.checkProductBarcode(f.getBarcode());
-
-            } catch (ApiException e) {
+                ValidationUtil.validateForms(f);
+            }
+            catch (ApiException e) {
                 errorSize++;
                 inventoryErrorData.setMessage(e.getMessage());
             }
@@ -70,7 +70,6 @@ public class InventoryDto {
             ErrorUtil.throwErrors(errorData);
         }
 
-        //bulkAdd(forms);
         flow.add(forms, errorData);
     }
 
@@ -126,20 +125,16 @@ public class InventoryDto {
 
     public void generateCsv(HttpServletResponse response) throws ApiException {
         response.setContentType("text/csv");
-        response.addHeader("Content-Disposition", "attachment; filename=\"inventoryReport.csv\"");
+
+        LocalDateTime lt = LocalDateTime.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd.HH:mm");
+        String identifier = lt.format(dateTimeFormatter);
+
+        response.addHeader("Content-Disposition", "attachment; filename=\"inventoryReport"+identifier+".csv");
         try {
             csvGenerator.writeInventoryToCsv(getAllItem(), response.getWriter());
         } catch (IOException e) {
             throw new ApiException(e.getMessage());
         }
     }
-
-//    @Transactional(rollbackOn = ApiException.class)
-//    private void bulkAdd(List<InventoryForm> inventoryForms) throws ApiException {
-//        for(InventoryForm f: inventoryForms){
-//            InventoryPojo p = InventoryHelper.convert(f);
-//            p.setId(productApi.getIdByBarcode(f.getBarcode()));
-//            api.add(p);
-//        }
-//    }
 }

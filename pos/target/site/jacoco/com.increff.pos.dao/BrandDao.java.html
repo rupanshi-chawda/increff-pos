@@ -4,21 +4,28 @@ import com.increff.pos.pojo.BrandPojo;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
+import java.util.List;
 
 @Repository
-<span class="fc" id="L9">public class BrandDao extends AbstractDao {</span>
+<span class="fc" id="L10">public class BrandDao extends AbstractDao {</span>
 
     private static final String SELECT_BY_BRAND_AND_CATEGORY = &quot;select p from BrandPojo p where brand=:brand and &quot; +
             &quot;category=:category&quot;;
+    private static final String SELECT_ALL = &quot;select p from BrandPojo p order by brand asc, category asc&quot;;
 
-    public BrandPojo selectBrandCategory(String brand, String category){
-<span class="fc" id="L15">        TypedQuery&lt;BrandPojo&gt; query = getQuery(SELECT_BY_BRAND_AND_CATEGORY, BrandPojo.class);</span>
-<span class="fc" id="L16">        query.setParameter(&quot;brand&quot;, brand); </span>
-<span class="fc" id="L17">        query.setParameter(&quot;category&quot;, category);</span>
-<span class="fc" id="L18">        return getSingle(query);</span>
+    public BrandPojo selectBrandCategory(String brand, String category) {
+<span class="fc" id="L17">        TypedQuery&lt;BrandPojo&gt; query = getQuery(SELECT_BY_BRAND_AND_CATEGORY, BrandPojo.class);</span>
+<span class="fc" id="L18">        query.setParameter(&quot;brand&quot;, brand); </span>
+<span class="fc" id="L19">        query.setParameter(&quot;category&quot;, category);</span>
+<span class="fc" id="L20">        return getSingle(query);</span>
+    }
+
+    public List&lt;BrandPojo&gt; selectAllSorted() {
+<span class="fc" id="L24">        TypedQuery&lt;BrandPojo&gt; query = getQuery(SELECT_ALL, BrandPojo.class);</span>
+<span class="fc" id="L25">        return query.getResultList();</span>
     }
 
     public void update(BrandPojo p) {
-<span class="fc" id="L22">    }</span>
+<span class="fc" id="L29">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

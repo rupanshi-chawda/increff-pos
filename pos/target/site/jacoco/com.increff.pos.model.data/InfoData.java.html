@@ -12,12 +12,18 @@ import org.springframework.stereotype.Component;
 @Getter
 <span class="nc" id="L13">@Setter</span>
 @Scope(value=&quot;session&quot;, proxyMode=ScopedProxyMode.TARGET_CLASS)
-<span class="nc" id="L15">public class InfoData implements Serializable {</span>
+public class InfoData implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 <span class="nc" id="L19">	private String message;</span>
 <span class="nc" id="L20">	private String email;</span>
+<span class="nc" id="L21">	private String role;</span>
 
+<span class="nc" id="L23">	public InfoData() {</span>
+<span class="nc" id="L24">		message = &quot;&quot;;</span>
+<span class="nc" id="L25">		email = &quot;No email&quot;;</span>
+<span class="nc" id="L26">		role = &quot;operator&quot;;</span>
+<span class="nc" id="L27">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -143,7 +143,7 @@ public class InventoryDtoTest extends AbstractUnitTest {
         }
         catch (ApiException e)
         {
-            String exception = "[ {\r\n  \"barcode\" : \"ab23fg4\",\r\n  \"quantity\" : 3,\r\n  \"message\" : \"[barcode must 8 character long]\"\r\n} ]";
+            String exception = "[ {\r\n  \"barcode\" : \"ab23fg4\",\r\n  \"quantity\" : 3,\r\n  \"message\" : \"[barcode must be 8 character long]\"\r\n} ]";
             assertEquals(exception, e.getMessage());
             throw e;
         }
