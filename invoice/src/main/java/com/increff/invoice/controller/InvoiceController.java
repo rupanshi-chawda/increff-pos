@@ -6,13 +6,11 @@ import com.increff.invoice.util.ApiException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
 
 @Api
 @RestController
@@ -24,7 +22,6 @@ public class InvoiceController {
     @ApiOperation(value = "Generate Invoice")
     @RequestMapping(path = "/api/invoice", method = RequestMethod.POST)
     public String getPDF(@RequestBody InvoiceForm form) throws ApiException {
-
         return dto.generateInvoice(form);
     }
 

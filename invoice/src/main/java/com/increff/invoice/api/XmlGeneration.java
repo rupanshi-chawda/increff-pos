@@ -2,7 +2,6 @@ package com.increff.invoice.api;
 
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
@@ -12,7 +11,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -23,24 +21,19 @@ import com.increff.invoice.util.ApiException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-public class CreateXmlFile {
-//todo: rename this file
-
+public class XmlGeneration {
     public String createXML(InvoiceForm invoiceForm) throws ApiException {
         Double totalAmount = 0.0;
 
         try {
 
             DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
-
             DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
-
             Document document = documentBuilder.newDocument();
 
             // root element
             Element root = document.createElement("invoice");
             document.appendChild(root);
-
 
             Element order_id = document.createElement("order_id");
             order_id.appendChild(document.createTextNode(invoiceForm.getOrderId().toString()));
@@ -93,9 +86,6 @@ public class CreateXmlFile {
             DecimalFormat df = new DecimalFormat("#.##");
             amount.appendChild(document.createTextNode(Double.valueOf(df.format(totalAmount)).toString()));
             root.appendChild(amount);
-            // create the xml file
-            //transform the DOM Object to an XML File
-            //DOMSource domSource = new DOMSource(document);
 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
@@ -105,16 +95,10 @@ public class CreateXmlFile {
             byte[] xmlBytes = bos.toByteArray();
             String encodedXML = Base64.getEncoder().encodeToString(xmlBytes);
 
-//            PdfFromFop pdfFromFOP = new PdfFromFop();
-//            pdfFromFOP.createPDF(invoiceForm, encodedXML);
-
             return encodedXML;
 
-        } catch (ParserConfigurationException pce) {
+        } catch (ParserConfigurationException | TransformerException pce) {
             throw new ApiException(pce.getMessage());
-        } catch (TransformerException e) {
-            e.printStackTrace();
         }
-        return null;
     }
 }

@@ -7,7 +7,7 @@ com\increff\invoice\dto\InvoiceDto.class
 com\increff\invoice\controller\AppRestControllerAdvice.class
 com\increff\invoice\model\OrderItemData.class
 com\increff\invoice\controller\InvoiceController.class
-com\increff\invoice\api\CreateXmlFile.class
 com\increff\invoice\model\InvoiceForm.class
 com\increff\invoice\model\MessageData.class
+com\increff\invoice\api\XmlGeneration.class
 com\increff\invoice\api\InvoiceApi.class
