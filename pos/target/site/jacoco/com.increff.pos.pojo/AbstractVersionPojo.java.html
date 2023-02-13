@@ -17,15 +17,15 @@ import java.time.ZonedDateTime;
 <span class="fc" id="L17">public abstract class AbstractVersionPojo implements Serializable {</span>
 
     @CreationTimestamp
-    @Column
-<span class="nc" id="L21">    private ZonedDateTime createdAt;</span>
+    @Column(nullable = false)
+<span class="fc" id="L21">    private ZonedDateTime createdAt;</span>
 
     @UpdateTimestamp
-    @Column
-<span class="nc" id="L25">    private ZonedDateTime updatedAt;</span>
+    @Column(nullable = false)
+<span class="fc" id="L25">    private ZonedDateTime updatedAt;</span>
 
     @Version
-    @Column
-<span class="nc" id="L29">    private Integer version;</span>
+    @Column(nullable = false)
+<span class="fc" id="L29">    private Integer version;</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

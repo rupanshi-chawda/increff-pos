@@ -28,7 +28,7 @@ import java.util.List;
     private ProductApi api;
 
     @Autowired
-    private ProductFlow flow;
+    private ProductFlowApi flowApi;
 
     @Autowired
     private BrandApi brandApi;
@@ -57,7 +57,7 @@ import java.util.List;
 <span class="nc" id="L57">            ErrorUtil.throwErrors(errorData);</span>
         }
 
-<span class="fc" id="L60">        flow.add(forms, errorData);</span>
+<span class="fc" id="L60">        flowApi.add(forms, errorData);</span>
 <span class="fc" id="L61">    }</span>
 
     public ProductData get(int id) throws ApiException {

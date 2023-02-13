@@ -2,30 +2,40 @@
 
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 
+import com.increff.pos.pojo.UserPojo;
 import com.increff.pos.pojo.UserPojo;
 import org.springframework.stereotype.Repository;
 
 @Repository
-<span class="fc" id="L10">public class UserDao extends AbstractDao {</span>
+<span class="fc" id="L15">public class UserDao extends AbstractDao {</span>
 
 	private static final String DELETE_BY_ID = &quot;delete from UserPojo p where id=:id&quot;;
-	private static final String SELECT_BY_EMAIL = &quot;select p from UserPojo p where email=:email&quot;;
 
 	public void deleteById(int id) {
-<span class="fc" id="L16">		Query query = em().createQuery(DELETE_BY_ID);</span>
-<span class="fc" id="L17">		query.setParameter(&quot;id&quot;, id);</span>
-<span class="fc" id="L18">		query.executeUpdate();</span>
-<span class="fc" id="L19">	}</span>
+<span class="fc" id="L20">		Query query = em().createQuery(DELETE_BY_ID);</span>
+<span class="fc" id="L21">		query.setParameter(&quot;id&quot;, id);</span>
+<span class="fc" id="L22">		query.executeUpdate();</span>
+<span class="fc" id="L23">	}</span>
 
 	public UserPojo selectByEmail(String email) {
-<span class="fc" id="L22">		TypedQuery&lt;UserPojo&gt; query = getQuery(SELECT_BY_EMAIL, UserPojo.class);</span>
-<span class="fc" id="L23">		query.setParameter(&quot;email&quot;, email);</span>
-<span class="fc" id="L24">		return getSingle(query);</span>
+<span class="fc" id="L26">		CriteriaBuilder cb = em().getCriteriaBuilder();</span>
+<span class="fc" id="L27">		CriteriaQuery&lt;UserPojo&gt; q = cb.createQuery(UserPojo.class);</span>
+<span class="fc" id="L28">		Root&lt;UserPojo&gt; c = q.from(UserPojo.class);</span>
+<span class="fc" id="L29">		ParameterExpression&lt;String &gt; p = cb.parameter(String.class);</span>
+<span class="fc" id="L30">		q.select(c).where(cb.equal(c.get(&quot;email&quot;), p));</span>
+
+<span class="fc" id="L32">		TypedQuery&lt;UserPojo&gt; query = em().createQuery(q);</span>
+<span class="fc" id="L33">		query.setParameter(p, email);</span>
+<span class="fc" id="L34">		return getSingle(query);</span>
 	}
 
 	public void update(UserPojo p) {
-<span class="nc" id="L28">	}</span>
+<span class="nc" id="L38">	}</span>
 
 
 }

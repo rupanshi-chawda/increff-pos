@@ -4,28 +4,46 @@ import com.increff.pos.pojo.BrandPojo;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Repository
-<span class="fc" id="L10">public class BrandDao extends AbstractDao {</span>
-
-    private static final String SELECT_BY_BRAND_AND_CATEGORY = &quot;select p from BrandPojo p where brand=:brand and &quot; +
-            &quot;category=:category&quot;;
-    private static final String SELECT_ALL = &quot;select p from BrandPojo p order by brand asc, category asc&quot;;
+<span class="fc" id="L14">public class BrandDao extends AbstractDao {</span>
 
     public BrandPojo selectBrandCategory(String brand, String category) {
-<span class="fc" id="L17">        TypedQuery&lt;BrandPojo&gt; query = getQuery(SELECT_BY_BRAND_AND_CATEGORY, BrandPojo.class);</span>
-<span class="fc" id="L18">        query.setParameter(&quot;brand&quot;, brand); </span>
-<span class="fc" id="L19">        query.setParameter(&quot;category&quot;, category);</span>
-<span class="fc" id="L20">        return getSingle(query);</span>
+<span class="fc" id="L17">        CriteriaBuilder cb = em().getCriteriaBuilder();</span>
+<span class="fc" id="L18">        CriteriaQuery&lt;BrandPojo&gt; q = cb.createQuery(BrandPojo.class);</span>
+<span class="fc" id="L19">        Root&lt;BrandPojo&gt; c = q.from(BrandPojo.class);</span>
+
+<span class="fc" id="L21">        q.select(c);</span>
+<span class="fc" id="L22">        ParameterExpression&lt;String&gt; p = cb.parameter(String.class);</span>
+<span class="fc" id="L23">        ParameterExpression&lt;String&gt; a = cb.parameter(String.class);</span>
+<span class="fc" id="L24">        q.where(</span>
+<span class="fc" id="L25">                cb.equal(c.get(&quot;brand&quot;), p),</span>
+<span class="fc" id="L26">                cb.equal(c.get(&quot;category&quot;), a)</span>
+        );
+
+<span class="fc" id="L29">        TypedQuery&lt;BrandPojo&gt; query = em().createQuery(q);</span>
+<span class="fc" id="L30">        query.setParameter(p, brand);</span>
+<span class="fc" id="L31">        query.setParameter(a, category);</span>
+<span class="fc" id="L32">        return getSingle(query);</span>
     }
 
     public List&lt;BrandPojo&gt; selectAllSorted() {
-<span class="fc" id="L24">        TypedQuery&lt;BrandPojo&gt; query = getQuery(SELECT_ALL, BrandPojo.class);</span>
-<span class="fc" id="L25">        return query.getResultList();</span>
+<span class="fc" id="L36">        CriteriaBuilder cb = em().getCriteriaBuilder();</span>
+<span class="fc" id="L37">        CriteriaQuery&lt;BrandPojo&gt; q = cb.createQuery(BrandPojo.class);</span>
+<span class="fc" id="L38">        Root&lt;BrandPojo&gt; c = q.from(BrandPojo.class);</span>
+<span class="fc" id="L39">        q.select(c);</span>
+<span class="fc" id="L40">        q.orderBy(cb.asc(c.get(&quot;brand&quot;)), cb.asc(c.get(&quot;category&quot;)));</span>
+        
+<span class="fc" id="L42">        TypedQuery&lt;BrandPojo&gt; query = em().createQuery(q);</span>
+<span class="fc" id="L43">        return query.getResultList();</span>
     }
 
     public void update(BrandPojo p) {
-<span class="fc" id="L29">    }</span>
+<span class="fc" id="L47">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

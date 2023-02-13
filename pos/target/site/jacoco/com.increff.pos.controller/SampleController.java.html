@@ -29,7 +29,7 @@ import static org.hibernate.internal.util.io.StreamCopier.BUFFER_SIZE;
 <span class="nc" id="L29">		response.setContentType(&quot;text/csv&quot;);</span>
 <span class="nc" id="L30">		response.addHeader(&quot;Content-disposition:&quot;, &quot;attachment; filename=&quot; + fileName);</span>
 <span class="nc" id="L31">		String fileClasspath = &quot;C:\\Users\\KIIT\\Downloads\\increff-pos\\pos\\src\\main\\resources\\com.increff\\pos\\&quot; + fileName;</span>
-
+		//todo: remove all absolute paths
 
 <span class="nc" id="L34">		return outputStream -&gt; {</span>
 			int bytesRead;

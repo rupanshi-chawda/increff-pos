@@ -18,7 +18,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
     @Async
     @Scheduled(cron = &quot;00 00 17 * * *&quot;)
     public void createReport() {
-<span class="nc" id="L21">        salesDto.createReport();;</span>
+<span class="nc" id="L21">        salesDto.createReport();; //todo: add on off</span>
 <span class="nc" id="L22">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

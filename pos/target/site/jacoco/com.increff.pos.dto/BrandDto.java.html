@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -22,27 +21,28 @@ import java.util.stream.Collectors;
 
 @Component
 @Service
-<span class="fc" id="L25">public class BrandDto {</span>
+<span class="fc" id="L24">public class BrandDto {</span>
 
     @Autowired
     private BrandApi api;
 
     @Autowired
-    private BrandFlow flow;
+    private BrandFlowApi flowApi;
 
     @Autowired
     private CsvFileGenerator csvGenerator;
 
     public void add(List&lt;BrandForm&gt; forms) throws ApiException {
-<span class="fc" id="L37">        List&lt;BrandErrorData&gt; errorData = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L38">        int errorSize = 0;</span>
+<span class="fc" id="L36">        List&lt;BrandErrorData&gt; errorData = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L37">        int errorSize = 0;</span>
 
-<span class="fc bfc" id="L40" title="All 2 branches covered.">        for(BrandForm f: forms)</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        for(BrandForm f: forms)</span>
         {
-<span class="fc" id="L42">            BrandErrorData brandErrorData = ConvertUtil.convert(f, BrandErrorData.class);</span>
-<span class="fc" id="L43">            brandErrorData.setMessage(&quot;&quot;);</span>
+<span class="fc" id="L41">            BrandErrorData brandErrorData = ConvertUtil.convert(f, BrandErrorData.class);</span>
+<span class="fc" id="L42">            brandErrorData.setMessage(&quot;&quot;);</span>
             try
             {
+                //todo: validation is kept above as it checks blank and null but if we keep it down @notnull will not be check. how to do this?
 <span class="fc" id="L46">                BrandHelper.normalize(f);</span>
 <span class="fc" id="L47">                ValidationUtil.validateForms(f);</span>
             }
@@ -56,7 +56,7 @@ import java.util.stream.Collectors;
 <span class="nc" id="L56">            ErrorUtil.throwErrors(errorData);</span>
         }
 
-<span class="fc" id="L59">        flow.add(forms, errorData);</span>
+<span class="fc" id="L59">        flowApi.add(forms, errorData);</span>
 <span class="fc" id="L60">    }</span>
 
     public BrandData get(int id) throws ApiException {
@@ -90,4 +90,6 @@ import java.util.stream.Collectors;
 <span class="fc" id="L90">        }</span>
 <span class="fc" id="L91">    }</span>
 }
+
+//todo: rename check and validation functions
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

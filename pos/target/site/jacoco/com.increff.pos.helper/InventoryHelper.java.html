@@ -4,6 +4,7 @@ import com.increff.pos.model.commons.InventoryItem;
 import com.increff.pos.model.data.InventoryData;
 import com.increff.pos.model.form.InventoryForm;
 import com.increff.pos.pojo.InventoryPojo;
+import com.increff.pos.util.ConvertUtil;
 import com.increff.pos.util.StringUtil;
 import com.increff.pos.util.ApiException;
 import javafx.util.Pair;
@@ -11,47 +12,43 @@ import javafx.util.Pair;
 import java.util.Map;
 import java.util.Objects;
 
-<span class="nc" id="L14">public class InventoryHelper {</span>
+<span class="nc" id="L15">public class InventoryHelper {</span>
 
 
     public static InventoryData convert(InventoryPojo p, String barcode) {
-<span class="fc" id="L18">        InventoryData d = new InventoryData();</span>
-<span class="fc" id="L19">        d.setBarcode(barcode);</span>
-<span class="fc" id="L20">        d.setId(p.getId());</span>
-<span class="fc" id="L21">        d.setQuantity(p.getQuantity());</span>
-<span class="fc" id="L22">        return d;</span>
+<span class="fc" id="L19">        InventoryData d = ConvertUtil.convert(p, InventoryData.class);</span>
+<span class="fc" id="L20">        d.setBarcode(barcode);</span>
+<span class="fc" id="L21">        return d;</span>
     }
 
     public static InventoryPojo convert(InventoryForm f) {
-<span class="fc" id="L26">        InventoryPojo p = new InventoryPojo();</span>
-<span class="fc" id="L27">        p.setQuantity(f.getQuantity());</span>
-<span class="fc" id="L28">        return p;</span>
+<span class="fc" id="L25">        return ConvertUtil.convert(f, InventoryPojo.class);</span>
     }
 
     public static void normalize(InventoryForm f) {
-<span class="fc" id="L32">        f.setBarcode(StringUtil.toLowerCase(f.getBarcode()));</span>
-<span class="fc" id="L33">    }</span>
+<span class="fc" id="L29">        f.setBarcode(StringUtil.toLowerCase(f.getBarcode()));</span>
+<span class="fc" id="L30">    }</span>
 
 
     public static void validateId(InventoryPojo p, int id) throws ApiException {
-<span class="pc bpc" id="L37" title="1 of 2 branches missed.">        if (Objects.isNull(p)) {</span>
-<span class="nc" id="L38">            throw new ApiException(&quot;Product with given ID does not exit, id: &quot; + id);</span>
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">        if (Objects.isNull(p)) {</span>
+<span class="nc" id="L35">            throw new ApiException(&quot;Product with given ID does not exit, id: &quot; + id);</span>
         }
-<span class="fc" id="L40">    }</span>
+<span class="fc" id="L37">    }</span>
 
     public static void validateInventoryId(InventoryPojo p) throws ApiException {
-<span class="fc bfc" id="L43" title="All 2 branches covered.">        if (Objects.isNull(p)) {</span>
-<span class="fc" id="L44">            throw new ApiException(&quot;Inventory for given barcode doesn't exists&quot;);</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        if (Objects.isNull(p)) {</span>
+<span class="fc" id="L41">            throw new ApiException(&quot;Inventory for given barcode doesn't exists&quot;);</span>
         }
-<span class="fc" id="L46">    }</span>
+<span class="fc" id="L43">    }</span>
 
     public static InventoryItem convertMapToItem(Map.Entry&lt;Pair&lt;String,String&gt;,Integer&gt; mapElement) {
-<span class="fc" id="L49">        Pair&lt;String, String&gt; p = mapElement.getKey();</span>
-<span class="fc" id="L50">        InventoryItem inventoryItem = new InventoryItem();</span>
-<span class="fc" id="L51">        inventoryItem.setBrand(p.getKey());</span>
-<span class="fc" id="L52">        inventoryItem.setCategory(p.getValue());</span>
-<span class="fc" id="L53">        inventoryItem.setQuantity(mapElement.getValue());</span>
-<span class="fc" id="L54">        return inventoryItem;</span>
+<span class="fc" id="L46">        Pair&lt;String, String&gt; p = mapElement.getKey();</span>
+<span class="fc" id="L47">        InventoryItem inventoryItem = new InventoryItem();</span>
+<span class="fc" id="L48">        inventoryItem.setBrand(p.getKey());</span>
+<span class="fc" id="L49">        inventoryItem.setCategory(p.getValue());</span>
+<span class="fc" id="L50">        inventoryItem.setQuantity(mapElement.getValue());</span>
+<span class="fc" id="L51">        return inventoryItem;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

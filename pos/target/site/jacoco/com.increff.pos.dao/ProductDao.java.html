@@ -4,18 +4,26 @@ import com.increff.pos.pojo.ProductPojo;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 
 @Repository
-<span class="fc" id="L9">public class ProductDao extends AbstractDao{</span>
+<span class="fc" id="L13">public class ProductDao extends AbstractDao{</span>
 
-    private static final String SELECT_BY_BARCODE = &quot;select p from ProductPojo p where barcode=:barcode&quot;;
+    public ProductPojo selectByBarcode(String barcode) {
+<span class="fc" id="L16">        CriteriaBuilder cb = em().getCriteriaBuilder();</span>
+<span class="fc" id="L17">        CriteriaQuery&lt;ProductPojo&gt; q = cb.createQuery(ProductPojo.class);</span>
+<span class="fc" id="L18">        Root&lt;ProductPojo&gt; c = q.from(ProductPojo.class);</span>
+<span class="fc" id="L19">        ParameterExpression&lt;String &gt; p = cb.parameter(String.class);</span>
+<span class="fc" id="L20">        q.select(c).where(cb.equal(c.get(&quot;barcode&quot;), p));</span>
 
-    public ProductPojo selectByBarcode(String barcode){
-<span class="fc" id="L14">        TypedQuery&lt;ProductPojo&gt; query = getQuery(SELECT_BY_BARCODE, ProductPojo.class);</span>
-<span class="fc" id="L15">        query.setParameter(&quot;barcode&quot;, barcode);</span>
-<span class="fc" id="L16">        return getSingle(query);</span>
+<span class="fc" id="L22">        TypedQuery&lt;ProductPojo&gt; query = em().createQuery(q);</span>
+<span class="fc" id="L23">        query.setParameter(p, barcode);</span>
+<span class="fc" id="L24">        return getSingle(query);</span>
     }
 
-<span class="fc" id="L19">    public void update(ProductPojo p){}</span>
+<span class="fc" id="L27">    public void update(ProductPojo p){}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

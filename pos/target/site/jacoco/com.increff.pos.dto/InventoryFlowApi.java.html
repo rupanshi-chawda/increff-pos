@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InventoryFlowApi.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pos</a> &gt; <a href="index.source.html" class="el_package">com.increff.pos.dto</a> &gt; <span class="el_source">InventoryFlowApi.java</span></div><h1>InventoryFlowApi.java</h1><pre class="source lang-java linenums">package com.increff.pos.dto;
+
+import com.increff.pos.api.BrandApi;
+import com.increff.pos.api.InventoryApi;
+import com.increff.pos.api.ProductApi;
+import com.increff.pos.helper.InventoryHelper;
+import com.increff.pos.model.data.InventoryErrorData;
+import com.increff.pos.model.form.InventoryForm;
+import com.increff.pos.pojo.InventoryPojo;
+import com.increff.pos.util.ApiException;
+import com.increff.pos.util.ConvertUtil;
+import com.increff.pos.util.ErrorUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.List;
+
+@Component
+@Service
+<span class="fc" id="L22">public class InventoryFlowApi {</span>
+
+    @Autowired
+    private InventoryApi api;
+
+    @Autowired
+    private ProductApi productApi;
+
+    @Autowired
+    private BrandApi brandApi;
+
+    @Transactional(rollbackOn = ApiException.class)
+    public void add(List&lt;InventoryForm&gt; forms, List&lt;InventoryErrorData&gt; errorData) throws ApiException {
+<span class="fc" id="L35">        int errorSize = 0;</span>
+<span class="fc" id="L36">        int i=0;</span>
+
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        for(InventoryForm f: forms)</span>
+        {
+<span class="fc" id="L40">            InventoryErrorData inventoryErrorData = ConvertUtil.convert(f, InventoryErrorData.class);</span>
+<span class="fc" id="L41">            inventoryErrorData.setMessage(&quot;&quot;);</span>
+            try
+            {
+<span class="fc" id="L44">                productApi.checkProductBarcode(f.getBarcode());</span>
+            }
+<span class="fc" id="L46">            catch (ApiException e) {</span>
+<span class="fc" id="L47">                errorSize++;</span>
+<span class="fc" id="L48">                inventoryErrorData.setMessage(e.getMessage());</span>
+<span class="fc" id="L49">            }</span>
+<span class="fc" id="L50">            errorData.get(i).setMessage(inventoryErrorData.getMessage());</span>
+<span class="fc" id="L51">            i++;</span>
+<span class="fc" id="L52">        }</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        if(errorSize &gt; 0) {</span>
+<span class="nc" id="L54">            ErrorUtil.throwErrors(errorData);</span>
+        }
+        else {
+<span class="fc bfc" id="L57" title="All 2 branches covered.">            for(InventoryForm f: forms){</span>
+<span class="fc" id="L58">                InventoryPojo p = InventoryHelper.convert(f);</span>
+<span class="fc" id="L59">                p.setId(productApi.getIdByBarcode(f.getBarcode()));</span>
+<span class="fc" id="L60">                api.add(p);</span>
+<span class="fc" id="L61">            }</span>
+        }
+<span class="fc" id="L63">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

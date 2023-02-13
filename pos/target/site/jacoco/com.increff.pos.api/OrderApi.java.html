@@ -60,7 +60,7 @@ import java.util.Objects;
 
     public OrderItemPojo getItem(int id) throws ApiException {
 <span class="nc" id="L62">        OrderItemPojo p = getOrderItemId(id);</span>
-<span class="nc" id="L63">        OrderHelper.validateId(p, id);</span>
+<span class="nc" id="L63">        OrderHelper.validateId(id);</span>
 <span class="nc" id="L64">        return p;</span>
     }
 

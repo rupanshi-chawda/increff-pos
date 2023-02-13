@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderHelper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pos</a> &gt; <a href="index.source.html" class="el_package">com.increff.pos.helper</a> &gt; <span class="el_source">OrderHelper.java</span></div><h1>OrderHelper.java</h1><pre class="source lang-java linenums">package com.increff.pos.helper;
 
+import com.increff.pos.model.data.ProductData;
+import com.increff.pos.util.ConvertUtil;
 import com.increff.pos.util.StringUtil;
 import com.increff.pos.model.data.OrderData;
 import com.increff.pos.model.data.OrderItemData;
@@ -13,55 +15,37 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Objects;
 
-<span class="nc" id="L16">public class OrderHelper {</span>
+<span class="nc" id="L18">public class OrderHelper {</span>
 
     public static OrderData convert(OrderPojo p) {
-<span class="fc" id="L19">        OrderData d = new OrderData();</span>
-<span class="fc" id="L20">        d.setId(p.getId());</span>
-<span class="fc" id="L21">        d.setTime(p.getTime());</span>
-<span class="fc" id="L22">        return d;</span>
+<span class="fc" id="L21">        return ConvertUtil.convert(p, OrderData.class);</span>
     }
 
     public static OrderItemData convert(OrderItemPojo p, String barcode) {
-<span class="fc" id="L26">        OrderItemData d = new OrderItemData();</span>
-<span class="fc" id="L27">        d.setBarcode(barcode);</span>
-<span class="fc" id="L28">        d.setId(p.getId());</span>
-<span class="fc" id="L29">        d.setOrderId(p.getOrderId());</span>
-<span class="fc" id="L30">        d.setProductId(p.getProductId());</span>
-<span class="fc" id="L31">        d.setQuantity(p.getQuantity());</span>
-<span class="fc" id="L32">        d.setSellingPrice(p.getSellingPrice());</span>
-<span class="fc" id="L33">        return d;</span>
+<span class="fc" id="L25">        OrderItemData d =  ConvertUtil.convert(p, OrderItemData.class);;</span>
+<span class="fc" id="L26">        d.setBarcode(barcode);</span>
+<span class="fc" id="L27">        return d;</span>
     }
 
     public static OrderItemPojo convert(OrderItemForm f) {
-<span class="fc" id="L37">        OrderItemPojo p = new OrderItemPojo();</span>
-<span class="fc" id="L38">        p.setSellingPrice(f.getSellingPrice());</span>
-<span class="fc" id="L39">        p.setQuantity(f.getQuantity());</span>
-<span class="fc" id="L40">        return p;</span>
+<span class="fc" id="L31">        return ConvertUtil.convert(f, OrderItemPojo.class);</span>
     }
 
     public static void normalize(OrderItemForm f) {
-<span class="fc" id="L44">        f.setBarcode(StringUtil.toLowerCase(f.getBarcode()));</span>
-<span class="fc" id="L45">    }</span>
-
-
-    public static void validateId(OrderItemPojo p, int id) throws ApiException {
-<span class="nc bnc" id="L49" title="All 2 branches missed.">        if (Objects.isNull(p)) {</span>
-<span class="nc" id="L50">            throw new ApiException(&quot;Product with given ID does not exit, id: &quot; + id);</span>
-        }
-<span class="nc" id="L52">    }</span>
+<span class="fc" id="L35">        f.setBarcode(StringUtil.toLowerCase(f.getBarcode()));</span>
+<span class="fc" id="L36">    }</span>
 
     public static void validateId(int id) throws ApiException {
-<span class="pc bpc" id="L55" title="1 of 2 branches missed.">        if (id&lt;1) {</span>
-<span class="nc" id="L56">            throw new ApiException(&quot;Product with given ID does not exit, id: &quot; + id);</span>
+<span class="pc bpc" id="L39" title="1 of 2 branches missed.">        if (id&lt;1) {</span>
+<span class="nc" id="L40">            throw new ApiException(&quot;Product with given ID does not exit, id: &quot; + id);</span>
         }
-<span class="fc" id="L58">    }</span>
+<span class="fc" id="L42">    }</span>
 
     public static void validateInventory(OrderItemForm f, int quantity) throws ApiException {
-<span class="pc bpc" id="L61" title="1 of 2 branches missed.">        if (f.getQuantity() &gt; quantity) {</span>
-<span class="nc" id="L62">            throw new ApiException(&quot;Product Quantity is more than available Inventory&quot;);</span>
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">        if (f.getQuantity() &gt; quantity) {</span>
+<span class="nc" id="L46">            throw new ApiException(&quot;Product Quantity is more than available Inventory&quot;);</span>
         }
-<span class="fc" id="L64">    }</span>
+<span class="fc" id="L48">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

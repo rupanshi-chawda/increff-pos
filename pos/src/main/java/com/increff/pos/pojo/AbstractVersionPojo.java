@@ -15,16 +15,16 @@ import java.time.ZonedDateTime;
 @Getter
 @Setter
 public abstract class AbstractVersionPojo implements Serializable {
-//todo: add nullable false
+
     @CreationTimestamp
-    @Column
+    @Column(nullable = false)
     private ZonedDateTime createdAt;
 
     @UpdateTimestamp
-    @Column
+    @Column(nullable = false)
     private ZonedDateTime updatedAt;
 
     @Version
-    @Column
+    @Column(nullable = false)
     private Integer version;
 }

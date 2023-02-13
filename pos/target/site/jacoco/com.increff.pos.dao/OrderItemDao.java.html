@@ -4,19 +4,27 @@ import com.increff.pos.pojo.OrderItemPojo;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Repository
-<span class="fc" id="L10">public class OrderItemDao extends AbstractDao{</span>
+<span class="fc" id="L14">public class OrderItemDao extends AbstractDao {</span>
 
-    private static final String SELECT_BY_ORDER_ID = &quot;select p from OrderItemPojo p where orderid=:orderid&quot;;
+<span class="nc" id="L16">    public void update(OrderItemPojo op){}</span>
 
-<span class="nc" id="L14">    public void update(OrderItemPojo op){}</span>
+    public List&lt;OrderItemPojo&gt; selectByOrderId(int orderId) {
+<span class="fc" id="L19">        CriteriaBuilder cb = em().getCriteriaBuilder();</span>
+<span class="fc" id="L20">        CriteriaQuery&lt;OrderItemPojo&gt; q = cb.createQuery(OrderItemPojo.class);</span>
+<span class="fc" id="L21">        Root&lt;OrderItemPojo&gt; c = q.from(OrderItemPojo.class);</span>
+<span class="fc" id="L22">        ParameterExpression&lt;Integer&gt; p = cb.parameter(Integer.class);</span>
+<span class="fc" id="L23">        q.select(c).where(cb.equal(c.get(&quot;orderId&quot;), p));</span>
 
-    public List&lt;OrderItemPojo&gt; selectByOrderId(int orderid) {
-<span class="fc" id="L17">        TypedQuery&lt;OrderItemPojo&gt; query = getQuery(SELECT_BY_ORDER_ID, OrderItemPojo.class);</span>
-<span class="fc" id="L18">        query.setParameter(&quot;orderid&quot;, orderid);</span>
-<span class="fc" id="L19">        return query.getResultList();</span>
+<span class="fc" id="L25">        TypedQuery&lt;OrderItemPojo&gt; query = em().createQuery(q);</span>
+<span class="fc" id="L26">        query.setParameter(p, orderId);</span>
+<span class="fc" id="L27">        return query.getResultList();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

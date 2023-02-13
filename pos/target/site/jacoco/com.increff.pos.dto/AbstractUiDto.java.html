@@ -16,7 +16,7 @@ import java.util.Objects;
 <span class="fc" id="L16">public class AbstractUiDto {</span>
 
     @Autowired
-    private InfoData info;
+    private InfoData info; //todo why is this autowired?
 
     @Value(&quot;${app.baseUrl}&quot;)
     private String baseUrl;
