@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Getter
-@Setter//TODO add indexes (unique/non-unique) and read about this db optimisation mysql and use box data types
+@Setter
 public class OrderItemPojo extends AbstractVersionPojo {
 
     @Id

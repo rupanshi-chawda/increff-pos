@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Getter
 @Setter
+@Table(indexes = @Index(name = "barcodeIndex", columnList = "barcode", unique = true))
 public class ProductPojo extends AbstractVersionPojo {
 
     @Id
