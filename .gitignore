@@ -26,3 +26,4 @@ hs_err_pid*
 /.idea
 /invoice/Pdf/
 /invoice/javax.xml.transform.dom.*
+/pos/src/main/resources/invoices/

@@ -17,6 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.ZonedDateTime;
@@ -85,22 +88,55 @@ public class OrderApi {
         return itemDao.selectByOrderId(orderId);
     }
 
+    public void update(int id, OrderPojo p) throws ApiException {
+        OrderPojo b = getOrder(id);
+        b.setInvoicePath(p.getInvoicePath());
+        orderDao.update(p);
+    }
+
     // Business Logic Methods
 
-    public ResponseEntity<byte[]> getPDF(InvoiceForm invoiceForm) {
+    public ResponseEntity<byte[]> getPDF(InvoiceForm invoiceForm) throws ApiException {
 
-        String base64 = restTemplate.postForObject(url, invoiceForm, String.class);
-        //Path pdfPath = Paths.get(PDF_PATH +id+"invoice.pdf");
-        byte[] contents = Base64.getDecoder().decode(base64);
+        int orderId = invoiceForm.getOrderId();
+        String PDF_PATH = "C:\\Users\\KIIT\\Downloads\\increff-pos\\pos\\src\\main\\resources\\invoices\\";
+        String _filename = PDF_PATH + "invoice_" + orderId + ".pdf";
+        File f = new File(_filename);
+        byte[] contents;
+        if(f.exists())
+        {
+            Path pdfPath = Paths.get(_filename);
+            try {
+                contents = Files.readAllBytes(pdfPath);
+            } catch (IOException e) {
+                throw new ApiException("Unable to read bytes from pdf" + e.getMessage());
+            }
+        }
+        else
+        {
+            String base64 = restTemplate.postForObject(url, invoiceForm, String.class);
+            Path pdfPath = Paths.get(_filename);
+
+            contents = Base64.getDecoder().decode(base64);
+
+            try {
+                Files.write(pdfPath, contents);
+            } catch (IOException e) {
+                throw new ApiException("Unable to create PDF in pos" + e.getMessage());
+            }
+        }
+
+        OrderPojo p = getOrder(orderId);
+        p.setInvoicePath(_filename);
+        update(orderId, p);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
 
-        String filename = "invoice.pdf";//TODO append orderId
-        headers.add("Content-Disposition", "inline;filename=" + filename);
+        String filename = "invoice_" + orderId + ".pdf";
+        headers.add("Content-Disposition", "inline");
+        headers.add("filename",filename);
 
-
-        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
         return new ResponseEntity<>(contents, headers, HttpStatus.OK);
     }
 

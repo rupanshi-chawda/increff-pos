@@ -1,5 +1,6 @@
 package com.increff.pos.dao;
 
+import com.increff.pos.pojo.BrandPojo;
 import com.increff.pos.pojo.OrderPojo;
 import com.increff.pos.pojo.OrderPojo;
 import org.springframework.stereotype.Repository;
@@ -40,5 +41,8 @@ public class OrderDao extends AbstractDao {
         query.setParameter(p, startDate);
         query.setParameter(a, endDate);
         return query.getResultList();
+    }
+
+    public void update(OrderPojo p) {
     }
 }
