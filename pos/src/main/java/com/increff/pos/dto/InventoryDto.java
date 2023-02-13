@@ -1,9 +1,7 @@
 package com.increff.pos.dto;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.increff.pos.api.BrandApi;
 import com.increff.pos.model.commons.InventoryItem;
-import com.increff.pos.model.data.InfoData;
 import com.increff.pos.model.data.InventoryData;
 import com.increff.pos.helper.InventoryHelper;
 import com.increff.pos.model.data.InventoryErrorData;
@@ -19,7 +17,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.Transactional;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -42,7 +39,7 @@ public class InventoryDto {
     private BrandApi brandApi;
 
     @Autowired
-    private InventoryFlow flow;
+    private InventoryFlowApi flowApi;
 
     @Autowired
     private CsvFileGenerator csvGenerator;
@@ -70,7 +67,7 @@ public class InventoryDto {
             ErrorUtil.throwErrors(errorData);
         }
 
-        flow.add(forms, errorData);
+        flowApi.add(forms, errorData);
     }
 
     public InventoryData get(String barcode) throws ApiException {

@@ -10,18 +10,16 @@ import com.increff.pos.pojo.InventoryPojo;
 import com.increff.pos.util.ApiException;
 import com.increff.pos.util.ConvertUtil;
 import com.increff.pos.util.ErrorUtil;
-import com.increff.pos.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
 @Service
-public class InventoryFlow {
+public class InventoryFlowApi {
 
     @Autowired
     private InventoryApi api;

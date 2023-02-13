@@ -18,7 +18,7 @@ import java.util.List;
 
 @Component
 @Service
-public class ProductFlow {
+public class ProductFlowApi {
 
     @Autowired
     private ProductApi api;

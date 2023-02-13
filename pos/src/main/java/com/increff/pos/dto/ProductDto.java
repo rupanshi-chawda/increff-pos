@@ -28,7 +28,7 @@ public class ProductDto {
     private ProductApi api;
 
     @Autowired
-    private ProductFlow flow;
+    private ProductFlowApi flowApi;
 
     @Autowired
     private BrandApi brandApi;
@@ -57,7 +57,7 @@ public class ProductDto {
             ErrorUtil.throwErrors(errorData);
         }
 
-        flow.add(forms, errorData);
+        flowApi.add(forms, errorData);
     }
 
     public ProductData get(int id) throws ApiException {

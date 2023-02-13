@@ -5,6 +5,7 @@ com\increff\pos\helper\BrandHelper.class
 com\increff\pos\model\data\MessageData.class
 com\increff\pos\util\CookieUtil.class
 com\increff\pos\model\data\UserData.class
+com\increff\pos\dto\BrandFlowApi.class
 com\increff\pos\dto\InventoryDto.class
 com\increff\pos\spring\SchedulerConfig.class
 com\increff\pos\model\data\ProductData.class
@@ -22,7 +23,6 @@ com\increff\pos\spring\SpringConfig.class
 com\increff\pos\model\data\OrderData.class
 com\increff\pos\controller\ProductController.class
 com\increff\pos\dto\ProductFlow.class
-com\increff\pos\dto\BrandFlow.class
 com\increff\pos\model\data\ProductErrorData.class
 com\increff\pos\dao\OrderItemDao.class
 com\increff\pos\dto\BrandDto.class

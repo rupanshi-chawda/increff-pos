@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ public class BrandDto {
     private BrandApi api;
 
     @Autowired
-    private BrandFlow flow;
+    private BrandFlowApi flowApi;
 
     @Autowired
     private CsvFileGenerator csvGenerator;
@@ -57,7 +56,7 @@ public class BrandDto {
             ErrorUtil.throwErrors(errorData);
         }
 
-        flow.add(forms, errorData);
+        flowApi.add(forms, errorData);
     }
 
     public BrandData get(int id) throws ApiException {
