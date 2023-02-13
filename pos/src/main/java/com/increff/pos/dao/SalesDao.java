@@ -10,22 +10,21 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 
 @Repository
 public class SalesDao extends AbstractDao {
 
-    public List<SalesPojo> selectBetweenDates(LocalDate startDate, LocalDate endDate) {
+    public List<SalesPojo> selectBetweenDates(ZonedDateTime startDate, ZonedDateTime endDate) {
         CriteriaBuilder cb = em().getCriteriaBuilder();
         CriteriaQuery<SalesPojo> q = cb.createQuery(SalesPojo.class);
         Root<SalesPojo> c = q.from(SalesPojo.class);
 
         q.select(c);
-        ParameterExpression<LocalDate> p = cb.parameter(LocalDate.class);
-        ParameterExpression<LocalDate> a = cb.parameter(LocalDate.class);
+        ParameterExpression<ZonedDateTime> p = cb.parameter(ZonedDateTime.class);
+        ParameterExpression<ZonedDateTime> a = cb.parameter(ZonedDateTime.class);
         q.where(cb.between(c.get("date"), p, a));
 
         TypedQuery<SalesPojo> query = em().createQuery(q);
@@ -34,11 +33,11 @@ public class SalesDao extends AbstractDao {
         return query.getResultList();
     }
 
-    public SalesPojo selectByDate(LocalDate date) {
+    public SalesPojo selectByDate(ZonedDateTime date) {
         CriteriaBuilder cb = em().getCriteriaBuilder();
         CriteriaQuery<SalesPojo> q = cb.createQuery(SalesPojo.class);
         Root<SalesPojo> c = q.from(SalesPojo.class);
-        ParameterExpression<LocalDate> p = cb.parameter(LocalDate.class);
+        ParameterExpression<ZonedDateTime> p = cb.parameter(ZonedDateTime.class);
         q.select(c).where(cb.equal(c.get("date"), p));
 
         TypedQuery<SalesPojo> query = em().createQuery(q);

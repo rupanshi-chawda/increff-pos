@@ -27,59 +27,61 @@ import java.util.Objects;
     private OrderApi orderApi;
 
     public List&lt;SalesPojo&gt; getAllBetweenDates(SalesForm salesForm) throws ApiException {
-<span class="fc" id="L30">        LocalDate startDate = LocalDate.parse(salesForm.getStartDate());</span>
-<span class="fc" id="L31">        LocalDate endDate = LocalDate.parse(salesForm.getEndDate());</span>
-<span class="fc" id="L32">        ValidationUtil.validateForms(salesForm);</span>
-<span class="fc" id="L33">        checkDates(startDate, endDate);</span>
-<span class="fc" id="L34">        return  api.getAllBetweenDates(startDate, endDate);</span>
+<span class="fc" id="L30">        LocalDate startdate = LocalDate.parse(salesForm.getStartDate());</span>
+<span class="fc" id="L31">        LocalDate enddate = LocalDate.parse(salesForm.getEndDate());</span>
+<span class="fc" id="L32">        ZonedDateTime startDate = startdate.atStartOfDay(ZoneId.systemDefault());</span>
+<span class="fc" id="L33">        ZonedDateTime endDate = enddate.atStartOfDay(ZoneId.systemDefault());</span>
+<span class="fc" id="L34">        ValidationUtil.validateForms(salesForm);</span>
+<span class="fc" id="L35">        checkDates(startDate, endDate);</span>
+<span class="fc" id="L36">        return  api.getAllBetweenDates(startDate, endDate);</span>
     }
 
     public List&lt;SalesPojo&gt; getAll() throws ApiException {
-<span class="fc" id="L38">        return api.getAll();</span>
+<span class="fc" id="L40">        return api.getAll();</span>
     }
 
     public void createReport() {
-<span class="fc" id="L42">        SalesPojo salesPojo = new SalesPojo();</span>
+<span class="fc" id="L44">        SalesPojo salesPojo = new SalesPojo();</span>
 
-<span class="fc" id="L44">        LocalDate date = LocalDate.now();</span>
-<span class="fc" id="L45">        int totalItems = 0;</span>
-<span class="fc" id="L46">        double totalRevenue = 0.0;</span>
+<span class="fc" id="L46">        LocalDate date = LocalDate.now();</span>
+<span class="fc" id="L47">        int totalItems = 0;</span>
+<span class="fc" id="L48">        double totalRevenue = 0.0;</span>
 
-<span class="fc" id="L48">        ZonedDateTime startDate = date.atStartOfDay(ZoneId.systemDefault());</span>
-<span class="fc" id="L49">        ZonedDateTime endDate = startDate.with(LocalTime.MAX);</span>
+<span class="fc" id="L50">        ZonedDateTime startDate = date.atStartOfDay(ZoneId.systemDefault());</span>
+<span class="fc" id="L51">        ZonedDateTime endDate = startDate.with(LocalTime.MAX);</span>
 
-<span class="fc" id="L51">        List&lt;OrderPojo&gt; orderPojoList = orderApi.getOrderByDateFilter(startDate,endDate);</span>
+<span class="fc" id="L53">        List&lt;OrderPojo&gt; orderPojoList = orderApi.getOrderByDateFilter(startDate,endDate);</span>
 
-<span class="fc" id="L53">        Integer totalOrders = orderPojoList.size();</span>
+<span class="fc" id="L55">        Integer totalOrders = orderPojoList.size();</span>
 
-<span class="fc bfc" id="L55" title="All 2 branches covered.">        for (OrderPojo orderPojo : orderPojoList) {</span>
-<span class="fc" id="L56">            int id = orderPojo.getId();</span>
-<span class="fc" id="L57">            List&lt;OrderItemPojo&gt; orderItemPojoList = orderApi.getOrderItemsByOrderId(id);</span>
-<span class="fc bfc" id="L58" title="All 2 branches covered.">            for (OrderItemPojo orderItemPojo: orderItemPojoList) {</span>
-<span class="fc" id="L59">                totalItems += orderItemPojo.getQuantity();</span>
-<span class="fc" id="L60">                totalRevenue += orderItemPojo.getQuantity() * orderItemPojo.getSellingPrice();</span>
-<span class="fc" id="L61">            }</span>
-<span class="fc" id="L62">        }</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        for (OrderPojo orderPojo : orderPojoList) {</span>
+<span class="fc" id="L58">            int id = orderPojo.getId();</span>
+<span class="fc" id="L59">            List&lt;OrderItemPojo&gt; orderItemPojoList = orderApi.getOrderItemsByOrderId(id);</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">            for (OrderItemPojo orderItemPojo: orderItemPojoList) {</span>
+<span class="fc" id="L61">                totalItems += orderItemPojo.getQuantity();</span>
+<span class="fc" id="L62">                totalRevenue += orderItemPojo.getQuantity() * orderItemPojo.getSellingPrice();</span>
+<span class="fc" id="L63">            }</span>
+<span class="fc" id="L64">        }</span>
 
-<span class="fc" id="L64">        salesPojo.setDate(date);</span>
-<span class="fc" id="L65">        salesPojo.setInvoicedItemsCount(totalItems);</span>
-<span class="fc" id="L66">        salesPojo.setTotalRevenue(totalRevenue);</span>
-<span class="fc" id="L67">        salesPojo.setInvoicedOrderCount(totalOrders);</span>
+<span class="fc" id="L66">        salesPojo.setDate(startDate);</span>
+<span class="fc" id="L67">        salesPojo.setInvoicedItemsCount(totalItems);</span>
+<span class="fc" id="L68">        salesPojo.setTotalRevenue(totalRevenue);</span>
+<span class="fc" id="L69">        salesPojo.setInvoicedOrderCount(totalOrders);</span>
 
-<span class="fc" id="L69">        SalesPojo pojo = api.getByDate(date);</span>
-<span class="fc bfc" id="L70" title="All 2 branches covered.">        if(Objects.isNull(pojo)){</span>
-<span class="fc" id="L71">            api.add(salesPojo);</span>
+<span class="fc" id="L71">        SalesPojo pojo = api.getByDate(startDate);</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        if(Objects.isNull(pojo)){</span>
+<span class="fc" id="L73">            api.add(salesPojo);</span>
         }
         else {
-<span class="fc" id="L74">            api.update(date,salesPojo);</span>
+<span class="fc" id="L76">            api.update(startDate,salesPojo);</span>
         }
 
-<span class="fc" id="L77">    }</span>
+<span class="fc" id="L79">    }</span>
 
-    private void checkDates(LocalDate startDate, LocalDate endDate) throws ApiException {
-<span class="fc bfc" id="L80" title="All 2 branches covered.">        if(endDate.isBefore(startDate)) {</span>
-<span class="fc" id="L81">            throw new ApiException(&quot;End date must not be before Start date&quot;);</span>
+    private void checkDates(ZonedDateTime startDate, ZonedDateTime endDate) throws ApiException {
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        if(endDate.isBefore(startDate)) {</span>
+<span class="fc" id="L83">            throw new ApiException(&quot;End date must not be before Start date&quot;);</span>
         }
-<span class="fc" id="L83">    }</span>
+<span class="fc" id="L85">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

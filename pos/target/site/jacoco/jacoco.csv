@@ -20,7 +20,7 @@ pos,com.increff.pos.dto,InventoryFlowApi,3,74,0,6,1,21,0,5,0,2
 pos,com.increff.pos.dto,BrandDto,9,117,0,4,3,33,0,8,0,6
 pos,com.increff.pos.dto,ProductFlowApi,3,87,0,6,1,23,0,5,0,2
 pos,com.increff.pos.dto,InventoryDto,9,245,0,12,3,59,0,13,0,7
-pos,com.increff.pos.dto,SalesDto,0,143,0,8,0,35,0,9,0,5
+pos,com.increff.pos.dto,SalesDto,0,151,0,8,0,37,0,9,0,5
 pos,com.increff.pos.model.commons,InventoryItem,7,24,0,0,1,5,2,7,2,7
 pos,com.increff.pos.api,OrderApi,27,105,1,1,5,24,3,11,2,11
 pos,com.increff.pos.api,ProductApi,0,105,0,6,0,26,0,13,0,10

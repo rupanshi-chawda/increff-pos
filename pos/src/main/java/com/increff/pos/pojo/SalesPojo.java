@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 
 @Entity
 @Getter
@@ -19,7 +20,7 @@ public class SalesPojo extends AbstractVersionPojo {
 
     @JsonFormat(pattern="yyyy-MM-dd ")
     @Column(nullable = false)
-    private LocalDate date;
+    private ZonedDateTime date;
 
     @Column(nullable = false)
     private Integer invoicedOrderCount;

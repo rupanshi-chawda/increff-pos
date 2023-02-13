@@ -27,8 +27,10 @@ public class SalesDto {
     private OrderApi orderApi;
 
     public List<SalesPojo> getAllBetweenDates(SalesForm salesForm) throws ApiException {
-        LocalDate startDate = LocalDate.parse(salesForm.getStartDate());
-        LocalDate endDate = LocalDate.parse(salesForm.getEndDate());
+        LocalDate startdate = LocalDate.parse(salesForm.getStartDate());
+        LocalDate enddate = LocalDate.parse(salesForm.getEndDate());
+        ZonedDateTime startDate = startdate.atStartOfDay(ZoneId.systemDefault());
+        ZonedDateTime endDate = enddate.atStartOfDay(ZoneId.systemDefault());
         ValidationUtil.validateForms(salesForm);
         checkDates(startDate, endDate);
         return  api.getAllBetweenDates(startDate, endDate);
@@ -61,22 +63,22 @@ public class SalesDto {
             }
         }
 
-        salesPojo.setDate(date);
+        salesPojo.setDate(startDate);
         salesPojo.setInvoicedItemsCount(totalItems);
         salesPojo.setTotalRevenue(totalRevenue);
         salesPojo.setInvoicedOrderCount(totalOrders);
 
-        SalesPojo pojo = api.getByDate(date);
+        SalesPojo pojo = api.getByDate(startDate);
         if(Objects.isNull(pojo)){
             api.add(salesPojo);
         }
         else {
-            api.update(date,salesPojo);
+            api.update(startDate,salesPojo);
         }
 
     }
 
-    private void checkDates(LocalDate startDate, LocalDate endDate) throws ApiException {
+    private void checkDates(ZonedDateTime startDate, ZonedDateTime endDate) throws ApiException {
         if(endDate.isBefore(startDate)) {
             throw new ApiException("End date must not be before Start date");
         }

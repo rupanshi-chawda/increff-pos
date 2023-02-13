@@ -7,28 +7,29 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 
 @Entity
 @Getter
-<span class="pc" id="L13">@Setter</span>
-<span class="fc" id="L14">public class SalesPojo extends AbstractVersionPojo {</span>
+<span class="pc" id="L14">@Setter</span>
+<span class="fc" id="L15">public class SalesPojo extends AbstractVersionPojo {</span>
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-<span class="nc" id="L18">    private int id;</span>
+<span class="nc" id="L19">    private int id;</span>
 
     @JsonFormat(pattern=&quot;yyyy-MM-dd &quot;)
     @Column(nullable = false)
-<span class="nc" id="L22">    private LocalDate date;</span>
+<span class="nc" id="L23">    private ZonedDateTime date;</span>
 
     @Column(nullable = false)
-<span class="fc" id="L25">    private Integer invoicedOrderCount;</span>
+<span class="fc" id="L26">    private Integer invoicedOrderCount;</span>
 
     @Column(nullable = false)
-<span class="fc" id="L28">    private Integer invoicedItemsCount;</span>
+<span class="fc" id="L29">    private Integer invoicedItemsCount;</span>
 
     @Column(nullable = false)
-<span class="fc" id="L31">    private Double totalRevenue;</span>
+<span class="fc" id="L32">    private Double totalRevenue;</span>
 }
 
 //TODO: try to add zonedatetime instead of localdate
