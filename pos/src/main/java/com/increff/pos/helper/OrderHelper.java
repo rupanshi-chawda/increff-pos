@@ -37,7 +37,7 @@ public class OrderHelper {
 
     public static void validateId(int id) throws ApiException {
         if (id<1) {
-            throw new ApiException("Product with given ID does not exit, id: " + id);
+            throw new ApiException("Product with given ID does not exists, id: " + id);
         }
     }
 

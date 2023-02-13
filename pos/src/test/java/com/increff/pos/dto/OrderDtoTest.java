@@ -60,7 +60,7 @@ public class OrderDtoTest extends AbstractUnitTest {
         brandDto.add(brandFormList);
 
         List<ProductForm> productFormList = new ArrayList<>();
-        ProductForm productForm = ProductTestHelper.createForm("dyson","hair"," A1B2C3D4", "AirWrap ", 45000.95);
+        ProductForm productForm = ProductTestHelper.createForm("dyson","hair","A1B2C3D4", "AirWrap ", 45000.95);
         productFormList.add(productForm);
         productDto.add(productFormList);
 
@@ -95,7 +95,7 @@ public class OrderDtoTest extends AbstractUnitTest {
             brandDto.add(brandFormList);
 
             List<ProductForm> productFormList = new ArrayList<>();
-            ProductForm productForm = ProductTestHelper.createForm("dyson", "hair", " A1B2C3D4", "AirWrap ", 45000.95);
+            ProductForm productForm = ProductTestHelper.createForm("dyson", "hair", "A1B2C3D4", "AirWrap ", 45000.95);
             productFormList.add(productForm);
             productDto.add(productFormList);
 
@@ -127,7 +127,7 @@ public class OrderDtoTest extends AbstractUnitTest {
             brandDto.add(brandFormList);
 
             List<ProductForm> productFormList = new ArrayList<>();
-            ProductForm productForm = ProductTestHelper.createForm("dyson", "hair", " A1B2C3D4", "AirWrap ", 45000.95);
+            ProductForm productForm = ProductTestHelper.createForm("dyson", "hair", "A1B2C3D4", "AirWrap ", 45000.95);
             productFormList.add(productForm);
             productDto.add(productFormList);
 
@@ -166,7 +166,7 @@ public class OrderDtoTest extends AbstractUnitTest {
             brandDto.add(brandFormList);
 
             List<ProductForm> productFormList = new ArrayList<>();
-            ProductForm productForm = ProductTestHelper.createForm("dyson", "hair", " A1B2C3D4", "AirWrap ", 45000.95);
+            ProductForm productForm = ProductTestHelper.createForm("dyson", "hair", "A1B2C3D4", "AirWrap ", 45000.95);
             productFormList.add(productForm);
             productDto.add(productFormList);
 
@@ -197,7 +197,7 @@ public class OrderDtoTest extends AbstractUnitTest {
             brandDto.add(brandFormList);
 
             List<ProductForm> productFormList = new ArrayList<>();
-            ProductForm productForm = ProductTestHelper.createForm("dyson", "hair", " A1B2C3D4", "AirWrap ", 45000.95);
+            ProductForm productForm = ProductTestHelper.createForm("dyson", "hair", "A1B2C3D4", "AirWrap ", 45000.95);
             productFormList.add(productForm);
             productDto.add(productFormList);
 
@@ -225,7 +225,7 @@ public class OrderDtoTest extends AbstractUnitTest {
             brandDto.add(brandFormList);
 
             List<ProductForm> productFormList = new ArrayList<>();
-            ProductForm productForm = ProductTestHelper.createForm("dyson", "hair", " A1B2C3D4", "AirWrap ", 45000.95);
+            ProductForm productForm = ProductTestHelper.createForm("dyson", "hair", "A1B2C3D4", "AirWrap ", 45000.95);
             productFormList.add(productForm);
             productDto.add(productFormList);
 
@@ -256,9 +256,9 @@ public class OrderDtoTest extends AbstractUnitTest {
 
 
         List<ProductForm> productFormList = new ArrayList<>();
-        ProductForm productForm = ProductTestHelper.createForm("dyson","hair"," A1B2C3D4", "AirWrap ", 45000.95);
+        ProductForm productForm = ProductTestHelper.createForm("dyson","hair","A1B2C3D4", "AirWrap ", 45000.95);
         productFormList.add(productForm);
-        ProductForm productForm2 = ProductTestHelper.createForm("dyson","hair"," qwer1234", "superSonic dryer", 32000.95);
+        ProductForm productForm2 = ProductTestHelper.createForm("dyson","hair","qwer1234", "superSonic dryer", 32000.95);
         productFormList.add(productForm2);
         productDto.add(productFormList);
 
@@ -295,7 +295,7 @@ public class OrderDtoTest extends AbstractUnitTest {
         brandDto.add(brandFormList);
 
         List<ProductForm> productFormList = new ArrayList<>();
-        ProductForm productForm = ProductTestHelper.createForm("dyson","hair"," A1B2C3D4", "AirWrap ", 45000.95);
+        ProductForm productForm = ProductTestHelper.createForm("dyson","hair","A1B2C3D4", "AirWrap ", 45000.95);
         productFormList.add(productForm);
         productDto.add(productFormList);
 

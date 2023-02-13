@@ -23,31 +23,31 @@ public class BrandController {
     @Autowired
     private BrandDto dto;
 
-    @ApiOperation(value = "Adds a Brand")
+    @ApiOperation(value = "Adds a brand")
     @PostMapping(path = "")
     public void addBrand(@RequestBody List<BrandForm> forms) throws ApiException{
         dto.add(forms);
     }
 
-    @ApiOperation(value = "Gets a Brand by Id")
+    @ApiOperation(value = "Gets a brand by id")
     @GetMapping(path = "/{id}")
     public BrandData getBrand(@PathVariable int id) throws ApiException {
         return dto.get(id);
     }
 
-    @ApiOperation(value = "Gets list of all Brands")
+    @ApiOperation(value = "Gets list of all brands")
     @GetMapping(path = "")
     public List<BrandData> getAllBrand() {
         return dto.getAll();
     }
 
-    @ApiOperation(value = "Updates a Brand")
+    @ApiOperation(value = "Updates a brand by id")
     @PutMapping(path = "/{id}")
     public void updateBrand(@PathVariable int id, @RequestBody BrandForm f) throws ApiException {
         dto.update(id, f);
     }
 
-    @ApiOperation(value = "Export Brand Report to CSV")
+    @ApiOperation(value = "Exports brand table to a csv report")
     @GetMapping(path = "/exportcsv")
     public void exportToCSV(HttpServletResponse response) throws ApiException {
         dto.generateCsv(response);

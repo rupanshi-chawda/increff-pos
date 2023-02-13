@@ -48,6 +48,8 @@ public class InventoryApi {
         dao.update(p);
     }
 
+    // Business Logic Methods
+
     public InventoryPojo getByInventoryId(int id) {
         return dao.selectById(id, InventoryPojo.class);
     }

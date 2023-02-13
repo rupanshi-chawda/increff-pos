@@ -199,7 +199,7 @@ public class BrandDtoTest extends AbstractUnitTest {
         }
         catch(ApiException e)
         {
-            String exception = "Brand with given ID does not exit, id: 98";
+            String exception = "Brand with given ID does not exists, id: 98";
             assertEquals(exception, e.getMessage());
             throw e;
         }

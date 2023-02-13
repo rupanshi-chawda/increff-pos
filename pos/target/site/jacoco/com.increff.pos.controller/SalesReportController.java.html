@@ -42,7 +42,7 @@ import java.util.List;
 <span class="nc" id="L42">        return dto.getFilterAll(form);</span>
     }
 
-    @ApiOperation(value = &quot;Export Product Report to CSV&quot;)
+    @ApiOperation(value = &quot;Exports sales report to csv&quot;)
     @GetMapping(path = &quot;/exportcsv&quot;)
     public void exportToCSV(HttpServletResponse response) throws ApiException {
 <span class="nc" id="L48">        dto.generateCsv(response);</span>

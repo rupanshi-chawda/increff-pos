@@ -22,25 +22,25 @@ public class OrderController {
     @Autowired
     private OrderDto dto;
 
-    @ApiOperation(value = "Gets list of all Orders")
+    @ApiOperation(value = "Gets list of all orders")
     @GetMapping(path = "")
     public List<OrderData> getAllOrder() {
         return dto.getAllOrder();
     }
 
-    @ApiOperation(value = "Adds an Order Item")
+    @ApiOperation(value = "Adds an order item")
     @PostMapping(path = "/cart")
     public void addOrderItem(@RequestBody List<OrderItemForm> form) throws ApiException {
         dto.addItem(form);
     }
 
-    @ApiOperation(value = "Gets list of Order Items in an Order by Id")
+    @ApiOperation(value = "Gets list of order items of an order by orderid")
     @GetMapping(path = "/cartitems/{id}")
     public List<OrderItemData> getOrderItemById(@PathVariable int id) throws ApiException {
         return dto.getByOrderId(id);
     }
 
-    @ApiOperation(value = "Download Invoice")
+    @ApiOperation(value = "Downloads order invoice by id")
     @GetMapping(path = "/invoice/{id}", produces =  "application/pdf")
     public ResponseEntity<byte[]> getPDF(@PathVariable int id) throws ApiException{
         return dto.getPDF(id);

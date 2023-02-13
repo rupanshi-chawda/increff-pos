@@ -31,5 +31,3 @@ public class SalesPojo extends AbstractVersionPojo {
     @Column(nullable = false)
     private Double totalRevenue;
 }
-
-//TODO: try to add zonedatetime instead of localdate

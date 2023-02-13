@@ -23,31 +23,31 @@ import java.util.List;
     @Autowired
     private BrandDto dto;
 
-    @ApiOperation(value = &quot;Adds a Brand&quot;)
+    @ApiOperation(value = &quot;Adds a brand&quot;)
     @PostMapping(path = &quot;&quot;)
     public void addBrand(@RequestBody List&lt;BrandForm&gt; forms) throws ApiException{
 <span class="nc" id="L29">        dto.add(forms);</span>
 <span class="nc" id="L30">    }</span>
 
-    @ApiOperation(value = &quot;Gets a Brand by Id&quot;)
+    @ApiOperation(value = &quot;Gets a brand by id&quot;)
     @GetMapping(path = &quot;/{id}&quot;)
     public BrandData getBrand(@PathVariable int id) throws ApiException {
 <span class="nc" id="L35">        return dto.get(id);</span>
     }
 
-    @ApiOperation(value = &quot;Gets list of all Brands&quot;)
+    @ApiOperation(value = &quot;Gets list of all brands&quot;)
     @GetMapping(path = &quot;&quot;)
     public List&lt;BrandData&gt; getAllBrand() {
 <span class="nc" id="L41">        return dto.getAll();</span>
     }
 
-    @ApiOperation(value = &quot;Updates a Brand&quot;)
+    @ApiOperation(value = &quot;Updates a brand by id&quot;)
     @PutMapping(path = &quot;/{id}&quot;)
     public void updateBrand(@PathVariable int id, @RequestBody BrandForm f) throws ApiException {
 <span class="nc" id="L47">        dto.update(id, f);</span>
 <span class="nc" id="L48">    }</span>
 
-    @ApiOperation(value = &quot;Export Brand Report to CSV&quot;)
+    @ApiOperation(value = &quot;Exports brand table to a csv report&quot;)
     @GetMapping(path = &quot;/exportcsv&quot;)
     public void exportToCSV(HttpServletResponse response) throws ApiException {
 <span class="nc" id="L53">        dto.generateCsv(response);</span>

@@ -38,7 +38,7 @@ public class ProductDtoTest extends AbstractUnitTest {
 
 
         List<ProductForm> productFormList = new ArrayList<>();
-        ProductForm productForm = ProductTestHelper.createForm("dyson","hair"," A1B2C3D4", "AirWrap ", 45000.95);
+        ProductForm productForm = ProductTestHelper.createForm("dyson","hair","A1B2C3D4", "AirWrap ", 45000.95);
         productFormList.add(productForm);
         dto.add(productFormList);
 
@@ -68,7 +68,7 @@ public class ProductDtoTest extends AbstractUnitTest {
             brandDto.add(brandFormList);
 
             List<ProductForm> productFormList = new ArrayList<>();
-            ProductForm productForm = ProductTestHelper.createForm("dyson","hair"," A1B2C3D4", "AirWrap ", 45000.95);
+            ProductForm productForm = ProductTestHelper.createForm("dyson","hair","A1B2C3D4", "AirWrap ", 45000.95);
             productFormList.add(productForm);
 
             dto.add(productFormList);
@@ -190,10 +190,10 @@ public class ProductDtoTest extends AbstractUnitTest {
         brandDto.add(brandFormList);
 
         List<ProductForm> productFormList = new ArrayList<>();
-        ProductForm productForm = ProductTestHelper.createForm("dyson","hair"," A1B2C3D4", "AirWrap ", 45000.95);
+        ProductForm productForm = ProductTestHelper.createForm("dyson","hair","A1B2C3D4", "AirWrap ", 45000.95);
         productFormList.add(productForm);
 
-        ProductForm productForm2 = ProductTestHelper.createForm("dyson","hair"," qwer1234", "superSonic dryer", 32000.95);
+        ProductForm productForm2 = ProductTestHelper.createForm("dyson","hair","qwer1234", "superSonic dryer", 32000.95);
         productFormList.add(productForm2);
         dto.add(productFormList);
 
@@ -209,7 +209,7 @@ public class ProductDtoTest extends AbstractUnitTest {
         brandDto.add(brandFormList);
 
         List<ProductForm> productFormList = new ArrayList<>();
-        ProductForm productForm = ProductTestHelper.createForm("dyson","hair"," A1B2C3D4", "AirWrap ", 45000.95);
+        ProductForm productForm = ProductTestHelper.createForm("dyson","hair","A1B2C3D4", "AirWrap ", 45000.95);
         productFormList.add(productForm);
         dto.add(productFormList);
 
@@ -239,7 +239,7 @@ public class ProductDtoTest extends AbstractUnitTest {
             brandDto.add(brandFormList);
 
             List<ProductForm> productFormList = new ArrayList<>();
-            ProductForm productForm = ProductTestHelper.createForm("dyson","hair"," A1B2C3D4", "AirWrap ", 45000.95);
+            ProductForm productForm = ProductTestHelper.createForm("dyson","hair","A1B2C3D4", "AirWrap ", 45000.95);
             productFormList.add(productForm);
             dto.add(productFormList);
 
@@ -256,7 +256,7 @@ public class ProductDtoTest extends AbstractUnitTest {
         }
         catch(ApiException    e)
         {
-            String exception = "Product with given ID does not exit, id: 42";
+            String exception = "Product with given ID does not exists, id: 42";
             assertEquals(exception, e.getMessage());
             throw e;
         }
@@ -271,7 +271,7 @@ public class ProductDtoTest extends AbstractUnitTest {
             brandDto.add(brandFormList);
 
             List<ProductForm> productFormList = new ArrayList<>();
-            ProductForm productForm = ProductTestHelper.createForm("dyson","hair"," A1B2C3D4", "AirWrap ", 45000.95);
+            ProductForm productForm = ProductTestHelper.createForm("dyson","hair","A1B2C3D4", "AirWrap ", 45000.95);
             productFormList.add(productForm);
             dto.add(productFormList);
 
@@ -299,7 +299,7 @@ public class ProductDtoTest extends AbstractUnitTest {
             brandDto.add(brandFormList);
 
             List<ProductForm> productFormList = new ArrayList<>();
-            ProductForm productForm = ProductTestHelper.createForm("dyson","hair"," A1B2C3D4", "AirWrap ", 45000.95);
+            ProductForm productForm = ProductTestHelper.createForm("dyson","hair","A1B2C3D4", "AirWrap ", 45000.95);
             productFormList.add(productForm);
             dto.add(productFormList);
 

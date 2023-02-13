@@ -19,13 +19,13 @@ import java.util.List;
     @Autowired
     private SalesDto dto;
 
-    @ApiOperation(value = &quot;Gets all the Sales data&quot;)
+    @ApiOperation(value = &quot;Gets all the sales data&quot;)
     @GetMapping(path = &quot;&quot;)
     public List&lt;SalesPojo&gt; getAll() throws ApiException {
 <span class="nc" id="L25">        return dto.getAll();</span>
     }
 
-    @ApiOperation(value = &quot;get all sales date between 2 dates&quot;)
+    @ApiOperation(value = &quot;Gets all sales data between given dates&quot;)
     @PostMapping(path = &quot;/filter&quot;)
     public List&lt;SalesPojo&gt; getAllByDate(@RequestBody SalesForm form) throws ApiException {
 <span class="nc" id="L31">        return dto.getAllBetweenDates(form);</span>

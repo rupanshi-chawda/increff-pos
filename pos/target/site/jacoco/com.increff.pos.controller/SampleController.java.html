@@ -9,7 +9,9 @@ import java.util.Objects;
 import javax.servlet.http.HttpServletResponse;
 
 import com.increff.pos.util.IOUtil;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,24 +23,28 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 import static org.hibernate.internal.util.io.StreamCopier.BUFFER_SIZE;
 
 @Controller
-<span class="fc" id="L24">public class SampleController {</span>
+<span class="fc" id="L26">public class SampleController {</span>
 
+
+	@Value(&quot;${project.path}&quot;)
+	private String project_path;
+
+	@ApiOperation(value = &quot;Gets sample tsv files from resources&quot;)
 	@GetMapping(value = &quot;/sample/{fileName:.+}&quot;)
 	public StreamingResponseBody getFile(@PathVariable(&quot;fileName&quot;) String fileName, HttpServletResponse response) {
 
-<span class="nc" id="L29">		response.setContentType(&quot;text/csv&quot;);</span>
-<span class="nc" id="L30">		response.addHeader(&quot;Content-disposition:&quot;, &quot;attachment; filename=&quot; + fileName);</span>
-<span class="nc" id="L31">		String fileClasspath = &quot;C:\\Users\\KIIT\\Downloads\\increff-pos\\pos\\src\\main\\resources\\com.increff\\pos\\&quot; + fileName;</span>
-		//todo: remove all absolute paths
+<span class="nc" id="L36">		response.setContentType(&quot;text/csv&quot;);</span>
+<span class="nc" id="L37">		response.addHeader(&quot;Content-disposition:&quot;, &quot;attachment; filename=&quot; + fileName);</span>
+<span class="nc" id="L38">		String fileClasspath = project_path + &quot;\\src\\main\\resources\\com.increff\\pos\\&quot; + fileName;</span>
 
-<span class="nc" id="L34">		return outputStream -&gt; {</span>
+<span class="nc" id="L40">		return outputStream -&gt; {</span>
 			int bytesRead;
-<span class="nc" id="L36">			byte[] buffer = new byte[BUFFER_SIZE];</span>
-<span class="nc" id="L37">			InputStream inputStream = new FileInputStream(fileClasspath);</span>
-<span class="nc bnc" id="L38" title="All 2 branches missed.">			while ((bytesRead = inputStream.read(buffer)) != -1) {</span>
-<span class="nc" id="L39">				outputStream.write(buffer, 0, bytesRead);</span>
+<span class="nc" id="L42">			byte[] buffer = new byte[BUFFER_SIZE];</span>
+<span class="nc" id="L43">			InputStream inputStream = new FileInputStream(fileClasspath);</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">			while ((bytesRead = inputStream.read(buffer)) != -1) {</span>
+<span class="nc" id="L45">				outputStream.write(buffer, 0, bytesRead);</span>
 			}
-<span class="nc" id="L41">		};</span>
+<span class="nc" id="L47">		};</span>
 	}
 
 }

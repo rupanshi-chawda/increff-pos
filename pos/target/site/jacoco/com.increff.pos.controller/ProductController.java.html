@@ -21,25 +21,25 @@ import java.util.List;
     @Autowired
     private ProductDto dto;
 
-    @ApiOperation(value = &quot;Adds a Product&quot;)
+    @ApiOperation(value = &quot;Adds a product&quot;)
     @PostMapping(path = &quot;&quot;)
     public void addProduct(@RequestBody List&lt;ProductForm&gt; forms) throws ApiException {
 <span class="nc" id="L27">        dto.add(forms);</span>
 <span class="nc" id="L28">    }</span>
 
-    @ApiOperation(value = &quot;Gets a Product by Id&quot;)
+    @ApiOperation(value = &quot;Gets a product by id&quot;)
     @GetMapping(path = &quot;/{id}&quot;)
     public ProductData getProduct(@PathVariable int id) throws ApiException {
 <span class="nc" id="L33">        return dto.get(id);</span>
     }
 
-    @ApiOperation(value = &quot;Gets list of all Products&quot;)
+    @ApiOperation(value = &quot;Gets list of all products&quot;)
     @GetMapping(path = &quot;&quot;)
     public List&lt;ProductData&gt; getAllProduct() throws ApiException {
 <span class="nc" id="L39">        return dto.getAll();</span>
     }
 
-    @ApiOperation(value = &quot;Updates a Product&quot;)
+    @ApiOperation(value = &quot;Updates a product by id&quot;)
     @PutMapping(path = &quot;/{id}&quot;)
     public void updateProduct(@PathVariable int id, @RequestBody ProductUpdateForm f) throws ApiException {
 <span class="nc" id="L45">        dto.update(id, f);</span>

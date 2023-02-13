@@ -20,7 +20,7 @@ import io.swagger.annotations.ApiOperation;
 	@Autowired
 	private InitDto dto;
 
-	@ApiOperation(value = &quot;Initializes application&quot;)
+	@ApiOperation(value = &quot;Shows page while initializing application&quot;)
 	@GetMapping(path = &quot;&quot;)
 	public ModelAndView showPage() throws ApiException {
 <span class="nc" id="L26">		return dto.show();</span>

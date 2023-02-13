@@ -54,8 +54,8 @@ public class InventoryDto {
             inventoryErrorData.setMessage("");
             try
             {
-                InventoryHelper.normalize(f);
                 ValidationUtil.validateForms(f);
+                InventoryHelper.normalize(f);
             }
             catch (ApiException e) {
                 errorSize++;

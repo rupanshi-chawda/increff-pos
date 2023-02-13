@@ -44,8 +44,8 @@ public class ProductDto {
             productErrorData.setMessage("");
             try
             {
-                ProductHelper.normalize(f);
                 ValidationUtil.validateForms(f);
+                ProductHelper.normalize(f);
             }
             catch (ApiException e) {
                 errorSize++;

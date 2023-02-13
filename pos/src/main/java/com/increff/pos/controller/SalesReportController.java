@@ -42,7 +42,7 @@ public class SalesReportController
         return dto.getFilterAll(form);
     }
 
-    @ApiOperation(value = "Export Product Report to CSV")
+    @ApiOperation(value = "Exports sales report to csv")
     @GetMapping(path = "/exportcsv")
     public void exportToCSV(HttpServletResponse response) throws ApiException {
         dto.generateCsv(response);

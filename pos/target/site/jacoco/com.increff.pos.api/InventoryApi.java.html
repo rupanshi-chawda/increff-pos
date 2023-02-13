@@ -48,13 +48,15 @@ import java.util.Objects;
 <span class="fc" id="L48">        dao.update(p);</span>
 <span class="fc" id="L49">    }</span>
 
+    // Business Logic Methods
+
     public InventoryPojo getByInventoryId(int id) {
-<span class="fc" id="L52">        return dao.selectById(id, InventoryPojo.class);</span>
+<span class="fc" id="L54">        return dao.selectById(id, InventoryPojo.class);</span>
     }
 
     public int getQuantityById(int id) {
-<span class="fc" id="L56">        InventoryPojo p = getByInventoryId(id);</span>
-<span class="fc" id="L57">        return p.getQuantity();</span>
+<span class="fc" id="L58">        InventoryPojo p = getByInventoryId(id);</span>
+<span class="fc" id="L59">        return p.getQuantity();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

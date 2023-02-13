@@ -36,36 +36,38 @@ import java.util.Objects;
 <span class="fc" id="L36">        dao.update(p);</span>
 <span class="fc" id="L37">    }</span>
 
+    // Business Logic Methods
+
     public ProductPojo getProductId(int id) throws ApiException {
-<span class="fc" id="L40">        ProductPojo p = dao.selectById(id, ProductPojo.class);</span>
-<span class="fc bfc" id="L41" title="All 2 branches covered.">        if (Objects.isNull(p)) {</span>
-<span class="fc" id="L42">            throw new ApiException(&quot;Product with given ID does not exit, id: &quot; + id);</span>
+<span class="fc" id="L42">        ProductPojo p = dao.selectById(id, ProductPojo.class);</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        if (Objects.isNull(p)) {</span>
+<span class="fc" id="L44">            throw new ApiException(&quot;Product with given ID does not exists, id: &quot; + id);</span>
         }
-<span class="fc" id="L44">        return p;</span>
+<span class="fc" id="L46">        return p;</span>
     }
 
-    public void getProductBarcode(ProductPojo p) throws ApiException {
-<span class="fc" id="L48">        ProductPojo d = dao.selectByBarcode(p.getBarcode());</span>
-<span class="fc bfc" id="L49" title="All 2 branches covered.">        if (!Objects.isNull(d)) {</span>
-<span class="fc" id="L50">            throw new ApiException(&quot;Product with given barcode already exists&quot;);</span>
+    public void checkBarcodeExists(ProductPojo p) throws ApiException {
+<span class="fc" id="L50">        ProductPojo d = dao.selectByBarcode(p.getBarcode());</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        if (!Objects.isNull(d)) {</span>
+<span class="fc" id="L52">            throw new ApiException(&quot;Product with given barcode already exists&quot;);</span>
         }
-<span class="fc" id="L52">    }</span>
+<span class="fc" id="L54">    }</span>
 
     public void checkProductBarcode(String barcode) throws ApiException {
-<span class="fc" id="L55">        ProductPojo d = dao.selectByBarcode(barcode);</span>
-<span class="fc bfc" id="L56" title="All 2 branches covered.">        if (Objects.isNull(d)) {</span>
-<span class="fc" id="L57">            throw new ApiException(&quot;Product with given barcode does not exists&quot;);</span>
+<span class="fc" id="L57">        ProductPojo d = dao.selectByBarcode(barcode);</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        if (Objects.isNull(d)) {</span>
+<span class="fc" id="L59">            throw new ApiException(&quot;Product with given barcode does not exists&quot;);</span>
         }
-<span class="fc" id="L59">    }</span>
+<span class="fc" id="L61">    }</span>
 
     public int getIdByBarcode(String barcode) {
-<span class="fc" id="L62">        ProductPojo p = dao.selectByBarcode(barcode);</span>
-<span class="fc" id="L63">        return p.getId();</span>
+<span class="fc" id="L64">        ProductPojo p = dao.selectByBarcode(barcode);</span>
+<span class="fc" id="L65">        return p.getId();</span>
     }
 
     public String getBarcodeById(int id) {
-<span class="fc" id="L67">        ProductPojo p = dao.selectById(id, ProductPojo.class);</span>
-<span class="fc" id="L68">        return p.getBarcode();</span>
+<span class="fc" id="L69">        ProductPojo p = dao.selectById(id, ProductPojo.class);</span>
+<span class="fc" id="L70">        return p.getBarcode();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

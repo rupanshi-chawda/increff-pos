@@ -42,9 +42,8 @@ public class BrandDto {
             brandErrorData.setMessage("");
             try
             {
-                //todo: validation is kept above as it checks blank and null but if we keep it down @notnull will not be check. how to do this?
-                BrandHelper.normalize(f);
                 ValidationUtil.validateForms(f);
+                BrandHelper.normalize(f);
             }
             catch (ApiException e) {
                 errorSize++;

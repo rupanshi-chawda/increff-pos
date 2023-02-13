@@ -21,32 +21,32 @@ import java.util.List;
 
     @Autowired
     private InventoryDto dto;
-//todo rename apioperation values to better description
-    @ApiOperation(value = &quot;Adds a Product Inventory&quot;)
+
+    @ApiOperation(value = &quot;Adds inventory of a product&quot;)
     @PostMapping(path = &quot;&quot;)
     public void addInventory(@RequestBody List&lt;InventoryForm&gt; forms) throws ApiException {
 <span class="nc" id="L28">        dto.add(forms);</span>
 <span class="nc" id="L29">    }</span>
 
-    @ApiOperation(value = &quot;Gets a Product Inventory by barcode&quot;)
+    @ApiOperation(value = &quot;Gets inventory of a product by barcode&quot;)
     @GetMapping(path = &quot;/{barcode}&quot;)
     public InventoryData getInventory(@PathVariable String barcode) throws ApiException {
 <span class="nc" id="L34">        return dto.get(barcode);</span>
     }
 
-    @ApiOperation(value = &quot;Gets list of all Product Inventories&quot;)
+    @ApiOperation(value = &quot;Gets list of all product inventories&quot;)
     @GetMapping(path = &quot;&quot;)
     public List&lt;InventoryData&gt; getAllInventory() {
 <span class="nc" id="L40">        return dto.getAll();</span>
     }
 
-    @ApiOperation(value = &quot;Updates a Product Inventory&quot;)
+    @ApiOperation(value = &quot;Updates inventory of a product by barcode&quot;)
     @PutMapping(path = &quot;/{barcode}&quot;)
     public void updateInventory(@PathVariable String barcode, @RequestBody InventoryForm f) throws ApiException {
 <span class="nc" id="L46">        dto.update(barcode, f);</span>
 <span class="nc" id="L47">    }</span>
 
-    @ApiOperation(value = &quot;Export Product Report to CSV&quot;)
+    @ApiOperation(value = &quot;Exports inventory of a unique brand category&quot;)
     @GetMapping(path = &quot;/exportcsv&quot;)
     public void exportToCSV(HttpServletResponse response) throws ApiException {
 <span class="nc" id="L52">        dto.generateCsv(response);</span>

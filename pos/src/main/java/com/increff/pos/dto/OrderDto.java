@@ -42,11 +42,6 @@ public class OrderDto {
     @Autowired
     private InvoiceGenerator invoiceGenerator;
 
-    //TODO general clean up
-    //1. remove system.out
-    //2. remove console.out
-    //3. log statements(info) and comments
-
     public List<OrderData> getAllOrder() {
         return orderApi.getAllOrder().stream().map(OrderHelper::convert).collect(Collectors.toList());
     }

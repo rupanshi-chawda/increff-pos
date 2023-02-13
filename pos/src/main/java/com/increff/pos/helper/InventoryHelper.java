@@ -32,7 +32,7 @@ public class InventoryHelper {
 
     public static void validateId(InventoryPojo p, int id) throws ApiException {
         if (Objects.isNull(p)) {
-            throw new ApiException("Product with given ID does not exit, id: " + id);
+            throw new ApiException("Product with given ID does not exists, id: " + id);
         }
     }
 

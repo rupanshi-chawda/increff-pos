@@ -9,7 +9,9 @@ import java.util.Objects;
 import javax.servlet.http.HttpServletResponse;
 
 import com.increff.pos.util.IOUtil;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,13 +25,17 @@ import static org.hibernate.internal.util.io.StreamCopier.BUFFER_SIZE;
 @Controller
 public class SampleController {
 
+
+	@Value("${project.path}")
+	private String project_path;
+
+	@ApiOperation(value = "Gets sample tsv files from resources")
 	@GetMapping(value = "/sample/{fileName:.+}")
 	public StreamingResponseBody getFile(@PathVariable("fileName") String fileName, HttpServletResponse response) {
 
 		response.setContentType("text/csv");
 		response.addHeader("Content-disposition:", "attachment; filename=" + fileName);
-		String fileClasspath = "C:\\Users\\KIIT\\Downloads\\increff-pos\\pos\\src\\main\\resources\\com.increff\\pos\\" + fileName;
-		//todo: remove all absolute paths
+		String fileClasspath = project_path + "\\src\\main\\resources\\com.increff\\pos\\" + fileName;
 
 		return outputStream -> {
 			int bytesRead;

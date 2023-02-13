@@ -36,15 +36,17 @@ public class ProductApi {
         dao.update(p);
     }
 
+    // Business Logic Methods
+
     public ProductPojo getProductId(int id) throws ApiException {
         ProductPojo p = dao.selectById(id, ProductPojo.class);
         if (Objects.isNull(p)) {
-            throw new ApiException("Product with given ID does not exit, id: " + id);
+            throw new ApiException("Product with given ID does not exists, id: " + id);
         }
         return p;
     }
 
-    public void getProductBarcode(ProductPojo p) throws ApiException {
+    public void checkBarcodeExists(ProductPojo p) throws ApiException {
         ProductPojo d = dao.selectByBarcode(p.getBarcode());
         if (!Objects.isNull(d)) {
             throw new ApiException("Product with given barcode already exists");

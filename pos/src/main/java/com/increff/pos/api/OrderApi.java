@@ -58,25 +58,25 @@ public class OrderApi {
         itemDao.insert(p);
     }
 
-    public OrderItemPojo getItem(int id) throws ApiException {
-        OrderItemPojo p = getOrderItemId(id);
-        OrderHelper.validateId(id);
-        return p;
-    }
+//    public OrderItemPojo getItem(int id) throws ApiException {
+//        OrderItemPojo p = getOrderItemId(id);
+//        OrderHelper.validateId(id);
+//        return p;
+//    }
 
 
     public List<OrderItemPojo> getByOrderId(int orderId) {
         return itemDao.selectByOrderId(orderId);
     }
 
-    private OrderItemPojo getOrderItemId(int id) {
-        return itemDao.selectById(id, OrderItemPojo.class);
-    }
+//    private OrderItemPojo getOrderItemId(int id) {
+//        return itemDao.selectById(id, OrderItemPojo.class);
+//    }
 
     private OrderPojo getCheckByOrderId(int id) throws ApiException {
         OrderPojo p = orderDao.selectById(id, OrderPojo.class);
         if (Objects.isNull(p)) {
-            throw new ApiException("Order with given ID does not exit, id: " + id);
+            throw new ApiException("Order with given ID does not exists, id: " + id);
         }
         return p;
     }
@@ -84,6 +84,8 @@ public class OrderApi {
     public List<OrderItemPojo> getOrderItemByOrderId(int orderId){
         return itemDao.selectByOrderId(orderId);
     }
+
+    // Business Logic Methods
 
     public ResponseEntity<byte[]> getPDF(InvoiceForm invoiceForm) {
 

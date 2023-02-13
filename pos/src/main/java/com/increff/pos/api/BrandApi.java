@@ -46,7 +46,7 @@ public class BrandApi {
     public BrandPojo getCheckBrandId(int id) throws ApiException {
         BrandPojo p = dao.selectById(id, BrandPojo.class);
         if (Objects.isNull(p)) {
-            throw new ApiException("Brand with given ID does not exit, id: " + id);
+            throw new ApiException("Brand with given ID does not exists, id: " + id);
         }
         return p;
     }

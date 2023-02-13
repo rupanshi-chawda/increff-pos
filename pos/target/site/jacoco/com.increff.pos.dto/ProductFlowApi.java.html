@@ -39,7 +39,7 @@ import java.util.List;
             {
 <span class="fc" id="L40">                ProductPojo p = ProductHelper.convert(f);</span>
 <span class="fc" id="L41">                p.setBrandCategory(brandApi.checkBrandCategory(f.getBrand(), f.getCategory()));</span>
-<span class="fc" id="L42">                api.getProductBarcode(p);</span>
+<span class="fc" id="L42">                api.checkBarcodeExists(p);</span>
             }
 <span class="fc" id="L44">            catch (ApiException e) {</span>
 <span class="fc" id="L45">                errorSize++;</span>

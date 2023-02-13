@@ -22,7 +22,7 @@ pos,com.increff.pos.dto,ProductFlowApi,3,87,0,6,1,23,0,5,0,2
 pos,com.increff.pos.dto,InventoryDto,9,245,0,12,3,59,0,13,0,7
 pos,com.increff.pos.dto,SalesDto,0,151,0,8,0,37,0,9,0,5
 pos,com.increff.pos.model.commons,InventoryItem,7,24,0,0,1,5,2,7,2,7
-pos,com.increff.pos.api,OrderApi,27,105,1,1,5,24,3,11,2,11
+pos,com.increff.pos.api,OrderApi,12,105,1,1,1,24,1,11,0,11
 pos,com.increff.pos.api,ProductApi,0,105,0,6,0,26,0,13,0,10
 pos,com.increff.pos.api,BrandApi,0,103,0,6,0,25,0,13,0,10
 pos,com.increff.pos.api,InventoryApi,0,77,0,2,0,21,0,8,0,7
@@ -52,7 +52,7 @@ pos,com.increff.pos.model.form,InventoryForm,0,17,0,0,0,4,0,5,0,5
 pos,com.increff.pos.model.form,InvoiceForm,0,24,0,0,0,5,0,7,0,7
 pos,com.increff.pos.model.form,ProductUpdateForm,0,17,0,0,0,4,0,5,0,5
 pos,com.increff.pos.controller,InitController,9,3,0,0,2,1,2,1,2,1
-pos,com.increff.pos.controller,SampleController,48,3,2,0,9,1,3,1,2,1
+pos,com.increff.pos.controller,SampleController,51,3,2,0,9,1,3,1,2,1
 pos,com.increff.pos.controller,AbstractUiController,0,8,0,0,0,2,0,2,0,2
 pos,com.increff.pos.controller,AdminController,14,3,0,0,5,1,3,1,3,1
 pos,com.increff.pos.controller,SiteUiController,12,3,0,0,3,1,3,1,3,1
@@ -89,7 +89,7 @@ pos,com.increff.pos.util,SecurityUtil,6,22,1,1,1,8,2,4,1,4
 pos,com.increff.pos.util,StringUtil,5,16,2,4,1,2,3,3,1,2
 pos,com.increff.pos.util,ConvertUtil,3,21,0,0,1,5,1,1,1,1
 pos,com.increff.pos.util,UserPrincipal,9,15,0,0,3,2,3,4,3,4
-pos,com.increff.pos.spring,ControllerConfig,4,145,0,0,2,33,1,9,1,9
+pos,com.increff.pos.spring,ControllerConfig,4,177,0,0,2,45,1,9,1,9
 pos,com.increff.pos.spring,WebInitializer,20,0,0,0,4,0,4,0,4,0
 pos,com.increff.pos.spring,SecurityConfig,0,312,0,0,0,27,0,4,0,4
 pos,com.increff.pos.spring,SpringSecurityInitializer,3,0,0,0,1,0,1,0,1,0

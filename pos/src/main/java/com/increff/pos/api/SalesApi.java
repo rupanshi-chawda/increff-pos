@@ -40,6 +40,8 @@ public class SalesApi {
         pojo.setInvoicedItemsCount(newPojo.getInvoicedItemsCount());
     }
 
+    // Business Logic Methods
+
     @Transactional
     public List<SalesPojo> getAllBetweenDates(ZonedDateTime startDate, ZonedDateTime endDate) {
         return dao.selectBetweenDates(startDate,endDate);

@@ -29,6 +29,7 @@ public class LoginController {
 		return dto.login(req, f);
 	}
 
+	@ApiOperation(value = "Logs out a user")
 	@GetMapping(path = "/logout")
 	public ModelAndView logout(HttpServletRequest request) {
 		return dto.logout(request);

@@ -4,9 +4,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.ser.ZonedDateTimeSerializer;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -102,6 +108,23 @@ public class ControllerConfig extends WebMvcConfigurerAdapter {
 
 	@Bean
 	public RestTemplate restTemplate( ) {
-		return new RestTemplate();
-	} //todo; add HttpConnectionPoolingManager
+		PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
+		connectionManager.setMaxTotal(100);
+		connectionManager.setDefaultMaxPerRoute(20);
+
+		RequestConfig requestConfig = RequestConfig
+				.custom()
+				.setConnectionRequestTimeout(5000) // timeout to get connection from pool
+				.setSocketTimeout(5000) // standard connection timeout
+				.setConnectTimeout(5000) // standard connection timeout
+				.build();
+
+		HttpClient httpClient = HttpClientBuilder.create()
+				.setConnectionManager(connectionManager)
+				.setDefaultRequestConfig(requestConfig).build();
+
+		ClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
+
+		return new RestTemplate(requestFactory);
+	}
 }

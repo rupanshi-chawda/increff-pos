@@ -20,7 +20,7 @@ public class InitController {
 	@Autowired
 	private InitDto dto;
 
-	@ApiOperation(value = "Initializes application")
+	@ApiOperation(value = "Shows page while initializing application")
 	@GetMapping(path = "")
 	public ModelAndView showPage() throws ApiException {
 		return dto.show();

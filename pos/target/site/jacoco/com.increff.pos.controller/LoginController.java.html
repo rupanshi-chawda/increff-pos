@@ -29,9 +29,10 @@ import io.swagger.annotations.ApiOperation;
 <span class="nc" id="L29">		return dto.login(req, f);</span>
 	}
 
+	@ApiOperation(value = &quot;Logs out a user&quot;)
 	@GetMapping(path = &quot;/logout&quot;)
 	public ModelAndView logout(HttpServletRequest request) {
-<span class="nc" id="L34">		return dto.logout(request);</span>
+<span class="nc" id="L35">		return dto.logout(request);</span>
 	}
 
 }

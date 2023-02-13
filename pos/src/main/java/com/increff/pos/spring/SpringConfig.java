@@ -9,7 +9,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 @ComponentScan("com.increff.pos")
 @EnableScheduling
 @PropertySources({ //
-		@PropertySource(value = "file:./pos.properties", ignoreResourceNotFound = true) //
+		@PropertySource(value = "file:./pos.properties", ignoreResourceNotFound = true) // todo:is ignore need?
 })
 public class SpringConfig {
 

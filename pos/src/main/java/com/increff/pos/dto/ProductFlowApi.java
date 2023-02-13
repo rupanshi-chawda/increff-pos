@@ -39,7 +39,7 @@ public class ProductFlowApi {
             {
                 ProductPojo p = ProductHelper.convert(f);
                 p.setBrandCategory(brandApi.checkBrandCategory(f.getBrand(), f.getCategory()));
-                api.getProductBarcode(p);
+                api.checkBarcodeExists(p);
             }
             catch (ApiException e) {
                 errorSize++;

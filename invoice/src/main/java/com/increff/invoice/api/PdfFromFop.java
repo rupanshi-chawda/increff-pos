@@ -3,6 +3,7 @@ package com.increff.invoice.api;
 import com.increff.invoice.model.InvoiceForm;
 import com.increff.invoice.util.ApiException;
 import org.apache.fop.apps.*;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.xml.transform.*;
 import javax.xml.transform.sax.SAXResult;
@@ -14,6 +15,10 @@ import java.nio.file.Paths;
 import java.util.Base64;
 
 public class PdfFromFop {
+
+    @Value("${xsl.path}")
+    private String xsl_path;
+
     public String createPDF(InvoiceForm form, String xmlEncodedString) throws ApiException {
 
         File xsltfile = new File("C:\\Users\\KIIT\\Downloads\\increff-pos\\invoice\\src\\main\\resources\\xsl\\invoice.xsl");
