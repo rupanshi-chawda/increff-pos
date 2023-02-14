@@ -81,7 +81,7 @@ public class LoginDtoTest extends AbstractUnitTest {
     }
 
     @Test
-    public void logoutTest() throws ApiException {
+    public void logoutTest() {
 
         MockHttpServletRequest req = new MockHttpServletRequest();
         ModelAndView mav = dto.logout(req);

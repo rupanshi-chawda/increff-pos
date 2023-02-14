@@ -64,130 +64,89 @@ import java.util.*;
 <span class="fc" id="L64">        return getFilterSalesReport(list, form.getBrand(), form.getCategory());</span>
     }
 
-    //todo: optimise this function to reduce api calls
     public List&lt;SalesReportData&gt; getFilterSalesReport(List&lt;OrderPojo&gt; list, String brand, String category) throws ApiException {
-<span class="fc" id="L69">        HashMap&lt;Integer, SalesReportData&gt; salesMap = new HashMap&lt;Integer, SalesReportData&gt;();</span>
-<span class="fc" id="L70">        HashMap&lt;Integer, BrandPojo&gt; brandMap = getBrandMap(list);</span>
-<span class="fc" id="L71">        HashMap&lt;Integer, ProductPojo&gt; productMap = getProductMap(list);</span>
+<span class="fc" id="L68">        HashMap&lt;Integer, SalesReportData&gt; salesMap = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L69">        HashMap&lt;Integer, BrandPojo&gt; brandMap = getBrandMap();</span>
+<span class="fc" id="L70">        HashMap&lt;Integer, ProductPojo&gt; productMap = getProductMap(list);</span>
 
-//        for(OrderPojo orderPojo: list)
-//        {
-//            List&lt;OrderItemPojo&gt; itemList = orderApi.getOrderItemsByOrderId(orderPojo.getId());
-//
-//            for (OrderItemPojo p: itemList)
-//            {
-//                ProductPojo productPojo = productApi.get(p.getProductId());
-//                BrandPojo brandPojo = brandApi.get(productPojo.getBrandCategory());
-//
-//                if(!salesMap.containsKey(brandPojo.getId())) {
-//                    salesMap.put(brandPojo.getId(), new SalesReportData());
-//                }
-//
-//                SalesReportData salesReportData = salesMap.get(brandPojo.getId());
-//
-//                salesReportData.setQuantity(salesReportData.getQuantity() + p.getQuantity() );
-//                salesReportData.setRevenue(salesReportData.getRevenue() + (p.getQuantity() * p.getSellingPrice()));
-//
-//            }
-//        }
-//
-//        List&lt;SalesReportData&gt; salesList = new ArrayList&lt;&gt;();
-//        for(Map.Entry&lt;Integer, SalesReportData&gt; entry: salesMap.entrySet()) {
-//            BrandPojo bp = brandApi.get(entry.getKey());
-//            if((Objects.equals(brand,bp.getBrand()) || Objects.equals(brand,&quot;all&quot;)) &amp;&amp;
-//                    (Objects.equals(category,bp.getCategory()) || Objects.equals(category,&quot;all&quot;)))
-//            {
-//                SalesReportData d = entry.getValue();
-//                d.setBrand(bp.getBrand());
-//                d.setCategory(bp.getCategory());
-//                salesList.add(d);
-//            }
-//        }
-//
-//        salesListData = salesList;
-//        return salesListData;
 
-<span class="fc bfc" id="L110" title="All 2 branches covered.">        for(OrderPojo orderPojo: list)</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">        for(OrderPojo orderPojo: list)</span>
         {
-<span class="fc" id="L112">            List&lt;OrderItemPojo&gt; orderItemPojoList = orderApi.getOrderItemsByOrderId(orderPojo.getId());</span>
-<span class="fc" id="L113">            DecimalFormat df = new DecimalFormat(&quot;#.##&quot;);</span>
-<span class="fc bfc" id="L114" title="All 2 branches covered.">            for (OrderItemPojo orderItemPojo: orderItemPojoList) {</span>
-<span class="fc" id="L115">                ProductPojo productPojo = productMap.get(orderItemPojo.getProductId());</span>
-<span class="fc" id="L116">                BrandPojo brandPojo = brandMap.get(productPojo.getBrandCategory());</span>
-<span class="pc bpc" id="L117" title="1 of 4 branches missed.">                if((Objects.equals(brand,brandPojo.getBrand()) || Objects.equals(brand,&quot;all&quot;)) &amp;&amp;</span>
-<span class="pc bpc" id="L118" title="1 of 4 branches missed.">                        (Objects.equals(category,brandPojo.getCategory()) || Objects.equals(category,&quot;all&quot;))) {</span>
-<span class="fc bfc" id="L119" title="All 2 branches covered.">                    if(!salesMap.containsKey(brandPojo.getId())) {</span>
-<span class="fc" id="L120">                        salesMap.put(brandPojo.getId(), new SalesReportData());</span>
+<span class="fc" id="L75">            List&lt;OrderItemPojo&gt; orderItemPojoList = orderApi.getOrderItemsByOrderId(orderPojo.getId());</span>
+<span class="fc" id="L76">            DecimalFormat df = new DecimalFormat(&quot;#.##&quot;);</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">            for (OrderItemPojo orderItemPojo: orderItemPojoList) {</span>
+<span class="fc" id="L78">                ProductPojo productPojo = productMap.get(orderItemPojo.getProductId());</span>
+<span class="fc" id="L79">                BrandPojo brandPojo = brandMap.get(productPojo.getBrandCategory());</span>
+<span class="pc bpc" id="L80" title="1 of 4 branches missed.">                if((Objects.equals(brand,brandPojo.getBrand()) || Objects.equals(brand,&quot;all&quot;)) &amp;&amp;</span>
+<span class="pc bpc" id="L81" title="1 of 4 branches missed.">                        (Objects.equals(category,brandPojo.getCategory()) || Objects.equals(category,&quot;all&quot;))) {</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">                    if(!salesMap.containsKey(brandPojo.getId())) {</span>
+<span class="fc" id="L83">                        salesMap.put(brandPojo.getId(), new SalesReportData());</span>
                     }
-<span class="fc" id="L122">                    SalesReportData salesReportData = salesMap.get(brandPojo.getId());</span>
-<span class="fc" id="L123">                    salesReportData.setQuantity(salesReportData.getQuantity() + orderItemPojo.getQuantity() );</span>
-<span class="fc" id="L124">                    salesReportData.setRevenue(Double.parseDouble(df.format(salesReportData.getRevenue()</span>
-<span class="fc" id="L125">                            + (orderItemPojo.getQuantity() * orderItemPojo.getSellingPrice()))));</span>
+<span class="fc" id="L85">                    SalesReportData salesReportData = salesMap.get(brandPojo.getId());</span>
+<span class="fc" id="L86">                    salesReportData.setQuantity(salesReportData.getQuantity() + orderItemPojo.getQuantity() );</span>
+<span class="fc" id="L87">                    salesReportData.setRevenue(Double.parseDouble(df.format(salesReportData.getRevenue()</span>
+<span class="fc" id="L88">                            + (orderItemPojo.getQuantity() * orderItemPojo.getSellingPrice()))));</span>
                 }
-<span class="fc" id="L127">            }</span>
-<span class="fc" id="L128">        }</span>
+<span class="fc" id="L90">            }</span>
+<span class="fc" id="L91">        }</span>
 
-<span class="fc" id="L130">        List&lt;SalesReportData&gt; salesReportDataList = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L131" title="All 2 branches covered.">        for(Map.Entry&lt;Integer, SalesReportData&gt; entry: salesMap.entrySet()) {</span>
-<span class="fc" id="L132">            BrandPojo bp = brandMap.get(entry.getKey());</span>
-<span class="fc" id="L133">            SalesReportData d = entry.getValue();</span>
-<span class="fc" id="L134">            d.setBrand(bp.getBrand());</span>
-<span class="fc" id="L135">            d.setCategory(bp.getCategory());</span>
-<span class="fc" id="L136">            salesReportDataList.add(d);</span>
-<span class="fc" id="L137">        }</span>
-<span class="fc" id="L138">        salesListData = salesReportDataList;</span>
-<span class="fc" id="L139">        return salesListData;</span>
+<span class="fc" id="L93">        List&lt;SalesReportData&gt; salesReportDataList = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        for(Map.Entry&lt;Integer, SalesReportData&gt; entry: salesMap.entrySet()) {</span>
+<span class="fc" id="L95">            BrandPojo bp = brandMap.get(entry.getKey());</span>
+<span class="fc" id="L96">            SalesReportData d = entry.getValue();</span>
+<span class="fc" id="L97">            d.setBrand(bp.getBrand());</span>
+<span class="fc" id="L98">            d.setCategory(bp.getCategory());</span>
+<span class="fc" id="L99">            salesReportDataList.add(d);</span>
+<span class="fc" id="L100">        }</span>
+<span class="fc" id="L101">        salesListData = salesReportDataList;</span>
+<span class="fc" id="L102">        return salesListData;</span>
     }
 
     public void generateCsv(HttpServletResponse response) throws ApiException {
-<span class="fc" id="L143">        response.setContentType(&quot;text/csv&quot;);</span>
+<span class="fc" id="L106">        response.setContentType(&quot;text/csv&quot;);</span>
 
-<span class="fc" id="L145">        LocalDateTime lt = LocalDateTime.now();</span>
-<span class="fc" id="L146">        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd.HH:mm&quot;);</span>
-<span class="fc" id="L147">        String identifier = lt.format(dateTimeFormatter);</span>
+<span class="fc" id="L108">        LocalDateTime lt = LocalDateTime.now();</span>
+<span class="fc" id="L109">        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd.HH:mm&quot;);</span>
+<span class="fc" id="L110">        String identifier = lt.format(dateTimeFormatter);</span>
 
-<span class="fc" id="L149">        response.addHeader(&quot;Content-Disposition&quot;, &quot;attachment; filename=\&quot;salesReport&quot;+identifier+&quot;.csv\&quot;&quot;);</span>
+<span class="fc" id="L112">        response.addHeader(&quot;Content-Disposition&quot;, &quot;attachment; filename=\&quot;salesReport&quot;+identifier+&quot;.csv\&quot;&quot;);</span>
         try {
-<span class="fc" id="L151">            csvGenerator.writeSalesToCsv(salesListData, response.getWriter());</span>
-<span class="nc" id="L152">        } catch (IOException e) {</span>
-<span class="nc" id="L153">            throw new ApiException(e.getMessage());</span>
-<span class="fc" id="L154">        }</span>
-<span class="fc" id="L155">        salesListData.clear();</span>
-<span class="fc" id="L156">    }</span>
+<span class="fc" id="L114">            csvGenerator.writeSalesToCsv(salesListData, response.getWriter());</span>
+<span class="nc" id="L115">        } catch (IOException e) {</span>
+<span class="nc" id="L116">            throw new ApiException(e.getMessage());</span>
+<span class="fc" id="L117">        }</span>
+<span class="fc" id="L118">        salesListData.clear();</span>
+<span class="fc" id="L119">    }</span>
 
     private void checkDates(ZonedDateTime startDate, ZonedDateTime endDate) throws ApiException {
-<span class="fc bfc" id="L159" title="All 2 branches covered.">        if(endDate.isBefore(startDate)) {</span>
-<span class="fc" id="L160">            throw new ApiException(&quot;End date must not be before Start date&quot;);</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        if(endDate.isBefore(startDate)) {</span>
+<span class="fc" id="L123">            throw new ApiException(&quot;End date must not be before Start date&quot;);</span>
         }
-<span class="fc" id="L162">    }</span>
+<span class="fc" id="L125">    }</span>
 
     private HashMap&lt;Integer, ProductPojo&gt; getProductMap(List&lt;OrderPojo&gt; list) throws ApiException {
-<span class="fc" id="L165">        HashMap&lt;Integer, ProductPojo&gt; productMap = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L166">        Set&lt;Integer&gt; productIdList = new HashSet&lt;&gt;();</span>
-<span class="fc bfc" id="L167" title="All 2 branches covered.">        for (OrderPojo orderPojo: list) {</span>
-<span class="fc" id="L168">            List&lt;OrderItemPojo&gt; orderItemPojoList = orderApi.getOrderItemsByOrderId(orderPojo.getId());</span>
-<span class="fc bfc" id="L169" title="All 2 branches covered.">            for (OrderItemPojo orderItemPojo: orderItemPojoList) {</span>
-<span class="fc" id="L170">                productIdList.add(orderItemPojo.getProductId());</span>
-<span class="fc" id="L171">            }</span>
-<span class="fc" id="L172">        }</span>
-//        List&lt;String&gt; barcodes = new ArrayList&lt;&gt;();
-//        for (Integer productId: productIdList) {
-//            barcodes.add(productApi.get(productId).getBarcode());
-//        }
-<span class="fc" id="L177">        List&lt;ProductPojo&gt; productPojoList = productApi.selectInId(productIdList);</span>
-<span class="fc bfc" id="L178" title="All 2 branches covered.">        for (ProductPojo productPojo: productPojoList) {</span>
-<span class="fc" id="L179">            productMap.put(productPojo.getId(), productPojo);</span>
-<span class="fc" id="L180">        }</span>
-<span class="fc" id="L181">        return productMap;</span>
+<span class="fc" id="L128">        HashMap&lt;Integer, ProductPojo&gt; productMap = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L129">        Set&lt;Integer&gt; productIdList = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">        for (OrderPojo orderPojo: list) {</span>
+<span class="fc" id="L131">            List&lt;OrderItemPojo&gt; orderItemPojoList = orderApi.getOrderItemsByOrderId(orderPojo.getId());</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">            for (OrderItemPojo orderItemPojo: orderItemPojoList) {</span>
+<span class="fc" id="L133">                productIdList.add(orderItemPojo.getProductId());</span>
+<span class="fc" id="L134">            }</span>
+<span class="fc" id="L135">        }</span>
+<span class="fc" id="L136">        List&lt;ProductPojo&gt; productPojoList = productApi.selectInId(productIdList);</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">        for (ProductPojo productPojo: productPojoList) {</span>
+<span class="fc" id="L138">            productMap.put(productPojo.getId(), productPojo);</span>
+<span class="fc" id="L139">        }</span>
+<span class="fc" id="L140">        return productMap;</span>
     }
-
-    private HashMap&lt;Integer, BrandPojo&gt; getBrandMap(List&lt;OrderPojo&gt; list) {
-<span class="fc" id="L185">        HashMap&lt;Integer, BrandPojo&gt; brandMap = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L186">        List&lt;BrandPojo&gt; brandPojoList = brandApi.getAll();</span>
-<span class="fc bfc" id="L187" title="All 2 branches covered.">        for (BrandPojo brandPojo: brandPojoList) {</span>
-<span class="fc" id="L188">            brandMap.put(brandPojo.getId(), brandPojo);</span>
-<span class="fc" id="L189">        }</span>
-<span class="fc" id="L190">        return brandMap;</span>
+    //todo: optimise this function to reduce api calls
+    private HashMap&lt;Integer, BrandPojo&gt; getBrandMap() {
+<span class="fc" id="L144">        HashMap&lt;Integer, BrandPojo&gt; brandMap = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L145">        List&lt;BrandPojo&gt; brandPojoList = brandApi.getAll();</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">        for (BrandPojo brandPojo: brandPojoList) {</span>
+<span class="fc" id="L147">            brandMap.put(brandPojo.getId(), brandPojo);</span>
+<span class="fc" id="L148">        }</span>
+<span class="fc" id="L149">        return brandMap;</span>
     }
 
 }

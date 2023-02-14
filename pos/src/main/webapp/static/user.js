@@ -101,6 +101,11 @@ function checkform() {
   document.getElementById("add-user").disabled = !cansubmit;
 }
 
+function resetButtons(event){
+    resetForm();
+    checkform();
+}
+
 //INITIALIZATION CODE
 function init() {
   $("#add-user").click(addUser);

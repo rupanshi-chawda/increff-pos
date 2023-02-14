@@ -22,11 +22,32 @@ function arrayToJson() {
     return JSON.stringify(json);
 }
 
+function isJson(str) {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
+
 //BUTTON ACTIONS
 function addInventory(event) {
   //Set the values to update
   var $form = $("#inventory-form");
   var json = toJson($form);
+
+  var qty = JSON.parse(json).quantity;
+
+  if(isNaN(qty) || isNaN(parseFloat(qty))) {
+      toastr.error("Quantity must be number", "Error : ");
+      return;
+  }
+  if(parseFloat(qty) > 2147483647) {
+      toastr.error("Quantity is greater than Maximum value allowed", "Error : ");
+      return;
+  }
+
   var url = getInventoryUrl();
   wholeInventory.push(json);
   var barcodeInv = $("#inventory-form input[name=barcode]").val();
@@ -58,19 +79,20 @@ function addInventory(event) {
       }
     },
     error: function (response) {
-        resetForm();
         console.log(response);
         if(response.status == 403) {
             toastr.error("Error: 403 unauthorized");
         }
         else {
             var resp = JSON.parse(response.responseText);
-            //alert(response.message);
-            console.log(resp);
-           	var jsonObj = JSON.parse(resp.message);
-           	console.log(jsonObj);
-            toastr.error(jsonObj[0].message, "Error : ");
-        }
+                if (isJson(resp.message) == true) {
+                   var jsonObj = JSON.parse(resp.message);
+                   console.log(jsonObj);
+                   toastr.error(jsonObj[0].message, "Error : ");
+                } else {
+                   handleAjaxError(response);
+                }
+            }
         wholeInventory=[];
     }
   });
@@ -87,6 +109,17 @@ function updateInventory(event) {
   var $form = $("#inventory-edit-form");
   var json = toJson($form);
   console.log(json);
+
+  var qty = JSON.parse(json).quantity;
+
+  if(isNaN(qty) || isNaN(parseFloat(qty))) {
+      toastr.error("Quantity must be number", "Error : ");
+      return;
+  }
+  if(parseFloat(qty) > 2147483647) {
+      toastr.error("Quantity is greater than Maximum value allowed", "Error : ");
+      return;
+  }
 
   $.ajax({
     url: url,
@@ -138,6 +171,17 @@ function readFileDataCallback(results) {
     	    toastr.error("file length exceeds 5000, Not Allowed");
     	}
     	else {
+            var headers = ["barcode","quantity"];
+      	    if(Object.keys(fileData[0]).length != headers.length) {
+                toastr.error("Number of columns in File do not match. Please check the file and try again");
+                return;
+            }
+            for(var i in headers) {
+                if(!fileData[0].hasOwnProperty(headers[i])) {
+                    toastr.error('File columns Names do not match. Please check the file and try again');
+                    return;
+                }
+            }
     	    uploadRows();
     	}
 }
@@ -306,6 +350,12 @@ function displayAddInventory(data) {
 
 function enableUpdate() {
   document.getElementById("update-inventory").disabled = false;
+}
+
+
+function resetButtons(event){
+    resetForm();
+    checkform();
 }
 
 //INITIALIZATION CODE

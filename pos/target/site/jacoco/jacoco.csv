@@ -10,7 +10,7 @@ pos,com.increff.pos.dao,OrderDao,0,93,0,0,0,20,0,4,0,4
 pos,com.increff.pos.dto,UserDto,0,52,0,4,0,15,0,9,0,7
 pos,com.increff.pos.dto,ProductDto,2,127,0,6,1,33,0,8,0,5
 pos,com.increff.pos.dto,AdminDto,5,39,1,3,1,10,1,5,0,4
-pos,com.increff.pos.dto,SalesReportDto,7,380,2,24,2,75,2,19,0,8
+pos,com.increff.pos.dto,SalesReportDto,7,379,2,24,2,75,2,19,0,8
 pos,com.increff.pos.dto,BrandFlowApi,3,95,0,6,1,21,0,5,0,2
 pos,com.increff.pos.dto,InitDto,0,66,1,7,0,15,1,6,0,3
 pos,com.increff.pos.dto,AbstractUiDto,4,40,2,2,0,8,2,2,0,2

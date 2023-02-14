@@ -82,10 +82,6 @@ public class SalesReportDtoTest extends AbstractUnitTest {
         productFormList.add(productForm2);
         productDto.add(productFormList);
 
-        List<ProductData> productData = productDto.getAll();
-        System.out.println(productData.get(0).getId());
-        System.out.println(productData.get(1).getId());
-
         List<InventoryForm> inventoryFormList = new ArrayList<>();
         InventoryForm inventoryForm = InventoryTestHelper.createForm("a1b2c3d4", 25);
         inventoryFormList.add(inventoryForm);

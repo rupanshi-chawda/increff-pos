@@ -36,47 +36,67 @@ function arrayToJson() {
     return JSON.stringify(json);
 }
 
+function isJson(str) {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
 
 //BUTTON ACTIONS
 function addProduct(event) {
   //Set the values to update
   var $form = $("#product-form");
   var json = toJson($form);
-  var url = getProductUrl();
-  wholeProduct.push(json);
-  var jsonObj = arrayToJson();
-  console.log(url);
-  $.ajax({
-    url: url,
-    type: "POST",
-    data: jsonObj,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    success: function (response) {
-      getProductList();
-      toastr.success("Product Added Successfully", "Success : ");
-      resetForm();
-      wholeProduct = [];
-    },
-    error: function (response) {
-             resetForm();
-             console.log(response);
-             if(response.status == 403) {
-                  toastr.error("Error: 403 unauthorized");
-             }
-             else {
 
-            var resp = JSON.parse(response.responseText);
-             //alert(response.message);
-                 console.log(resp);
-            var jsonObj = JSON.parse(resp.message);
-            console.log(jsonObj);
-              toastr.error(jsonObj[0].message, "Error : ");
-             }
-             wholeProduct=[];
-          }
-  });
+  var mrp = JSON.parse(json).mrp;
+
+  if(isNaN(mrp) || isNaN(parseFloat(mrp))) {
+      toastr.error("MRP must be number", "Error : ");
+      return;
+  }
+  if(parseFloat(mrp) > 2147483647) {
+      toastr.error("MRP is greater than Maximum value allowed", "Error : ");
+      return;
+  }
+
+      var url = getProductUrl();
+      wholeProduct.push(json);
+      var jsonObj = arrayToJson();
+      console.log(url);
+      $.ajax({
+        url: url,
+        type: "POST",
+        data: jsonObj,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        success: function (response) {
+          getProductList();
+          toastr.success("Product Added Successfully", "Success : ");
+          resetForm();
+          wholeProduct = [];
+        },
+        error: function (response) {
+                 console.log(response);
+                 if(response.status == 403) {
+                      toastr.error("Error: 403 unauthorized");
+                 }
+                 else {
+                        var resp = JSON.parse(response.responseText);
+                        if (isJson(resp.message) == true) {
+                           var jsonObj = JSON.parse(resp.message);
+                           console.log(jsonObj);
+                           toastr.error(jsonObj[0].message, "Error : ");
+                        } else {
+                           handleAjaxError(response);
+                        }
+                 }
+                 wholeProduct=[];
+              }
+      });
 
   return false;
 }
@@ -89,6 +109,17 @@ function updateProduct(event) {
   //Set the values to update
   var $form = $("#product-edit-form");
   var json = toJson($form);
+
+  var mrp = JSON.parse(json).mrp;
+
+  if(isNaN(mrp) || isNaN(parseFloat(mrp))) {
+      toastr.error("MRP must be a number", "Error : ");
+      return;
+  }
+  if(parseFloat(mrp) > 2147483647) {
+      toastr.error("MRP is greater than Maximum value allowed", "Error : ");
+      return;
+  }
 
   $.ajax({
     url: url,
@@ -139,6 +170,17 @@ function readFileDataCallback(results) {
   	    toastr.error("file length exceeds 5000, Not Allowed");
   	}
   	else {
+  	        var headers = ["barcode", "brand", "category", "name", "mrp"];
+      	    if(Object.keys(fileData[0]).length != headers.length) {
+                toastr.error("Number of columns in File do not match. Please check the file and try again");
+                return;
+            }
+            for(var i in headers) {
+                if(!fileData[0].hasOwnProperty(headers[i])) {
+                    toastr.error('File columns Names do not match. Please check the file and try again');
+                    return;
+                }
+            }
   	    uploadRows();
   	}
 }
@@ -360,6 +402,12 @@ function enableUpdate() {
   document.getElementById("update-product").disabled = false;
 }
 
+
+function resetButtons(event){
+    resetForm();
+    checkform();
+}
+
 //INITIALIZATION CODE
 function init() {
   $("#add-product").click(addProduct);
@@ -370,7 +418,6 @@ function init() {
   $("#download-errors").click(downloadErrors);
   $("#productFile").on("change", updateFileName);
   $("#inputBrand").change(displayCategoryOptions);
-//  $("#productFile").click(activateUpload);
   $("#add-modal").click(displayAddProduct);
 }
 

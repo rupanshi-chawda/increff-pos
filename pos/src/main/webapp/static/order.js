@@ -1,5 +1,5 @@
 var wholeOrder = [];
-
+//todo: fix order js
 function getOrderItemUrl() {
   var baseUrl = $("meta[name=baseUrl]").attr("content");
   return baseUrl + "/api/order/cart";
@@ -115,6 +115,10 @@ function changeQuantity(item) {
     if (temp_barcode == barcode) {
       var prev_quantity = parseInt(JSON.parse(wholeOrder[i]).quantity);
       var new_quantity = prev_quantity + quantity;
+      if (new_quantity > barcodeList.get(barcode)) {
+        toastr.error("Quantity not available in the inventory");
+        return;
+      }
       console.log(new_quantity);
       var str = new_quantity.toString();
       console.log(str);
@@ -163,6 +167,58 @@ const barcodeList = new Map();
 var inv_qty = null;
 var inv_barcode = null;
 
+function getBarcode(data) {
+  for (i in data) {
+    let vars = [];
+    vars.push(data[i].id);
+    vars.push(data[i].barcode);
+    getQtyFromInventory(vars);
+  }
+}
+
+function getQtyFromInventory(vars) {
+  var url = getInventoryUrl() + "/" + vars[0];
+  var temp_qty;
+  $.ajax({
+    url: url,
+    type: "GET",
+    success: function (data) {
+      barcodeList.set(vars[1], data.quantity);
+    },
+    error: handleAjaxError,
+  });
+
+  return temp_qty;
+}
+
+function getProductList() {
+  var url = getInventoryUrl();
+  $.ajax({
+    url: url,
+    type: "GET",
+    success: function (data) {
+      barcode_qty.clear();
+      getBarcode(data);
+    },
+    error: handleAjaxError,
+  });
+}
+
+function checkBarcode(data) {
+  console.log(data);
+  console.log(barcode_qty[data]);
+  console.log(barcode_qty.has(data));
+  if (barcode_qty.has(data)) {
+    return true;
+  }
+  return false;
+}
+var inv_qty = null;
+var inv_barcode = null;
+var mrp = null;
+
+var check = 1;
+
 function getInventory(barcode) {
   var url = getInventoryUrl() + "/" + barcode;
   $.ajax({
@@ -174,7 +230,6 @@ function getInventory(barcode) {
 
       barcodeList.set(data.barcode, data.qty);
       addItem();
-      toastr.success("Item added to Cart", "Success : ");
       resetForm();
     },
     error: function (data) {
@@ -196,41 +251,50 @@ function addItem() {
 
   console.log(qty);
   console.log(inv_qty);
-  if (qty > barcodeList.get(barcode1)) {
+  if(isNaN(qty) || isNaN(parseFloat(qty))) {
+        toastr.error("Quantity must be a number", "Error : ");
+  }
+  else if (qty > barcodeList.get(barcode1)) {
     toastr.error("Quantity not present in inventory");
     resetForm();
-  } else {
+  }
+  else
+  {
     var _qty = barcodeList.get(barcode1) - qty;
     var sp = $("#order-item-form input[name=sellingPrice]").val();
 
-    if (sp <= 0) {
-      toastr.error("Price cannot be negative or zero");
-    } else if (qty <= 0) {
-      toastr.error("Quantity cannot be negative or zero");
-    } else {
-      if (checkOrderItemExist()) {
-        console.log("inside check");
-        let vars = [];
-
-        var barcode = $("#order-item-form input[name=barcode]").val();
-        var qty = $("#order-item-form input[name=quantity]").val();
-        var sp = $("#order-item-form input[name=sellingPrice]").val();
-
-        vars.push(barcode);
-        vars.push(qty);
-        vars.push(sp);
-        if (checkSellingPrice(vars) == false) {
-          toastr.error("Selling price cannot be different");
-        } else {
-          changeQuantity(vars);
+        if (sp <= 0) {
+            toastr.error("Price cannot be negative or zero");
+        } else if (qty <= 0) {
+            toastr.error("Quantity cannot be negative or zero");
         }
-      } else {
-        wholeOrder.push(json);
-      }
-      resetForm();
+        if (qty > barcodeList.get(barcode1)) {
+            toastr.error("Not enough quantity present in inventory , "+ barcodeList.get(barcode1) + " available");
+        } else {
+              if (checkOrderItemExist()) {
+                console.log("inside check");
+                let vars = [];
 
-      displayOrderItemList(wholeOrder);
-    }
+                var barcode = $("#order-item-form input[name=barcode]").val();
+                var qty = $("#order-item-form input[name=quantity]").val();
+                var sp = $("#order-item-form input[name=sellingPrice]").val();
+
+                vars.push(barcode);
+                vars.push(qty);
+                vars.push(sp);
+                if (checkSellingPrice(vars) == false) {
+                  toastr.error("Selling price cannot be different");
+                } else {
+                  changeQuantity(vars);
+                }
+              } else {
+                wholeOrder.push(json);
+                toastr.success("Item added to Cart", "Success : ");
+                resetForm();
+              }
+
+          displayOrderItemList(wholeOrder);
+        }
   }
 }
 

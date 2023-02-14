@@ -44,14 +44,12 @@ function addBrand(event) {
       toastr.success("Brand Added Successfully", "Success : ");
     },
     error: function (response) {
-        resetForm();
         console.log(response);
         if(response.status == 403) {
             toastr.error("Error: 403 unauthorized");
         }
         else {
             var resp = JSON.parse(response.responseText);
-            //alert(response.message);
             console.log(resp);
             var jsonObj = JSON.parse(resp.message);
             console.log(jsonObj);
@@ -119,9 +117,20 @@ function readFileDataCallback(results) {
   console.log(fileData);
   var filelen = fileData.length;
   	if(filelen > 5000) {
-  	    toastr.error("file length exceeds 5000, Not Allowed");
+  	    toastr.error("File length exceeds 5000, upload not allowed");
   	}
   	else {
+  	    var headers = ["brand", "category"];
+  	    if(Object.keys(fileData[0]).length != headers.length) {
+            toastr.error("Number of columns in File do not match. Please check the file and try again");
+            return;
+        }
+        for(var i in headers) {
+            if(!fileData[0].hasOwnProperty(headers[i])) {
+                toastr.error('File columns Names do not match. Please check the file and try again');
+                return;
+            }
+        }
   	    uploadRows();
   	}
 }
@@ -133,15 +142,8 @@ function uploadRows() {
   $("#process-data").prop("disabled", true);
   //If everything processed then return
   if (processCount == fileData.length) {
-    //toastr.success("Rows uploaded Successfully", "Success : ");
     return;
   }
-//  if (errorData.length > 0) {
-//    $("#download-errors").prop("disabled", false);
-//  }
-  //Process next row
-//  var row = fileData[processCount];
-//  processCount++;
 
   var json = JSON.stringify(fileData);
   var url = getBrandUrl();
@@ -163,9 +165,6 @@ function uploadRows() {
       toastr.success("Brands Uploaded Successfully", "Success : ");
     },
     error: function (response) {
-//      row.error = response.responseText;
-//      errorData.push(row);
-//      uploadRows();
         if(response.status == 403){
             toastr.error("403 Forbidden");
         }
@@ -274,6 +273,7 @@ function displayBrand(data) {
 
   document.getElementById("update-brand").disabled = true;
 }
+
 function checkform() {
   var f = document.forms["brand-form"].elements;
   var cansubmit = true;
@@ -291,6 +291,11 @@ function enableUpdate() {
   document.getElementById("update-brand").disabled = false;
 }
 
+function resetButtons(event){
+    resetForm();
+    checkform();
+}
+
 //INITIALIZATION CODE
 function init() {
   $("#add-brand").click(addBrand);
@@ -301,7 +306,6 @@ function init() {
   $("#download-errors").click(downloadErrors);
   $("#brandFile").on("change", updateFileName);
   $("#download-csv").click(downloadCsv);
-  //$("#brandFile").click(activateUpload);
   $("#add-modal").click(displayAddBrand);
 }
 
