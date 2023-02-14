@@ -1,6 +1,8 @@
 package com.increff.pos.dto;
 
 import com.increff.pos.AbstractUnitTest;
+import com.increff.pos.api.UserApi;
+import com.increff.pos.helper.UserHelper;
 import com.increff.pos.helper.UserTestHelper;
 import com.increff.pos.model.data.InfoData;
 import com.increff.pos.model.form.LoginForm;
@@ -16,10 +18,10 @@ import static org.junit.Assert.assertEquals;
 public class InitDtoTest extends AbstractUnitTest {
 
     @Autowired
-    private AdminDto adminDto;
+    private InitDto dto;
 
     @Autowired
-    private InitDto dto;
+    private UserApi userApi;
 
     @Autowired
     private InfoData info;
@@ -45,7 +47,7 @@ public class InitDtoTest extends AbstractUnitTest {
     @Test
     public void signUpExistsTest() throws ApiException {
         UserForm userForm = UserTestHelper.createForm("test@mail.com", "1234abcd", "");
-        adminDto.add(userForm);
+        userApi.add(UserHelper.convert(userForm));
 
         ModelAndView mav = dto.init(userForm);
 

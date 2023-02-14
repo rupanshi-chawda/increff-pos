@@ -1,8 +1,11 @@
 package com.increff.pos.dto;
 
 import com.increff.pos.AbstractUnitTest;
+import com.increff.pos.api.BrandApi;
 import com.increff.pos.api.ProductApi;
+import com.increff.pos.helper.BrandHelper;
 import com.increff.pos.helper.BrandTestHelper;
+import com.increff.pos.helper.ProductHelper;
 import com.increff.pos.helper.ProductTestHelper;
 import com.increff.pos.model.data.ProductData;
 import com.increff.pos.model.form.BrandForm;
@@ -27,14 +30,12 @@ public class ProductDtoTest extends AbstractUnitTest {
     private ProductApi api;
 
     @Autowired
-    private BrandDto brandDto;
+    private BrandApi brandApi;
 
     @Test
     public void addProductTest() throws ApiException  {
-        List<BrandForm> brandFormList = new ArrayList<>();
-        BrandForm brandForm = BrandTestHelper.createForm("Dyson ", " hair");
-        brandFormList.add(brandForm);
-        brandDto.add(brandFormList);
+        BrandForm brandForm = BrandTestHelper.createForm("dyson", "hair");
+        brandApi.add(BrandHelper.convert(brandForm));
 
 
         List<ProductForm> productFormList = new ArrayList<>();
@@ -42,30 +43,26 @@ public class ProductDtoTest extends AbstractUnitTest {
         productFormList.add(productForm);
         dto.add(productFormList);
 
-        String expectedBrand = "dyson";
-        String expectedCategory = "hair";
+        Integer expectedBrandCategory = brandApi.checkBrandCategory(productForm.getBrand(), productForm.getCategory());
         String expectedName = "airwrap";
         Double expectedMrp = 45000.95;
         String expectedBarcode = "a1b2c3d4";
 
 
-        ProductData productData = dto.get(api.getIdByBarcode(expectedBarcode));
+        ProductPojo productPojo = api.get(api.getIdByBarcode(expectedBarcode));
 
-        assertEquals(expectedBarcode, productData.getBarcode());
-        assertEquals(expectedName, productData.getName());
-        assertEquals(expectedBrand, productData.getBrand());
-        assertEquals(expectedCategory, productData.getCategory());
-        assertEquals(expectedMrp, productData.getMrp(), 0.001);
+        assertEquals(expectedBarcode, productPojo.getBarcode());
+        assertEquals(expectedName, productPojo.getName());
+        assertEquals(expectedBrandCategory, productPojo.getBrandCategory());
+        assertEquals(expectedMrp, productPojo.getMrp(), 0.001);
     }
 
     @Test(expected = ApiException.class)
     public void addDuplicateProduct() throws ApiException  {
 
         try{
-            List<BrandForm> brandFormList = new ArrayList<>();
-            BrandForm brandForm = BrandTestHelper.createForm("Dyson ", " hair");
-            brandFormList.add(brandForm);
-            brandDto.add(brandFormList);
+            BrandForm brandForm = BrandTestHelper.createForm("dyson", "hair");
+            brandApi.add(BrandHelper.convert(brandForm));
 
             List<ProductForm> productFormList = new ArrayList<>();
             ProductForm productForm = ProductTestHelper.createForm("dyson","hair","A1B2C3D4", "AirWrap ", 45000.95);
@@ -85,14 +82,10 @@ public class ProductDtoTest extends AbstractUnitTest {
     @Test(expected = ApiException.class)
     public void addIllegalProduct() throws ApiException  {
         try {
+            BrandForm brandForm = BrandTestHelper.createForm("dyson", "hair");
+            brandApi.add(BrandHelper.convert(brandForm));
+
             List<ProductForm> productFormList = new ArrayList<>();
-            List<BrandForm> brandFormList = new ArrayList<>();
-            BrandForm brandForm = BrandTestHelper.createForm("Dyson ", " hair");
-            brandFormList.add(brandForm);
-
-
-            brandDto.add(brandFormList);
-
             ProductForm productForm = ProductTestHelper.createForm("dyson","dryer","a1b2c3d4", "airwrap", 45000.95);
             productFormList.add(productForm);
 
@@ -109,11 +102,8 @@ public class ProductDtoTest extends AbstractUnitTest {
     @Test(expected = ApiException.class)
     public void addEmptyProductTest() throws ApiException  {
         try {
-            List<BrandForm> brandFormList = new ArrayList<>();
-            BrandForm brandForm = BrandTestHelper.createForm("Dyson ", " hair");
-            brandFormList.add(brandForm);
-            brandDto.add(brandFormList);
-
+            BrandForm brandForm = BrandTestHelper.createForm("dyson", "hair");
+            brandApi.add(BrandHelper.convert(brandForm));
 
             List<ProductForm> productFormList = new ArrayList<>();
             ProductForm productForm = ProductTestHelper.createForm("dyson","","a1b2c3d4", "airwrap", 45000.95);
@@ -127,11 +117,8 @@ public class ProductDtoTest extends AbstractUnitTest {
             throw e;
         }
         try {
-            List<BrandForm> brandFormList = new ArrayList<>();
-            BrandForm brandForm = BrandTestHelper.createForm("Dyson ", " hair");
-            brandFormList.add(brandForm);
-            brandDto.add(brandFormList);
-
+            BrandForm brandForm = BrandTestHelper.createForm("dyson", "hair");
+            brandApi.add(BrandHelper.convert(brandForm));
 
             List<ProductForm> productFormList = new ArrayList<>();
             ProductForm productForm = ProductTestHelper.createForm("dyson","hair","a1b2c3d4", "airwrap", -1200.00);
@@ -145,11 +132,8 @@ public class ProductDtoTest extends AbstractUnitTest {
             throw e;
         }
         try {
-            List<BrandForm> brandFormList = new ArrayList<>();
-            BrandForm brandForm = BrandTestHelper.createForm("Dyson ", " hair");
-            brandFormList.add(brandForm);
-            brandDto.add(brandFormList);
-
+            BrandForm brandForm = BrandTestHelper.createForm("dyson", "hair");
+            brandApi.add(BrandHelper.convert(brandForm));
 
             List<ProductForm> productFormList = new ArrayList<>();
             ProductForm productForm = ProductTestHelper.createForm("","hair","a1b2c3d4", "airwrap", 45000.95);
@@ -163,11 +147,8 @@ public class ProductDtoTest extends AbstractUnitTest {
             throw e;
         }
         try {
-            List<BrandForm> brandFormList = new ArrayList<>();
-            BrandForm brandForm = BrandTestHelper.createForm("Dyson ", " hair");
-            brandFormList.add(brandForm);
-            brandDto.add(brandFormList);
-
+            BrandForm brandForm = BrandTestHelper.createForm("dyson", "hair");
+            brandApi.add(BrandHelper.convert(brandForm));
 
             List<ProductForm> productFormList = new ArrayList<>();
             ProductForm productForm = ProductTestHelper.createForm("dyson","hair","a1b2c3d4", "", 45000.95);
@@ -184,18 +165,18 @@ public class ProductDtoTest extends AbstractUnitTest {
 
     @Test
     public void getAllProductTest() throws ApiException  {
-        List<BrandForm> brandFormList = new ArrayList<>();
-        BrandForm brandForm = BrandTestHelper.createForm("Dyson ", " hair");
-        brandFormList.add(brandForm);
-        brandDto.add(brandFormList);
+        BrandForm brandForm = BrandTestHelper.createForm("dyson", "hair");
+        brandApi.add(BrandHelper.convert(brandForm));
 
-        List<ProductForm> productFormList = new ArrayList<>();
-        ProductForm productForm = ProductTestHelper.createForm("dyson","hair","A1B2C3D4", "AirWrap ", 45000.95);
-        productFormList.add(productForm);
+        ProductForm productForm = ProductTestHelper.createForm("dyson","hair","a1b2c3d4", "airwrap", 45000.95);
+        ProductPojo px = ProductHelper.convert(productForm);
+        px.setBrandCategory(brandApi.checkBrandCategory(productForm.getBrand(), productForm.getCategory()));
+        api.add(px);
 
-        ProductForm productForm2 = ProductTestHelper.createForm("dyson","hair","qwer1234", "superSonic dryer", 32000.95);
-        productFormList.add(productForm2);
-        dto.add(productFormList);
+        ProductForm productForm2 = ProductTestHelper.createForm("dyson","hair","qwer1234", "supersonic dryer", 32000.95);
+        ProductPojo py = ProductHelper.convert(productForm2);
+        py.setBrandCategory(brandApi.checkBrandCategory(productForm2.getBrand(), productForm2.getCategory()));
+        api.add(py);
 
         List<ProductData> list = dto.getAll();
         assertEquals(2, list.size());
@@ -203,15 +184,13 @@ public class ProductDtoTest extends AbstractUnitTest {
 
     @Test
     public void updateProductTest() throws ApiException  {
-        List<BrandForm> brandFormList = new ArrayList<>();
-        BrandForm brandForm = BrandTestHelper.createForm("Dyson ", " hair");
-        brandFormList.add(brandForm);
-        brandDto.add(brandFormList);
+        BrandForm brandForm = BrandTestHelper.createForm("dyson", "hair");
+        brandApi.add(BrandHelper.convert(brandForm));
 
-        List<ProductForm> productFormList = new ArrayList<>();
-        ProductForm productForm = ProductTestHelper.createForm("dyson","hair","A1B2C3D4", "AirWrap ", 45000.95);
-        productFormList.add(productForm);
-        dto.add(productFormList);
+        ProductForm productForm = ProductTestHelper.createForm("dyson","hair","a1b2c3d4", "airwrap", 45000.95);
+        ProductPojo px = ProductHelper.convert(productForm);
+        px.setBrandCategory(brandApi.checkBrandCategory(productForm.getBrand(), productForm.getCategory()));
+        api.add(px);
 
 
         String expectedBarcode = "a1b2c3d4";
@@ -233,15 +212,13 @@ public class ProductDtoTest extends AbstractUnitTest {
     @Test(expected = ApiException.class)
     public void updateIllegalProduct() throws ApiException  {
         try {
-            List<BrandForm> brandFormList = new ArrayList<>();
-            BrandForm brandForm = BrandTestHelper.createForm("Dyson ", " hair");
-            brandFormList.add(brandForm);
-            brandDto.add(brandFormList);
+            BrandForm brandForm = BrandTestHelper.createForm("dyson", "hair");
+            brandApi.add(BrandHelper.convert(brandForm));
 
-            List<ProductForm> productFormList = new ArrayList<>();
-            ProductForm productForm = ProductTestHelper.createForm("dyson","hair","A1B2C3D4", "AirWrap ", 45000.95);
-            productFormList.add(productForm);
-            dto.add(productFormList);
+            ProductForm productForm = ProductTestHelper.createForm("dyson","hair","a1b2c3d4", "airwrap", 45000.95);
+            ProductPojo px = ProductHelper.convert(productForm);
+            px.setBrandCategory(brandApi.checkBrandCategory(productForm.getBrand(), productForm.getCategory()));
+            api.add(px);
 
 
             String expectedBarcode = "a1b2c3d4";
@@ -254,7 +231,7 @@ public class ProductDtoTest extends AbstractUnitTest {
             updateForm.setMrp(newMrp);
             dto.update(42, updateForm);
         }
-        catch(ApiException    e)
+        catch(ApiException e)
         {
             String exception = "Product with given ID does not exists, id: 42";
             assertEquals(exception, e.getMessage());
@@ -265,15 +242,13 @@ public class ProductDtoTest extends AbstractUnitTest {
     @Test(expected = ApiException.class)
     public void updateEmptyBrand() throws ApiException  {
         try {
-            List<BrandForm> brandFormList = new ArrayList<>();
-            BrandForm brandForm = BrandTestHelper.createForm("Dyson ", " hair");
-            brandFormList.add(brandForm);
-            brandDto.add(brandFormList);
+            BrandForm brandForm = BrandTestHelper.createForm("dyson", "hair");
+            brandApi.add(BrandHelper.convert(brandForm));
 
-            List<ProductForm> productFormList = new ArrayList<>();
-            ProductForm productForm = ProductTestHelper.createForm("dyson","hair","A1B2C3D4", "AirWrap ", 45000.95);
-            productFormList.add(productForm);
-            dto.add(productFormList);
+            ProductForm productForm = ProductTestHelper.createForm("dyson","hair","a1b2c3d4", "airwrap", 45000.95);
+            ProductPojo px = ProductHelper.convert(productForm);
+            px.setBrandCategory(brandApi.checkBrandCategory(productForm.getBrand(), productForm.getCategory()));
+            api.add(px);
 
 
             String expectedBarcode = "a1b2c3d4";
@@ -293,16 +268,13 @@ public class ProductDtoTest extends AbstractUnitTest {
             throw e;
         }
         try {
-            List<BrandForm> brandFormList = new ArrayList<>();
-            BrandForm brandForm = BrandTestHelper.createForm("Dyson ", " hair");
-            brandFormList.add(brandForm);
-            brandDto.add(brandFormList);
+            BrandForm brandForm = BrandTestHelper.createForm("dyson", "hair");
+            brandApi.add(BrandHelper.convert(brandForm));
 
-            List<ProductForm> productFormList = new ArrayList<>();
-            ProductForm productForm = ProductTestHelper.createForm("dyson","hair","A1B2C3D4", "AirWrap ", 45000.95);
-            productFormList.add(productForm);
-            dto.add(productFormList);
-
+            ProductForm productForm = ProductTestHelper.createForm("dyson","hair","a1b2c3d4", "airwrap", 45000.95);
+            ProductPojo px = ProductHelper.convert(productForm);
+            px.setBrandCategory(brandApi.checkBrandCategory(productForm.getBrand(), productForm.getCategory()));
+            api.add(px);
 
             String expectedBarcode = "a1b2c3d4";
 

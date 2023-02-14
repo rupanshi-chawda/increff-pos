@@ -1,13 +1,10 @@
 package com.increff.pos.dto;
 
 import com.increff.pos.AbstractUnitTest;
-import com.increff.pos.api.SalesApi;
-import com.increff.pos.helper.BrandTestHelper;
-import com.increff.pos.helper.InventoryTestHelper;
-import com.increff.pos.helper.OrderTestHelper;
-import com.increff.pos.helper.ProductTestHelper;
+import com.increff.pos.api.*;
+import com.increff.pos.helper.*;
 import com.increff.pos.model.form.*;
-import com.increff.pos.pojo.SalesPojo;
+import com.increff.pos.pojo.*;
 import com.increff.pos.util.ApiException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +24,16 @@ public class SalesDtoTest extends AbstractUnitTest {
     private OrderDto orderDto;
 
     @Autowired
-    private InventoryDto inventoryDto;
+    private OrderApi orderApi;
 
     @Autowired
-    private ProductDto productDto;
+    private InventoryApi inventoryApi;
 
     @Autowired
-    private BrandDto brandDto;
+    private ProductApi productApi;
+
+    @Autowired
+    private BrandApi brandApi;
 
     @Autowired
     private SalesApi api;
@@ -42,33 +42,44 @@ public class SalesDtoTest extends AbstractUnitTest {
     public void getAllTest() throws ApiException {
         SalesForm salesForm = new SalesForm();
 
-        List<BrandForm> brandFormList = new ArrayList<>();
-        BrandForm brandForm = BrandTestHelper.createForm("Dyson ", " hair");
-        brandFormList.add(brandForm);
-        brandDto.add(brandFormList);
+        BrandForm brandForm = BrandTestHelper.createForm("dyson", "hair");
+        brandApi.add(BrandHelper.convert(brandForm));
 
-        List<ProductForm> productFormList = new ArrayList<>();
-        ProductForm productForm = ProductTestHelper.createForm("dyson","hair","A1B2C3D4", "AirWrap ", 45000.95);
-        productFormList.add(productForm);
-        ProductForm productForm2 = ProductTestHelper.createForm("dyson","hair","qwer1234", "superSonic dryer", 32000.95);
-        productFormList.add(productForm2);
-        productDto.add(productFormList);
+        ProductForm productForm = ProductTestHelper.createForm("dyson","hair","a1b2c3d4", "airwrap", 45000.95);
+        ProductPojo px = ProductHelper.convert(productForm);
+        px.setBrandCategory(brandApi.checkBrandCategory(productForm.getBrand(), productForm.getCategory()));
+        productApi.add(px);
 
-        List<InventoryForm> inventoryFormList = new ArrayList<>();
+        ProductForm productForm2 = ProductTestHelper.createForm("dyson","hair","qwer1234", "supersonic dryer", 32000.95);
+        ProductPojo py = ProductHelper.convert(productForm2);
+        py.setBrandCategory(brandApi.checkBrandCategory(productForm2.getBrand(), productForm2.getCategory()));
+        productApi.add(py);
+
         InventoryForm inventoryForm = InventoryTestHelper.createForm("a1b2c3d4", 25);
-        inventoryFormList.add(inventoryForm);
-        InventoryForm inventoryForm2 = InventoryTestHelper.createForm("qwer1234", 17);
-        inventoryFormList.add(inventoryForm2);
-        inventoryDto.add(inventoryFormList);
+        InventoryPojo inventoryPojo = InventoryHelper.convert(inventoryForm);
+        inventoryPojo.setId(productApi.getIdByBarcode(inventoryForm.getBarcode()));
+        inventoryApi.add(inventoryPojo);
 
-        List<OrderItemForm> orderItemFormList = new ArrayList<>();
+        InventoryForm inventoryForm1 = InventoryTestHelper.createForm("qwer1234", 15);
+        InventoryPojo inventoryPojo1 = InventoryHelper.convert(inventoryForm1);
+        inventoryPojo1.setId(productApi.getIdByBarcode(inventoryForm1.getBarcode()));
+        inventoryApi.add(inventoryPojo1);
+
         OrderItemForm orderItemForm = OrderTestHelper.createForm("a1b2c3d4",5,40599.95);
-        orderItemFormList.add(orderItemForm);
-        orderDto.addItem(orderItemFormList);
+        OrderPojo op = new OrderPojo();
+        orderApi.addOrder(op);
+        OrderItemPojo p = OrderHelper.convert(orderItemForm);
+        orderDto.reduceInventory(orderItemForm.getBarcode(), orderItemForm.getQuantity());
+        Integer pid = productApi.getIdByBarcode(orderItemForm.getBarcode());
+        orderApi.addItem(p, pid, op.getId());
 
         OrderItemForm orderItemForm2 = OrderTestHelper.createForm("qwer1234",3,29000.95);
-        orderItemFormList.add(orderItemForm2);
-        orderDto.addItem(orderItemFormList);
+        OrderPojo op2 = new OrderPojo();
+        orderApi.addOrder(op2);
+        OrderItemPojo p2 = OrderHelper.convert(orderItemForm2);
+        orderDto.reduceInventory(orderItemForm2.getBarcode(), orderItemForm2.getQuantity());
+        Integer pid2 = productApi.getIdByBarcode(orderItemForm2.getBarcode());
+        orderApi.addItem(p2, pid2, op2.getId());
 
         dto.createReport();
         List<SalesPojo> salesPojoList2 = dto.getAll();
@@ -88,31 +99,44 @@ public class SalesDtoTest extends AbstractUnitTest {
         {
             SalesForm salesForm = new SalesForm();
 
-            List<BrandForm> brandFormList = new ArrayList<>();
-            BrandForm brandForm = BrandTestHelper.createForm("Dyson ", " hair");
-            brandFormList.add(brandForm);
-            brandDto.add(brandFormList);
+            BrandForm brandForm = BrandTestHelper.createForm("dyson", "hair");
+            brandApi.add(BrandHelper.convert(brandForm));
 
-            List<ProductForm> productFormList = new ArrayList<>();
-            ProductForm productForm = ProductTestHelper.createForm("dyson", "hair", "A1B2C3D4", "AirWrap ", 45000.95);
-            productFormList.add(productForm);
-            ProductForm productForm2 = ProductTestHelper.createForm("dyson", "hair", "qwer1234", "superSonic dryer", 32000.95);
-            productFormList.add(productForm2);
-            productDto.add(productFormList);
+            ProductForm productForm = ProductTestHelper.createForm("dyson","hair","a1b2c3d4", "airwrap", 45000.95);
+            ProductPojo px = ProductHelper.convert(productForm);
+            px.setBrandCategory(brandApi.checkBrandCategory(productForm.getBrand(), productForm.getCategory()));
+            productApi.add(px);
 
-            List<InventoryForm> inventoryFormList = new ArrayList<>();
+            ProductForm productForm2 = ProductTestHelper.createForm("dyson","hair","qwer1234", "supersonic dryer", 32000.95);
+            ProductPojo py = ProductHelper.convert(productForm2);
+            py.setBrandCategory(brandApi.checkBrandCategory(productForm2.getBrand(), productForm2.getCategory()));
+            productApi.add(py);
+
             InventoryForm inventoryForm = InventoryTestHelper.createForm("a1b2c3d4", 25);
-            inventoryFormList.add(inventoryForm);
-            InventoryForm inventoryForm2 = InventoryTestHelper.createForm("qwer1234", 17);
-            inventoryFormList.add(inventoryForm2);
-            inventoryDto.add(inventoryFormList);
+            InventoryPojo inventoryPojo = InventoryHelper.convert(inventoryForm);
+            inventoryPojo.setId(productApi.getIdByBarcode(inventoryForm.getBarcode()));
+            inventoryApi.add(inventoryPojo);
 
-            List<OrderItemForm> orderItemFormList = new ArrayList<>();
-            OrderItemForm orderItemForm = OrderTestHelper.createForm("a1b2c3d4", 5, 40599.95);
-            orderItemFormList.add(orderItemForm);
-            OrderItemForm orderItemForm2 = OrderTestHelper.createForm("qwer1234", 3, 29000.95);
-            orderItemFormList.add(orderItemForm2);
-            orderDto.addItem(orderItemFormList);
+            InventoryForm inventoryForm1 = InventoryTestHelper.createForm("qwer1234", 15);
+            InventoryPojo inventoryPojo1 = InventoryHelper.convert(inventoryForm1);
+            inventoryPojo1.setId(productApi.getIdByBarcode(inventoryForm1.getBarcode()));
+            inventoryApi.add(inventoryPojo1);
+
+            OrderItemForm orderItemForm = OrderTestHelper.createForm("a1b2c3d4",5,40599.95);
+            OrderPojo op = new OrderPojo();
+            orderApi.addOrder(op);
+            OrderItemPojo p = OrderHelper.convert(orderItemForm);
+            orderDto.reduceInventory(orderItemForm.getBarcode(), orderItemForm.getQuantity());
+            Integer pid = productApi.getIdByBarcode(orderItemForm.getBarcode());
+            orderApi.addItem(p, pid, op.getId());
+
+            OrderItemForm orderItemForm2 = OrderTestHelper.createForm("qwer1234",3,29000.95);
+            OrderPojo op2 = new OrderPojo();
+            orderApi.addOrder(op2);
+            OrderItemPojo p2 = OrderHelper.convert(orderItemForm2);
+            orderDto.reduceInventory(orderItemForm2.getBarcode(), orderItemForm2.getQuantity());
+            Integer pid2 = productApi.getIdByBarcode(orderItemForm2.getBarcode());
+            orderApi.addItem(p2, pid2, op2.getId());
 
             LocalDate sdate = LocalDate.now();
             LocalDate edate = LocalDate.now().minusDays(1);
@@ -131,34 +155,40 @@ public class SalesDtoTest extends AbstractUnitTest {
 
     @Test
     public void testCreateReport() throws ApiException {
-        SalesForm salesForm = new SalesForm();
 
-        List<BrandForm> brandFormList = new ArrayList<>();
-        BrandForm brandForm = BrandTestHelper.createForm("Dyson ", " hair");
-        brandFormList.add(brandForm);
-        brandDto.add(brandFormList);
+        BrandForm brandForm = BrandTestHelper.createForm("dyson", "hair");
+        brandApi.add(BrandHelper.convert(brandForm));
 
-        List<ProductForm> productFormList = new ArrayList<>();
-        ProductForm productForm = ProductTestHelper.createForm("dyson","hair","A1B2C3D4", "AirWrap ", 45000.95);
-        productFormList.add(productForm);
-        ProductForm productForm2 = ProductTestHelper.createForm("dyson","hair","qwer1234", "superSonic dryer", 32000.95);
-        productFormList.add(productForm2);
-        productDto.add(productFormList);
+        ProductForm productForm = ProductTestHelper.createForm("dyson","hair","a1b2c3d4", "airwrap", 45000.95);
+        ProductPojo px = ProductHelper.convert(productForm);
+        px.setBrandCategory(brandApi.checkBrandCategory(productForm.getBrand(), productForm.getCategory()));
+        productApi.add(px);
 
-        List<InventoryForm> inventoryFormList = new ArrayList<>();
+        ProductForm productForm2 = ProductTestHelper.createForm("dyson","hair","qwer1234", "supersonic dryer", 32000.95);
+        ProductPojo py = ProductHelper.convert(productForm2);
+        py.setBrandCategory(brandApi.checkBrandCategory(productForm2.getBrand(), productForm2.getCategory()));
+        productApi.add(py);
+
         InventoryForm inventoryForm = InventoryTestHelper.createForm("a1b2c3d4", 25);
-        inventoryFormList.add(inventoryForm);
-        InventoryForm inventoryForm2 = InventoryTestHelper.createForm("qwer1234", 17);
-        inventoryFormList.add(inventoryForm2);
-        inventoryDto.add(inventoryFormList);
+        InventoryPojo inventoryPojo = InventoryHelper.convert(inventoryForm);
+        inventoryPojo.setId(productApi.getIdByBarcode(inventoryForm.getBarcode()));
+        inventoryApi.add(inventoryPojo);
 
-        List<OrderItemForm> orderItemFormList = new ArrayList<>();
+        InventoryForm inventoryForm1 = InventoryTestHelper.createForm("qwer1234", 15);
+        InventoryPojo inventoryPojo1 = InventoryHelper.convert(inventoryForm1);
+        inventoryPojo1.setId(productApi.getIdByBarcode(inventoryForm1.getBarcode()));
+        inventoryApi.add(inventoryPojo1);
+
         OrderItemForm orderItemForm = OrderTestHelper.createForm("a1b2c3d4",5,40599.95);
-        orderItemFormList.add(orderItemForm);
-        orderDto.addItem(orderItemFormList);
+        OrderPojo op = new OrderPojo();
+        orderApi.addOrder(op);
+        OrderItemPojo p = OrderHelper.convert(orderItemForm);
+        orderDto.reduceInventory(orderItemForm.getBarcode(), orderItemForm.getQuantity());
+        Integer pid = productApi.getIdByBarcode(orderItemForm.getBarcode());
+        orderApi.addItem(p, pid, op.getId());
 
         dto.createReport();
-        List<SalesPojo> salesPojoList1 = dto.getAll();
+        List<SalesPojo> salesPojoList1 = api.getAll();
         Integer count1 = salesPojoList1.get(0).getInvoicedOrderCount();
         Integer itemCount1 = salesPojoList1.get(0).getInvoicedItemsCount();
         assertEquals(1, salesPojoList1.size());
@@ -166,16 +196,20 @@ public class SalesDtoTest extends AbstractUnitTest {
         assertEquals(5, (int) itemCount1);
 
         OrderItemForm orderItemForm2 = OrderTestHelper.createForm("qwer1234",3,29000.95);
-        orderItemFormList.add(orderItemForm2);
-        orderDto.addItem(orderItemFormList);
+        OrderPojo op2 = new OrderPojo();
+        orderApi.addOrder(op2);
+        OrderItemPojo p2 = OrderHelper.convert(orderItemForm2);
+        orderDto.reduceInventory(orderItemForm2.getBarcode(), orderItemForm2.getQuantity());
+        Integer pid2 = productApi.getIdByBarcode(orderItemForm2.getBarcode());
+        orderApi.addItem(p2, pid2, op2.getId());
 
         dto.createReport();
-        List<SalesPojo> salesPojoList2 = dto.getAll();
+        List<SalesPojo> salesPojoList2 = api.getAll();
         Integer count2 = salesPojoList1.get(0).getInvoicedOrderCount();
         Integer itemCount2 = salesPojoList1.get(0).getInvoicedItemsCount();
         assertEquals(1, salesPojoList2.size());
         assertEquals(2,(int) count2);
-        assertEquals(13, (int)itemCount2);
+        assertEquals(8, (int)itemCount2);
 
     }
 }

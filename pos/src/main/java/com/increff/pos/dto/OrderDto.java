@@ -81,7 +81,7 @@ public class OrderDto {
         return orderApi.getPDF(invoiceForm);
     }
 
-    private void reduceInventory(String barcode, Integer quantity) throws ApiException {
+    protected void reduceInventory(String barcode, Integer quantity) throws ApiException {
         Integer id = productApi.getIdByBarcode(barcode);
         InventoryPojo p = inventoryApi.getByInventoryId(id);
         Integer newQuantity = p.getQuantity() - quantity;

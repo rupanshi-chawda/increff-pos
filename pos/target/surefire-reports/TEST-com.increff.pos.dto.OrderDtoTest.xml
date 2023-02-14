@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="6" failures="0" name="com.increff.pos.dto.OrderDtoTest" time="1.34" errors="0" skipped="0">
+<testsuite tests="6" failures="0" name="com.increff.pos.dto.OrderDtoTest" time="0.846" errors="0" skipped="0">
   <properties>
     <property name="idea.version" value="2021.3.3"/>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
@@ -64,10 +64,10 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="com.increff.pos.dto.OrderDtoTest" name="addIllegalOrderItem" time="0.061"/>
-  <testcase classname="com.increff.pos.dto.OrderDtoTest" name="invoiceTest" time="0.802"/>
-  <testcase classname="com.increff.pos.dto.OrderDtoTest" name="addOrderTest" time="0.105"/>
-  <testcase classname="com.increff.pos.dto.OrderDtoTest" name="addEmptyOrderItem" time="0.111"/>
-  <testcase classname="com.increff.pos.dto.OrderDtoTest" name="getOrderTest" time="0.188"/>
-  <testcase classname="com.increff.pos.dto.OrderDtoTest" name="addDuplicateOrderItem" time="0.073"/>
+  <testcase classname="com.increff.pos.dto.OrderDtoTest" name="addIllegalOrderItem" time="0.03"/>
+  <testcase classname="com.increff.pos.dto.OrderDtoTest" name="invoiceTest" time="0.617"/>
+  <testcase classname="com.increff.pos.dto.OrderDtoTest" name="addOrderTest" time="0.055"/>
+  <testcase classname="com.increff.pos.dto.OrderDtoTest" name="addEmptyOrderItem" time="0.042"/>
+  <testcase classname="com.increff.pos.dto.OrderDtoTest" name="getOrderTest" time="0.065"/>
+  <testcase classname="com.increff.pos.dto.OrderDtoTest" name="addDuplicateOrderItem" time="0.037"/>
 </testsuite>

@@ -1,6 +1,8 @@
 package com.increff.pos.dto;
 
 import com.increff.pos.AbstractUnitTest;
+import com.increff.pos.api.UserApi;
+import com.increff.pos.helper.UserHelper;
 import com.increff.pos.helper.UserTestHelper;
 import com.increff.pos.model.data.InfoData;
 import com.increff.pos.model.form.LoginForm;
@@ -17,13 +19,10 @@ import static org.junit.Assert.assertEquals;
 public class LoginDtoTest extends AbstractUnitTest {
 
     @Autowired
-    private UserDto userDto;
-
-    @Autowired
     private LoginDto dto;
 
     @Autowired
-    private AdminDto adminDto;
+    private UserApi userApi;
 
     @Autowired
     private InfoData info;
@@ -31,7 +30,7 @@ public class LoginDtoTest extends AbstractUnitTest {
     @Test
     public void loginTest() throws ApiException {
         UserForm userForm = UserTestHelper.createForm("test@mail.com", "1234abcd", "supervisor");
-        adminDto.add(userForm);
+        userApi.add(UserHelper.convert(userForm));
 
         LoginForm form = new LoginForm();
         form.setEmail("test@mail.com");
@@ -47,7 +46,7 @@ public class LoginDtoTest extends AbstractUnitTest {
     @Test
     public void invalidPasswordTest() throws ApiException {
         UserForm userForm = UserTestHelper.createForm("test@mail.com", "1234abcd", "supervisor");
-        adminDto.add(userForm);
+        userApi.add(UserHelper.convert(userForm));
 
         LoginForm form = new LoginForm();
         form.setEmail("test@mail.com");
@@ -65,7 +64,7 @@ public class LoginDtoTest extends AbstractUnitTest {
     @Test
     public void invalidEmailTest() throws ApiException {
         UserForm userForm = UserTestHelper.createForm("test@mail.com", "1234abcd", "supervisor");
-        adminDto.add(userForm);
+        userApi.add(UserHelper.convert(userForm));
 
         LoginForm form = new LoginForm();
         form.setEmail("fake@mail.com");

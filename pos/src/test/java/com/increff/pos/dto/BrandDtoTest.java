@@ -3,6 +3,7 @@ package com.increff.pos.dto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.increff.pos.AbstractUnitTest;
 import com.increff.pos.api.BrandApi;
+import com.increff.pos.helper.BrandHelper;
 import com.increff.pos.helper.BrandTestHelper;
 import com.increff.pos.model.data.BrandData;
 import com.increff.pos.model.form.BrandForm;
@@ -95,11 +96,8 @@ public class BrandDtoTest extends AbstractUnitTest {
 
     @Test
     public void getBrandByIdTest() throws ApiException {
-        List<BrandForm> formList = new ArrayList<>();
-        BrandForm form = BrandTestHelper.createForm("Dyson ", " hair");
-        formList.add(form);
-
-        dto.add(formList);
+        BrandForm form = BrandTestHelper.createForm("dyson", "hair");
+        api.add(BrandHelper.convert(form));
 
         String expectedBrand = "dyson";
         String expectedCategory = "hair";
@@ -112,14 +110,11 @@ public class BrandDtoTest extends AbstractUnitTest {
 
     @Test
     public  void getAllBrandTest() throws ApiException {
-        List<BrandForm> formList = new ArrayList<>();
-        BrandForm form = BrandTestHelper.createForm("Dyson ", " hair");
-        formList.add(form);
+        BrandForm form = BrandTestHelper.createForm("dyson", "hair");
+        api.add(BrandHelper.convert(form));
 
-        BrandForm form2 = BrandTestHelper.createForm("Vivo ", " phone");
-        formList.add(form2);
-
-        dto.add(formList);
+        BrandForm form2 = BrandTestHelper.createForm("vivo ", "phone");
+        api.add(BrandHelper.convert(form2));
 
         List<BrandData> list = dto.getAll();
         assertEquals(2, list.size());
@@ -127,11 +122,8 @@ public class BrandDtoTest extends AbstractUnitTest {
 
     @Test
     public void updateBrandTest() throws ApiException {
-        List<BrandForm> formList = new ArrayList<>();
-        BrandForm form = BrandTestHelper.createForm("Dyson ", " hair");
-        formList.add(form);
-
-        dto.add(formList);
+        BrandForm form = BrandTestHelper.createForm("dyson", "hair");
+        api.add(BrandHelper.convert(form));
 
         String expectedBrand = "dyson";
         String expectedCategory = "hair";
@@ -152,11 +144,8 @@ public class BrandDtoTest extends AbstractUnitTest {
     @Test(expected = ApiException.class)
     public void updateDuplicateBrand() throws ApiException {
         try {
-            List<BrandForm> formList = new ArrayList<>();
-            BrandForm form = BrandTestHelper.createForm("Dyson ", " hair");
-            formList.add(form);
-
-            dto.add(formList);
+            BrandForm form = BrandTestHelper.createForm("dyson", "hair");
+            api.add(BrandHelper.convert(form));
 
             String expectedBrand = "dyson";
             String expectedCategory = "hair";
@@ -180,11 +169,8 @@ public class BrandDtoTest extends AbstractUnitTest {
     @Test(expected = ApiException.class)
     public void updateIllegalBrand() throws ApiException {
         try {
-            List<BrandForm> formList = new ArrayList<>();
-            BrandForm form = BrandTestHelper.createForm("Dyson ", " hair");
-            formList.add(form);
-
-            dto.add(formList);
+            BrandForm form = BrandTestHelper.createForm("dyson", "hair");
+            api.add(BrandHelper.convert(form));
 
             String expectedBrand = "dyson";
             String expectedCategory = "hair";
@@ -208,11 +194,8 @@ public class BrandDtoTest extends AbstractUnitTest {
     @Test(expected = ApiException.class)
     public void updateEmptyBrand() throws ApiException {
         try {
-            List<BrandForm> formList = new ArrayList<>();
-            BrandForm form = BrandTestHelper.createForm("Dyson ", " hair");
-            formList.add(form);
-
-            dto.add(formList);
+            BrandForm form = BrandTestHelper.createForm("dyson", "hair");
+            api.add(BrandHelper.convert(form));
 
             String expectedBrand = "dyson";
             String expectedCategory = "hair";
@@ -232,11 +215,8 @@ public class BrandDtoTest extends AbstractUnitTest {
             throw e;
         }
         try {
-            List<BrandForm> formList = new ArrayList<>();
-            BrandForm form = BrandTestHelper.createForm("Dyson ", " hair");
-            formList.add(form);
-
-            dto.add(formList);
+            BrandForm form = BrandTestHelper.createForm("dyson", "hair");
+            api.add(BrandHelper.convert(form));
 
             String expectedBrand = "dyson";
             String expectedCategory = "hair";
@@ -259,11 +239,8 @@ public class BrandDtoTest extends AbstractUnitTest {
 
     @Test
     public void testBrandReportCsv() throws ApiException {
-        List<BrandForm> formList = new ArrayList<>();
-        BrandForm form = BrandTestHelper.createForm("Dyson ", " hair");
-        formList.add(form);
-
-        dto.add(formList);
+        BrandForm form = BrandTestHelper.createForm("dyson", "hair");
+        api.add(BrandHelper.convert(form));
 
         MockHttpServletResponse response = new MockHttpServletResponse();
         dto.generateCsv(response);

@@ -24,8 +24,8 @@ import java.util.stream.Collectors;
 <span class="fc bfc" id="L24" title="All 2 branches covered.">        if(StringUtil.isEmpty(form.getEmail())) {</span>
 <span class="fc" id="L25">            throw new ApiException(&quot;Email cannot be empty&quot;);</span>
         }
-<span class="pc bpc" id="L27" title="1 of 2 branches missed.">        if(StringUtil.isEmpty(form.getPassword())) {</span>
-<span class="nc" id="L28">            throw new ApiException(&quot;Password cannot be empty&quot;);</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">        if(StringUtil.isEmpty(form.getPassword())) {</span>
+<span class="fc" id="L28">            throw new ApiException(&quot;Password cannot be empty&quot;);</span>
         }
 <span class="fc" id="L30">        UserPojo p = UserHelper.convert(form);</span>
 <span class="fc" id="L31">        dto.add(p);</span>

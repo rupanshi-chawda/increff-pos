@@ -1,9 +1,12 @@
 package com.increff.pos.dto;
 
 import com.increff.pos.AbstractUnitTest;
+import com.increff.pos.api.UserApi;
+import com.increff.pos.helper.UserHelper;
 import com.increff.pos.helper.UserTestHelper;
 import com.increff.pos.model.data.UserData;
 import com.increff.pos.model.form.UserForm;
+import com.increff.pos.pojo.UserPojo;
 import com.increff.pos.util.ApiException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,19 +21,19 @@ public class AdminDtoTest extends AbstractUnitTest {
     private AdminDto dto;
 
     @Autowired
-    private UserDto userDto;
-
+    private UserApi userApi;
+    
     @Test
     public void userAddTest() throws ApiException {
         UserForm userForm = UserTestHelper.createForm("fake@mail.com", "1234abcd", "supervisor");
         dto.add(userForm);
 
-        List<UserData> userDataList = dto.getAll();
-        assertEquals(1, userDataList.size());
+        List<UserPojo> userPojoList = userApi.getAll();
+        assertEquals(1, userPojoList.size());
     }
 
     @Test(expected = ApiException.class)
-    public void addEmptyUserTest() throws ApiException {
+    public void addEmptyUserEmailTest() throws ApiException {
         try {
             UserForm userForm = UserTestHelper.createForm(" ", "12345678", " ");
             dto.add(userForm);
@@ -41,14 +44,20 @@ public class AdminDtoTest extends AbstractUnitTest {
             assertEquals(exception, e.getMessage());
             throw e;
         }
+    }
+
+    @Test(expected = ApiException.class)
+    public void addEmptyUserPasswordTest() throws ApiException {
         try {
             UserForm userForm = UserTestHelper.createForm("fake@gmail.com", "", " ");
+            System.out.println("inside empty password try");
             dto.add(userForm);
         }
         catch(ApiException e)
         {
             String exception = "Password cannot be empty";
             assertEquals(exception, e.getMessage());
+            System.out.println("inside empty password catch");
             throw e;
         }
     }
@@ -71,34 +80,32 @@ public class AdminDtoTest extends AbstractUnitTest {
     @Test
     public void userDeleteTest() throws ApiException {
         UserForm userForm = UserTestHelper.createForm("fake@mail.com", "1234abcd", "supervisor");
-        dto.add(userForm);
+        userApi.add(UserHelper.convert(userForm));
 
-        List<UserData> userDataList = dto.getAll();
-        assertEquals(1, userDataList.size());
+        List<UserPojo> userPojoList = userApi.getAll();
+        assertEquals(1, userPojoList.size());
 
-        dto.delete(userDataList.get(0).getId());
-        List<UserData> userDataList2 = dto.getAll();
-        assertEquals(0, userDataList2.size());
+        dto.delete(userPojoList.get(0).getId());
+        List<UserPojo> userPojoList2 = userApi.getAll();
+        assertEquals(0, userPojoList2.size());
 
     }
 
     @Test
     public void userGetTest() throws ApiException {
         UserForm userForm = UserTestHelper.createForm("fake@mail.com", "1234abcd", "supervisor");
-        dto.add(userForm);
+        userApi.add(UserHelper.convert(userForm));
 
-        List<UserData> userDataList = dto.getAll();
-        assertEquals(1, userDataList.size());
-
-        assertTrue(userDto.checkEmailExists("fake@mail.com"));
+        List<UserData> userPojoList = dto.getAll();
+        assertEquals(1, userPojoList.size());
+        assertNotEquals(null, userApi.get("fake@mail.com"));
     }
 
     @Test
     public void checkIllegalEmailTest() throws ApiException {
         UserForm userForm = UserTestHelper.createForm("fake@mail.com", "1234abcd", "supervisor");
-        dto.add(userForm);
-
-        assertFalse(userDto.checkEmailExists("user@fake.com"));
+        userApi.add(UserHelper.convert(userForm));
+        assertNull(userApi.get("user@fake.com"));
     }
 
 }
