@@ -4,7 +4,7 @@ import com.increff.pos.model.form.OrderItemForm;
 
 public class OrderTestHelper {
 
-    public static OrderItemForm createForm(String barcode, int quantity, Double sellingPrice){
+    public static OrderItemForm createForm(String barcode, Integer quantity, Double sellingPrice){
         OrderItemForm f = new OrderItemForm();
         f.setBarcode(barcode);
         f.setQuantity(quantity);

@@ -35,13 +35,13 @@ import java.util.Objects;
 <span class="fc" id="L35">        f.setBarcode(StringUtil.toLowerCase(f.getBarcode()));</span>
 <span class="fc" id="L36">    }</span>
 
-    public static void validateId(int id) throws ApiException {
+    public static void validateId(Integer id) throws ApiException {
 <span class="pc bpc" id="L39" title="1 of 2 branches missed.">        if (id&lt;1) {</span>
 <span class="nc" id="L40">            throw new ApiException(&quot;Product with given ID does not exists, id: &quot; + id);</span>
         }
 <span class="fc" id="L42">    }</span>
 
-    public static void validateInventory(OrderItemForm f, int quantity) throws ApiException {
+    public static void validateInventory(OrderItemForm f, Integer quantity) throws ApiException {
 <span class="pc bpc" id="L45" title="1 of 2 branches missed.">        if (f.getQuantity() &gt; quantity) {</span>
 <span class="nc" id="L46">            throw new ApiException(&quot;Product Quantity is more than available Inventory&quot;);</span>
         }

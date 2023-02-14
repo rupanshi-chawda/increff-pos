@@ -19,7 +19,7 @@ public class OrderItemForm {
 
     @NotNull
     @Min(value = 1, message = "must be atleast 1")
-    private int quantity;
+    private Integer quantity;
 
     @NotNull
     @Min(value = 1, message = "must be atleast 1")

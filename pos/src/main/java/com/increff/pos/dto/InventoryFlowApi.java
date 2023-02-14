@@ -32,8 +32,8 @@ public class InventoryFlowApi {
 
     @Transactional(rollbackOn = ApiException.class)
     public void add(List<InventoryForm> forms, List<InventoryErrorData> errorData) throws ApiException {
-        int errorSize = 0;
-        int i=0;
+        Integer errorSize = 0;
+        Integer i=0;
 
         for(InventoryForm f: forms)
         {

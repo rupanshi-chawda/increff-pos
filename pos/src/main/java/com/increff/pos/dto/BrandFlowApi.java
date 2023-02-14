@@ -24,8 +24,8 @@ public class BrandFlowApi {
 //todo: remove errordata part
     @Transactional(rollbackOn = ApiException.class)
     public void add(List<BrandForm> brandForms, List<BrandErrorData> errorData) throws ApiException {
-        int errorSize = 0;
-        int i=0;
+        Integer errorSize = 0;
+        Integer i=0;
 
         for(BrandForm f: brandForms)
         {

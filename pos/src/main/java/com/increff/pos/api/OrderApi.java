@@ -47,7 +47,7 @@ public class OrderApi {
         orderDao.insert(p);
     }
     
-    public OrderPojo getOrder(int id) throws ApiException {
+    public OrderPojo getOrder(Integer id) throws ApiException {
         return getCheckByOrderId(id);
     }
 
@@ -55,28 +55,28 @@ public class OrderApi {
         return orderDao.selectAllDesc();
     }
     
-    public void addItem(OrderItemPojo p, int pid, int oid){
+    public void addItem(OrderItemPojo p, Integer pid, Integer oid){
         p.setProductId(pid);
         p.setOrderId(oid);
         itemDao.insert(p);
     }
 
-//    public OrderItemPojo getItem(int id) throws ApiException {
+//    public OrderItemPojo getItem(Integer id) throws ApiException {
 //        OrderItemPojo p = getOrderItemId(id);
 //        OrderHelper.validateId(id);
 //        return p;
 //    }
 
 
-    public List<OrderItemPojo> getByOrderId(int orderId) {
+    public List<OrderItemPojo> getByOrderId(Integer orderId) {
         return itemDao.selectByOrderId(orderId);
     }
 
-//    private OrderItemPojo getOrderItemId(int id) {
+//    private OrderItemPojo getOrderItemId(Integer id) {
 //        return itemDao.selectById(id, OrderItemPojo.class);
 //    }
 
-    private OrderPojo getCheckByOrderId(int id) throws ApiException {
+    private OrderPojo getCheckByOrderId(Integer id) throws ApiException {
         OrderPojo p = orderDao.selectById(id, OrderPojo.class);
         if (Objects.isNull(p)) {
             throw new ApiException("Order with given ID does not exists, id: " + id);
@@ -84,11 +84,11 @@ public class OrderApi {
         return p;
     }
 
-    public List<OrderItemPojo> getOrderItemByOrderId(int orderId){
+    public List<OrderItemPojo> getOrderItemByOrderId(Integer orderId){
         return itemDao.selectByOrderId(orderId);
     }
 
-    public void update(int id, OrderPojo p) throws ApiException {
+    public void update(Integer id, OrderPojo p) throws ApiException {
         OrderPojo b = getOrder(id);
         b.setInvoicePath(p.getInvoicePath());
         orderDao.update(p);
@@ -98,7 +98,7 @@ public class OrderApi {
 
     public ResponseEntity<byte[]> getPDF(InvoiceForm invoiceForm) throws ApiException {
 
-        int orderId = invoiceForm.getOrderId();
+        Integer orderId = invoiceForm.getOrderId();
         String PDF_PATH = "C:\\Users\\KIIT\\Downloads\\increff-pos\\pos\\src\\main\\resources\\invoices\\";
         String _filename = PDF_PATH + "invoice_" + orderId + ".pdf";
         File f = new File(_filename);
@@ -144,7 +144,7 @@ public class OrderApi {
         return orderDao.selectOrderByDateFilter(startDate,endDate);
     }
 
-    public List<OrderItemPojo> getOrderItemsByOrderId(int id) {
+    public List<OrderItemPojo> getOrderItemsByOrderId(Integer id) {
         return itemDao.selectByOrderId(id);
     }
 }

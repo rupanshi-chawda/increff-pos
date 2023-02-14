@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class SalesReportData extends SalesReportForm {
 
-    private int quantity;
+    private Integer quantity;
     private double revenue;
 
     public SalesReportData() {

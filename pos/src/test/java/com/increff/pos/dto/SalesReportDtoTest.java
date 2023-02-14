@@ -2,6 +2,7 @@ package com.increff.pos.dto;
 
 import com.increff.pos.AbstractUnitTest;
 import com.increff.pos.helper.*;
+import com.increff.pos.model.data.ProductData;
 import com.increff.pos.model.data.SalesReportData;
 import com.increff.pos.model.form.*;
 import com.increff.pos.util.ApiException;
@@ -80,6 +81,10 @@ public class SalesReportDtoTest extends AbstractUnitTest {
         ProductForm productForm2 = ProductTestHelper.createForm("dyson","hair","qwer1234", "superSonic dryer", 32000.95);
         productFormList.add(productForm2);
         productDto.add(productFormList);
+
+        List<ProductData> productData = productDto.getAll();
+        System.out.println(productData.get(0).getId());
+        System.out.println(productData.get(1).getId());
 
         List<InventoryForm> inventoryFormList = new ArrayList<>();
         InventoryForm inventoryForm = InventoryTestHelper.createForm("a1b2c3d4", 25);

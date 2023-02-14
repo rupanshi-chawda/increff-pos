@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 
     public void add(List&lt;BrandForm&gt; forms) throws ApiException {
 <span class="fc" id="L36">        List&lt;BrandErrorData&gt; errorData = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L37">        int errorSize = 0;</span>
+<span class="fc" id="L37">        Integer errorSize = 0;</span>
 
 <span class="fc bfc" id="L39" title="All 2 branches covered.">        for(BrandForm f: forms)</span>
         {
@@ -58,7 +58,7 @@ import java.util.stream.Collectors;
 <span class="fc" id="L58">        flowApi.add(forms, errorData);</span>
 <span class="fc" id="L59">    }</span>
 
-    public BrandData get(int id) throws ApiException {
+    public BrandData get(Integer id) throws ApiException {
 <span class="fc" id="L62">        BrandPojo p = api.get(id);</span>
 <span class="fc" id="L63">        return BrandHelper.convert(p);</span>
     }
@@ -67,7 +67,7 @@ import java.util.stream.Collectors;
 <span class="fc" id="L67">        return api.getAll().stream().map(BrandHelper::convert).collect(Collectors.toList());</span>
     }
 
-    public void update(int id, BrandForm f) throws ApiException {
+    public void update(Integer id, BrandForm f) throws ApiException {
 <span class="fc" id="L71">        BrandHelper.normalize(f);</span>
 <span class="fc" id="L72">        ValidationUtil.validateForms(f);</span>
 <span class="fc" id="L73">        BrandPojo p = BrandHelper.convert(f);</span>

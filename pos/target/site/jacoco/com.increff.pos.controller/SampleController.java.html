@@ -38,7 +38,7 @@ import static org.hibernate.internal.util.io.StreamCopier.BUFFER_SIZE;
 <span class="nc" id="L38">		String fileClasspath = project_path + &quot;\\src\\main\\resources\\com.increff\\pos\\&quot; + fileName;</span>
 
 <span class="nc" id="L40">		return outputStream -&gt; {</span>
-			int bytesRead;
+			Integer bytesRead;
 <span class="nc" id="L42">			byte[] buffer = new byte[BUFFER_SIZE];</span>
 <span class="nc" id="L43">			InputStream inputStream = new FileInputStream(fileClasspath);</span>
 <span class="nc bnc" id="L44" title="All 2 branches missed.">			while ((bytesRead = inputStream.read(buffer)) != -1) {</span>

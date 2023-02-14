@@ -34,7 +34,7 @@ public class BrandDto {
 
     public void add(List<BrandForm> forms) throws ApiException {
         List<BrandErrorData> errorData = new ArrayList<>();
-        int errorSize = 0;
+        Integer errorSize = 0;
 
         for(BrandForm f: forms)
         {
@@ -58,7 +58,7 @@ public class BrandDto {
         flowApi.add(forms, errorData);
     }
 
-    public BrandData get(int id) throws ApiException {
+    public BrandData get(Integer id) throws ApiException {
         BrandPojo p = api.get(id);
         return BrandHelper.convert(p);
     }
@@ -67,7 +67,7 @@ public class BrandDto {
         return api.getAll().stream().map(BrandHelper::convert).collect(Collectors.toList());
     }
 
-    public void update(int id, BrandForm f) throws ApiException {
+    public void update(Integer id, BrandForm f) throws ApiException {
         BrandHelper.normalize(f);
         ValidationUtil.validateForms(f);
         BrandPojo p = BrandHelper.convert(f);

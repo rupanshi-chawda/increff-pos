@@ -32,7 +32,7 @@ import java.util.List;
 <span class="fc" id="L32">		em.persist(t);</span>
 <span class="fc" id="L33">	}</span>
 
-	public &lt;T&gt; T selectById(int id, Class&lt;T&gt; z)
+	public &lt;T&gt; T selectById(Integer id, Class&lt;T&gt; z)
 	{
 <span class="fc" id="L37">		CriteriaBuilder cb = em().getCriteriaBuilder();</span>
 <span class="fc" id="L38">		CriteriaQuery&lt;T&gt; q = cb.createQuery(z);</span>

@@ -10,7 +10,7 @@ import java.time.ZonedDateTime;
 @Setter
 public class OrderData
 {
-    private int id;
+    private Integer id;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private ZonedDateTime time;

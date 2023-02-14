@@ -15,7 +15,7 @@ public class OrderItemDao extends AbstractDao {
 
     public void update(OrderItemPojo op){}
 
-    public List<OrderItemPojo> selectByOrderId(int orderId) {
+    public List<OrderItemPojo> selectByOrderId(Integer orderId) {
         CriteriaBuilder cb = em().getCriteriaBuilder();
         CriteriaQuery<OrderItemPojo> q = cb.createQuery(OrderItemPojo.class);
         Root<OrderItemPojo> c = q.from(OrderItemPojo.class);

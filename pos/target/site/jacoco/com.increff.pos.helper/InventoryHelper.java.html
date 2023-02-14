@@ -30,7 +30,7 @@ import java.util.Objects;
 <span class="fc" id="L30">    }</span>
 
 
-    public static void validateId(InventoryPojo p, int id) throws ApiException {
+    public static void validateId(InventoryPojo p, Integer id) throws ApiException {
 <span class="pc bpc" id="L34" title="1 of 2 branches missed.">        if (Objects.isNull(p)) {</span>
 <span class="nc" id="L35">            throw new ApiException(&quot;Product with given ID does not exists, id: &quot; + id);</span>
         }

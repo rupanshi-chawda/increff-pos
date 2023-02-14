@@ -29,7 +29,7 @@ import io.swagger.annotations.ApiOperation;
 
 	@ApiOperation(value = &quot;Deletes a user&quot;)
 	@DeleteMapping(path = &quot;/{id}&quot;)
-	public void deleteUser(@PathVariable int id) {
+	public void deleteUser(@PathVariable Integer id) {
 <span class="nc" id="L33">		dto.delete(id);</span>
 <span class="nc" id="L34">	}</span>
 

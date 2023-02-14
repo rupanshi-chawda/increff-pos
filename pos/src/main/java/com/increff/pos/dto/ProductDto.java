@@ -36,7 +36,7 @@ public class ProductDto {
     public void add(List<ProductForm> forms) throws ApiException {
         List<ProductErrorData> errorData = new ArrayList<>();
         errorData.clear();
-        int errorSize = 0;
+        Integer errorSize = 0;
 
         for(ProductForm f: forms)
         {
@@ -60,7 +60,7 @@ public class ProductDto {
         flowApi.add(forms, errorData);
     }
 
-    public ProductData get(int id) throws ApiException {
+    public ProductData get(Integer id) throws ApiException {
         ProductPojo p = api.get(id);
         BrandPojo b = brandApi.getCheckBrandId(p.getBrandCategory());
         return ProductHelper.convert(p, b);
@@ -76,7 +76,7 @@ public class ProductDto {
         return list2;
     }
 
-    public void update(int id, ProductUpdateForm f) throws ApiException {
+    public void update(Integer id, ProductUpdateForm f) throws ApiException {
         ProductHelper.normalize(f);
         ValidationUtil.validateForms(f);
         ProductPojo p = ProductHelper.convert(f);

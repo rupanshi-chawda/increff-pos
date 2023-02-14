@@ -13,11 +13,10 @@ import javax.validation.constraints.NotNull;
 public class InventoryPojo extends AbstractVersionPojo {
 
     @Id
-    private int id;
+    private Integer id;
 
     @Column(nullable = false)
     @Min(value = 0)
-    private int quantity;
+    private Integer quantity;
 
 }
-//TODO: change int to Integer

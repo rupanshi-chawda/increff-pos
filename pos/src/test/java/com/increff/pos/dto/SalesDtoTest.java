@@ -159,11 +159,11 @@ public class SalesDtoTest extends AbstractUnitTest {
 
         dto.createReport();
         List<SalesPojo> salesPojoList1 = dto.getAll();
-        int count1 = salesPojoList1.get(0).getInvoicedOrderCount();
-        int itemCount1 = salesPojoList1.get(0).getInvoicedItemsCount();
+        Integer count1 = salesPojoList1.get(0).getInvoicedOrderCount();
+        Integer itemCount1 = salesPojoList1.get(0).getInvoicedItemsCount();
         assertEquals(1, salesPojoList1.size());
-        assertEquals(1, count1);
-        assertEquals(5, itemCount1);
+        assertEquals(1, (int) count1);
+        assertEquals(5, (int) itemCount1);
 
         OrderItemForm orderItemForm2 = OrderTestHelper.createForm("qwer1234",3,29000.95);
         orderItemFormList.add(orderItemForm2);
@@ -171,11 +171,11 @@ public class SalesDtoTest extends AbstractUnitTest {
 
         dto.createReport();
         List<SalesPojo> salesPojoList2 = dto.getAll();
-        int count2 = salesPojoList1.get(0).getInvoicedOrderCount();
-        int itemCount2 = salesPojoList1.get(0).getInvoicedItemsCount();
+        Integer count2 = salesPojoList1.get(0).getInvoicedOrderCount();
+        Integer itemCount2 = salesPojoList1.get(0).getInvoicedItemsCount();
         assertEquals(1, salesPojoList2.size());
-        assertEquals(2, count2);
-        assertEquals(13, itemCount2);
+        assertEquals(2,(int) count2);
+        assertEquals(13, (int)itemCount2);
 
     }
 }

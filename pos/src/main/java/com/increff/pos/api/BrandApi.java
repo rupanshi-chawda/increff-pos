@@ -21,7 +21,7 @@ public class BrandApi {
         dao.insert(p);
     }
 
-    public BrandPojo get(int id) throws ApiException {
+    public BrandPojo get(Integer id) throws ApiException {
         return getCheckBrandId(id);
     }
 
@@ -33,7 +33,7 @@ public class BrandApi {
         return dao.selectAllSorted();
     }
 
-    public void update(int id, BrandPojo p) throws ApiException {
+    public void update(Integer id, BrandPojo p) throws ApiException {
         getCheckBrandCategory(p);
         BrandPojo bx = getCheckBrandId(id);
         bx.setCategory(p.getCategory());
@@ -43,7 +43,7 @@ public class BrandApi {
 
     // Business Logic Methods
 
-    public BrandPojo getCheckBrandId(int id) throws ApiException {
+    public BrandPojo getCheckBrandId(Integer id) throws ApiException {
         BrandPojo p = dao.selectById(id, BrandPojo.class);
         if (Objects.isNull(p)) {
             throw new ApiException("Brand with given ID does not exists, id: " + id);
@@ -57,7 +57,7 @@ public class BrandApi {
             throw new ApiException("Brand Category already exists");
         }
     }
-    public int checkBrandCategory(String brand, String category) throws ApiException {
+    public Integer checkBrandCategory(String brand, String category) throws ApiException {
         BrandPojo b = getBrandCategory(brand, category);
         if(Objects.isNull(b)) {
             throw new ApiException("Brand and Category doesn't exist");

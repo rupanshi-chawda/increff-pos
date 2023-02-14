@@ -21,7 +21,7 @@ import java.util.List;
     @Autowired
     ProductApi productApi;
 
-    public InvoiceForm generateInvoiceForOrder(int orderId) throws ApiException
+    public InvoiceForm generateInvoiceForOrder(Integer orderId) throws ApiException
     {
 <span class="fc" id="L26">        InvoiceForm invoiceForm = new InvoiceForm();</span>
 <span class="fc" id="L27">        OrderPojo orderPojo = orderApi.getOrder(orderId);</span>

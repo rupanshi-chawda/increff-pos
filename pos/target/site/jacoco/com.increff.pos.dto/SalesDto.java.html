@@ -44,7 +44,7 @@ import java.util.Objects;
 <span class="fc" id="L44">        SalesPojo salesPojo = new SalesPojo();</span>
 
 <span class="fc" id="L46">        LocalDate date = LocalDate.now();</span>
-<span class="fc" id="L47">        int totalItems = 0;</span>
+<span class="fc" id="L47">        Integer totalItems = 0;</span>
 <span class="fc" id="L48">        double totalRevenue = 0.0;</span>
 
 <span class="fc" id="L50">        ZonedDateTime startDate = date.atStartOfDay(ZoneId.systemDefault());</span>
@@ -55,7 +55,7 @@ import java.util.Objects;
 <span class="fc" id="L55">        Integer totalOrders = orderPojoList.size();</span>
 
 <span class="fc bfc" id="L57" title="All 2 branches covered.">        for (OrderPojo orderPojo : orderPojoList) {</span>
-<span class="fc" id="L58">            int id = orderPojo.getId();</span>
+<span class="fc" id="L58">            Integer id = orderPojo.getId();</span>
 <span class="fc" id="L59">            List&lt;OrderItemPojo&gt; orderItemPojoList = orderApi.getOrderItemsByOrderId(id);</span>
 <span class="fc bfc" id="L60" title="All 2 branches covered.">            for (OrderItemPojo orderItemPojo: orderItemPojoList) {</span>
 <span class="fc" id="L61">                totalItems += orderItemPojo.getQuantity();</span>

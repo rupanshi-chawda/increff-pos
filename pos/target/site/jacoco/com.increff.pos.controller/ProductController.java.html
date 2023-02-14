@@ -29,7 +29,7 @@ import java.util.List;
 
     @ApiOperation(value = &quot;Gets a product by id&quot;)
     @GetMapping(path = &quot;/{id}&quot;)
-    public ProductData getProduct(@PathVariable int id) throws ApiException {
+    public ProductData getProduct(@PathVariable Integer id) throws ApiException {
 <span class="nc" id="L33">        return dto.get(id);</span>
     }
 
@@ -41,7 +41,7 @@ import java.util.List;
 
     @ApiOperation(value = &quot;Updates a product by id&quot;)
     @PutMapping(path = &quot;/{id}&quot;)
-    public void updateProduct(@PathVariable int id, @RequestBody ProductUpdateForm f) throws ApiException {
+    public void updateProduct(@PathVariable Integer id, @RequestBody ProductUpdateForm f) throws ApiException {
 <span class="nc" id="L45">        dto.update(id, f);</span>
 <span class="nc" id="L46">    }</span>
 

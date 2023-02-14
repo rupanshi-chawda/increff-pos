@@ -11,25 +11,26 @@ import javax.validation.constraints.Size;
 @Entity
 @Getter
 <span class="pc" id="L13">@Setter</span>
-<span class="fc" id="L14">public class ProductPojo extends AbstractVersionPojo {</span>
+@Table(indexes = @Index(name = &quot;barcodeIndex&quot;, columnList = &quot;barcode&quot;, unique = true))
+<span class="fc" id="L15">public class ProductPojo extends AbstractVersionPojo {</span>
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-<span class="fc" id="L18">    private int id;</span>
+<span class="fc" id="L19">    private Integer id;</span>
 
     @Column(nullable = false)
     @Size(max = 8, min = 8)
-<span class="fc" id="L22">    private String barcode;</span>
+<span class="fc" id="L23">    private String barcode;</span>
 
     @Column(nullable = false)
-<span class="fc" id="L25">    private int brandCategory;</span>
+<span class="fc" id="L26">    private Integer brandCategory;</span>
 
     @Column(nullable = false)
-<span class="fc" id="L28">    private String name;</span>
+<span class="fc" id="L29">    private String name;</span>
 
     @Column(nullable = false)
     @Min(value = 1)
-<span class="fc" id="L32">    private Double mrp;</span>
+<span class="fc" id="L33">    private Double mrp;</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

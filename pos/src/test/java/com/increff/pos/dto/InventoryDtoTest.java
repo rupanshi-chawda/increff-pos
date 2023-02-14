@@ -55,7 +55,7 @@ public class InventoryDtoTest extends AbstractUnitTest {
 
 
         String expectedBarcode = "a1b2c3d4";
-        int expectedQuantity = 25;
+        Integer expectedQuantity = 25;
 
         InventoryData data = dto.get(expectedBarcode);
         assertEquals(expectedBarcode, data.getBarcode());
@@ -114,7 +114,7 @@ public class InventoryDtoTest extends AbstractUnitTest {
         dto.add(inventoryFormList);
 
         String expectedBarcode = "a1b2c3d4";
-        int expectedQuantity = 32;
+        Integer expectedQuantity = 32;
 
         InventoryData data = dto.get(expectedBarcode);
         assertEquals(expectedQuantity, data.getQuantity());
@@ -224,7 +224,7 @@ public class InventoryDtoTest extends AbstractUnitTest {
         inventoryFormList.add(inventoryForm1);
 
         String expectedBarcode = "a1b2c3d4";
-        int expectedQty = 9;
+        Integer expectedQty = 9;
 
         InventoryData data = dto.get(expectedBarcode);
         dto.update(data.getBarcode(), inventoryForm1);

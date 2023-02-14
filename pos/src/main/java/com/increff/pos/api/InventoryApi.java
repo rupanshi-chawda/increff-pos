@@ -24,14 +24,14 @@ public class InventoryApi {
             dao.insert(p);
         }
         else {
-            int prevQuantity = b.getQuantity();
-            int newQuantity = prevQuantity + p.getQuantity();
+            Integer prevQuantity = b.getQuantity();
+            Integer newQuantity = prevQuantity + p.getQuantity();
             b.setQuantity(newQuantity);
             dao.update(p);
         }
     }
 
-    public InventoryPojo get(int id) throws ApiException {
+    public InventoryPojo get(Integer id) throws ApiException {
         InventoryPojo p = getByInventoryId(id);
         InventoryHelper.validateInventoryId(p);
         return p;
@@ -50,11 +50,11 @@ public class InventoryApi {
 
     // Business Logic Methods
 
-    public InventoryPojo getByInventoryId(int id) {
+    public InventoryPojo getByInventoryId(Integer id) {
         return dao.selectById(id, InventoryPojo.class);
     }
 
-    public int getQuantityById(int id) {
+    public Integer getQuantityById(Integer id) {
         InventoryPojo p = getByInventoryId(id);
         return p.getQuantity();
     }

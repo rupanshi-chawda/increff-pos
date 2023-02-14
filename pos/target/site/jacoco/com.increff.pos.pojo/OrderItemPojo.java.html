@@ -9,22 +9,22 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Getter
-<span class="pc" id="L12">@Setter//TODO add indexes (unique/non-unique) and read about this db optimisation mysql and use box data types</span>
+<span class="pc" id="L12">@Setter</span>
 <span class="fc" id="L13">public class OrderItemPojo extends AbstractVersionPojo {</span>
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-<span class="fc" id="L17">    private int id;</span>
+<span class="fc" id="L17">    private Integer id;</span>
 
     @Column(nullable = false)
-<span class="fc" id="L20">    private int orderId;</span>
+<span class="fc" id="L20">    private Integer orderId;</span>
 
     @Column(nullable = false)
-<span class="fc" id="L23">    private int productId;</span>
+<span class="fc" id="L23">    private Integer productId;</span>
 
     @Column(nullable = false)
     @Min(value = 0)
-<span class="fc" id="L27">    private int quantity;</span>
+<span class="fc" id="L27">    private Integer quantity;</span>
 
     @Column(nullable = false)
     @Min(value = 1)

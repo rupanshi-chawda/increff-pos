@@ -75,7 +75,7 @@ public class OrderDtoTest extends AbstractUnitTest {
         dto.addItem(orderItemFormList);
 
         String expectedBarcode = "a1b2c3d4";
-        int expectedQty = 5;
+        Integer expectedQty = 5;
         Double expectedSp = 40599.95;
 
         List<OrderData> list = dto.getAllOrder();

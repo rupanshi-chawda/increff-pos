@@ -28,8 +28,8 @@ public class ProductFlowApi {
 
     @Transactional(rollbackOn = ApiException.class)
     public void add(List<ProductForm> forms, List<ProductErrorData> errorData) throws ApiException {
-        int errorSize = 0;
-        int i=0;
+        Integer errorSize = 0;
+        Integer i=0;
 
         for(ProductForm f: forms)
         {

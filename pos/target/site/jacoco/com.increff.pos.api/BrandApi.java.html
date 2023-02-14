@@ -21,7 +21,7 @@ import java.util.Objects;
 <span class="fc" id="L21">        dao.insert(p);</span>
 <span class="fc" id="L22">    }</span>
 
-    public BrandPojo get(int id) throws ApiException {
+    public BrandPojo get(Integer id) throws ApiException {
 <span class="fc" id="L25">        return getCheckBrandId(id);</span>
     }
 
@@ -33,7 +33,7 @@ import java.util.Objects;
 <span class="fc" id="L33">        return dao.selectAllSorted();</span>
     }
 
-    public void update(int id, BrandPojo p) throws ApiException {
+    public void update(Integer id, BrandPojo p) throws ApiException {
 <span class="fc" id="L37">        getCheckBrandCategory(p);</span>
 <span class="fc" id="L38">        BrandPojo bx = getCheckBrandId(id);</span>
 <span class="fc" id="L39">        bx.setCategory(p.getCategory());</span>
@@ -43,7 +43,7 @@ import java.util.Objects;
 
     // Business Logic Methods
 
-    public BrandPojo getCheckBrandId(int id) throws ApiException {
+    public BrandPojo getCheckBrandId(Integer id) throws ApiException {
 <span class="fc" id="L47">        BrandPojo p = dao.selectById(id, BrandPojo.class);</span>
 <span class="fc bfc" id="L48" title="All 2 branches covered.">        if (Objects.isNull(p)) {</span>
 <span class="fc" id="L49">            throw new ApiException(&quot;Brand with given ID does not exists, id: &quot; + id);</span>
@@ -57,7 +57,7 @@ import java.util.Objects;
 <span class="fc" id="L57">            throw new ApiException(&quot;Brand Category already exists&quot;);</span>
         }
 <span class="fc" id="L59">    }</span>
-    public int checkBrandCategory(String brand, String category) throws ApiException {
+    public Integer checkBrandCategory(String brand, String category) throws ApiException {
 <span class="fc" id="L61">        BrandPojo b = getBrandCategory(brand, category);</span>
 <span class="fc bfc" id="L62" title="All 2 branches covered.">        if(Objects.isNull(b)) {</span>
 <span class="fc" id="L63">            throw new ApiException(&quot;Brand and Category doesn't exist&quot;);</span>

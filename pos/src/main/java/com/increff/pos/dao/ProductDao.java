@@ -8,6 +8,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
+import java.util.List;
+import java.util.Set;
 
 @Repository
 public class ProductDao extends AbstractDao{
@@ -25,4 +27,17 @@ public class ProductDao extends AbstractDao{
     }
 
     public void update(ProductPojo p){}
+
+    public List<ProductPojo> selectInId(Set<Integer> productIdList) {
+        CriteriaBuilder cb = em().getCriteriaBuilder();
+        CriteriaQuery<ProductPojo> q = cb.createQuery(ProductPojo.class);
+        Root<ProductPojo> c = q.from(ProductPojo.class);
+        CriteriaBuilder.In<Integer> in = cb.in(c.get("id"));
+        productIdList.forEach(in::value);
+
+        q.select(c).where(in).orderBy(cb.asc(c.get("id")));
+
+        TypedQuery<ProductPojo> query = em().createQuery(q);
+        return query.getResultList();
+    }
 }

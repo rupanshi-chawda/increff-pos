@@ -31,7 +31,7 @@ public class BrandController {
 
     @ApiOperation(value = "Gets a brand by id")
     @GetMapping(path = "/{id}")
-    public BrandData getBrand(@PathVariable int id) throws ApiException {
+    public BrandData getBrand(@PathVariable Integer id) throws ApiException {
         return dto.get(id);
     }
 
@@ -43,7 +43,7 @@ public class BrandController {
 
     @ApiOperation(value = "Updates a brand by id")
     @PutMapping(path = "/{id}")
-    public void updateBrand(@PathVariable int id, @RequestBody BrandForm f) throws ApiException {
+    public void updateBrand(@PathVariable Integer id, @RequestBody BrandForm f) throws ApiException {
         dto.update(id, f);
     }
 

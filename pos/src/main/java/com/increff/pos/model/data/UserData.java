@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class UserData {
 
-	private int id;
+	private Integer id;
 	private String email;
 	private String role;
 

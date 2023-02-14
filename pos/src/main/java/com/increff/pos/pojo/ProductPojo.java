@@ -16,14 +16,14 @@ public class ProductPojo extends AbstractVersionPojo {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(nullable = false)
     @Size(max = 8, min = 8)
     private String barcode;
 
     @Column(nullable = false)
-    private int brandCategory;
+    private Integer brandCategory;
 
     @Column(nullable = false)
     private String name;

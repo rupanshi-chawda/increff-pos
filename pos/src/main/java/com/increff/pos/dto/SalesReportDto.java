@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDate;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -64,47 +64,43 @@ public class SalesReportDto {
         return getFilterSalesReport(list, form.getBrand(), form.getCategory());
     }
 
-    //todo: optimise this function to reduce api calls
     public List<SalesReportData> getFilterSalesReport(List<OrderPojo> list, String brand, String category) throws ApiException {
-        HashMap<Integer, SalesReportData> map = new HashMap<Integer, SalesReportData>();
+        HashMap<Integer, SalesReportData> salesMap = new HashMap<>();
+        HashMap<Integer, BrandPojo> brandMap = getBrandMap();
+        HashMap<Integer, ProductPojo> productMap = getProductMap(list);
+
+
         for(OrderPojo orderPojo: list)
         {
-            List<OrderItemPojo> itemList = orderApi.getOrderItemsByOrderId(orderPojo.getId());
-
-            for (OrderItemPojo p: itemList)
-            {
-                ProductPojo productPojo = productApi.get(p.getProductId());
-                BrandPojo brandPojo = brandApi.get(productPojo.getBrandCategory());
-
-                if(!map.containsKey(brandPojo.getId())) {
-                    map.put(brandPojo.getId(), new SalesReportData());
+            List<OrderItemPojo> orderItemPojoList = orderApi.getOrderItemsByOrderId(orderPojo.getId());
+            DecimalFormat df = new DecimalFormat("#.##");
+            for (OrderItemPojo orderItemPojo: orderItemPojoList) {
+                ProductPojo productPojo = productMap.get(orderItemPojo.getProductId());
+                BrandPojo brandPojo = brandMap.get(productPojo.getBrandCategory());
+                if((Objects.equals(brand,brandPojo.getBrand()) || Objects.equals(brand,"all")) &&
+                        (Objects.equals(category,brandPojo.getCategory()) || Objects.equals(category,"all"))) {
+                    if(!salesMap.containsKey(brandPojo.getId())) {
+                        salesMap.put(brandPojo.getId(), new SalesReportData());
+                    }
+                    SalesReportData salesReportData = salesMap.get(brandPojo.getId());
+                    salesReportData.setQuantity(salesReportData.getQuantity() + orderItemPojo.getQuantity() );
+                    salesReportData.setRevenue(Double.parseDouble(df.format(salesReportData.getRevenue()
+                            + (orderItemPojo.getQuantity() * orderItemPojo.getSellingPrice()))));
                 }
-
-                SalesReportData salesReportData = map.get(brandPojo.getId());
-
-                salesReportData.setQuantity(salesReportData.getQuantity() + p.getQuantity() );
-                salesReportData.setRevenue(salesReportData.getRevenue() + (p.getQuantity() * p.getSellingPrice()));
-
             }
         }
 
-        List<SalesReportData> salesList = new ArrayList<>();
-        for(Map.Entry<Integer, SalesReportData> entry: map.entrySet()) {
-            BrandPojo bp = brandApi.get(entry.getKey());
-            if((Objects.equals(brand,bp.getBrand()) || Objects.equals(brand,"all")) &&
-                    (Objects.equals(category,bp.getCategory()) || Objects.equals(category,"all")))
-            {
-                SalesReportData d = entry.getValue();
-                d.setBrand(bp.getBrand());
-                d.setCategory(bp.getCategory());
-                salesList.add(d);
-            }
+        List<SalesReportData> salesReportDataList = new ArrayList<>();
+        for(Map.Entry<Integer, SalesReportData> entry: salesMap.entrySet()) {
+            BrandPojo bp = brandMap.get(entry.getKey());
+            SalesReportData d = entry.getValue();
+            d.setBrand(bp.getBrand());
+            d.setCategory(bp.getCategory());
+            salesReportDataList.add(d);
         }
-
-        salesListData = salesList;
+        salesListData = salesReportDataList;
         return salesListData;
     }
-
 
     public void generateCsv(HttpServletResponse response) throws ApiException {
         response.setContentType("text/csv");
@@ -127,4 +123,30 @@ public class SalesReportDto {
             throw new ApiException("End date must not be before Start date");
         }
     }
+
+    private HashMap<Integer, ProductPojo> getProductMap(List<OrderPojo> list) throws ApiException {
+        HashMap<Integer, ProductPojo> productMap = new HashMap<>();
+        Set<Integer> productIdList = new HashSet<>();
+        for (OrderPojo orderPojo: list) {
+            List<OrderItemPojo> orderItemPojoList = orderApi.getOrderItemsByOrderId(orderPojo.getId());
+            for (OrderItemPojo orderItemPojo: orderItemPojoList) {
+                productIdList.add(orderItemPojo.getProductId());
+            }
+        }
+        List<ProductPojo> productPojoList = productApi.selectInId(productIdList);
+        for (ProductPojo productPojo: productPojoList) {
+            productMap.put(productPojo.getId(), productPojo);
+        }
+        return productMap;
+    }
+    //todo: optimise this function to reduce api calls
+    private HashMap<Integer, BrandPojo> getBrandMap() {
+        HashMap<Integer, BrandPojo> brandMap = new HashMap<>();
+        List<BrandPojo> brandPojoList = brandApi.getAll();
+        for (BrandPojo brandPojo: brandPojoList) {
+            brandMap.put(brandPojo.getId(), brandPojo);
+        }
+        return brandMap;
+    }
+
 }

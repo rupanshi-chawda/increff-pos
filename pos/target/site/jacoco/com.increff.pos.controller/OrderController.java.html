@@ -36,15 +36,15 @@ import java.util.List;
 
     @ApiOperation(value = &quot;Gets list of order items of an order by orderid&quot;)
     @GetMapping(path = &quot;/cartitems/{id}&quot;)
-    public List&lt;OrderItemData&gt; getOrderItemById(@PathVariable int id) throws ApiException {
+    public List&lt;OrderItemData&gt; getOrderItemById(@PathVariable Integer id) throws ApiException {
 <span class="nc" id="L40">        return dto.getByOrderId(id);</span>
     }
 
     @ApiOperation(value = &quot;Downloads order invoice by id&quot;)
     @GetMapping(path = &quot;/invoice/{id}&quot;, produces =  &quot;application/pdf&quot;)
-    public ResponseEntity&lt;byte[]&gt; getPDF(@PathVariable int id) throws ApiException{
+    public ResponseEntity&lt;byte[]&gt; getPDF(@PathVariable Integer id) throws ApiException{
 <span class="nc" id="L46">        return dto.getPDF(id);</span>
     }
-// todo: move invoice saving to pos and add filepath column to orderpojo
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

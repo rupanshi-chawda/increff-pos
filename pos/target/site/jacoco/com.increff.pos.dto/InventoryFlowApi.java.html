@@ -32,8 +32,8 @@ import java.util.List;
 
     @Transactional(rollbackOn = ApiException.class)
     public void add(List&lt;InventoryForm&gt; forms, List&lt;InventoryErrorData&gt; errorData) throws ApiException {
-<span class="fc" id="L35">        int errorSize = 0;</span>
-<span class="fc" id="L36">        int i=0;</span>
+<span class="fc" id="L35">        Integer errorSize = 0;</span>
+<span class="fc" id="L36">        Integer i=0;</span>
 
 <span class="fc bfc" id="L38" title="All 2 branches covered.">        for(InventoryForm f: forms)</span>
         {

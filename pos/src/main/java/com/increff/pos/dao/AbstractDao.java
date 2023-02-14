@@ -32,7 +32,7 @@ public abstract class AbstractDao {
 		em.persist(t);
 	}
 
-	public <T> T selectById(int id, Class<T> z)
+	public <T> T selectById(Integer id, Class<T> z)
 	{
 		CriteriaBuilder cb = em().getCriteriaBuilder();
 		CriteriaQuery<T> q = cb.createQuery(z);

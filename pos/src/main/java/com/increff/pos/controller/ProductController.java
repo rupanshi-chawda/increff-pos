@@ -29,7 +29,7 @@ public class ProductController {
 
     @ApiOperation(value = "Gets a product by id")
     @GetMapping(path = "/{id}")
-    public ProductData getProduct(@PathVariable int id) throws ApiException {
+    public ProductData getProduct(@PathVariable Integer id) throws ApiException {
         return dto.get(id);
     }
 
@@ -41,7 +41,7 @@ public class ProductController {
 
     @ApiOperation(value = "Updates a product by id")
     @PutMapping(path = "/{id}")
-    public void updateProduct(@PathVariable int id, @RequestBody ProductUpdateForm f) throws ApiException {
+    public void updateProduct(@PathVariable Integer id, @RequestBody ProductUpdateForm f) throws ApiException {
         dto.update(id, f);
     }
 

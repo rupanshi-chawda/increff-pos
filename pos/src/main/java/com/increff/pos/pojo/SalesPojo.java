@@ -16,7 +16,7 @@ public class SalesPojo extends AbstractVersionPojo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @JsonFormat(pattern="yyyy-MM-dd ")
     @Column(nullable = false)

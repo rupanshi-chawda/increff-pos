@@ -28,7 +28,7 @@ public class UserApi {
 		return dao.selectAll(UserPojo.class);
 	}
 
-	public void delete(int id) {
+	public void delete(Integer id) {
 		dao.deleteById(id);
 	}
 

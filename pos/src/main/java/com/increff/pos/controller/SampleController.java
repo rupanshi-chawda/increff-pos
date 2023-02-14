@@ -38,7 +38,7 @@ public class SampleController {
 		String fileClasspath = project_path + "\\src\\main\\resources\\com.increff\\pos\\" + fileName;
 
 		return outputStream -> {
-			int bytesRead;
+			Integer bytesRead;
 			byte[] buffer = new byte[BUFFER_SIZE];
 			InputStream inputStream = new FileInputStream(fileClasspath);
 			while ((bytesRead = inputStream.read(buffer)) != -1) {

@@ -35,13 +35,13 @@ public class OrderHelper {
         f.setBarcode(StringUtil.toLowerCase(f.getBarcode()));
     }
 
-    public static void validateId(int id) throws ApiException {
+    public static void validateId(Integer id) throws ApiException {
         if (id<1) {
             throw new ApiException("Product with given ID does not exists, id: " + id);
         }
     }
 
-    public static void validateInventory(OrderItemForm f, int quantity) throws ApiException {
+    public static void validateInventory(OrderItemForm f, Integer quantity) throws ApiException {
         if (f.getQuantity() > quantity) {
             throw new ApiException("Product Quantity is more than available Inventory");
         }

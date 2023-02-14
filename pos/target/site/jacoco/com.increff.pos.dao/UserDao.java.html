@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 
 	private static final String DELETE_BY_ID = &quot;delete from UserPojo p where id=:id&quot;;
 
-	public void deleteById(int id) {
+	public void deleteById(Integer id) {
 <span class="fc" id="L20">		Query query = em().createQuery(DELETE_BY_ID);</span>
 <span class="fc" id="L21">		query.setParameter(&quot;id&quot;, id);</span>
 <span class="fc" id="L22">		query.executeUpdate();</span>

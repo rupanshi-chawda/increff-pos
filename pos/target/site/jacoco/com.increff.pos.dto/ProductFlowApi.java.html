@@ -28,8 +28,8 @@ import java.util.List;
 
     @Transactional(rollbackOn = ApiException.class)
     public void add(List&lt;ProductForm&gt; forms, List&lt;ProductErrorData&gt; errorData) throws ApiException {
-<span class="fc" id="L31">        int errorSize = 0;</span>
-<span class="fc" id="L32">        int i=0;</span>
+<span class="fc" id="L31">        Integer errorSize = 0;</span>
+<span class="fc" id="L32">        Integer i=0;</span>
 
 <span class="fc bfc" id="L34" title="All 2 branches covered.">        for(ProductForm f: forms)</span>
         {

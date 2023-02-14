@@ -24,14 +24,14 @@ import java.util.Objects;
 <span class="fc" id="L24">            dao.insert(p);</span>
         }
         else {
-<span class="fc" id="L27">            int prevQuantity = b.getQuantity();</span>
-<span class="fc" id="L28">            int newQuantity = prevQuantity + p.getQuantity();</span>
+<span class="fc" id="L27">            Integer prevQuantity = b.getQuantity();</span>
+<span class="fc" id="L28">            Integer newQuantity = prevQuantity + p.getQuantity();</span>
 <span class="fc" id="L29">            b.setQuantity(newQuantity);</span>
 <span class="fc" id="L30">            dao.update(p);</span>
         }
 <span class="fc" id="L32">    }</span>
 
-    public InventoryPojo get(int id) throws ApiException {
+    public InventoryPojo get(Integer id) throws ApiException {
 <span class="fc" id="L35">        InventoryPojo p = getByInventoryId(id);</span>
 <span class="fc" id="L36">        InventoryHelper.validateInventoryId(p);</span>
 <span class="fc" id="L37">        return p;</span>
@@ -50,11 +50,11 @@ import java.util.Objects;
 
     // Business Logic Methods
 
-    public InventoryPojo getByInventoryId(int id) {
+    public InventoryPojo getByInventoryId(Integer id) {
 <span class="fc" id="L54">        return dao.selectById(id, InventoryPojo.class);</span>
     }
 
-    public int getQuantityById(int id) {
+    public Integer getQuantityById(Integer id) {
 <span class="fc" id="L58">        InventoryPojo p = getByInventoryId(id);</span>
 <span class="fc" id="L59">        return p.getQuantity();</span>
     }

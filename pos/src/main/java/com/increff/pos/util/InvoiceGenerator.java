@@ -21,7 +21,7 @@ public class InvoiceGenerator {
     @Autowired
     ProductApi productApi;
 
-    public InvoiceForm generateInvoiceForOrder(int orderId) throws ApiException
+    public InvoiceForm generateInvoiceForOrder(Integer orderId) throws ApiException
     {
         InvoiceForm invoiceForm = new InvoiceForm();
         OrderPojo orderPojo = orderApi.getOrder(orderId);

@@ -216,7 +216,7 @@ public class ProductDtoTest extends AbstractUnitTest {
 
         String expectedBarcode = "a1b2c3d4";
 
-        int id = api.getIdByBarcode(expectedBarcode);
+        Integer id = api.getIdByBarcode(expectedBarcode);
         ProductUpdateForm updateForm = new ProductUpdateForm();
         String newName = "supersonic wrap";
         Double newMrp = 32000.50;
@@ -246,7 +246,7 @@ public class ProductDtoTest extends AbstractUnitTest {
 
             String expectedBarcode = "a1b2c3d4";
 
-            int id = api.getIdByBarcode(expectedBarcode);
+            Integer id = api.getIdByBarcode(expectedBarcode);
             ProductUpdateForm updateForm = new ProductUpdateForm();
             String newName = "supersonic wrap";
             Double newMrp = 32000.50;
@@ -278,7 +278,7 @@ public class ProductDtoTest extends AbstractUnitTest {
 
             String expectedBarcode = "a1b2c3d4";
 
-            int id = api.getIdByBarcode(expectedBarcode);
+            Integer id = api.getIdByBarcode(expectedBarcode);
             ProductUpdateForm updateForm = new ProductUpdateForm();
             String newName = "";
             Double newMrp = 32000.50;
@@ -306,7 +306,7 @@ public class ProductDtoTest extends AbstractUnitTest {
 
             String expectedBarcode = "a1b2c3d4";
 
-            int id = api.getIdByBarcode(expectedBarcode);
+            Integer id = api.getIdByBarcode(expectedBarcode);
             ProductUpdateForm updateForm = new ProductUpdateForm();
             String newName = "supersonic dryer";
             Double newMrp = -32000.50;

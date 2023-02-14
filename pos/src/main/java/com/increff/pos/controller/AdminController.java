@@ -29,7 +29,7 @@ public class AdminController {
 
 	@ApiOperation(value = "Deletes a user")
 	@DeleteMapping(path = "/{id}")
-	public void deleteUser(@PathVariable int id) {
+	public void deleteUser(@PathVariable Integer id) {
 		dto.delete(id);
 	}
 

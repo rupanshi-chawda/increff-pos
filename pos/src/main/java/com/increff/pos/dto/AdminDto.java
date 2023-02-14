@@ -31,7 +31,7 @@ public class AdminDto {
         dto.add(p);
     }
 
-    public void delete(int id) {
+    public void delete(Integer id) {
         dto.delete(id);
     }
 

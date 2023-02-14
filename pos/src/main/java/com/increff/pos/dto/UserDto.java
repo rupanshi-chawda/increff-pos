@@ -45,7 +45,7 @@ public class UserDto {
         return api.getAll();
     }
 
-    public void delete(int id) {
+    public void delete(Integer id) {
         api.delete(id);
     }
 }

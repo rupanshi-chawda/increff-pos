@@ -44,7 +44,7 @@ public class SalesDto {
         SalesPojo salesPojo = new SalesPojo();
 
         LocalDate date = LocalDate.now();
-        int totalItems = 0;
+        Integer totalItems = 0;
         double totalRevenue = 0.0;
 
         ZonedDateTime startDate = date.atStartOfDay(ZoneId.systemDefault());
@@ -55,7 +55,7 @@ public class SalesDto {
         Integer totalOrders = orderPojoList.size();
 
         for (OrderPojo orderPojo : orderPojoList) {
-            int id = orderPojo.getId();
+            Integer id = orderPojo.getId();
             List<OrderItemPojo> orderItemPojoList = orderApi.getOrderItemsByOrderId(id);
             for (OrderItemPojo orderItemPojo: orderItemPojoList) {
                 totalItems += orderItemPojo.getQuantity();

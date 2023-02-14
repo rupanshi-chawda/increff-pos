@@ -24,8 +24,8 @@ import java.util.List;
 //todo: remove errordata part
     @Transactional(rollbackOn = ApiException.class)
     public void add(List&lt;BrandForm&gt; brandForms, List&lt;BrandErrorData&gt; errorData) throws ApiException {
-<span class="fc" id="L27">        int errorSize = 0;</span>
-<span class="fc" id="L28">        int i=0;</span>
+<span class="fc" id="L27">        Integer errorSize = 0;</span>
+<span class="fc" id="L28">        Integer i=0;</span>
 
 <span class="fc bfc" id="L30" title="All 2 branches covered.">        for(BrandForm f: brandForms)</span>
         {

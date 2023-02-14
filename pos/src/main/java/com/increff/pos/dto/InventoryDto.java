@@ -46,7 +46,7 @@ public class InventoryDto {
 
     public void add(List<InventoryForm> forms) throws ApiException {
         List<InventoryErrorData> errorData = new ArrayList<>();
-        int errorSize = 0;
+        Integer errorSize = 0;
 
         for(InventoryForm f: forms)
         {
@@ -72,7 +72,7 @@ public class InventoryDto {
 
     public InventoryData get(String barcode) throws ApiException {
         productApi.checkProductBarcode(barcode);
-        int id = productApi.getIdByBarcode(barcode);
+        Integer id = productApi.getIdByBarcode(barcode);
         InventoryPojo p = api.get(id);
         return InventoryHelper.convert(p, barcode);
     }
@@ -106,7 +106,7 @@ public class InventoryDto {
             BrandPojo brandPojo = brandApi.get(productApi.get(inventoryData.getId()).getBrandCategory());
             Pair<String, String> pair= new Pair<>(brandPojo.getBrand(), brandPojo.getCategory());
             if(map.containsKey(pair)) {
-                int prev = map.get(pair);
+                Integer prev = map.get(pair);
                 map.replace(pair, prev+inventoryData.getQuantity());
             }
             else {

@@ -36,13 +36,13 @@ public class OrderController {
 
     @ApiOperation(value = "Gets list of order items of an order by orderid")
     @GetMapping(path = "/cartitems/{id}")
-    public List<OrderItemData> getOrderItemById(@PathVariable int id) throws ApiException {
+    public List<OrderItemData> getOrderItemById(@PathVariable Integer id) throws ApiException {
         return dto.getByOrderId(id);
     }
 
     @ApiOperation(value = "Downloads order invoice by id")
     @GetMapping(path = "/invoice/{id}", produces =  "application/pdf")
-    public ResponseEntity<byte[]> getPDF(@PathVariable int id) throws ApiException{
+    public ResponseEntity<byte[]> getPDF(@PathVariable Integer id) throws ApiException{
         return dto.getPDF(id);
     }
 

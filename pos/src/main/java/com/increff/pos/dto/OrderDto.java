@@ -61,12 +61,12 @@ public class OrderDto {
             OrderItemPojo p = OrderHelper.convert(f);
             //Reduce inventory
             reduceInventory(f.getBarcode(), f.getQuantity());
-            int pid = productApi.getIdByBarcode(f.getBarcode());
+            Integer pid = productApi.getIdByBarcode(f.getBarcode());
             orderApi.addItem(p, pid, op.getId());
         }
     }
 
-    public List<OrderItemData> getByOrderId(int orderId) {
+    public List<OrderItemData> getByOrderId(Integer orderId) {
         List<OrderItemPojo> list = orderApi.getByOrderId(orderId);
         List<OrderItemData> list2 = new ArrayList<OrderItemData>();
         for(OrderItemPojo b : list) {
@@ -76,15 +76,15 @@ public class OrderDto {
         return list2;
     }
 
-    public ResponseEntity<byte[]> getPDF(int id) throws ApiException {
+    public ResponseEntity<byte[]> getPDF(Integer id) throws ApiException {
         InvoiceForm invoiceForm = invoiceGenerator.generateInvoiceForOrder(id);
         return orderApi.getPDF(invoiceForm);
     }
 
-    private void reduceInventory(String barcode, int quantity) throws ApiException {
-        int id = productApi.getIdByBarcode(barcode);
+    private void reduceInventory(String barcode, Integer quantity) throws ApiException {
+        Integer id = productApi.getIdByBarcode(barcode);
         InventoryPojo p = inventoryApi.getByInventoryId(id);
-        int newQuantity = p.getQuantity() - quantity;
+        Integer newQuantity = p.getQuantity() - quantity;
         p.setQuantity(newQuantity);
         inventoryApi.update(p);
     }
@@ -93,12 +93,12 @@ public class OrderDto {
         for(OrderItemForm f : forms) {
             productApi.checkProductBarcode(f.getBarcode());
 
-            int id = productApi.getIdByBarcode(f.getBarcode());
+            Integer id = productApi.getIdByBarcode(f.getBarcode());
             OrderHelper.validateId(id);
 
             inventoryApi.get(id);
 
-            int quantity = inventoryApi.getQuantityById(id);
+            Integer quantity = inventoryApi.getQuantityById(id);
             OrderHelper.validateInventory(f, quantity);
         }
     }
