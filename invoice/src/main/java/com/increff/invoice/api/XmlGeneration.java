@@ -57,7 +57,7 @@ public class XmlGeneration {
                 // set an attribute to staff element
                 Element id = document.createElement("id");
                 id.appendChild(document.createTextNode(o.getOrderItemId().toString()));
-                order_item.appendChild(id);
+                order_item.appendChild(id);//todo check case
 
                 // firstname element
                 Element ProductId = document.createElement("product_name");
@@ -97,7 +97,7 @@ public class XmlGeneration {
 
             return encodedXML;
 
-        } catch (ParserConfigurationException | TransformerException pce) {
+        } catch () {
             throw new ApiException(pce.getMessage());
         }
     }

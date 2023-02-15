@@ -30,7 +30,7 @@ public class ProductHelper {
         return ConvertUtil.convert(f, ProductPojo.class);
     }
 
-    public static void normalize(ProductForm f) {
+    public static void normalize(ProductForm f) {//todo check variable names
         f.setBarcode(StringUtil.toLowerCase(f.getBarcode()));
         f.setBrand(StringUtil.toLowerCase(f.getBrand()));
         f.setCategory(StringUtil.toLowerCase(f.getCategory()));

@@ -12,7 +12,7 @@ import javax.persistence.Id;
 public class InventoryItem {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)//todo don't use this in forms and data
     private Integer id;
     private String brand;
     private String category;

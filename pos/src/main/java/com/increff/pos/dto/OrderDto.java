@@ -46,6 +46,7 @@ public class OrderDto {
         return orderApi.getAllOrder().stream().map(OrderHelper::convert).collect(Collectors.toList());
     }
 
+    //todo refactor function
     public void addItem(List<OrderItemForm> forms) throws ApiException {
         // Validating every order item before adding it.
 

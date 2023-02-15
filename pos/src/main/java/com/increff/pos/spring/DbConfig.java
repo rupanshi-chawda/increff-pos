@@ -19,28 +19,17 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class DbConfig {
 
 	public static final String PACKAGE_POJO = "com.increff.pos.pojo";
-	
-	@Value("${jdbc.driverClassName}")
-	private String jdbcDriver;
-	@Value("${jdbc.url}")
-	private String jdbcUrl;
-	@Value("${jdbc.username}")
-	private String jdbcUsername;
-	@Value("${jdbc.password}")
-	private String jdbcPassword;
-	@Value("${hibernate.dialect}")
-	private String hibernateDialect;
-	@Value("${hibernate.show_sql}")
-	private String hibernateShowSql;
-	@Value("${hibernate.hbm2ddl.auto}")
-	private String hibernateHbm2ddl;
-	
+
+
+	//todo move this to application properties
+	@Autowired
+	private ApplicationProperties properties;
 
 	@Bean(name = "dataSource")
 	public DataSource getDataSource() {
 
 		BasicDataSource bean = new BasicDataSource();
-		bean.setDriverClassName(jdbcDriver);
+		bean.setDriverClassName(properties.getDbName());
 		bean.setUrl(jdbcUrl);
 		bean.setUsername(jdbcUsername);
 		bean.setPassword(jdbcPassword);

@@ -63,6 +63,7 @@ public class SalesDto {
             }
         }
 
+        //todo helper
         salesPojo.setDate(startDate);
         salesPojo.setInvoicedItemsCount(totalItems);
         salesPojo.setTotalRevenue(totalRevenue);

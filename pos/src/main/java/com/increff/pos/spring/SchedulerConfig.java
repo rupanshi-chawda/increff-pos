@@ -16,7 +16,7 @@ public class SchedulerConfig {
     SalesDto salesDto;
 
     @Async
-    @Scheduled(cron = "00 00 12 * * *")
+    @Scheduled(cron = "00 00 12 * * *")//todo comment time
     public void createReport() {
         salesDto.createReport();
     }

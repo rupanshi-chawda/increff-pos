@@ -46,7 +46,12 @@ public class OrderApi {
     public void addOrder(OrderPojo p) {
         orderDao.insert(p);
     }
-    
+
+    public void addOrder(OrderPojo p, List<OrderItemPojo> items) {
+        orderDao.insert(p);
+
+    }
+
     public OrderPojo getOrder(Integer id) throws ApiException {
         return getCheckByOrderId(id);
     }

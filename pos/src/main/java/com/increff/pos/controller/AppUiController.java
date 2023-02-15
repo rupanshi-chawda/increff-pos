@@ -38,10 +38,10 @@ public class AppUiController extends AbstractUiController {
 		return mav("order.html");
 	}
 
-	@RequestMapping(value = "/salesreport")
+	@RequestMapping(value = "/salesreport")//todo check how to name rest end points online
 	public ModelAndView salesreport() {
 		return mav("salesreport.html");
-	}
+	}//todo check the name
 
 	@RequestMapping(value = "/sales")
 	public ModelAndView sales() {

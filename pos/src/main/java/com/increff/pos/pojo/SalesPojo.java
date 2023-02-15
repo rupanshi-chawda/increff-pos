@@ -20,7 +20,7 @@ public class SalesPojo extends AbstractVersionPojo {
 
     @JsonFormat(pattern="yyyy-MM-dd ")
     @Column(nullable = false)
-    private ZonedDateTime date;
+    private ZonedDateTime date; // tod use date
 
     @Column(nullable = false)
     private Integer invoicedOrderCount;

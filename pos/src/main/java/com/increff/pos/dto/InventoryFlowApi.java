@@ -32,15 +32,24 @@ public class InventoryFlowApi {
 
     @Transactional(rollbackOn = ApiException.class)
     public void add(List<InventoryForm> forms, List<InventoryErrorData> errorData) throws ApiException {
-        Integer errorSize = 0;
-        Integer i=0;
 
-        for(InventoryForm f: forms)
-        {
+        //validate function
+        validateProductExistence(forms, errorData);
+        for(InventoryForm f: forms) {
+                InventoryPojo p = InventoryHelper.convert(f);
+                p.setId(productApi.getIdByBarcode(f.getBarcode()));
+                api.add(p);
+        }
+    }
+
+    private void validateProductExistence(List<InventoryForm> forms, List<InventoryErrorData> errorData) throws ApiException {
+        Integer errorSize = 0;
+        Integer i=0;//todo renma e to row number
+
+        for(InventoryForm f: forms) {
             InventoryErrorData inventoryErrorData = ConvertUtil.convert(f, InventoryErrorData.class);
             inventoryErrorData.setMessage("");
-            try
-            {
+            try {
                 productApi.checkProductBarcode(f.getBarcode());
             }
             catch (ApiException e) {
@@ -51,14 +60,7 @@ public class InventoryFlowApi {
             i++;
         }
         if(errorSize > 0) {
-            ErrorUtil.throwErrors(errorData);
-        }
-        else {
-            for(InventoryForm f: forms){
-                InventoryPojo p = InventoryHelper.convert(f);
-                p.setId(productApi.getIdByBarcode(f.getBarcode()));
-                api.add(p);
-            }
+             ErrorUtil.throwErrors(errorData);
         }
     }
 }

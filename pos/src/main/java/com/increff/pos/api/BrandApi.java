@@ -27,7 +27,7 @@ public class BrandApi {
 
     public List<BrandPojo> getAll() {
         return dao.selectAll(BrandPojo.class);
-    }
+    }//todo check and remove
 
     public List<BrandPojo> getAllSorted() {
         return dao.selectAllSorted();
@@ -53,11 +53,11 @@ public class BrandApi {
 
     public void getCheckBrandCategory(BrandPojo p) throws ApiException {
         BrandPojo b = getBrandCategory(p.getBrand(),p.getCategory());
-        if(!Objects.isNull(b)) {
+        if(!Objects.isNull(b)) {//todno nonNull
             throw new ApiException("Brand Category already exists");
         }
     }
-    public Integer checkBrandCategory(String brand, String category) throws ApiException {
+    public Integer checkBrandCategory(String brand, String category) throws ApiException {//todo check
         BrandPojo b = getBrandCategory(brand, category);
         if(Objects.isNull(b)) {
             throw new ApiException("Brand and Category doesn't exist");

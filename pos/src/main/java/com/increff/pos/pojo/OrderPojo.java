@@ -23,6 +23,6 @@ public class OrderPojo extends AbstractVersionPojo {
     @Column
     private ZonedDateTime time;
 
-    @Column
+    @Column//todo do we need
     private String invoicePath;
 }
