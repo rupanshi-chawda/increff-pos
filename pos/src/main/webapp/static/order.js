@@ -349,6 +349,12 @@ function displayEditOrderItem(id) {
 // --------------------------------------------------------------------------------
 
 function displayOrderList(data){
+
+    var $head = $("#total-rows").find("span");
+    $head.empty();
+    var span = "Total Rows : " + data.length;
+    $head.append(span);
+
    var $tbody = $('#order-table').find('tbody');
    $tbody.empty();
    for(var i in data){

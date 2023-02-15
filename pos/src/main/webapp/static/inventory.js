@@ -254,6 +254,12 @@ function downloadErrors() {
 
 //UI DISPLAY METHODS
 function displayInventoryList(data){
+
+    var $head = $("#total-rows").find("span");
+    $head.empty();
+    var span = "Total Rows : " + data.length;
+    $head.append(span);
+
 	var $tbody = $('#inventory-table').find('tbody');
 	$tbody.empty();
 	console.log(data);

@@ -69,6 +69,12 @@ function deleteUser(event) {
 //UI DISPLAY METHODS
 
 function displayUserList(data){
+
+    var $head = $("#total-rows").find("span");
+    $head.empty();
+    var span = "Total Rows : " + data.length;
+    $head.append(span);
+
 	console.log('Printing user data');
 	var $tbody = $('#user-table').find('tbody');
 	$tbody.empty();

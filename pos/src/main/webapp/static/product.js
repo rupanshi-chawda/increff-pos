@@ -258,6 +258,12 @@ function downloadErrors() {
 //UI DISPLAY METHODS
 
 function displayProductList(data){
+
+    var $head = $("#total-rows").find("span");
+    $head.empty();
+    var span = "Total Rows : " + data.length;
+    $head.append(span);
+
    var $tbody = $('#Product-table').find('tbody');
    $tbody.empty();
    for(var i in data){

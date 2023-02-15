@@ -2,11 +2,14 @@ function getSalesUrl() {
   var baseUrl = $("meta[name=baseUrl]").attr("content");
   return baseUrl + "/api/sales";
 }
-var last_run = null;
+
 function displaySalesList(data) {
-    last_run = data[0].lastRun;
-    console.log(last_run);
-    $("#last-run input[name=lastRun]").val(last_run);
+
+    var $head = $("#total-rows").find("span");
+    $head.empty();
+    var span = "Total Rows : " + data.length;
+    $head.append(span);
+
     var $tbody = $('#Sales-table').find('tbody');
     $tbody.empty();
     for (var i in data) {
