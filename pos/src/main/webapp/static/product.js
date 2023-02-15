@@ -159,6 +159,10 @@ var processCount = 0;
 function processData() {
   var file = $("#productFile")[0].files[0];
   console.log(file);
+  if(file.name.split('.').pop() != "tsv"){
+      toastr.error("File should be TSV");
+      return;
+  }
   readFileData(file, readFileDataCallback);
 }
 
@@ -166,8 +170,11 @@ function readFileDataCallback(results) {
   fileData = results.data;
   console.log(fileData);
   var filelen = fileData.length;
-  	if(filelen > 5000) {
-  	    toastr.error("file length exceeds 5000, Not Allowed");
+    if(filelen == 0) {
+        toastr.error("File is empty, upload not allowed");
+    }
+  	else if(filelen > 5000) {
+  	    toastr.error("File length exceeds 5000, upload not allowed");
   	}
   	else {
   	        var headers = ["barcode", "brand", "category", "name", "mrp"];
@@ -177,7 +184,7 @@ function readFileDataCallback(results) {
             }
             for(var i in headers) {
                 if(!fileData[0].hasOwnProperty(headers[i])) {
-                    toastr.error('File columns Names do not match. Please check the file and try again');
+                toastr.error('File column names do not match. Please check the file and try again');
                     return;
                 }
             }
@@ -238,7 +245,7 @@ function uploadRows() {
             console.log(response);
             $("#download-errors").prop('disabled', false);
             resetForm();
-            toastr.error("There are errors in file, please Download Errors", "Error : ");
+            toastr.error("There are errors in file, please download errors", "Error : ");
         }
     },
   });

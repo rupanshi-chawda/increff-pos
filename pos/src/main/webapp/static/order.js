@@ -1,5 +1,5 @@
 var wholeOrder = [];
-//todo: fix order js
+
 function getOrderItemUrl() {
   var baseUrl = $("meta[name=baseUrl]").attr("content");
   return baseUrl + "/api/order/cart";
@@ -115,10 +115,6 @@ function changeQuantity(item) {
     if (temp_barcode == barcode) {
       var prev_quantity = parseInt(JSON.parse(wholeOrder[i]).quantity);
       var new_quantity = prev_quantity + quantity;
-      if (new_quantity > barcodeList.get(barcode)) {
-        toastr.error("Quantity not available in the inventory");
-        return;
-      }
       console.log(new_quantity);
       var str = new_quantity.toString();
       console.log(str);
@@ -167,74 +163,22 @@ const barcodeList = new Map();
 var inv_qty = null;
 var inv_barcode = null;
 
-function getBarcode(data) {
-  for (i in data) {
-    let vars = [];
-    vars.push(data[i].id);
-    vars.push(data[i].barcode);
-    getQtyFromInventory(vars);
-  }
-}
-
-function getQtyFromInventory(vars) {
-  var url = getInventoryUrl() + "/" + vars[0];
-  var temp_qty;
-  $.ajax({
-    url: url,
-    type: "GET",
-    success: function (data) {
-      barcodeList.set(vars[1], data.quantity);
-    },
-    error: handleAjaxError,
-  });
-
-  return temp_qty;
-}
-
-function getProductList() {
-  var url = getInventoryUrl();
-  $.ajax({
-    url: url,
-    type: "GET",
-    success: function (data) {
-      barcode_qty.clear();
-      getBarcode(data);
-    },
-    error: handleAjaxError,
-  });
-}
-
-function checkBarcode(data) {
-  console.log(data);
-  console.log(barcode_qty[data]);
-  console.log(barcode_qty.has(data));
-  if (barcode_qty.has(data)) {
-    return true;
-  }
-  return false;
-}
-var inv_qty = null;
-var inv_barcode = null;
-var mrp = null;
-
-var check = 1;
-
 function getInventory(barcode) {
+  barcode = barcode.trim();
   var url = getInventoryUrl() + "/" + barcode;
   $.ajax({
     url: url,
     type: "GET",
     success: function (data) {
       inv_barcode = data.barcode;
-      inv_qty = data.qty;
-
-      barcodeList.set(data.barcode, data.qty);
+      inv_qty = data.quantity;
+        console.log(data);
+      barcodeList.set(data.barcode, data.quantity);
       addItem();
       resetForm();
     },
     error: function (data) {
       toastr.error("Barcode does not exist in the Inventory");
-      resetForm();
     },
   });
 }
@@ -246,55 +190,65 @@ function addItem() {
   var barcode1 = $("#order-item-form input[name=barcode]").val();
 
   var qty = $("#order-item-form input[name=quantity]").val();
+  var sp = $("#order-item-form input[name=sellingPrice]").val();
 
-  console.log(check);
+//  console.log(check);
+//
+//  console.log(qty);
+//  console.log(barcodeList.get(barcode1));
+//  console.log(inv_qty);
 
-  console.log(qty);
-  console.log(inv_qty);
   if(isNaN(qty) || isNaN(parseFloat(qty))) {
-        toastr.error("Quantity must be a number", "Error : ");
+        toastr.error("Quantity must be number", "Error : ");
+        return;
+    }
+  if(parseFloat(qty) > 2147483647) {
+        toastr.error("Quantity is greater than Maximum value allowed", "Error : ");
+        return;
   }
-  else if (qty > barcodeList.get(barcode1)) {
+  if(isNaN(sp) || isNaN(parseFloat(sp))) {
+        toastr.error("Selling Price must be number", "Error : ");
+        return;
+    }
+  if(parseFloat(sp) > 2147483647) {
+        toastr.error("Selling Price is greater than Maximum value allowed", "Error : ");
+        return;
+  }
+
+  if (qty > barcodeList.get(barcode1)) {
     toastr.error("Quantity not present in inventory");
-    resetForm();
-  }
-  else
-  {
+  } else {
     var _qty = barcodeList.get(barcode1) - qty;
-    var sp = $("#order-item-form input[name=sellingPrice]").val();
 
-        if (sp <= 0) {
-            toastr.error("Price cannot be negative or zero");
-        } else if (qty <= 0) {
-            toastr.error("Quantity cannot be negative or zero");
-        }
-        if (qty > barcodeList.get(barcode1)) {
-            toastr.error("Not enough quantity present in inventory , "+ barcodeList.get(barcode1) + " available");
+    if (sp <= 0) {
+      toastr.error("Price cannot be negative or zero");
+    } else if (qty <= 0) {
+      toastr.error("Quantity cannot be negative or zero");
+    } else {
+      if (checkOrderItemExist()) {
+        console.log("inside check");
+        let vars = [];
+
+        var barcode = $("#order-item-form input[name=barcode]").val();
+        var qty = $("#order-item-form input[name=quantity]").val();
+        var sp = $("#order-item-form input[name=sellingPrice]").val();
+
+        vars.push(barcode);
+        vars.push(qty);
+        vars.push(sp);
+        if (checkSellingPrice(vars) == false) {
+          toastr.error("Selling price cannot be different");
         } else {
-              if (checkOrderItemExist()) {
-                console.log("inside check");
-                let vars = [];
-
-                var barcode = $("#order-item-form input[name=barcode]").val();
-                var qty = $("#order-item-form input[name=quantity]").val();
-                var sp = $("#order-item-form input[name=sellingPrice]").val();
-
-                vars.push(barcode);
-                vars.push(qty);
-                vars.push(sp);
-                if (checkSellingPrice(vars) == false) {
-                  toastr.error("Selling price cannot be different");
-                } else {
-                  changeQuantity(vars);
-                }
-              } else {
-                wholeOrder.push(json);
-                toastr.success("Item added to Cart", "Success : ");
-                resetForm();
-              }
-
-          displayOrderItemList(wholeOrder);
+          changeQuantity(vars);
         }
+      } else {
+        wholeOrder.push(json);
+        toastr.success("Item Added Successfully", "Success : ");
+        resetForm();
+      }
+
+      displayOrderItemList(wholeOrder);
+    }
   }
 }
 
@@ -382,7 +336,6 @@ function updateOrderItem(event) {
     wholeOrder[editOrderItem] = JSON.stringify(data);
     console.log(wholeOrder);
   }
-  //resetForm();
   toastr.success("Item updated Successfully", "Success : ");
   displayOrderItemList(wholeOrder);
 }
@@ -467,18 +420,28 @@ function viewOrder(id) {
  	var $tbody = $('#view-order-item-table').find('tbody');
  	$tbody.empty();
     console.log(data);
+    var amt = 0;
  	for(var i in data)
  	{
          var e = data[i];
          console.log(e);
+         var total = e.sellingPrice * e.quantity;
          var row = '<tr>'
          + '<td>' + e.barcode + '</td>'
          + '<td>' + e.quantity + '</td>'
-         //+ '<td>' + e.sellingPrice + '</td>'
          + '<td>'  + parseFloat(e.sellingPrice).toFixed(2) + '</td>'
+         + '<td>'  + parseFloat(total).toFixed(2) + '</td>'
          + '</tr>';
          $tbody.append(row);
+         amt += total;
      }
+     var row = '<tr>'
+              + '<td> </td>'
+              + '<td> </td>'
+              + '<td class="d-flex justify-content-end font-weight-bold"> Total : </td>'
+              + '<td>'  + parseFloat(amt).toFixed(2) + '</td>'
+              + '</tr>';
+              $tbody.append(row);
  }
 
 function displayOrderItem(i) {

@@ -17,7 +17,6 @@ function handleAjaxError(response) {
   } else {
     var response = JSON.parse(response.responseText);
     //alert(response.message);
-    //TODO: remove stack of errors
 
     toastr.error(response.message, "Error : ", {
       closeButton: true,
