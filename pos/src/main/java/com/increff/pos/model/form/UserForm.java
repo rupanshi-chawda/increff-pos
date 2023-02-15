@@ -13,6 +13,7 @@ public class UserForm {
 
 	@Email
 	@NotBlank
+	@Size(min = 1, max = 25,message = " must be between 1 and 25 characters long ")
 	private String email;
 
 	@NotBlank

@@ -17,7 +17,9 @@ import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.core.AnyOf.anyOf;
+import static org.hamcrest.core.StringContains.containsString;
+import static org.junit.Assert.*;
 
 public class BrandDtoTest extends AbstractUnitTest {
 
@@ -73,8 +75,9 @@ public class BrandDtoTest extends AbstractUnitTest {
         }
         catch(ApiException e)
         {
-            String exception = "[ {\r\n  \"brand\" : \"dyson\",\r\n  \"category\" : \"\",\r\n  \"message\" : \"[category must not be blank]\"\r\n} ]";
-            assertEquals(exception, e.getMessage());
+            String exception = "[ {\r\n  \"brand\" : \"dyson\",\r\n  \"category\" : \"\",\r\n  \"message\" : \"[category  must be between 1 and 15 characters long , category must not be blank]\"\r\n} ]";
+            String exception2 = "[ {\r\n  \"brand\" : \"dyson\",\r\n  \"category\" : \"\",\r\n  \"message\" : \"[category must not be blank , category  must be between 1 and 15 characters long]\"\r\n} ]";
+            assertThat(e.getMessage(), anyOf(containsString(exception),containsString(exception2)));
             throw e;
         }
         try {
@@ -87,8 +90,9 @@ public class BrandDtoTest extends AbstractUnitTest {
         }
         catch(ApiException e)
         {
-            String exception = "[ {\r\n  \"brand\" : \"\",\r\n  \"category\" : \"hair\",\r\n  \"message\" : \"[brand must not be blank]\"\r\n} ]";
-            assertEquals(exception, e.getMessage());
+            String exception = "[ {\r\n  \"brand\" : \"\",\r\n  \"category\" : \"hair\",\r\n  \"message\" : \"[brand  must be between 1 and 15 characters long , brand must not be blank]\"\r\n} ]";
+            String exception2 = "[ {\r\n  \"brand\" : \"dyson\",\r\n  \"category\" : \"\",\r\n  \"message\" : \"[brand must not be blank , brand  must be between 1 and 15 characters long]\"\r\n} ]";
+            assertThat(e.getMessage(), anyOf(containsString(exception),containsString(exception2)));
             throw e;
         }
     }
@@ -210,8 +214,9 @@ public class BrandDtoTest extends AbstractUnitTest {
         }
         catch(ApiException e)
         {
-            String exception = "[brand must not be blank]";
-            assertEquals(exception, e.getMessage());
+            String exception = "[brand must not be blank, brand  must be between 1 and 15 characters long ]";
+            String exception2 = "[brand  must be between 1 and 15 characters long , brand must not be blank]";
+            assertThat(e.getMessage(), anyOf(containsString(exception),containsString(exception2)));
             throw e;
         }
         try {
@@ -231,8 +236,9 @@ public class BrandDtoTest extends AbstractUnitTest {
         }
         catch(ApiException e)
         {
-            String exception = "[category must not be blank]";
-            assertEquals(exception, e.getMessage());
+            String exception = "[category must not be blank, category  must be between 1 and 15 characters long ]";
+            String exception2 = "[category  must be between 1 and 15 characters long , category must not be blank]";
+            assertThat(e.getMessage(), anyOf(containsString(exception),containsString(exception2)));
             throw e;
         }
     }

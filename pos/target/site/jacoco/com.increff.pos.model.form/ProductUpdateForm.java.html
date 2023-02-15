@@ -6,18 +6,20 @@ import lombok.Setter;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Getter
-<span class="fc" id="L11">@Setter</span>
-<span class="fc" id="L12">public class ProductUpdateForm {</span>
+<span class="fc" id="L12">@Setter</span>
+<span class="fc" id="L13">public class ProductUpdateForm {</span>
 
     @NotBlank
-<span class="fc" id="L15">    private String name;</span>
+    @Size(min = 1, max = 25,message = &quot; must be between 1 and 25 characters long &quot;)
+<span class="fc" id="L17">    private String name;</span>
 
 
     @NotNull
     @Min(value = 1, message = &quot;must be atleast 1&quot;)
-<span class="fc" id="L20">    private Double mrp;</span>
+<span class="fc" id="L22">    private Double mrp;</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -4,22 +4,25 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Getter
-<span class="fc" id="L9">@Setter</span>
-<span class="fc" id="L10">public class SalesReportForm {</span>
+<span class="fc" id="L10">@Setter</span>
+<span class="fc" id="L11">public class SalesReportForm {</span>
 
     @NotBlank
-<span class="fc" id="L13">    private String startDate;</span>
+<span class="fc" id="L14">    private String startDate;</span>
 
     @NotBlank
-<span class="fc" id="L16">    private String endDate;</span>
+<span class="fc" id="L17">    private String endDate;</span>
 
     @NotBlank
-<span class="fc" id="L19">    private String brand;</span>
+    @Size(min = 1, max = 15,message = &quot; must be between 1 and 15 characters long &quot;)
+<span class="fc" id="L21">    private String brand;</span>
 
     @NotBlank
-<span class="fc" id="L22">    private String category;</span>
+    @Size(min = 1, max = 15,message = &quot; must be between 1 and 15 characters long &quot;)
+<span class="fc" id="L25">    private String category;</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

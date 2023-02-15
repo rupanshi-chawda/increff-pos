@@ -61,7 +61,6 @@ function getFilteredList(event) {
     error: handleAjaxError,
   });
 
-  document.getElementById("inputED").disabled = true;
   return false;
 }
 
@@ -93,12 +92,11 @@ function autoFillDate() {
 
   var today = year + "-" + month + "-" + day;
   $("#inputED").attr("value", today);
-  //$("#inputSD").attr("value", today);
+  $("#inputSD").attr("value", today);
 }
 
 function disableDate() {
   var sd = $("#sales-form input[name=startDate]").val();
-  document.getElementById("inputED").disabled = false;
   $("#inputED").attr("min", sd);
 }
 

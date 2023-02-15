@@ -19,7 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.core.AnyOf.anyOf;
+import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class ProductDtoTest extends AbstractUnitTest {
 
@@ -112,8 +115,9 @@ public class ProductDtoTest extends AbstractUnitTest {
 
         }
         catch(ApiException e) {
-            String exception = "[ {\r\n  \"barcode\" : \"a1b2c3d4\",\r\n  \"brand\" : \"dyson\",\r\n  \"category\" : \"\",\r\n  \"name\" : \"airwrap\",\r\n  \"mrp\" : 45000.95,\r\n  \"message\" : \"[category must not be blank]\"\r\n} ]";
-            assertEquals(exception, e.getMessage());
+            String exception = "[ {\r\n  \"barcode\" : \"a1b2c3d4\",\r\n  \"brand\" : \"dyson\",\r\n  \"category\" : \"\",\r\n  \"name\" : \"airwrap\",\r\n  \"mrp\" : 45000.95,\r\n  \"message\" : \"[category  must be between 1 and 15 characters long , category must not be blank]\"\r\n} ]";
+            String exception2 = "[ {\r\n  \"barcode\" : \"a1b2c3d4\",\r\n  \"brand\" : \"dyson\",\r\n  \"category\" : \"\",\r\n  \"name\" : \"airwrap\",\r\n  \"mrp\" : 45000.95,\r\n  \"message\" : \"[category must not be blank, category  must be between 1 and 15 characters long ]\"\r\n} ]";
+            assertThat(e.getMessage(), anyOf(containsString(exception),containsString(exception2)));
             throw e;
         }
         try {
@@ -142,8 +146,9 @@ public class ProductDtoTest extends AbstractUnitTest {
 
         }
         catch(ApiException e) {
-            String exception = "[ {\r\n  \"barcode\" : \"a1b2c3d4\",\r\n  \"brand\" : \"\",\r\n  \"category\" : \"hair\",\r\n  \"name\" : \"airwrap\",\r\n  \"mrp\" : 45000.95,\r\n  \"message\" : \"[brand must not be blank]\"\r\n} ]";
-            assertEquals(exception, e.getMessage());
+            String exception = "[ {\r\n  \"barcode\" : \"a1b2c3d4\",\r\n  \"brand\" : \"\",\r\n  \"category\" : \"hair\",\r\n  \"name\" : \"airwrap\",\r\n  \"mrp\" : 45000.95,\r\n  \"message\" : \"[brand  must be between 1 and 15 characters long , brand must not be blank]\"\r\n} ]";
+            String exception2 = "[ {\r\n  \"barcode\" : \"a1b2c3d4\",\r\n  \"brand\" : \"dyson\",\r\n  \"category\" : \"\",\r\n  \"name\" : \"airwrap\",\r\n  \"mrp\" : 45000.95,\r\n  \"message\" : \"[brand must not be blank, brand  must be between 1 and 15 characters long ]\"\r\n} ]";
+            assertThat(e.getMessage(), anyOf(containsString(exception),containsString(exception2)));
             throw e;
         }
         try {
@@ -157,8 +162,9 @@ public class ProductDtoTest extends AbstractUnitTest {
 
         }
         catch(ApiException e) {
-            String exception = "[ {\r\n  \"barcode\" : \"a1b2c3d4\",\r\n  \"brand\" : \"dyson\",\r\n  \"category\" : \"hair\",\r\n  \"name\" : \"\",\r\n  \"mrp\" : 45000.95,\r\n  \"message\" : \"[name must not be blank]\"\r\n} ]";
-            assertEquals(exception, e.getMessage());
+            String exception = "[ {\r\n  \"barcode\" : \"a1b2c3d4\",\r\n  \"brand\" : \"dyson\",\r\n  \"category\" : \"hair\",\r\n  \"name\" : \"\",\r\n  \"mrp\" : 45000.95,\r\n  \"message\" : \"[name  must be between 1 and 25 characters long , name must not be blank]\"\r\n} ]";
+            String exception2 = "[ {\r\n  \"barcode\" : \"a1b2c3d4\",\r\n  \"brand\" : \"dyson\",\r\n  \"category\" : \"\",\r\n  \"name\" : \"airwrap\",\r\n  \"mrp\" : 45000.95,\r\n  \"message\" : \"[name must not be blank, name  must be between 1 and 25 characters long ]\"\r\n} ]";
+            assertThat(e.getMessage(), anyOf(containsString(exception),containsString(exception2)));
             throw e;
         }
     }
@@ -263,8 +269,9 @@ public class ProductDtoTest extends AbstractUnitTest {
         }
         catch(ApiException e)
         {
-            String exception = "[name must not be blank]";
-            assertEquals(exception, e.getMessage());
+            String exception = "[name  must be between 1 and 25 characters long , name must not be blank]";
+            String exception2 = "[name must not be blank, name  must be between 1 and 25 characters long ]";
+            assertThat(e.getMessage(), anyOf(containsString(exception),containsString(exception2)));
             throw e;
         }
         try {

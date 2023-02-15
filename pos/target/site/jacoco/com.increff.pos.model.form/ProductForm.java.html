@@ -17,17 +17,20 @@ import javax.validation.constraints.Size;
 <span class="fc" id="L17">    private String barcode;</span>
 
     @NotBlank
-<span class="fc" id="L20">    private String brand;</span>
+    @Size(min = 1, max = 15,message = &quot; must be between 1 and 15 characters long &quot;)
+<span class="fc" id="L21">    private String brand;</span>
 
     @NotBlank
-<span class="fc" id="L23">    private String category;</span>
+    @Size(min = 1, max = 15,message = &quot; must be between 1 and 15 characters long &quot;)
+<span class="fc" id="L25">    private String category;</span>
 
     @NotBlank
-<span class="fc" id="L26">    private String name;</span>
+    @Size(min = 1, max = 25,message = &quot; must be between 1 and 25 characters long &quot;)
+<span class="fc" id="L29">    private String name;</span>
 
     @NotNull
     @Min(value = 1, message = &quot;must be atleast 1&quot;)
-<span class="fc" id="L30">    private Double mrp;</span>
+<span class="fc" id="L33">    private Double mrp;</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
