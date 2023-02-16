@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProductDto.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pos</a> &gt; <a href="index.source.html" class="el_package">com.increff.pos.dto</a> &gt; <span class="el_source">ProductDto.java</span></div><h1>ProductDto.java</h1><pre class="source lang-java linenums">package com.increff.pos.dto;
 
 import com.increff.pos.model.data.ProductErrorData;
+import com.increff.pos.model.form.BrandForm;
 import com.increff.pos.model.form.ProductForm;
 import com.increff.pos.api.BrandApi;
 import com.increff.pos.api.ProductApi;
@@ -13,16 +14,17 @@ import com.increff.pos.util.ApiException;
 import com.increff.pos.util.ConvertUtil;
 import com.increff.pos.util.ErrorUtil;
 import com.increff.pos.util.ValidationUtil;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
-@Component
 @Service
-<span class="fc" id="L25">public class ProductDto {</span>
+<span class="fc" id="L27">public class ProductDto {</span>
 
     @Autowired
     private ProductApi api;
@@ -34,54 +36,43 @@ import java.util.List;
     private BrandApi brandApi;
 
     public void add(List&lt;ProductForm&gt; forms) throws ApiException {
-<span class="fc" id="L37">        List&lt;ProductErrorData&gt; errorData = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L38">        errorData.clear();</span>
-<span class="fc" id="L39">        Integer errorSize = 0;</span>
-
-<span class="fc bfc" id="L41" title="All 2 branches covered.">        for(ProductForm f: forms)</span>
-        {
-<span class="fc" id="L43">            ProductErrorData productErrorData = ConvertUtil.convert(f, ProductErrorData.class);</span>
-<span class="fc" id="L44">            productErrorData.setMessage(&quot;&quot;);</span>
-            try
-            {
-<span class="fc" id="L47">                ValidationUtil.validateForms(f);</span>
-<span class="fc" id="L48">                ProductHelper.normalize(f);</span>
-            }
-<span class="fc" id="L50">            catch (ApiException e) {</span>
-<span class="fc" id="L51">                errorSize++;</span>
-<span class="fc" id="L52">                productErrorData.setMessage(e.getMessage());</span>
-<span class="fc" id="L53">            }</span>
-<span class="fc" id="L54">            errorData.add(productErrorData);</span>
-<span class="fc" id="L55">        }</span>
-<span class="fc bfc" id="L56" title="All 2 branches covered.">        if(errorSize &gt; 0) {</span>
-<span class="nc" id="L57">            ErrorUtil.throwErrors(errorData);</span>
-        }
-
-<span class="fc" id="L60">        flowApi.add(forms, errorData);</span>
-<span class="fc" id="L61">    }</span>
+<span class="fc" id="L39">        checkDuplicates(forms);</span>
+<span class="fc" id="L40">        ProductHelper.validateFormList(forms);</span>
+<span class="fc" id="L41">        flowApi.add(forms);</span>
+<span class="fc" id="L42">    }</span>
 
     public ProductData get(Integer id) throws ApiException {
-<span class="nc" id="L64">        ProductPojo p = api.get(id);</span>
-<span class="nc" id="L65">        BrandPojo b = brandApi.getCheckBrandId(p.getBrandCategory());</span>
-<span class="nc" id="L66">        return ProductHelper.convert(p, b);</span>
+<span class="nc" id="L45">        ProductPojo p = api.get(id);</span>
+<span class="nc" id="L46">        BrandPojo b = brandApi.getCheckBrandId(p.getBrandCategory());</span>
+<span class="nc" id="L47">        return ProductHelper.convert(p, b);</span>
     }
 
     public List&lt;ProductData&gt; getAll() throws ApiException {
-<span class="fc" id="L70">        List&lt;ProductPojo&gt; list = api.getAll();</span>
-<span class="fc" id="L71">        List&lt;ProductData&gt; list2 = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L72" title="All 2 branches covered.">        for(ProductPojo productPojo : list) {</span>
-<span class="fc" id="L73">            BrandPojo brandPojo= brandApi.getCheckBrandId(productPojo.getBrandCategory());</span>
-<span class="fc" id="L74">            list2.add(ProductHelper.convert(productPojo, brandPojo));</span>
-<span class="fc" id="L75">        }</span>
-<span class="fc" id="L76">        return list2;</span>
+<span class="fc" id="L51">        List&lt;ProductPojo&gt; list = api.getAll();</span>
+<span class="fc" id="L52">        List&lt;ProductData&gt; list2 = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        for(ProductPojo productPojo : list) {</span>
+<span class="fc" id="L54">            BrandPojo brandPojo= brandApi.getCheckBrandId(productPojo.getBrandCategory());</span>
+<span class="fc" id="L55">            list2.add(ProductHelper.convert(productPojo, brandPojo));</span>
+<span class="fc" id="L56">        }</span>
+<span class="fc" id="L57">        return list2;</span>
     }
 
     public void update(Integer id, ProductUpdateForm f) throws ApiException {
-<span class="fc" id="L80">        ProductHelper.normalize(f);</span>
-<span class="fc" id="L81">        ValidationUtil.validateForms(f);</span>
-<span class="fc" id="L82">        ProductPojo p = ProductHelper.convert(f);</span>
-<span class="fc" id="L83">        api.update(id, p);</span>
-<span class="fc" id="L84">    }</span>
+<span class="fc" id="L61">        ProductHelper.normalize(f);</span>
+<span class="fc" id="L62">        ValidationUtil.validateForms(f);</span>
+<span class="fc" id="L63">        ProductPojo p = ProductHelper.convert(f);</span>
+<span class="fc" id="L64">        api.update(id, p);</span>
+<span class="fc" id="L65">    }</span>
 
+    private void checkDuplicates(List&lt;ProductForm&gt; forms) throws ApiException {
+<span class="fc" id="L68">        HashSet&lt;String&gt; set = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        for(ProductForm form : forms) {</span>
+<span class="fc" id="L70">            String p = form.getBarcode();</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">            if (set.contains(p)) {</span>
+<span class="nc" id="L72">                throw new ApiException(&quot;Duplicates Brand and Category Exists&quot;);</span>
+            }
+<span class="fc" id="L74">            set.add(p);</span>
+<span class="fc" id="L75">        }</span>
+<span class="fc" id="L76">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

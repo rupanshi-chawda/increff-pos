@@ -34,38 +34,24 @@ public class OrderDto {
     private OrderApi orderApi;
 
     @Autowired
-    private ProductApi productApi;
+    private OrderFlowApi flowApi;
 
     @Autowired
-    private InventoryApi inventoryApi;
+    private ProductApi productApi;
 
     @Autowired
     private InvoiceGenerator invoiceGenerator;
 
-    public List<OrderData> getAllOrder() {
-        return orderApi.getAllOrder().stream().map(OrderHelper::convert).collect(Collectors.toList());
-    }
-
     public void addItem(List<OrderItemForm> forms) throws ApiException {
-        // Validating every order item before adding it.
-
-        //todo move this flow
         checkDuplicateItems(forms);
-        validateItems(forms);
 
         // Place order
         //todo move all below to next layer to add since we are only adding
-        OrderPojo op = new OrderPojo();
-        orderApi.addOrder(op);
+        flowApi.addItem(forms);
+    }
 
-        // Adding order item to table
-        for(OrderItemForm f : forms) {
-            OrderItemPojo p = OrderHelper.convert(f);
-            //Reduce inventory
-            reduceInventory(f.getBarcode(), f.getQuantity());
-            Integer pid = productApi.getIdByBarcode(f.getBarcode());
-            orderApi.addItem(p, pid, op.getId());
-        }
+    public List<OrderData> getAllOrder() {
+        return orderApi.getAllOrder().stream().map(OrderHelper::convert).collect(Collectors.toList());
     }
 
     public List<OrderItemData> getByOrderId(Integer orderId) {
@@ -81,28 +67,6 @@ public class OrderDto {
     public ResponseEntity<byte[]> getPDF(Integer id) throws ApiException {
         InvoiceForm invoiceForm = invoiceGenerator.generateInvoiceForOrder(id);
         return orderApi.getPDF(invoiceForm);
-    }
-
-    protected void reduceInventory(String barcode, Integer quantity) throws ApiException {
-        Integer id = productApi.getIdByBarcode(barcode);
-        InventoryPojo p = inventoryApi.getByInventoryId(id);
-        Integer newQuantity = p.getQuantity() - quantity;
-        p.setQuantity(newQuantity);
-        inventoryApi.update(p);
-    }
-
-    private void validateItems(List<OrderItemForm> forms) throws ApiException {
-        for(OrderItemForm f : forms) {
-            productApi.checkProductBarcodeExistence(f.getBarcode());
-
-            Integer id = productApi.getIdByBarcode(f.getBarcode());
-            OrderHelper.validateId(id);
-
-            inventoryApi.get(id);
-
-            Integer quantity = inventoryApi.getQuantityById(id);
-            OrderHelper.validateInventory(f, quantity);
-        }
     }
 
     private void checkDuplicateItems(List<OrderItemForm> forms) throws ApiException {

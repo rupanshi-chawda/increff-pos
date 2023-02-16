@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="4" failures="0" name="com.increff.pos.dto.SalesReportDtoTest" time="0.252" errors="0" skipped="0">
+<testsuite tests="4" failures="0" name="com.increff.pos.dto.SalesReportDtoTest" time="0.217" errors="0" skipped="0">
   <properties>
     <property name="idea.version" value="2021.3.3"/>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
@@ -64,8 +64,8 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="com.increff.pos.dto.SalesReportDtoTest" name="getFilterTest" time="0.072"/>
-  <testcase classname="com.increff.pos.dto.SalesReportDtoTest" name="getAllTest" time="0.061"/>
-  <testcase classname="com.increff.pos.dto.SalesReportDtoTest" name="testReportCsv" time="0.059"/>
-  <testcase classname="com.increff.pos.dto.SalesReportDtoTest" name="getIllegalFilterTest" time="0.06"/>
+  <testcase classname="com.increff.pos.dto.SalesReportDtoTest" name="getFilterTest" time="0.07"/>
+  <testcase classname="com.increff.pos.dto.SalesReportDtoTest" name="getAllTest" time="0.057"/>
+  <testcase classname="com.increff.pos.dto.SalesReportDtoTest" name="testReportCsv" time="0.043"/>
+  <testcase classname="com.increff.pos.dto.SalesReportDtoTest" name="getIllegalFilterTest" time="0.047"/>
 </testsuite>

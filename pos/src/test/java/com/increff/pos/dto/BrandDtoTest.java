@@ -56,7 +56,7 @@ public class BrandDtoTest extends AbstractUnitTest {
         }
         catch(ApiException e)
         {
-            String exception = "[ {\r\n  \"brand\" : \"dyson\",\r\n  \"category\" : \"hair\",\r\n  \"message\" : \"Brand Category already exists\"\r\n} ]";
+            String exception = "Brand Category already exists";
             assertEquals(exception, e.getMessage());
             throw e;
         }

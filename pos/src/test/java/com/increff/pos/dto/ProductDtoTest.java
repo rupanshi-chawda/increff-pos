@@ -76,7 +76,7 @@ public class ProductDtoTest extends AbstractUnitTest {
         }
         catch(ApiException e)
         {
-            String exception = "[ {\r\n  \"barcode\" : \"a1b2c3d4\",\r\n  \"brand\" : \"dyson\",\r\n  \"category\" : \"hair\",\r\n  \"name\" : \"airwrap\",\r\n  \"mrp\" : 45000.95,\r\n  \"message\" : \"Product with given barcode already exists\"\r\n} ]";
+            String exception = "Product with given barcode already exists";
             assertEquals(exception, e.getMessage());
             throw e;
         }
@@ -96,7 +96,7 @@ public class ProductDtoTest extends AbstractUnitTest {
         }
         catch(ApiException e)
         {
-            String exception = "[ {\r\n  \"barcode\" : \"a1b2c3d4\",\r\n  \"brand\" : \"dyson\",\r\n  \"category\" : \"dryer\",\r\n  \"name\" : \"airwrap\",\r\n  \"mrp\" : 45000.95,\r\n  \"message\" : \"Brand and Category doesn't exist\"\r\n} ]";
+            String exception = "Brand and Category doesn't exist";
             assertEquals(exception, e.getMessage());
             throw e;
         }

@@ -7,6 +7,7 @@ import com.increff.pos.pojo.BrandPojo;
 import com.increff.pos.model.data.BrandData;
 import com.increff.pos.model.form.BrandForm;
 import com.increff.pos.util.*;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -16,12 +17,12 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
 @Service
-<span class="fc" id="L24">public class BrandDto {</span>
+<span class="fc" id="L25">public class BrandDto {</span>
 
     @Autowired
     private BrandApi api;
@@ -33,62 +34,51 @@ import java.util.stream.Collectors;
     private CsvFileGenerator csvGenerator;
 
     public void add(List&lt;BrandForm&gt; forms) throws ApiException {
-<span class="fc" id="L36">        List&lt;BrandErrorData&gt; errorData = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L37">        Integer errorSize = 0;</span>
-
-<span class="fc bfc" id="L39" title="All 2 branches covered.">        for(BrandForm f: forms)</span>
-        {
-<span class="fc" id="L41">            BrandErrorData brandErrorData = ConvertUtil.convert(f, BrandErrorData.class);</span>
-<span class="fc" id="L42">            brandErrorData.setMessage(&quot;&quot;);</span>
-            try
-            {
-<span class="fc" id="L45">                ValidationUtil.validateForms(f);</span>
-<span class="fc" id="L46">                BrandHelper.normalize(f);</span>
-            }
-<span class="fc" id="L48">            catch (ApiException e) {</span>
-<span class="fc" id="L49">                errorSize++;</span>
-<span class="fc" id="L50">                brandErrorData.setMessage(e.getMessage());</span>
-<span class="fc" id="L51">            }</span>
-<span class="fc" id="L52">            errorData.add(brandErrorData);</span>
-<span class="fc" id="L53">        }</span>
-<span class="fc bfc" id="L54" title="All 2 branches covered.">        if (errorSize &gt; 0) {</span>
-<span class="nc" id="L55">            ErrorUtil.throwErrors(errorData);</span>
-        }
-
-<span class="fc" id="L58">        flowApi.add(forms, errorData);</span>
-<span class="fc" id="L59">    }</span>
+<span class="fc" id="L37">        checkDuplicates(forms);</span>
+<span class="fc" id="L38">        BrandHelper.validateFormLists(forms);</span>
+<span class="fc" id="L39">        flowApi.add(forms);</span>
+<span class="fc" id="L40">    }</span>
 
     public BrandData get(Integer id) throws ApiException {
-<span class="fc" id="L62">        BrandPojo p = api.get(id);</span>
-<span class="fc" id="L63">        return BrandHelper.convert(p);</span>
+<span class="fc" id="L43">        BrandPojo p = api.get(id);</span>
+<span class="fc" id="L44">        return BrandHelper.convert(p);</span>
     }
 
     public List&lt;BrandData&gt; getAll() {
-<span class="fc" id="L67">        return api.getAllSorted().stream().map(BrandHelper::convert).collect(Collectors.toList());</span>
+<span class="fc" id="L48">        return api.getAllSorted().stream().map(BrandHelper::convert).collect(Collectors.toList());</span>
     }
 
     public void update(Integer id, BrandForm f) throws ApiException {
-<span class="fc" id="L71">        BrandHelper.normalize(f);</span>
-<span class="fc" id="L72">        ValidationUtil.validateForms(f);</span>
-<span class="fc" id="L73">        BrandPojo p = BrandHelper.convert(f);</span>
-<span class="fc" id="L74">        api.update(id, p);</span>
-<span class="fc" id="L75">    }</span>
+<span class="fc" id="L52">        BrandHelper.normalize(f);</span>
+<span class="fc" id="L53">        ValidationUtil.validateForms(f);</span>
+<span class="fc" id="L54">        BrandPojo p = BrandHelper.convert(f);</span>
+<span class="fc" id="L55">        api.update(id, p);</span>
+<span class="fc" id="L56">    }</span>
 
     public void generateCsv(HttpServletResponse response) throws ApiException {
-<span class="fc" id="L78">        response.setContentType(&quot;text/csv&quot;);</span>
+<span class="fc" id="L59">        response.setContentType(&quot;text/csv&quot;);</span>
 
-<span class="fc" id="L80">        LocalDateTime lt = LocalDateTime.now();</span>
-<span class="fc" id="L81">        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd.HH:mm&quot;);</span>
-<span class="fc" id="L82">        String identifier = lt.format(dateTimeFormatter);</span>
+<span class="fc" id="L61">        LocalDateTime lt = LocalDateTime.now();</span>
+<span class="fc" id="L62">        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd.HH:mm&quot;);</span>
+<span class="fc" id="L63">        String identifier = lt.format(dateTimeFormatter);</span>
 
-<span class="fc" id="L84">        response.addHeader(&quot;Content-Disposition&quot;, &quot;attachment; filename=\&quot;brandReport&quot;+identifier+&quot;.csv&quot;);</span>
+<span class="fc" id="L65">        response.addHeader(&quot;Content-Disposition&quot;, &quot;attachment; filename=\&quot;brandReport&quot;+identifier+&quot;.csv&quot;);</span>
         try {
-<span class="fc" id="L86">            csvGenerator.writeBrandsToCsv(api.getAllSorted(), response.getWriter());</span>
-<span class="nc" id="L87">        } catch (IOException e) {</span>
-<span class="nc" id="L88">            throw new ApiException(e.getMessage());</span>
-<span class="fc" id="L89">        }</span>
-<span class="fc" id="L90">    }</span>
-}
+<span class="fc" id="L67">            csvGenerator.writeBrandsToCsv(api.getAllSorted(), response.getWriter());</span>
+<span class="nc" id="L68">        } catch (IOException e) {</span>
+<span class="nc" id="L69">            throw new ApiException(e.getMessage());</span>
+<span class="fc" id="L70">        }</span>
+<span class="fc" id="L71">    }</span>
 
-//todo: rename check and validation functions
+    private void checkDuplicates(List&lt;BrandForm&gt; forms) throws ApiException {
+<span class="fc" id="L74">        HashSet&lt;Pair&lt;String, String&gt;&gt; set = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        for(BrandForm form : forms) {</span>
+<span class="fc" id="L76">            Pair&lt;String, String&gt; p = new Pair&lt;&gt;(form.getBrand(), form.getCategory());</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">            if (set.contains(p)) {</span>
+<span class="nc" id="L78">                throw new ApiException(&quot;Duplicates Brand and Category Exists&quot;);</span>
+            }
+<span class="fc" id="L80">            set.add(p);</span>
+<span class="fc" id="L81">        }</span>
+<span class="fc" id="L82">    }</span>
+}
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -87,6 +87,7 @@ com\increff\pos\spring\DbConfig.class
 com\increff\pos\util\CsvFileGenerator.class
 com\increff\pos\controller\AppRestControllerAdvice.class
 com\increff\pos\dto\InitDto.class
+com\increff\pos\dto\OrderFlowApi.class
 com\increff\pos\dto\ProductDto.class
 com\increff\pos\spring\ControllerConfig.class
 com\increff\pos\pojo\SalesPojo.class

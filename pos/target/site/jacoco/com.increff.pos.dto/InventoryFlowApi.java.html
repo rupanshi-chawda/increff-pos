@@ -17,9 +17,8 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Component
 @Service
-<span class="fc" id="L22">public class InventoryFlowApi {</span>
+<span class="fc" id="L21">public class InventoryFlowApi {</span>
 
     @Autowired
     private InventoryApi api;
@@ -31,35 +30,13 @@ import java.util.List;
     private BrandApi brandApi;
 
     @Transactional(rollbackOn = ApiException.class)
-    public void add(List&lt;InventoryForm&gt; forms, List&lt;InventoryErrorData&gt; errorData) throws ApiException {
-<span class="fc" id="L35">        Integer errorSize = 0;</span>
-<span class="fc" id="L36">        Integer i=0;// todo: rename i to row</span>
-//todo: move below to validate function validateProductExistence();
-<span class="fc bfc" id="L38" title="All 2 branches covered.">        for(InventoryForm f: forms)</span>
-        {
-<span class="fc" id="L40">            InventoryErrorData inventoryErrorData = ConvertUtil.convert(f, InventoryErrorData.class);</span>
-<span class="fc" id="L41">            inventoryErrorData.setMessage(&quot;&quot;);</span>
-            try
-            {
-<span class="fc" id="L44">                productApi.checkProductBarcodeExistence(f.getBarcode());</span>
-            }
-<span class="fc" id="L46">            catch (ApiException e) {</span>
-<span class="fc" id="L47">                errorSize++;</span>
-<span class="fc" id="L48">                inventoryErrorData.setMessage(e.getMessage());</span>
-<span class="fc" id="L49">            }</span>
-<span class="fc" id="L50">            errorData.get(i).setMessage(inventoryErrorData.getMessage());</span>
-<span class="fc" id="L51">            i++;</span>
-<span class="fc" id="L52">        }</span>
-<span class="fc bfc" id="L53" title="All 2 branches covered.">        if(errorSize &gt; 0) {</span>
-<span class="nc" id="L54">            ErrorUtil.throwErrors(errorData);</span>
-        }
-        else {
-<span class="fc bfc" id="L57" title="All 2 branches covered.">            for(InventoryForm f: forms){</span>
-<span class="fc" id="L58">                InventoryPojo p = InventoryHelper.convert(f);</span>
-<span class="fc" id="L59">                p.setId(productApi.getIdByBarcode(f.getBarcode()));</span>
-<span class="fc" id="L60">                api.add(p);</span>
-<span class="fc" id="L61">            }</span>
-        }
-<span class="fc" id="L63">    }</span>
+    public void add(List&lt;InventoryForm&gt; forms) throws ApiException {
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        for(InventoryForm f: forms) {</span>
+<span class="fc" id="L35">            productApi.checkProductBarcodeExistence(f.getBarcode());</span>
+<span class="fc" id="L36">            InventoryPojo p = InventoryHelper.convert(f);</span>
+<span class="fc" id="L37">            p.setId(productApi.getIdByBarcode(f.getBarcode()));</span>
+<span class="fc" id="L38">            api.add(p);</span>
+<span class="fc" id="L39">        }</span>
+<span class="fc" id="L40">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -77,7 +77,7 @@ public class InventoryDtoTest extends AbstractUnitTest {
         }
         catch (ApiException e)
         {
-            String exception = "[ {\r\n  \"barcode\" : \"12345679\",\r\n  \"quantity\" : 3,\r\n  \"message\" : \"Product with given barcode does not exists\"\r\n} ]";
+            String exception = "Product with given barcode does not exists";
             assertEquals(exception, e.getMessage());
             throw e;
         }

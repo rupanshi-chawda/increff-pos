@@ -50,6 +50,9 @@ public class OrderDtoTest extends AbstractUnitTest {
     @Autowired
     private BrandApi brandApi;
 
+    @Autowired
+    private OrderFlowApi flowApi;
+
     @Test
     public void addOrderTest() throws ApiException {
         BrandForm brandForm = BrandTestHelper.createForm("dyson", "hair");
@@ -63,14 +66,9 @@ public class OrderDtoTest extends AbstractUnitTest {
         InventoryForm inventoryForm = InventoryTestHelper.createForm("a1b2c3d4", 25);
         InventoryPojo inventoryPojo = InventoryHelper.convert(inventoryForm);
         inventoryPojo.setId(productApi.getAll().get(0).getId());
-        System.out.println(inventoryPojo.getId());
         inventoryApi.add(inventoryPojo);
 
         List<InventoryPojo> list1 = inventoryApi.getAll();
-        System.out.println(list1.size());
-        System.out.println(list1.get(0).getQuantity());
-        System.out.println(list1.get(0).getId());
-        System.out.println(productApi.getIdByBarcode("a1b2c3d4"));
 
         List<OrderItemForm> orderItemFormList = new ArrayList<>();
         OrderItemForm orderItemForm = OrderTestHelper.createForm("a1b2c3d4",5,40599.95);
@@ -270,20 +268,16 @@ public class OrderDtoTest extends AbstractUnitTest {
 
 
         OrderItemForm orderItemForm = OrderTestHelper.createForm("a1b2c3d4",5,40599.95);
-        OrderPojo op = new OrderPojo();
-        orderApi.addOrder(op);
         OrderItemPojo p = OrderHelper.convert(orderItemForm);
-        dto.reduceInventory(orderItemForm.getBarcode(), orderItemForm.getQuantity());
+        flowApi.reduceInventory(orderItemForm.getBarcode(), orderItemForm.getQuantity());
         Integer pid = productApi.getIdByBarcode(orderItemForm.getBarcode());
-        orderApi.addItem(p, pid, op.getId());
+        orderApi.addItem(p, pid);
 
         OrderItemForm orderItemForm2 = OrderTestHelper.createForm("qwer1234",3,29000.95);
-        OrderPojo op2 = new OrderPojo();
-        orderApi.addOrder(op2);
         OrderItemPojo p2 = OrderHelper.convert(orderItemForm2);
-        dto.reduceInventory(orderItemForm2.getBarcode(), orderItemForm2.getQuantity());
+        flowApi.reduceInventory(orderItemForm2.getBarcode(), orderItemForm2.getQuantity());
         Integer pid2 = productApi.getIdByBarcode(orderItemForm2.getBarcode());
-        orderApi.addItem(p2, pid2, op2.getId());
+        orderApi.addItem(p2, pid2);
 
 
         List<OrderData> list = dto.getAllOrder();
@@ -310,17 +304,16 @@ public class OrderDtoTest extends AbstractUnitTest {
         inventoryApi.add(inventoryPojo);
 
         OrderItemForm orderItemForm = OrderTestHelper.createForm("a1b2c3d4",5,40599.95);
-        OrderPojo op = new OrderPojo();
-        orderApi.addOrder(op);
         OrderItemPojo p = OrderHelper.convert(orderItemForm);
-        dto.reduceInventory(orderItemForm.getBarcode(), orderItemForm.getQuantity());
+        flowApi.reduceInventory(orderItemForm.getBarcode(), orderItemForm.getQuantity());
         Integer pid = productApi.getIdByBarcode(orderItemForm.getBarcode());
-        orderApi.addItem(p, pid, op.getId());
+        orderApi.addItem(p, pid);
 
 
         List<OrderData> list = orderApi.getAllOrder().stream().map(OrderHelper::convert).collect(Collectors.toList());
         InvoiceForm invoiceForm = new InvoiceForm();
 
+        //todo: autowire rest template and response should be string
         RestTemplate restTemplate = mock(RestTemplate.class);
         when(restTemplate.postForEntity(url, invoiceForm, byte[].class)).thenReturn(new ResponseEntity<byte[]>(HttpStatus.OK));
 

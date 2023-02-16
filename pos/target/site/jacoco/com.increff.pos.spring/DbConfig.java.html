@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 <span class="fc" id="L19">public class DbConfig {</span>
 
 	public static final String PACKAGE_POJO = &quot;com.increff.pos.pojo&quot;;
-	
+	//todo: create application property
 	@Value(&quot;${jdbc.driverClassName}&quot;)
 	private String jdbcDriver;
 	@Value(&quot;${jdbc.url}&quot;)

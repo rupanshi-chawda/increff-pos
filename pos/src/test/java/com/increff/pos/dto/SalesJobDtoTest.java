@@ -20,7 +20,7 @@ public class SalesJobDtoTest extends AbstractUnitTest {
     private SalesJobDto dto;
 
     @Autowired
-    private OrderDto orderDto;
+    private OrderFlowApi orderFlowApi;
 
     @Autowired
     private OrderApi orderApi;
@@ -65,20 +65,16 @@ public class SalesJobDtoTest extends AbstractUnitTest {
         inventoryApi.add(inventoryPojo1);
 
         OrderItemForm orderItemForm = OrderTestHelper.createForm("a1b2c3d4",5,40599.95);
-        OrderPojo op = new OrderPojo();
-        orderApi.addOrder(op);
         OrderItemPojo p = OrderHelper.convert(orderItemForm);
-        orderDto.reduceInventory(orderItemForm.getBarcode(), orderItemForm.getQuantity());
+        orderFlowApi.reduceInventory(orderItemForm.getBarcode(), orderItemForm.getQuantity());
         Integer pid = productApi.getIdByBarcode(orderItemForm.getBarcode());
-        orderApi.addItem(p, pid, op.getId());
+        orderApi.addItem(p, pid);
 
         OrderItemForm orderItemForm2 = OrderTestHelper.createForm("qwer1234",3,29000.95);
-        OrderPojo op2 = new OrderPojo();
-        orderApi.addOrder(op2);
         OrderItemPojo p2 = OrderHelper.convert(orderItemForm2);
-        orderDto.reduceInventory(orderItemForm2.getBarcode(), orderItemForm2.getQuantity());
+        orderFlowApi.reduceInventory(orderItemForm2.getBarcode(), orderItemForm2.getQuantity());
         Integer pid2 = productApi.getIdByBarcode(orderItemForm2.getBarcode());
-        orderApi.addItem(p2, pid2, op2.getId());
+        orderApi.addItem(p2, pid2);
 
         dto.createReport();
         List<SalesPojo> salesPojoList2 = dto.getAll();
@@ -122,20 +118,16 @@ public class SalesJobDtoTest extends AbstractUnitTest {
             inventoryApi.add(inventoryPojo1);
 
             OrderItemForm orderItemForm = OrderTestHelper.createForm("a1b2c3d4",5,40599.95);
-            OrderPojo op = new OrderPojo();
-            orderApi.addOrder(op);
             OrderItemPojo p = OrderHelper.convert(orderItemForm);
-            orderDto.reduceInventory(orderItemForm.getBarcode(), orderItemForm.getQuantity());
+            orderFlowApi.reduceInventory(orderItemForm.getBarcode(), orderItemForm.getQuantity());
             Integer pid = productApi.getIdByBarcode(orderItemForm.getBarcode());
-            orderApi.addItem(p, pid, op.getId());
+            orderApi.addItem(p, pid);
 
             OrderItemForm orderItemForm2 = OrderTestHelper.createForm("qwer1234",3,29000.95);
-            OrderPojo op2 = new OrderPojo();
-            orderApi.addOrder(op2);
             OrderItemPojo p2 = OrderHelper.convert(orderItemForm2);
-            orderDto.reduceInventory(orderItemForm2.getBarcode(), orderItemForm2.getQuantity());
+            orderFlowApi.reduceInventory(orderItemForm2.getBarcode(), orderItemForm2.getQuantity());
             Integer pid2 = productApi.getIdByBarcode(orderItemForm2.getBarcode());
-            orderApi.addItem(p2, pid2, op2.getId());
+            orderApi.addItem(p2, pid2);
 
             LocalDate sdate = LocalDate.now();
             LocalDate edate = LocalDate.now().minusDays(1);
@@ -179,12 +171,10 @@ public class SalesJobDtoTest extends AbstractUnitTest {
         inventoryApi.add(inventoryPojo1);
 
         OrderItemForm orderItemForm = OrderTestHelper.createForm("a1b2c3d4",5,40599.95);
-        OrderPojo op = new OrderPojo();
-        orderApi.addOrder(op);
         OrderItemPojo p = OrderHelper.convert(orderItemForm);
-        orderDto.reduceInventory(orderItemForm.getBarcode(), orderItemForm.getQuantity());
+        orderFlowApi.reduceInventory(orderItemForm.getBarcode(), orderItemForm.getQuantity());
         Integer pid = productApi.getIdByBarcode(orderItemForm.getBarcode());
-        orderApi.addItem(p, pid, op.getId());
+        orderApi.addItem(p, pid);
 
         dto.createReport();
         List<SalesPojo> salesPojoList1 = api.getAll();
@@ -195,12 +185,10 @@ public class SalesJobDtoTest extends AbstractUnitTest {
         assertEquals(5, (int) itemCount1);
 
         OrderItemForm orderItemForm2 = OrderTestHelper.createForm("qwer1234",3,29000.95);
-        OrderPojo op2 = new OrderPojo();
-        orderApi.addOrder(op2);
         OrderItemPojo p2 = OrderHelper.convert(orderItemForm2);
-        orderDto.reduceInventory(orderItemForm2.getBarcode(), orderItemForm2.getQuantity());
+        orderFlowApi.reduceInventory(orderItemForm2.getBarcode(), orderItemForm2.getQuantity());
         Integer pid2 = productApi.getIdByBarcode(orderItemForm2.getBarcode());
-        orderApi.addItem(p2, pid2, op2.getId());
+        orderApi.addItem(p2, pid2);
 
         dto.createReport();
         List<SalesPojo> salesPojoList2 = api.getAll();

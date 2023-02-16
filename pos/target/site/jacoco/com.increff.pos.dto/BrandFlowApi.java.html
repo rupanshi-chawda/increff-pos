@@ -15,44 +15,20 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Component
 @Service
-<span class="fc" id="L20">public class BrandFlowApi {</span>
+<span class="fc" id="L19">public class BrandFlowApi {</span>
 
     @Autowired
     private BrandApi api;
-//todo: remove errordata part as it cannot check duplicates in file
-    @Transactional(rollbackOn = ApiException.class)
-    public void add(List&lt;BrandForm&gt; brandForms, List&lt;BrandErrorData&gt; errorData) throws ApiException {
-<span class="fc" id="L27">        Integer errorSize = 0;</span>
-<span class="fc" id="L28">        Integer i=0;</span>
 
-<span class="fc bfc" id="L30" title="All 2 branches covered.">        for(BrandForm f: brandForms)</span>
-        {
-<span class="fc" id="L32">            BrandErrorData brandErrorData = ConvertUtil.convert(f, BrandErrorData.class);</span>
-<span class="fc" id="L33">            brandErrorData.setMessage(&quot;&quot;);</span>
-            try
-            {
-<span class="fc" id="L36">                BrandPojo b = BrandHelper.convert(f);</span>
-<span class="fc" id="L37">                api.checkBrandCategoryExist(b);</span>
-            }
-<span class="fc" id="L39">            catch (ApiException e) {</span>
-<span class="fc" id="L40">                errorSize++;</span>
-<span class="fc" id="L41">                brandErrorData.setMessage(e.getMessage());</span>
-<span class="fc" id="L42">            }</span>
-<span class="fc" id="L43">            errorData.get(i).setMessage(brandErrorData.getMessage());</span>
-<span class="fc" id="L44">            i++;</span>
-<span class="fc" id="L45">        }</span>
-<span class="fc bfc" id="L46" title="All 2 branches covered.">        if (errorSize &gt; 0) {</span>
-<span class="nc" id="L47">            ErrorUtil.throwErrors(errorData);</span>
-        }
-        else{
-<span class="fc bfc" id="L50" title="All 2 branches covered.">            for (BrandForm f: brandForms){</span>
-<span class="fc" id="L51">                BrandPojo b = BrandHelper.convert(f);</span>
-<span class="fc" id="L52">                api.add(b);</span>
-<span class="fc" id="L53">            }</span>
-        }
-<span class="fc" id="L55">    }</span>
+    @Transactional(rollbackOn = ApiException.class)
+    public void add(List&lt;BrandForm&gt; brandForms) throws ApiException {
+<span class="fc bfc" id="L26" title="All 2 branches covered.">        for (BrandForm f: brandForms){</span>
+<span class="fc" id="L27">            BrandPojo b = BrandHelper.convert(f);</span>
+<span class="fc" id="L28">            api.checkBrandCategoryExist(b);</span>
+<span class="fc" id="L29">            api.add(b);</span>
+<span class="fc" id="L30">        }</span>
+<span class="fc" id="L31">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
