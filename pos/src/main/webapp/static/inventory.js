@@ -235,14 +235,20 @@ function uploadRows() {
         }
         else {
 		    var resp = JSON.parse(response.responseText);
-			var jsonObj = JSON.parse(resp.message);
-			console.log(jsonObj);
-	        errorData = jsonObj;
-			processCount = fileData.length;
-			console.log(response);
-			$("#download-errors").prop('disabled', false);
-			resetForm();
-            toastr.error("There are errors in file, please download errors", "Error : ");
+		    if(isJson(resp.message) == true) {
+                var jsonObj = JSON.parse(resp.message);
+                console.log(jsonObj);
+                errorData = jsonObj;
+                processCount = fileData.length;
+                console.log(response);
+                $("#download-errors").prop('disabled', false);
+                resetForm();
+                toastr.error("There are errors in file, please download errors", "Error : ");
+            }
+            else {
+                $("#process-data").prop("disabled", false);
+                handleAjaxError(response);
+            }
 		}
     }
   });

@@ -1,6 +1,7 @@
 package com.increff.pos.dto;
 
 import com.increff.pos.model.data.ProductErrorData;
+import com.increff.pos.model.form.BrandForm;
 import com.increff.pos.model.form.ProductForm;
 import com.increff.pos.api.BrandApi;
 import com.increff.pos.api.ProductApi;
@@ -13,14 +14,15 @@ import com.increff.pos.util.ApiException;
 import com.increff.pos.util.ConvertUtil;
 import com.increff.pos.util.ErrorUtil;
 import com.increff.pos.util.ValidationUtil;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
-@Component
 @Service
 public class ProductDto {
 
@@ -34,30 +36,9 @@ public class ProductDto {
     private BrandApi brandApi;
 
     public void add(List<ProductForm> forms) throws ApiException {
-        List<ProductErrorData> errorData = new ArrayList<>();
-        errorData.clear();
-        Integer errorSize = 0;
-
-        for(ProductForm f: forms)
-        {
-            ProductErrorData productErrorData = ConvertUtil.convert(f, ProductErrorData.class);
-            productErrorData.setMessage("");
-            try
-            {
-                ValidationUtil.validateForms(f);
-                ProductHelper.normalize(f);
-            }
-            catch (ApiException e) {
-                errorSize++;
-                productErrorData.setMessage(e.getMessage());
-            }
-            errorData.add(productErrorData);
-        }
-        if(errorSize > 0) {
-            ErrorUtil.throwErrors(errorData);
-        }
-
-        flowApi.add(forms, errorData);
+        checkDuplicates(forms);
+        ProductHelper.validateFormList(forms);
+        flowApi.add(forms);
     }
 
     public ProductData get(Integer id) throws ApiException {
@@ -83,4 +64,14 @@ public class ProductDto {
         api.update(id, p);
     }
 
+    private void checkDuplicates(List<ProductForm> forms) throws ApiException {
+        HashSet<String> set = new HashSet<>();
+        for(ProductForm form : forms) {
+            String p = form.getBarcode();
+            if (set.contains(p)) {
+                throw new ApiException("Duplicates Brand and Category Exists");
+            }
+            set.add(p);
+        }
+    }
 }

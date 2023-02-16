@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Component
 @Service
 public class InventoryFlowApi {
 
@@ -31,34 +30,12 @@ public class InventoryFlowApi {
     private BrandApi brandApi;
 
     @Transactional(rollbackOn = ApiException.class)
-    public void add(List<InventoryForm> forms, List<InventoryErrorData> errorData) throws ApiException {
-        Integer errorSize = 0;
-        Integer i=0;// todo: rename i to row
-//todo: move below to validate function validateProductExistence();
-        for(InventoryForm f: forms)
-        {
-            InventoryErrorData inventoryErrorData = ConvertUtil.convert(f, InventoryErrorData.class);
-            inventoryErrorData.setMessage("");
-            try
-            {
-                productApi.checkProductBarcodeExistence(f.getBarcode());
-            }
-            catch (ApiException e) {
-                errorSize++;
-                inventoryErrorData.setMessage(e.getMessage());
-            }
-            errorData.get(i).setMessage(inventoryErrorData.getMessage());
-            i++;
-        }
-        if(errorSize > 0) {
-            ErrorUtil.throwErrors(errorData);
-        }
-        else {
-            for(InventoryForm f: forms){
-                InventoryPojo p = InventoryHelper.convert(f);
-                p.setId(productApi.getIdByBarcode(f.getBarcode()));
-                api.add(p);
-            }
+    public void add(List<InventoryForm> forms) throws ApiException {
+        for(InventoryForm f: forms) {
+            productApi.checkProductBarcodeExistence(f.getBarcode());
+            InventoryPojo p = InventoryHelper.convert(f);
+            p.setId(productApi.getIdByBarcode(f.getBarcode()));
+            api.add(p);
         }
     }
 }

@@ -16,7 +16,7 @@ import java.time.*;
 import java.util.List;
 import java.util.Objects;
 
-@Component
+
 @Service
 public class SalesJobDto {
 

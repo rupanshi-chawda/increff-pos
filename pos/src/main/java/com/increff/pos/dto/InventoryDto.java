@@ -25,7 +25,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Component
 @Service//todo add only one, i.i service
 public class InventoryDto {
     
@@ -45,29 +44,8 @@ public class InventoryDto {
     private CsvFileGenerator csvGenerator;
 
     public void add(List<InventoryForm> forms) throws ApiException {
-        List<InventoryErrorData> errorData = new ArrayList<>();
-        Integer errorSize = 0;
-
-        for(InventoryForm f: forms)
-        {
-            InventoryErrorData inventoryErrorData = ConvertUtil.convert(f, InventoryErrorData.class);
-            inventoryErrorData.setMessage("");
-            try
-            {
-                ValidationUtil.validateForms(f);
-                InventoryHelper.normalize(f);
-            }
-            catch (ApiException e) {
-                errorSize++;
-                inventoryErrorData.setMessage(e.getMessage());
-            }
-            errorData.add(inventoryErrorData);
-        }
-        if(errorSize > 0) {
-            ErrorUtil.throwErrors(errorData);
-        }
-
-        flowApi.add(forms, errorData);
+        InventoryHelper.validateFormLists(forms);
+        flowApi.add(forms);
     }
 
     public InventoryData get(String barcode) throws ApiException {

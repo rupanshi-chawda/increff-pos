@@ -2,13 +2,15 @@ package com.increff.pos.helper;
 
 import com.increff.pos.model.commons.InventoryItem;
 import com.increff.pos.model.data.InventoryData;
+import com.increff.pos.model.data.InventoryErrorData;
+import com.increff.pos.model.form.BrandForm;
 import com.increff.pos.model.form.InventoryForm;
 import com.increff.pos.pojo.InventoryPojo;
-import com.increff.pos.util.ConvertUtil;
-import com.increff.pos.util.StringUtil;
-import com.increff.pos.util.ApiException;
+import com.increff.pos.util.*;
 import javafx.util.Pair;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -49,5 +51,29 @@ public class InventoryHelper {
         inventoryItem.setCategory(pojo.getValue());
         inventoryItem.setQuantity(mapElement.getValue());
         return inventoryItem;
+    }
+
+    public static void validateFormLists(List<InventoryForm> forms) throws ApiException {
+        List<InventoryErrorData> errorData = new ArrayList<>();
+        Integer errorSize = 0;
+
+        for(InventoryForm f: forms)
+        {
+            InventoryErrorData inventoryErrorData = ConvertUtil.convert(f, InventoryErrorData.class);
+            inventoryErrorData.setMessage("");
+            try
+            {
+                ValidationUtil.validateForms(f);
+                InventoryHelper.normalize(f);
+            }
+            catch (ApiException e) {
+                errorSize++;
+                inventoryErrorData.setMessage(e.getMessage());
+            }
+            errorData.add(inventoryErrorData);
+        }
+        if(errorSize > 0) {
+            ErrorUtil.throwErrors(errorData);
+        }
     }
 }

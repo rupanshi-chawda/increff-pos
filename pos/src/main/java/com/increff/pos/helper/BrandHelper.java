@@ -4,9 +4,10 @@ import com.increff.pos.model.data.BrandErrorData;
 import com.increff.pos.pojo.BrandPojo;
 import com.increff.pos.model.data.BrandData;
 import com.increff.pos.model.form.BrandForm;
-import com.increff.pos.util.ApiException;
-import com.increff.pos.util.ConvertUtil;
-import com.increff.pos.util.StringUtil;
+import com.increff.pos.util.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class BrandHelper {
@@ -24,4 +25,26 @@ public class BrandHelper {
         form.setCategory(StringUtil.toLowerCase(form.getCategory()));
     }
 
+    public static void validateFormLists(List<BrandForm> forms) throws ApiException {
+        List<BrandErrorData> errorData = new ArrayList<>();
+        Integer errorSize = 0;
+        for(BrandForm f: forms)
+        {
+            BrandErrorData brandErrorData = ConvertUtil.convert(f, BrandErrorData.class);
+            brandErrorData.setMessage("");
+            try
+            {
+                ValidationUtil.validateForms(f);
+                BrandHelper.normalize(f);
+            }
+            catch (ApiException e) {
+                errorSize++;
+                brandErrorData.setMessage(e.getMessage());
+            }
+            errorData.add(brandErrorData);
+        }
+        if (errorSize > 0) {
+            ErrorUtil.throwErrors(errorData);
+        }
+    }
 }

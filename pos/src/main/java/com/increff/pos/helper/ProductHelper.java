@@ -1,16 +1,17 @@
 package com.increff.pos.helper;
 
+import com.increff.pos.model.data.ProductErrorData;
 import com.increff.pos.model.form.ProductForm;
 import com.increff.pos.model.data.ProductData;
 import com.increff.pos.model.form.ProductUpdateForm;
 import com.increff.pos.pojo.BrandPojo;
 import com.increff.pos.pojo.ProductPojo;
-import com.increff.pos.util.ApiException;
-import com.increff.pos.util.ConvertUtil;
-import com.increff.pos.util.StringUtil;
+import com.increff.pos.util.*;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class ProductHelper {
@@ -41,4 +42,27 @@ public class ProductHelper {
         form.setName(StringUtil.toLowerCase(form.getName()));
     }
 
+    public static void validateFormList(List<ProductForm> forms) throws ApiException {
+        List<ProductErrorData> errorData = new ArrayList<>();
+        Integer errorSize = 0;
+
+        for(ProductForm f: forms)
+        {
+            ProductErrorData productErrorData = ConvertUtil.convert(f, ProductErrorData.class);
+            productErrorData.setMessage("");
+            try
+            {
+                ValidationUtil.validateForms(f);
+                ProductHelper.normalize(f);
+            }
+            catch (ApiException e) {
+                errorSize++;
+                productErrorData.setMessage(e.getMessage());
+            }
+            errorData.add(productErrorData);
+        }
+        if(errorSize > 0) {
+            ErrorUtil.throwErrors(errorData);
+        }
+    }
 }

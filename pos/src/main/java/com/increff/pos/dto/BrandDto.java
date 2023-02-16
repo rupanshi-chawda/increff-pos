@@ -7,6 +7,7 @@ import com.increff.pos.pojo.BrandPojo;
 import com.increff.pos.model.data.BrandData;
 import com.increff.pos.model.form.BrandForm;
 import com.increff.pos.util.*;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -16,10 +17,10 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
 @Service
 public class BrandDto {
 
@@ -33,29 +34,9 @@ public class BrandDto {
     private CsvFileGenerator csvGenerator;
 
     public void add(List<BrandForm> forms) throws ApiException {
-        List<BrandErrorData> errorData = new ArrayList<>();
-        Integer errorSize = 0;
-
-        for(BrandForm f: forms)
-        {
-            BrandErrorData brandErrorData = ConvertUtil.convert(f, BrandErrorData.class);
-            brandErrorData.setMessage("");
-            try
-            {
-                ValidationUtil.validateForms(f);
-                BrandHelper.normalize(f);
-            }
-            catch (ApiException e) {
-                errorSize++;
-                brandErrorData.setMessage(e.getMessage());
-            }
-            errorData.add(brandErrorData);
-        }
-        if (errorSize > 0) {
-            ErrorUtil.throwErrors(errorData);
-        }
-
-        flowApi.add(forms, errorData);
+        checkDuplicates(forms);
+        BrandHelper.validateFormLists(forms);
+        flowApi.add(forms);
     }
 
     public BrandData get(Integer id) throws ApiException {
@@ -88,6 +69,15 @@ public class BrandDto {
             throw new ApiException(e.getMessage());
         }
     }
-}
 
-//todo: rename check and validation functions
+    private void checkDuplicates(List<BrandForm> forms) throws ApiException {
+        HashSet<Pair<String, String>> set = new HashSet<>();
+        for(BrandForm form : forms) {
+            Pair<String, String> p = new Pair<>(form.getBrand(), form.getCategory());
+            if (set.contains(p)) {
+                throw new ApiException("Duplicates Brand and Category Exists");
+            }
+            set.add(p);
+        }
+    }
+}

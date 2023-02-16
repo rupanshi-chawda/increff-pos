@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Component
 @Service
 public class ProductFlowApi {
 
@@ -27,36 +26,12 @@ public class ProductFlowApi {
     private BrandApi brandApi;
 
     @Transactional(rollbackOn = ApiException.class)
-    public void add(List<ProductForm> forms, List<ProductErrorData> errorData) throws ApiException {
-        Integer errorSize = 0;
-        Integer i=0;
-
-        for(ProductForm f: forms)
-        {
-            ProductErrorData productErrorData = ConvertUtil.convert(f, ProductErrorData.class);
-            productErrorData.setMessage("");
-            try
-            {
-                ProductPojo p = ProductHelper.convert(f);
-                p.setBrandCategory(brandApi.getCheckBrandCategoryId(f.getBrand(), f.getCategory()));
-                api.checkBarcodeExists(p);
-            }
-            catch (ApiException e) {
-                errorSize++;
-                productErrorData.setMessage(e.getMessage());
-            }
-            errorData.get(i).setMessage(productErrorData.getMessage());
-            i++;
-        }
-        if(errorSize > 0) {
-            ErrorUtil.throwErrors(errorData);
-        }
-        else {
-            for(ProductForm f: forms){
-                ProductPojo p = ProductHelper.convert(f);
-                p.setBrandCategory(brandApi.getCheckBrandCategoryId(f.getBrand(), f.getCategory()));
-                api.add(p);
-            }
+    public void add(List<ProductForm> forms) throws ApiException {
+        for(ProductForm f: forms) {
+            ProductPojo p = ProductHelper.convert(f);
+            p.setBrandCategory(brandApi.getCheckBrandCategoryId(f.getBrand(), f.getCategory()));
+            api.checkBarcodeExists(p);
+            api.add(p);
         }
     }
 

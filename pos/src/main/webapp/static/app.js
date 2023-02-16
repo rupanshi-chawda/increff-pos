@@ -73,4 +73,13 @@ function init() {
     }
 }
 
+function isJson(str) {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
+
 $(document).ready(init);

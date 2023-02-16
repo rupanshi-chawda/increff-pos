@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 import java.util.Objects;
 
-@Component
+
 @Service
 public class InitDto extends AbstractUiController {
 

@@ -22,31 +22,42 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+
 @Component
 public class SalesReportDto {
+
     @Autowired
     private OrderApi orderApi;
+
     @Autowired
     private BrandApi brandApi;
+
     @Autowired
     private ProductApi productApi;
+
     @Autowired
     private CsvFileGenerator csvGenerator;
+
     protected List<SalesReportData> salesListData = new ArrayList<>();
+
     public List<SalesReportData> getAll() throws ApiException {
         List<OrderPojo> list = orderApi.getAllOrder();
         return getFilterSalesReport(list, "all", "all");
     }
+
     public List<SalesReportData> getFilterAll(SalesReportForm form) throws ApiException {
         ValidationUtil.validateForms(form);
+
         String startDate = form.getStartDate() + " 00:00:00";
         String endDate = form.getEndDate() + " 23:59:59";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime sDate = LocalDateTime.parse(startDate, formatter);
         LocalDateTime eDate = LocalDateTime.parse(endDate, formatter);
         ZonedDateTime start = sDate.atZone(ZoneId.systemDefault());
-        ZonedDateTime end = eDate.atZone(ZoneId.systemDefault());;
+        ZonedDateTime end = eDate.atZone(ZoneId.systemDefault());
+
         checkDates(start, end);
+
         List<OrderPojo> list = orderApi.getOrderByDateFilter(start, end);
         return getFilterSalesReport(list, form.getBrand(), form.getCategory());
     }
@@ -92,7 +103,6 @@ public class SalesReportDto {
         return salesListData;
     }
 
-
     public void generateCsv(HttpServletResponse response) throws ApiException {
         response.setContentType("text/csv");
 
@@ -107,6 +117,7 @@ public class SalesReportDto {
         }
         salesListData.clear();
     }
+
     private void checkDates(ZonedDateTime startDate, ZonedDateTime endDate) throws ApiException {
         if(endDate.isBefore(startDate)) {
             throw new ApiException("End date must not be before Start date");
