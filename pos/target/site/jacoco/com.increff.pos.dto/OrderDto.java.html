@@ -44,41 +44,38 @@ import java.util.stream.Collectors;
 
     public void addItem(List&lt;OrderItemForm&gt; forms) throws ApiException {
 <span class="fc" id="L46">        checkDuplicateItems(forms);</span>
-
-        // Place order
-        //todo move all below to next layer to add since we are only adding
-<span class="fc" id="L50">        flowApi.addItem(forms);</span>
-<span class="fc" id="L51">    }</span>
+<span class="fc" id="L47">        flowApi.addItem(forms);</span>
+<span class="fc" id="L48">    }</span>
 
     public List&lt;OrderData&gt; getAllOrder() {
-<span class="fc" id="L54">        return orderApi.getAllOrder().stream().map(OrderHelper::convert).collect(Collectors.toList());</span>
+<span class="fc" id="L51">        return orderApi.getAllOrder().stream().map(OrderHelper::convert).collect(Collectors.toList());</span>
     }
 
     public List&lt;OrderItemData&gt; getByOrderId(Integer orderId) {
-<span class="fc" id="L58">        List&lt;OrderItemPojo&gt; list = orderApi.getItemsByOrderId(orderId);</span>
-<span class="fc" id="L59">        List&lt;OrderItemData&gt; list2 = new ArrayList&lt;OrderItemData&gt;();</span>
-<span class="fc bfc" id="L60" title="All 2 branches covered.">        for(OrderItemPojo b : list) {</span>
-<span class="fc" id="L61">            String barcode = productApi.getBarcodeById(b.getProductId());</span>
-<span class="fc" id="L62">            list2.add(OrderHelper.convert(b, barcode));</span>
-<span class="fc" id="L63">        }</span>
-<span class="fc" id="L64">        return list2;</span>
+<span class="fc" id="L55">        List&lt;OrderItemPojo&gt; list = orderApi.getItemsByOrderId(orderId);</span>
+<span class="fc" id="L56">        List&lt;OrderItemData&gt; list2 = new ArrayList&lt;OrderItemData&gt;();</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        for(OrderItemPojo b : list) {</span>
+<span class="fc" id="L58">            String barcode = productApi.getBarcodeById(b.getProductId());</span>
+<span class="fc" id="L59">            list2.add(OrderHelper.convert(b, barcode));</span>
+<span class="fc" id="L60">        }</span>
+<span class="fc" id="L61">        return list2;</span>
     }
 
     public ResponseEntity&lt;byte[]&gt; getPDF(Integer id) throws ApiException {
-<span class="fc" id="L68">        InvoiceForm invoiceForm = invoiceGenerator.generateInvoiceForOrder(id);</span>
-<span class="fc" id="L69">        return orderApi.getPDF(invoiceForm);</span>
+<span class="fc" id="L65">        InvoiceForm invoiceForm = invoiceGenerator.generateInvoiceForOrder(id);</span>
+<span class="fc" id="L66">        return orderApi.getPDF(invoiceForm);</span>
     }
 
     private void checkDuplicateItems(List&lt;OrderItemForm&gt; forms) throws ApiException {
-<span class="fc" id="L73">        Set&lt;String&gt; set = new HashSet&lt;&gt;();</span>
-<span class="fc bfc" id="L74" title="All 2 branches covered.">        for(OrderItemForm f : forms) {</span>
-<span class="fc" id="L75">            OrderHelper.normalize(f);</span>
-<span class="fc" id="L76">            ValidationUtil.validateForms(f);</span>
-<span class="fc bfc" id="L77" title="All 2 branches covered.">            if(set.contains(f.getBarcode())) {</span>
-<span class="fc" id="L78">                throw new ApiException(&quot;Duplicate Barcode Detected&quot;);</span>
+<span class="fc" id="L70">        Set&lt;String&gt; set = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        for(OrderItemForm f : forms) {</span>
+<span class="fc" id="L72">            OrderHelper.normalize(f);</span>
+<span class="fc" id="L73">            ValidationUtil.validateForms(f);</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">            if(set.contains(f.getBarcode())) {</span>
+<span class="fc" id="L75">                throw new ApiException(&quot;Duplicate Barcode Detected&quot;);</span>
             }
-<span class="fc" id="L80">            set.add(f.getBarcode());</span>
-<span class="fc" id="L81">        }</span>
-<span class="fc" id="L82">    }</span>
+<span class="fc" id="L77">            set.add(f.getBarcode());</span>
+<span class="fc" id="L78">        }</span>
+<span class="fc" id="L79">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

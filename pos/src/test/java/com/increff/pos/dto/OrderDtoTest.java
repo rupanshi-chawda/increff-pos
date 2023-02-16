@@ -42,6 +42,9 @@ public class OrderDtoTest extends AbstractUnitTest {
     private String url;
 
     @Autowired
+    private RestTemplate restTemplate;
+
+    @Autowired
     private InventoryApi inventoryApi;
 
     @Autowired
@@ -313,9 +316,8 @@ public class OrderDtoTest extends AbstractUnitTest {
         List<OrderData> list = orderApi.getAllOrder().stream().map(OrderHelper::convert).collect(Collectors.toList());
         InvoiceForm invoiceForm = new InvoiceForm();
 
-        //todo: autowire rest template and response should be string
-        RestTemplate restTemplate = mock(RestTemplate.class);
-        when(restTemplate.postForEntity(url, invoiceForm, byte[].class)).thenReturn(new ResponseEntity<byte[]>(HttpStatus.OK));
+        restTemplate = mock(RestTemplate.class);
+        when(restTemplate.postForObject(url, invoiceForm, String.class)).thenReturn(String.valueOf(HttpStatus.OK));
 
         ResponseEntity<byte[]> response = dto.getPDF(list.get(0).getId());
         assertNotEquals(null, response);

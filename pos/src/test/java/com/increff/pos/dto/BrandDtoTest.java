@@ -60,6 +60,21 @@ public class BrandDtoTest extends AbstractUnitTest {
             assertEquals(exception, e.getMessage());
             throw e;
         }
+        try {
+            List<BrandForm> formList = new ArrayList<>();
+            BrandForm form = BrandTestHelper.createForm("Dyson ", " hair");
+            formList.add(form);
+            BrandForm form2 = BrandTestHelper.createForm("Dyson ", " hair");
+            formList.add(form2);
+
+            dto.add(formList);
+        }
+        catch(ApiException e)
+        {
+            String exception = "Duplicates Brand and Category Exists";
+            assertEquals(exception, e.getMessage());
+            throw e;
+        }
     }
 
 

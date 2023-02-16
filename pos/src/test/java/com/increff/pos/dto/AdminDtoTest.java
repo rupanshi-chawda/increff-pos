@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 import static org.junit.Assert.*;
-//todo rewrite tests
+
 public class AdminDtoTest extends AbstractUnitTest {
 
     @Autowired

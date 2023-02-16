@@ -44,9 +44,6 @@ public class OrderDto {
 
     public void addItem(List<OrderItemForm> forms) throws ApiException {
         checkDuplicateItems(forms);
-
-        // Place order
-        //todo move all below to next layer to add since we are only adding
         flowApi.addItem(forms);
     }
 

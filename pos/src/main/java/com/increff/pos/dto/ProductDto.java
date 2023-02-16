@@ -69,7 +69,7 @@ public class ProductDto {
         for(ProductForm form : forms) {
             String p = form.getBarcode();
             if (set.contains(p)) {
-                throw new ApiException("Duplicates Brand and Category Exists");
+                throw new ApiException("Duplicate Barcode Exists");
             }
             set.add(p);
         }

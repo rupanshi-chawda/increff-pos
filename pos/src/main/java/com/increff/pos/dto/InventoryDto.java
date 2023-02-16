@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service//todo add only one, i.i service
+@Service
 public class InventoryDto {
     
     @Autowired

@@ -62,7 +62,6 @@ public class ProductDtoTest extends AbstractUnitTest {
 
     @Test(expected = ApiException.class)
     public void addDuplicateProduct() throws ApiException  {
-
         try{
             BrandForm brandForm = BrandTestHelper.createForm("dyson", "hair");
             brandApi.add(BrandHelper.convert(brandForm));
@@ -77,6 +76,24 @@ public class ProductDtoTest extends AbstractUnitTest {
         catch(ApiException e)
         {
             String exception = "Product with given barcode already exists";
+            assertEquals(exception, e.getMessage());
+            throw e;
+        }
+        try{
+            BrandForm brandForm = BrandTestHelper.createForm("dyson", "hair");
+            brandApi.add(BrandHelper.convert(brandForm));
+
+            List<ProductForm> productFormList = new ArrayList<>();
+            ProductForm productForm = ProductTestHelper.createForm("dyson","hair","A1B2C3D4", "AirWrap ", 45000.95);
+            productFormList.add(productForm);
+            ProductForm productForm2 = ProductTestHelper.createForm("dyson","hair","A1B2C3D4", "AirWrap ", 45000.95);
+            productFormList.add(productForm2);
+
+            dto.add(productFormList);
+        }
+        catch(ApiException e)
+        {
+            String exception = "Duplicate Barcode Exists";
             assertEquals(exception, e.getMessage());
             throw e;
         }
@@ -186,6 +203,28 @@ public class ProductDtoTest extends AbstractUnitTest {
 
         List<ProductData> list = dto.getAll();
         assertEquals(2, list.size());
+    }
+
+    @Test
+    public void getProductTest() throws ApiException  {
+        BrandForm brandForm = BrandTestHelper.createForm("dyson", "hair");
+        brandApi.add(BrandHelper.convert(brandForm));
+
+        ProductForm productForm = ProductTestHelper.createForm("dyson","hair","a1b2c3d4", "airwrap", 45000.95);
+        ProductPojo px = ProductHelper.convert(productForm);
+        px.setBrandCategory(brandApi.getCheckBrandCategoryId(productForm.getBrand(), productForm.getCategory()));
+        api.add(px);
+
+        Integer id = api.getIdByBarcode("a1b2c3d4");
+        ProductPojo p = api.get(id);
+
+        String expectedBarcode = "a1b2c3d4";
+        String expectedName = "airwrap";
+        Double expectedMrp = 45000.95;
+
+        assertEquals(expectedBarcode, p.getBarcode());
+        assertEquals(expectedName, p.getName());
+        assertEquals(expectedMrp, p.getMrp());
     }
 
     @Test
