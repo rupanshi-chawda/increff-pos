@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderApi.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pos</a> &gt; <a href="index.source.html" class="el_package">com.increff.pos.api</a> &gt; <span class="el_source">OrderApi.java</span></div><h1>OrderApi.java</h1><pre class="source lang-java linenums">package com.increff.pos.api;
 
-import com.increff.pos.helper.OrderHelper;
 import com.increff.pos.dao.OrderDao;
 import com.increff.pos.dao.OrderItemDao;
 import com.increff.pos.model.form.InvoiceForm;
@@ -29,7 +28,7 @@ import java.util.Objects;
 
 @Service
 @Transactional(rollbackOn = ApiException.class)
-<span class="fc" id="L32">public class OrderApi {</span>
+<span class="fc" id="L31">public class OrderApi {</span>
     
     @Autowired
     private OrderDao orderDao;
@@ -44,108 +43,91 @@ import java.util.Objects;
     private String url;
     
     public void addOrder(OrderPojo p) {
-<span class="fc" id="L47">        orderDao.insert(p);</span>
-<span class="fc" id="L48">    }</span>
+<span class="fc" id="L46">        orderDao.insert(p);</span>
+<span class="fc" id="L47">    }</span>
     
     public OrderPojo getOrder(Integer id) throws ApiException {
-<span class="fc" id="L51">        return getCheckByOrderId(id);</span>
+<span class="fc" id="L50">        return getCheckByOrderId(id);</span>
     }
 
     public List&lt;OrderPojo&gt; getAllOrder() {
-<span class="fc" id="L55">        return orderDao.selectAllDesc();</span>
+<span class="fc" id="L54">        return orderDao.selectAllDesc();</span>
     }
     
     public void addItem(OrderItemPojo p, Integer pid, Integer oid){
-<span class="fc" id="L59">        p.setProductId(pid);</span>
-<span class="fc" id="L60">        p.setOrderId(oid);</span>
-<span class="fc" id="L61">        itemDao.insert(p);</span>
-<span class="fc" id="L62">    }</span>
+<span class="fc" id="L58">        p.setProductId(pid);</span>
+<span class="fc" id="L59">        p.setOrderId(oid);</span>
+<span class="fc" id="L60">        itemDao.insert(p);</span>
+<span class="fc" id="L61">    }</span>
 
-//    public OrderItemPojo getItem(Integer id) throws ApiException {
-//        OrderItemPojo p = getOrderItemId(id);
-//        OrderHelper.validateId(id);
-//        return p;
-//    }
-
-
-    public List&lt;OrderItemPojo&gt; getByOrderId(Integer orderId) {
-<span class="fc" id="L72">        return itemDao.selectByOrderId(orderId);</span>
+    public List&lt;OrderItemPojo&gt; getItemsByOrderId(Integer orderId) {
+<span class="fc" id="L64">        return itemDao.selectByOrderId(orderId);</span>
     }
 
-//    private OrderItemPojo getOrderItemId(Integer id) {
-//        return itemDao.selectById(id, OrderItemPojo.class);
-//    }
 
     private OrderPojo getCheckByOrderId(Integer id) throws ApiException {
-<span class="fc" id="L80">        OrderPojo p = orderDao.selectById(id, OrderPojo.class);</span>
-<span class="pc bpc" id="L81" title="1 of 2 branches missed.">        if (Objects.isNull(p)) {</span>
-<span class="nc" id="L82">            throw new ApiException(&quot;Order with given ID does not exists, id: &quot; + id);</span>
+<span class="fc" id="L69">        OrderPojo p = orderDao.selectById(id, OrderPojo.class);</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">        if (Objects.isNull(p)) {</span>
+<span class="nc" id="L71">            throw new ApiException(&quot;Order with given ID does not exists, id: &quot; + id);</span>
         }
-<span class="fc" id="L84">        return p;</span>
-    }
-
-    public List&lt;OrderItemPojo&gt; getOrderItemByOrderId(Integer orderId){
-<span class="fc" id="L88">        return itemDao.selectByOrderId(orderId);</span>
+<span class="fc" id="L73">        return p;</span>
     }
 
     public void update(Integer id, OrderPojo p) throws ApiException {
-<span class="fc" id="L92">        OrderPojo b = getOrder(id);</span>
-<span class="fc" id="L93">        b.setInvoicePath(p.getInvoicePath());</span>
-<span class="fc" id="L94">        orderDao.update(p);</span>
-<span class="fc" id="L95">    }</span>
+<span class="fc" id="L77">        OrderPojo b = getOrder(id);</span>
+<span class="fc" id="L78">        b.setInvoicePath(p.getInvoicePath());</span>
+<span class="fc" id="L79">        orderDao.update(p);</span>
+<span class="fc" id="L80">    }</span>
 
     // Business Logic Methods
 
     public ResponseEntity&lt;byte[]&gt; getPDF(InvoiceForm invoiceForm) throws ApiException {
 
-<span class="fc" id="L101">        Integer orderId = invoiceForm.getOrderId();</span>
-<span class="fc" id="L102">        String PDF_PATH = &quot;C:\\Users\\KIIT\\Downloads\\increff-pos\\pos\\src\\main\\resources\\invoices\\&quot;;</span>
-<span class="fc" id="L103">        String _filename = PDF_PATH + &quot;invoice_&quot; + orderId + &quot;.pdf&quot;;</span>
-<span class="fc" id="L104">        File f = new File(_filename);</span>
+<span class="fc" id="L86">        Integer orderId = invoiceForm.getOrderId();</span>
+<span class="fc" id="L87">        String PDF_PATH = &quot;C:\\Users\\KIIT\\Downloads\\increff-pos\\pos\\src\\main\\resources\\invoices\\&quot;;</span>
+<span class="fc" id="L88">        String _filename = PDF_PATH + &quot;invoice_&quot; + orderId + &quot;.pdf&quot;;</span>
+<span class="fc" id="L89">        File f = new File(_filename);</span>
         byte[] contents;
-<span class="fc bfc" id="L106" title="All 2 branches covered.">        if(f.exists())</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">        if(f.exists())</span>
         {
-<span class="fc" id="L108">            Path pdfPath = Paths.get(_filename);</span>
+<span class="fc" id="L93">            Path pdfPath = Paths.get(_filename);</span>
             try {
-<span class="fc" id="L110">                contents = Files.readAllBytes(pdfPath);</span>
-<span class="nc" id="L111">            } catch (IOException e) {</span>
-<span class="nc" id="L112">                throw new ApiException(&quot;Unable to read bytes from pdf&quot; + e.getMessage());</span>
-<span class="fc" id="L113">            }</span>
-<span class="fc" id="L114">        }</span>
+<span class="fc" id="L95">                contents = Files.readAllBytes(pdfPath);</span>
+<span class="nc" id="L96">            } catch (IOException e) {</span>
+<span class="nc" id="L97">                throw new ApiException(&quot;Unable to read bytes from pdf&quot; + e.getMessage());</span>
+<span class="fc" id="L98">            }</span>
+<span class="fc" id="L99">        }</span>
         else
         {
-<span class="fc" id="L117">            String base64 = restTemplate.postForObject(url, invoiceForm, String.class);</span>
-<span class="fc" id="L118">            Path pdfPath = Paths.get(_filename);</span>
+<span class="nc" id="L102">            String base64 = restTemplate.postForObject(url, invoiceForm, String.class);</span>
+<span class="nc" id="L103">            Path pdfPath = Paths.get(_filename);</span>
 
-<span class="fc" id="L120">            contents = Base64.getDecoder().decode(base64);</span>
+<span class="nc" id="L105">            contents = Base64.getDecoder().decode(base64);</span>
 
             try {
-<span class="fc" id="L123">                Files.write(pdfPath, contents);</span>
-<span class="nc" id="L124">            } catch (IOException e) {</span>
-<span class="nc" id="L125">                throw new ApiException(&quot;Unable to create PDF in pos&quot; + e.getMessage());</span>
-<span class="fc" id="L126">            }</span>
+<span class="nc" id="L108">                Files.write(pdfPath, contents);</span>
+<span class="nc" id="L109">            } catch (IOException e) {</span>
+<span class="nc" id="L110">                throw new ApiException(&quot;Unable to create PDF in pos&quot; + e.getMessage());</span>
+<span class="nc" id="L111">            }</span>
         }
 
-<span class="fc" id="L129">        OrderPojo p = getOrder(orderId);</span>
-<span class="fc" id="L130">        p.setInvoicePath(_filename);</span>
-<span class="fc" id="L131">        update(orderId, p);</span>
+<span class="fc" id="L114">        OrderPojo p = getOrder(orderId);</span>
+<span class="fc" id="L115">        p.setInvoicePath(_filename);</span>
+<span class="fc" id="L116">        update(orderId, p);</span>
 
-<span class="fc" id="L133">        HttpHeaders headers = new HttpHeaders();</span>
-<span class="fc" id="L134">        headers.setContentType(MediaType.APPLICATION_PDF);</span>
+<span class="fc" id="L118">        HttpHeaders headers = new HttpHeaders();</span>
+<span class="fc" id="L119">        headers.setContentType(MediaType.APPLICATION_PDF);</span>
 
-<span class="fc" id="L136">        String filename = &quot;invoice_&quot; + orderId + &quot;.pdf&quot;;</span>
-<span class="fc" id="L137">        headers.add(&quot;Content-Disposition&quot;, &quot;inline&quot;);</span>
-<span class="fc" id="L138">        headers.add(&quot;filename&quot;,filename);</span>
+<span class="fc" id="L121">        String filename = &quot;invoice_&quot; + orderId + &quot;.pdf&quot;;</span>
+<span class="fc" id="L122">        headers.add(&quot;Content-Disposition&quot;, &quot;inline&quot;);</span>
+<span class="fc" id="L123">        headers.add(&quot;filename&quot;,filename);</span>
 
-<span class="fc" id="L140">        return new ResponseEntity&lt;&gt;(contents, headers, HttpStatus.OK);</span>
+<span class="fc" id="L125">        return new ResponseEntity&lt;&gt;(contents, headers, HttpStatus.OK);</span>
     }
 
     public List&lt;OrderPojo&gt; getOrderByDateFilter(ZonedDateTime startDate, ZonedDateTime endDate) {
-<span class="fc" id="L144">        return orderDao.selectOrderByDateFilter(startDate,endDate);</span>
+<span class="fc" id="L129">        return orderDao.selectOrderByDateFilter(startDate,endDate);</span>
     }
 
-    public List&lt;OrderItemPojo&gt; getOrderItemsByOrderId(Integer id) {
-<span class="fc" id="L148">        return itemDao.selectByOrderId(id);</span>
-    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

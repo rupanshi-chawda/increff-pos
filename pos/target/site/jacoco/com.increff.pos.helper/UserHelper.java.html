@@ -8,25 +8,25 @@ import com.increff.pos.util.ConvertUtil;
 
 <span class="nc" id="L9">public class UserHelper {</span>
 
-    public static void normalize(UserPojo p) {
-<span class="fc" id="L12">        p.setEmail(p.getEmail().toLowerCase().trim());</span>
-<span class="fc" id="L13">        p.setRole(p.getRole().toLowerCase().trim());</span>
+    public static void normalize(UserPojo pojo) {
+<span class="fc" id="L12">        pojo.setEmail(pojo.getEmail().toLowerCase().trim());</span>
+<span class="fc" id="L13">        pojo.setRole(pojo.getRole().toLowerCase().trim());</span>
 <span class="fc" id="L14">    }</span>
 
-    public static UserData convert(UserPojo p) {
-<span class="fc" id="L17">        return  ConvertUtil.convert(p, UserData.class);</span>
+    public static UserData convert(UserPojo pojo) {
+<span class="fc" id="L17">        return  ConvertUtil.convert(pojo, UserData.class);</span>
     }
 
-    public static UserPojo convert(UserForm f) {
-<span class="fc" id="L21">        UserPojo p = ConvertUtil.convert(f, UserPojo.class);</span>
-<span class="fc" id="L22">        p.setRole(&quot;operator&quot;);</span>
-<span class="fc" id="L23">        return p;</span>
+    public static UserPojo convert(UserForm form) {
+<span class="fc" id="L21">        UserPojo pojo = ConvertUtil.convert(form, UserPojo.class);</span>
+<span class="fc" id="L22">        pojo.setRole(&quot;operator&quot;);</span>
+<span class="fc" id="L23">        return pojo;</span>
     }
 
-    public static UserPojo convert(UserForm f, String role) {
-<span class="fc" id="L27">        UserPojo p = ConvertUtil.convert(f, UserPojo.class);</span>
-<span class="fc" id="L28">        p.setRole(role);</span>
-<span class="fc" id="L29">        return p;</span>
+    public static UserPojo convert(UserForm form, String role) {
+<span class="fc" id="L27">        UserPojo pojo = ConvertUtil.convert(form, UserPojo.class);</span>
+<span class="fc" id="L28">        pojo.setRole(role);</span>
+<span class="fc" id="L29">        return pojo;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

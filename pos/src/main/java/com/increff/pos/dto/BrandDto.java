@@ -64,7 +64,7 @@ public class BrandDto {
     }
 
     public List<BrandData> getAll() {
-        return api.getAll().stream().map(BrandHelper::convert).collect(Collectors.toList());
+        return api.getAllSorted().stream().map(BrandHelper::convert).collect(Collectors.toList());
     }
 
     public void update(Integer id, BrandForm f) throws ApiException {

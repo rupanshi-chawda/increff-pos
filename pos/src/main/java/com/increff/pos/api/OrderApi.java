@@ -1,6 +1,5 @@
 package com.increff.pos.api;
 
-import com.increff.pos.helper.OrderHelper;
 import com.increff.pos.dao.OrderDao;
 import com.increff.pos.dao.OrderItemDao;
 import com.increff.pos.model.form.InvoiceForm;
@@ -61,20 +60,10 @@ public class OrderApi {
         itemDao.insert(p);
     }
 
-//    public OrderItemPojo getItem(Integer id) throws ApiException {
-//        OrderItemPojo p = getOrderItemId(id);
-//        OrderHelper.validateId(id);
-//        return p;
-//    }
-
-
-    public List<OrderItemPojo> getByOrderId(Integer orderId) {
+    public List<OrderItemPojo> getItemsByOrderId(Integer orderId) {
         return itemDao.selectByOrderId(orderId);
     }
 
-//    private OrderItemPojo getOrderItemId(Integer id) {
-//        return itemDao.selectById(id, OrderItemPojo.class);
-//    }
 
     private OrderPojo getCheckByOrderId(Integer id) throws ApiException {
         OrderPojo p = orderDao.selectById(id, OrderPojo.class);
@@ -82,10 +71,6 @@ public class OrderApi {
             throw new ApiException("Order with given ID does not exists, id: " + id);
         }
         return p;
-    }
-
-    public List<OrderItemPojo> getOrderItemByOrderId(Integer orderId){
-        return itemDao.selectByOrderId(orderId);
     }
 
     public void update(Integer id, OrderPojo p) throws ApiException {
@@ -144,7 +129,4 @@ public class OrderApi {
         return orderDao.selectOrderByDateFilter(startDate,endDate);
     }
 
-    public List<OrderItemPojo> getOrderItemsByOrderId(Integer id) {
-        return itemDao.selectByOrderId(id);
-    }
 }

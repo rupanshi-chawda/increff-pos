@@ -25,16 +25,12 @@ public class BrandApi {
         return getCheckBrandId(id);
     }
 
-    public List<BrandPojo> getAll() {
-        return dao.selectAll(BrandPojo.class);
-    }
-
     public List<BrandPojo> getAllSorted() {
         return dao.selectAllSorted();
     }
 
     public void update(Integer id, BrandPojo p) throws ApiException {
-        getCheckBrandCategory(p);
+        checkBrandCategoryExist(p);
         BrandPojo bx = getCheckBrandId(id);
         bx.setCategory(p.getCategory());
         bx.setBrand(p.getBrand());
@@ -51,18 +47,18 @@ public class BrandApi {
         return p;
     }
 
-    public void getCheckBrandCategory(BrandPojo p) throws ApiException {
+    public void checkBrandCategoryExist(BrandPojo p) throws ApiException {
         BrandPojo b = getBrandCategory(p.getBrand(),p.getCategory());
-        if(!Objects.isNull(b)) {
+        if(Objects.nonNull(b)) {
             throw new ApiException("Brand Category already exists");
         }
     }
-    public Integer checkBrandCategory(String brand, String category) throws ApiException {
-        BrandPojo b = getBrandCategory(brand, category);
-        if(Objects.isNull(b)) {
+    public Integer getCheckBrandCategoryId(String brand, String category) throws ApiException {
+        BrandPojo existing = getBrandCategory(brand, category);
+        if(Objects.isNull(existing)) {
             throw new ApiException("Brand and Category doesn't exist");
         }
-        return b.getId();
+        return existing.getId();
     }
 
     public BrandPojo getBrandCategory(String brand, String category) {

@@ -25,48 +25,44 @@ import java.util.Objects;
 <span class="fc" id="L25">        return getCheckBrandId(id);</span>
     }
 
-    public List&lt;BrandPojo&gt; getAll() {
-<span class="fc" id="L29">        return dao.selectAll(BrandPojo.class);</span>
-    }
-
     public List&lt;BrandPojo&gt; getAllSorted() {
-<span class="fc" id="L33">        return dao.selectAllSorted();</span>
+<span class="fc" id="L29">        return dao.selectAllSorted();</span>
     }
 
     public void update(Integer id, BrandPojo p) throws ApiException {
-<span class="fc" id="L37">        getCheckBrandCategory(p);</span>
-<span class="fc" id="L38">        BrandPojo bx = getCheckBrandId(id);</span>
-<span class="fc" id="L39">        bx.setCategory(p.getCategory());</span>
-<span class="fc" id="L40">        bx.setBrand(p.getBrand());</span>
-<span class="fc" id="L41">        dao.update(p);</span>
-<span class="fc" id="L42">    }</span>
+<span class="fc" id="L33">        checkBrandCategoryExist(p);</span>
+<span class="fc" id="L34">        BrandPojo bx = getCheckBrandId(id);</span>
+<span class="fc" id="L35">        bx.setCategory(p.getCategory());</span>
+<span class="fc" id="L36">        bx.setBrand(p.getBrand());</span>
+<span class="fc" id="L37">        dao.update(p);</span>
+<span class="fc" id="L38">    }</span>
 
     // Business Logic Methods
 
     public BrandPojo getCheckBrandId(Integer id) throws ApiException {
-<span class="fc" id="L47">        BrandPojo p = dao.selectById(id, BrandPojo.class);</span>
-<span class="fc bfc" id="L48" title="All 2 branches covered.">        if (Objects.isNull(p)) {</span>
-<span class="fc" id="L49">            throw new ApiException(&quot;Brand with given ID does not exists, id: &quot; + id);</span>
+<span class="fc" id="L43">        BrandPojo p = dao.selectById(id, BrandPojo.class);</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        if (Objects.isNull(p)) {</span>
+<span class="fc" id="L45">            throw new ApiException(&quot;Brand with given ID does not exists, id: &quot; + id);</span>
         }
-<span class="fc" id="L51">        return p;</span>
+<span class="fc" id="L47">        return p;</span>
     }
 
-    public void getCheckBrandCategory(BrandPojo p) throws ApiException {
-<span class="fc" id="L55">        BrandPojo b = getBrandCategory(p.getBrand(),p.getCategory());</span>
-<span class="fc bfc" id="L56" title="All 2 branches covered.">        if(!Objects.isNull(b)) {</span>
-<span class="fc" id="L57">            throw new ApiException(&quot;Brand Category already exists&quot;);</span>
+    public void checkBrandCategoryExist(BrandPojo p) throws ApiException {
+<span class="fc" id="L51">        BrandPojo b = getBrandCategory(p.getBrand(),p.getCategory());</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        if(Objects.nonNull(b)) {</span>
+<span class="fc" id="L53">            throw new ApiException(&quot;Brand Category already exists&quot;);</span>
         }
-<span class="fc" id="L59">    }</span>
-    public Integer checkBrandCategory(String brand, String category) throws ApiException {
-<span class="fc" id="L61">        BrandPojo b = getBrandCategory(brand, category);</span>
-<span class="fc bfc" id="L62" title="All 2 branches covered.">        if(Objects.isNull(b)) {</span>
-<span class="fc" id="L63">            throw new ApiException(&quot;Brand and Category doesn't exist&quot;);</span>
+<span class="fc" id="L55">    }</span>
+    public Integer getCheckBrandCategoryId(String brand, String category) throws ApiException {
+<span class="fc" id="L57">        BrandPojo existing = getBrandCategory(brand, category);</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        if(Objects.isNull(existing)) {</span>
+<span class="fc" id="L59">            throw new ApiException(&quot;Brand and Category doesn't exist&quot;);</span>
         }
-<span class="fc" id="L65">        return b.getId();</span>
+<span class="fc" id="L61">        return existing.getId();</span>
     }
 
     public BrandPojo getBrandCategory(String brand, String category) {
-<span class="fc" id="L69">        return dao.selectBrandCategory(brand, category);</span>
+<span class="fc" id="L65">        return dao.selectBrandCategory(brand, category);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

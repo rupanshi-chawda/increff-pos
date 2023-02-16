@@ -27,17 +27,4 @@ public class ProductDao extends AbstractDao{
     }
 
     public void update(ProductPojo p){}
-
-    public List<ProductPojo> selectInId(Set<Integer> productIdList) {
-        CriteriaBuilder cb = em().getCriteriaBuilder();
-        CriteriaQuery<ProductPojo> q = cb.createQuery(ProductPojo.class);
-        Root<ProductPojo> c = q.from(ProductPojo.class);
-        CriteriaBuilder.In<Integer> in = cb.in(c.get("id"));
-        productIdList.forEach(in::value);
-
-        q.select(c).where(in).orderBy(cb.asc(c.get("id")));
-
-        TypedQuery<ProductPojo> query = em().createQuery(q);
-        return query.getResultList();
-    }
 }

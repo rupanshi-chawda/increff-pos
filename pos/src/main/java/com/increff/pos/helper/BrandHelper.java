@@ -11,17 +11,17 @@ import com.increff.pos.util.StringUtil;
 
 public class BrandHelper {
 
-    public static BrandData convert(BrandPojo p) {
-        return ConvertUtil.convert(p, BrandData.class);
+    public static BrandData convert(BrandPojo pojo) {
+        return ConvertUtil.convert(pojo, BrandData.class);
     }
 
-    public static BrandPojo convert(BrandForm f) {
-        return ConvertUtil.convert(f, BrandPojo.class);
+    public static BrandPojo convert(BrandForm form) {
+        return ConvertUtil.convert(form, BrandPojo.class);
     }
 
-    public static void normalize(BrandForm f) {
-        f.setBrand(StringUtil.toLowerCase(f.getBrand()));
-        f.setCategory(StringUtil.toLowerCase(f.getCategory()));
+    public static void normalize(BrandForm form) {
+        form.setBrand(StringUtil.toLowerCase(form.getBrand()));
+        form.setCategory(StringUtil.toLowerCase(form.getCategory()));
     }
 
 }

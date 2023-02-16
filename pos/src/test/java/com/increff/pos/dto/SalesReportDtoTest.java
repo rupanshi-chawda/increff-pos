@@ -6,7 +6,6 @@ import com.increff.pos.api.InventoryApi;
 import com.increff.pos.api.OrderApi;
 import com.increff.pos.api.ProductApi;
 import com.increff.pos.helper.*;
-import com.increff.pos.model.data.ProductData;
 import com.increff.pos.model.data.SalesReportData;
 import com.increff.pos.model.form.*;
 import com.increff.pos.pojo.InventoryPojo;
@@ -19,9 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import java.time.LocalDate;
-import java.time.Period;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -53,12 +49,12 @@ public class SalesReportDtoTest extends AbstractUnitTest {
 
         ProductForm productForm = ProductTestHelper.createForm("dyson","hair","a1b2c3d4", "airwrap", 45000.95);
         ProductPojo px = ProductHelper.convert(productForm);
-        px.setBrandCategory(brandApi.checkBrandCategory(productForm.getBrand(), productForm.getCategory()));
+        px.setBrandCategory(brandApi.getCheckBrandCategoryId(productForm.getBrand(), productForm.getCategory()));
         productApi.add(px);
 
         ProductForm productForm2 = ProductTestHelper.createForm("dyson","hair","qwer1234", "supersonic dryer", 32000.95);
         ProductPojo py = ProductHelper.convert(productForm2);
-        py.setBrandCategory(brandApi.checkBrandCategory(productForm2.getBrand(), productForm2.getCategory()));
+        py.setBrandCategory(brandApi.getCheckBrandCategoryId(productForm2.getBrand(), productForm2.getCategory()));
         productApi.add(py);
 
         InventoryForm inventoryForm = InventoryTestHelper.createForm("a1b2c3d4", 25);
@@ -99,12 +95,12 @@ public class SalesReportDtoTest extends AbstractUnitTest {
 
         ProductForm productForm = ProductTestHelper.createForm("dyson","hair","a1b2c3d4", "airwrap", 45000.95);
         ProductPojo px = ProductHelper.convert(productForm);
-        px.setBrandCategory(brandApi.checkBrandCategory(productForm.getBrand(), productForm.getCategory()));
+        px.setBrandCategory(brandApi.getCheckBrandCategoryId(productForm.getBrand(), productForm.getCategory()));
         productApi.add(px);
 
         ProductForm productForm2 = ProductTestHelper.createForm("dyson","hair","qwer1234", "supersonic dryer", 32000.95);
         ProductPojo py = ProductHelper.convert(productForm2);
-        py.setBrandCategory(brandApi.checkBrandCategory(productForm2.getBrand(), productForm2.getCategory()));
+        py.setBrandCategory(brandApi.getCheckBrandCategoryId(productForm2.getBrand(), productForm2.getCategory()));
         productApi.add(py);
 
         InventoryForm inventoryForm = InventoryTestHelper.createForm("a1b2c3d4", 25);
@@ -147,12 +143,12 @@ public class SalesReportDtoTest extends AbstractUnitTest {
 
         ProductForm productForm = ProductTestHelper.createForm("dyson","hair","a1b2c3d4", "airwrap", 45000.95);
         ProductPojo px = ProductHelper.convert(productForm);
-        px.setBrandCategory(brandApi.checkBrandCategory(productForm.getBrand(), productForm.getCategory()));
+        px.setBrandCategory(brandApi.getCheckBrandCategoryId(productForm.getBrand(), productForm.getCategory()));
         productApi.add(px);
 
         ProductForm productForm2 = ProductTestHelper.createForm("dyson","hair","qwer1234", "supersonic dryer", 32000.95);
         ProductPojo py = ProductHelper.convert(productForm2);
-        py.setBrandCategory(brandApi.checkBrandCategory(productForm2.getBrand(), productForm2.getCategory()));
+        py.setBrandCategory(brandApi.getCheckBrandCategoryId(productForm2.getBrand(), productForm2.getCategory()));
         productApi.add(py);
 
         InventoryForm inventoryForm = InventoryTestHelper.createForm("a1b2c3d4", 25);
@@ -199,12 +195,12 @@ public class SalesReportDtoTest extends AbstractUnitTest {
 
             ProductForm productForm = ProductTestHelper.createForm("dyson","hair","a1b2c3d4", "airwrap", 45000.95);
             ProductPojo px = ProductHelper.convert(productForm);
-            px.setBrandCategory(brandApi.checkBrandCategory(productForm.getBrand(), productForm.getCategory()));
+            px.setBrandCategory(brandApi.getCheckBrandCategoryId(productForm.getBrand(), productForm.getCategory()));
             productApi.add(px);
 
             ProductForm productForm2 = ProductTestHelper.createForm("dyson","hair","qwer1234", "supersonic dryer", 32000.95);
             ProductPojo py = ProductHelper.convert(productForm2);
-            py.setBrandCategory(brandApi.checkBrandCategory(productForm2.getBrand(), productForm2.getCategory()));
+            py.setBrandCategory(brandApi.getCheckBrandCategoryId(productForm2.getBrand(), productForm2.getCategory()));
             productApi.add(py);
 
             InventoryForm inventoryForm = InventoryTestHelper.createForm("a1b2c3d4", 25);

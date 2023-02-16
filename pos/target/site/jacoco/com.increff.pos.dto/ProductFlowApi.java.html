@@ -38,7 +38,7 @@ import java.util.List;
             try
             {
 <span class="fc" id="L40">                ProductPojo p = ProductHelper.convert(f);</span>
-<span class="fc" id="L41">                p.setBrandCategory(brandApi.checkBrandCategory(f.getBrand(), f.getCategory()));</span>
+<span class="fc" id="L41">                p.setBrandCategory(brandApi.getCheckBrandCategoryId(f.getBrand(), f.getCategory()));</span>
 <span class="fc" id="L42">                api.checkBarcodeExists(p);</span>
             }
 <span class="fc" id="L44">            catch (ApiException e) {</span>
@@ -54,7 +54,7 @@ import java.util.List;
         else {
 <span class="fc bfc" id="L55" title="All 2 branches covered.">            for(ProductForm f: forms){</span>
 <span class="fc" id="L56">                ProductPojo p = ProductHelper.convert(f);</span>
-<span class="fc" id="L57">                p.setBrandCategory(brandApi.checkBrandCategory(f.getBrand(), f.getCategory()));</span>
+<span class="fc" id="L57">                p.setBrandCategory(brandApi.getCheckBrandCategoryId(f.getBrand(), f.getCategory()));</span>
 <span class="fc" id="L58">                api.add(p);</span>
 <span class="fc" id="L59">            }</span>
         }

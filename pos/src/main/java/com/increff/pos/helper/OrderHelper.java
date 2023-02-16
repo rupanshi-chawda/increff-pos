@@ -17,22 +17,22 @@ import java.util.Objects;
 
 public class OrderHelper {
 
-    public static OrderData convert(OrderPojo p) {
-        return ConvertUtil.convert(p, OrderData.class);
+    public static OrderData convert(OrderPojo pojo) {
+        return ConvertUtil.convert(pojo, OrderData.class);
     }
 
-    public static OrderItemData convert(OrderItemPojo p, String barcode) {
-        OrderItemData d =  ConvertUtil.convert(p, OrderItemData.class);;
-        d.setBarcode(barcode);
-        return d;
+    public static OrderItemData convert(OrderItemPojo pojo, String barcode) {
+        OrderItemData data =  ConvertUtil.convert(pojo, OrderItemData.class);;
+        data.setBarcode(barcode);
+        return data;
     }
 
-    public static OrderItemPojo convert(OrderItemForm f) {
-        return ConvertUtil.convert(f, OrderItemPojo.class);
+    public static OrderItemPojo convert(OrderItemForm form) {
+        return ConvertUtil.convert(form, OrderItemPojo.class);
     }
 
-    public static void normalize(OrderItemForm f) {
-        f.setBarcode(StringUtil.toLowerCase(f.getBarcode()));
+    public static void normalize(OrderItemForm form) {
+        form.setBarcode(StringUtil.toLowerCase(form.getBarcode()));
     }
 
     public static void validateId(Integer id) throws ApiException {
@@ -41,8 +41,8 @@ public class OrderHelper {
         }
     }
 
-    public static void validateInventory(OrderItemForm f, Integer quantity) throws ApiException {
-        if (f.getQuantity() > quantity) {
+    public static void validateInventory(OrderItemForm form, Integer quantity) throws ApiException {
+        if (form.getQuantity() > quantity) {
             throw new ApiException("Product Quantity is more than available Inventory");
         }
     }

@@ -21,7 +21,7 @@ public class BrandFlowApi {
 
     @Autowired
     private BrandApi api;
-//todo: remove errordata part
+//todo: remove errordata part as it cannot check duplicates in file
     @Transactional(rollbackOn = ApiException.class)
     public void add(List<BrandForm> brandForms, List<BrandErrorData> errorData) throws ApiException {
         Integer errorSize = 0;
@@ -34,7 +34,7 @@ public class BrandFlowApi {
             try
             {
                 BrandPojo b = BrandHelper.convert(f);
-                api.getCheckBrandCategory(b);
+                api.checkBrandCategoryExist(b);
             }
             catch (ApiException e) {
                 errorSize++;

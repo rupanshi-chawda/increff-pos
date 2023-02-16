@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-@Service
+@Service//todo add only one, i.i service
 public class InventoryDto {
     
     @Autowired
@@ -71,7 +71,7 @@ public class InventoryDto {
     }
 
     public InventoryData get(String barcode) throws ApiException {
-        productApi.checkProductBarcode(barcode);
+        productApi.checkProductBarcodeExistence(barcode);
         Integer id = productApi.getIdByBarcode(barcode);
         InventoryPojo p = api.get(id);
         return InventoryHelper.convert(p, barcode);
@@ -90,7 +90,7 @@ public class InventoryDto {
     public void update(String barcode, InventoryForm f) throws ApiException {
         InventoryHelper.normalize(f);
         ValidationUtil.validateForms(f);
-        productApi.checkProductBarcode(barcode);
+        productApi.checkProductBarcodeExistence(barcode);
         InventoryPojo p = InventoryHelper.convert(f);
         p.setId(productApi.getIdByBarcode(f.getBarcode()));
         api.update(p);

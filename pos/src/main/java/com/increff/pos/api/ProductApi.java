@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Service
 @Transactional(rollbackOn = ApiException.class)
@@ -23,7 +22,7 @@ public class ProductApi {
     }
 
     public ProductPojo get(Integer id) throws ApiException {
-        return getProductId(id);
+        return getCheckProductId(id);
     }
 
     public List<ProductPojo> getAll() {
@@ -31,7 +30,7 @@ public class ProductApi {
     }
 
     public void update(Integer id, ProductPojo p) throws ApiException {
-        ProductPojo bx = getProductId(id);
+        ProductPojo bx = getCheckProductId(id);
         bx.setName(p.getName());
         bx.setMrp(p.getMrp());
         dao.update(p);
@@ -39,7 +38,7 @@ public class ProductApi {
 
     // Business Logic Methods
 
-    public ProductPojo getProductId(Integer id) throws ApiException {
+    public ProductPojo getCheckProductId(Integer id) throws ApiException {
         ProductPojo p = dao.selectById(id, ProductPojo.class);
         if (Objects.isNull(p)) {
             throw new ApiException("Product with given ID does not exists, id: " + id);
@@ -49,12 +48,12 @@ public class ProductApi {
 
     public void checkBarcodeExists(ProductPojo p) throws ApiException {
         ProductPojo d = dao.selectByBarcode(p.getBarcode());
-        if (!Objects.isNull(d)) {
+        if (Objects.nonNull(d)) {
             throw new ApiException("Product with given barcode already exists");
         }
     }
 
-    public void checkProductBarcode(String barcode) throws ApiException {
+    public void checkProductBarcodeExistence(String barcode) throws ApiException {
         ProductPojo d = dao.selectByBarcode(barcode);
         if (Objects.isNull(d)) {
             throw new ApiException("Product with given barcode does not exists");
@@ -69,19 +68,5 @@ public class ProductApi {
     public String getBarcodeById(Integer id) {
         ProductPojo p = dao.selectById(id, ProductPojo.class);
         return p.getBarcode();
-    }
-
-    public List<ProductPojo> selectInId(Set<Integer> productIdList) throws ApiException {
-        List<ProductPojo> productPojoList = dao.selectInId(productIdList);
-        String error = "Following ID not found in Product Database: ";
-        for (Integer id : productIdList) {
-            if (!productPojoList.stream().anyMatch(productPojo -> productPojo.getId().equals(id))) {
-                error += id + ", ";
-            }
-        }
-        if(productPojoList.size() != productIdList.size()){
-            throw new ApiException(error);
-        }
-        return productPojoList;
     }
 }

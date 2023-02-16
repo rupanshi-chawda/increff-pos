@@ -23,8 +23,7 @@ public class PdfFromFop {
 
             try {
                 // Construct fop with desired output format
-                Fop fop;
-                fop = fopFactory.newFop(MimeConstants.MIME_PDF, foUserAgent, out);
+                Fop fop = fopFactory.newFop(MimeConstants.MIME_PDF, foUserAgent, out);
                 // Setup XSLT
                 TransformerFactory factory = TransformerFactory.newInstance();
                 Transformer transformer = factory.newTransformer(new StreamSource(xsltfile));
@@ -36,8 +35,7 @@ public class PdfFromFop {
                 transformer.transform(src, res);
 
                 byte[] pdf = out.toByteArray();
-                String base64 = Base64.getEncoder().encodeToString(pdf);
-                return base64;
+                return Base64.getEncoder().encodeToString(pdf);
 
             } catch (FOPException | TransformerException e) {
                 throw new ApiException("Cannot Transform to create Invoice"+e.getMessage());

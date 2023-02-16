@@ -8,24 +8,24 @@ import com.increff.pos.util.ConvertUtil;
 
 public class UserHelper {
 
-    public static void normalize(UserPojo p) {
-        p.setEmail(p.getEmail().toLowerCase().trim());
-        p.setRole(p.getRole().toLowerCase().trim());
+    public static void normalize(UserPojo pojo) {
+        pojo.setEmail(pojo.getEmail().toLowerCase().trim());
+        pojo.setRole(pojo.getRole().toLowerCase().trim());
     }
 
-    public static UserData convert(UserPojo p) {
-        return  ConvertUtil.convert(p, UserData.class);
+    public static UserData convert(UserPojo pojo) {
+        return  ConvertUtil.convert(pojo, UserData.class);
     }
 
-    public static UserPojo convert(UserForm f) {
-        UserPojo p = ConvertUtil.convert(f, UserPojo.class);
-        p.setRole("operator");
-        return p;
+    public static UserPojo convert(UserForm form) {
+        UserPojo pojo = ConvertUtil.convert(form, UserPojo.class);
+        pojo.setRole("operator");
+        return pojo;
     }
 
-    public static UserPojo convert(UserForm f, String role) {
-        UserPojo p = ConvertUtil.convert(f, UserPojo.class);
-        p.setRole(role);
-        return p;
+    public static UserPojo convert(UserForm form, String role) {
+        UserPojo pojo = ConvertUtil.convert(form, UserPojo.class);
+        pojo.setRole(role);
+        return pojo;
     }
 }

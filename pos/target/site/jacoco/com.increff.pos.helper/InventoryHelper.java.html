@@ -15,38 +15,38 @@ import java.util.Objects;
 <span class="nc" id="L15">public class InventoryHelper {</span>
 
 
-    public static InventoryData convert(InventoryPojo p, String barcode) {
-<span class="fc" id="L19">        InventoryData d = ConvertUtil.convert(p, InventoryData.class);</span>
-<span class="fc" id="L20">        d.setBarcode(barcode);</span>
-<span class="fc" id="L21">        return d;</span>
+    public static InventoryData convert(InventoryPojo pojo, String barcode) {
+<span class="fc" id="L19">        InventoryData data = ConvertUtil.convert(pojo, InventoryData.class);</span>
+<span class="fc" id="L20">        data.setBarcode(barcode);</span>
+<span class="fc" id="L21">        return data;</span>
     }
 
-    public static InventoryPojo convert(InventoryForm f) {
-<span class="fc" id="L25">        return ConvertUtil.convert(f, InventoryPojo.class);</span>
+    public static InventoryPojo convert(InventoryForm form) {
+<span class="fc" id="L25">        return ConvertUtil.convert(form, InventoryPojo.class);</span>
     }
 
-    public static void normalize(InventoryForm f) {
-<span class="fc" id="L29">        f.setBarcode(StringUtil.toLowerCase(f.getBarcode()));</span>
+    public static void normalize(InventoryForm form) {
+<span class="fc" id="L29">        form.setBarcode(StringUtil.toLowerCase(form.getBarcode()));</span>
 <span class="fc" id="L30">    }</span>
 
 
-    public static void validateId(InventoryPojo p, Integer id) throws ApiException {
-<span class="pc bpc" id="L34" title="1 of 2 branches missed.">        if (Objects.isNull(p)) {</span>
+    public static void validateId(InventoryPojo pojo, Integer id) throws ApiException {
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">        if (Objects.isNull(pojo)) {</span>
 <span class="nc" id="L35">            throw new ApiException(&quot;Product with given ID does not exists, id: &quot; + id);</span>
         }
 <span class="fc" id="L37">    }</span>
 
-    public static void validateInventoryId(InventoryPojo p) throws ApiException {
-<span class="fc bfc" id="L40" title="All 2 branches covered.">        if (Objects.isNull(p)) {</span>
+    public static void validateInventoryId(InventoryPojo pojo) throws ApiException {
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        if (Objects.isNull(pojo)) {</span>
 <span class="fc" id="L41">            throw new ApiException(&quot;Inventory for given barcode doesn't exists&quot;);</span>
         }
 <span class="fc" id="L43">    }</span>
 
     public static InventoryItem convertMapToItem(Map.Entry&lt;Pair&lt;String,String&gt;,Integer&gt; mapElement) {
-<span class="fc" id="L46">        Pair&lt;String, String&gt; p = mapElement.getKey();</span>
+<span class="fc" id="L46">        Pair&lt;String, String&gt; pojo = mapElement.getKey();</span>
 <span class="fc" id="L47">        InventoryItem inventoryItem = new InventoryItem();</span>
-<span class="fc" id="L48">        inventoryItem.setBrand(p.getKey());</span>
-<span class="fc" id="L49">        inventoryItem.setCategory(p.getValue());</span>
+<span class="fc" id="L48">        inventoryItem.setBrand(pojo.getKey());</span>
+<span class="fc" id="L49">        inventoryItem.setCategory(pojo.getValue());</span>
 <span class="fc" id="L50">        inventoryItem.setQuantity(mapElement.getValue());</span>
 <span class="fc" id="L51">        return inventoryItem;</span>
     }

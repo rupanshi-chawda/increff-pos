@@ -11,8 +11,6 @@ import javax.persistence.Id;
 @Getter
 public class InventoryItem {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String brand;
     private String category;

@@ -15,30 +15,30 @@ import java.util.Objects;
 
 <span class="nc" id="L16">public class ProductHelper {</span>
 
-    public static ProductData convert(ProductPojo p, BrandPojo b) {
-<span class="fc" id="L19">        ProductData d = ConvertUtil.convert(p, ProductData.class);</span>
-<span class="fc" id="L20">        d.setBrand(b.getBrand());</span>
-<span class="fc" id="L21">        d.setCategory(b.getCategory());</span>
-<span class="fc" id="L22">        return d;</span>
+    public static ProductData convert(ProductPojo pojo, BrandPojo brandPojo) {
+<span class="fc" id="L19">        ProductData data = ConvertUtil.convert(pojo, ProductData.class);</span>
+<span class="fc" id="L20">        data.setBrand(brandPojo.getBrand());</span>
+<span class="fc" id="L21">        data.setCategory(brandPojo.getCategory());</span>
+<span class="fc" id="L22">        return data;</span>
     }
 
-    public static ProductPojo convert(ProductForm f) {
-<span class="fc" id="L26">        return ConvertUtil.convert(f, ProductPojo.class);</span>
+    public static ProductPojo convert(ProductForm form) {
+<span class="fc" id="L26">        return ConvertUtil.convert(form, ProductPojo.class);</span>
     }
 
-    public static ProductPojo convert(ProductUpdateForm f) {
-<span class="fc" id="L30">        return ConvertUtil.convert(f, ProductPojo.class);</span>
+    public static ProductPojo convert(ProductUpdateForm updateForm) {
+<span class="fc" id="L30">        return ConvertUtil.convert(updateForm, ProductPojo.class);</span>
     }
 
-    public static void normalize(ProductForm f) {
-<span class="fc" id="L34">        f.setBarcode(StringUtil.toLowerCase(f.getBarcode()));</span>
-<span class="fc" id="L35">        f.setBrand(StringUtil.toLowerCase(f.getBrand()));</span>
-<span class="fc" id="L36">        f.setCategory(StringUtil.toLowerCase(f.getCategory()));</span>
-<span class="fc" id="L37">        f.setName(StringUtil.toLowerCase(f.getName()));</span>
+    public static void normalize(ProductForm form) {
+<span class="fc" id="L34">        form.setBarcode(StringUtil.toLowerCase(form.getBarcode()));</span>
+<span class="fc" id="L35">        form.setBrand(StringUtil.toLowerCase(form.getBrand()));</span>
+<span class="fc" id="L36">        form.setCategory(StringUtil.toLowerCase(form.getCategory()));</span>
+<span class="fc" id="L37">        form.setName(StringUtil.toLowerCase(form.getName()));</span>
 <span class="fc" id="L38">    }</span>
 
-    public static void normalize(ProductUpdateForm f) {
-<span class="fc" id="L41">        f.setName(StringUtil.toLowerCase(f.getName()));</span>
+    public static void normalize(ProductUpdateForm form) {
+<span class="fc" id="L41">        form.setName(StringUtil.toLowerCase(form.getName()));</span>
 <span class="fc" id="L42">    }</span>
 
 }

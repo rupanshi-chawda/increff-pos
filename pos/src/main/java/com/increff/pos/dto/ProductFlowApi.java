@@ -38,7 +38,7 @@ public class ProductFlowApi {
             try
             {
                 ProductPojo p = ProductHelper.convert(f);
-                p.setBrandCategory(brandApi.checkBrandCategory(f.getBrand(), f.getCategory()));
+                p.setBrandCategory(brandApi.getCheckBrandCategoryId(f.getBrand(), f.getCategory()));
                 api.checkBarcodeExists(p);
             }
             catch (ApiException e) {
@@ -54,7 +54,7 @@ public class ProductFlowApi {
         else {
             for(ProductForm f: forms){
                 ProductPojo p = ProductHelper.convert(f);
-                p.setBrandCategory(brandApi.checkBrandCategory(f.getBrand(), f.getCategory()));
+                p.setBrandCategory(brandApi.getCheckBrandCategoryId(f.getBrand(), f.getCategory()));
                 api.add(p);
             }
         }

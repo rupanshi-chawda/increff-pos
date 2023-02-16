@@ -33,15 +33,15 @@ public class InventoryFlowApi {
     @Transactional(rollbackOn = ApiException.class)
     public void add(List<InventoryForm> forms, List<InventoryErrorData> errorData) throws ApiException {
         Integer errorSize = 0;
-        Integer i=0;
-
+        Integer i=0;// todo: rename i to row
+//todo: move below to validate function validateProductExistence();
         for(InventoryForm f: forms)
         {
             InventoryErrorData inventoryErrorData = ConvertUtil.convert(f, InventoryErrorData.class);
             inventoryErrorData.setMessage("");
             try
             {
-                productApi.checkProductBarcode(f.getBarcode());
+                productApi.checkProductBarcodeExistence(f.getBarcode());
             }
             catch (ApiException e) {
                 errorSize++;

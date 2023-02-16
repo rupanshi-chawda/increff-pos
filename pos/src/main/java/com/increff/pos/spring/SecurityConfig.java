@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	//todo: how does this security works behind the scenes?
 	private static Logger logger = Logger.getLogger(SecurityConfig.class);
 
 	@Override
@@ -39,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 				.antMatchers("/ui/admin/**").hasAuthority("supervisor")//
 				.antMatchers("/ui/sales/**").hasAuthority("supervisor")//
-				.antMatchers("/ui/salesreport/**").hasAuthority("supervisor")//
+				.antMatchers("/ui/sales-report/**").hasAuthority("supervisor")//
 				.antMatchers("/ui/**").hasAnyAuthority("supervisor", "operator")//
 				// Ignore CSRF and CORS
 				.and().csrf().disable().cors().disable();

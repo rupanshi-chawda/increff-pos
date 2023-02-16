@@ -27,14 +27,14 @@ import java.util.Objects;
     //Checkers
     public void checkEmail(String email) throws ApiException {
 <span class="fc" id="L29">        UserPojo existing = getUserByEmail(email);</span>
-<span class="fc bfc" id="L30" title="All 2 branches covered.">        if (!Objects.isNull(existing)) {</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        if (Objects.nonNull(existing)) {</span>
 <span class="fc" id="L31">            throw new ApiException(&quot;User with given email already exists&quot;);</span>
         }
 <span class="fc" id="L33">    }</span>
 
     public boolean checkEmailExists(String email) throws ApiException {
 <span class="fc" id="L36">        UserPojo existing = getUserByEmail(email);</span>
-<span class="fc bfc" id="L37" title="All 2 branches covered.">        return !Objects.isNull(existing);</span>
+<span class="fc" id="L37">        return Objects.nonNull(existing);</span>
     }
 
     public UserPojo getUserByEmail(String email) throws ApiException {

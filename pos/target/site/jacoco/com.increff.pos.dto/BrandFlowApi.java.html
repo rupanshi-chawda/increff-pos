@@ -21,7 +21,7 @@ import java.util.List;
 
     @Autowired
     private BrandApi api;
-//todo: remove errordata part
+//todo: remove errordata part as it cannot check duplicates in file
     @Transactional(rollbackOn = ApiException.class)
     public void add(List&lt;BrandForm&gt; brandForms, List&lt;BrandErrorData&gt; errorData) throws ApiException {
 <span class="fc" id="L27">        Integer errorSize = 0;</span>
@@ -34,7 +34,7 @@ import java.util.List;
             try
             {
 <span class="fc" id="L36">                BrandPojo b = BrandHelper.convert(f);</span>
-<span class="fc" id="L37">                api.getCheckBrandCategory(b);</span>
+<span class="fc" id="L37">                api.checkBrandCategoryExist(b);</span>
             }
 <span class="fc" id="L39">            catch (ApiException e) {</span>
 <span class="fc" id="L40">                errorSize++;</span>

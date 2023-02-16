@@ -17,22 +17,22 @@ import java.util.Objects;
 
 <span class="nc" id="L18">public class OrderHelper {</span>
 
-    public static OrderData convert(OrderPojo p) {
-<span class="fc" id="L21">        return ConvertUtil.convert(p, OrderData.class);</span>
+    public static OrderData convert(OrderPojo pojo) {
+<span class="fc" id="L21">        return ConvertUtil.convert(pojo, OrderData.class);</span>
     }
 
-    public static OrderItemData convert(OrderItemPojo p, String barcode) {
-<span class="fc" id="L25">        OrderItemData d =  ConvertUtil.convert(p, OrderItemData.class);;</span>
-<span class="fc" id="L26">        d.setBarcode(barcode);</span>
-<span class="fc" id="L27">        return d;</span>
+    public static OrderItemData convert(OrderItemPojo pojo, String barcode) {
+<span class="fc" id="L25">        OrderItemData data =  ConvertUtil.convert(pojo, OrderItemData.class);;</span>
+<span class="fc" id="L26">        data.setBarcode(barcode);</span>
+<span class="fc" id="L27">        return data;</span>
     }
 
-    public static OrderItemPojo convert(OrderItemForm f) {
-<span class="fc" id="L31">        return ConvertUtil.convert(f, OrderItemPojo.class);</span>
+    public static OrderItemPojo convert(OrderItemForm form) {
+<span class="fc" id="L31">        return ConvertUtil.convert(form, OrderItemPojo.class);</span>
     }
 
-    public static void normalize(OrderItemForm f) {
-<span class="fc" id="L35">        f.setBarcode(StringUtil.toLowerCase(f.getBarcode()));</span>
+    public static void normalize(OrderItemForm form) {
+<span class="fc" id="L35">        form.setBarcode(StringUtil.toLowerCase(form.getBarcode()));</span>
 <span class="fc" id="L36">    }</span>
 
     public static void validateId(Integer id) throws ApiException {
@@ -41,8 +41,8 @@ import java.util.Objects;
         }
 <span class="fc" id="L42">    }</span>
 
-    public static void validateInventory(OrderItemForm f, Integer quantity) throws ApiException {
-<span class="pc bpc" id="L45" title="1 of 2 branches missed.">        if (f.getQuantity() &gt; quantity) {</span>
+    public static void validateInventory(OrderItemForm form, Integer quantity) throws ApiException {
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">        if (form.getQuantity() &gt; quantity) {</span>
 <span class="nc" id="L46">            throw new ApiException(&quot;Product Quantity is more than available Inventory&quot;);</span>
         }
 <span class="fc" id="L48">    }</span>

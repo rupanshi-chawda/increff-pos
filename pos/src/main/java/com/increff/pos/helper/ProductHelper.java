@@ -15,30 +15,30 @@ import java.util.Objects;
 
 public class ProductHelper {
 
-    public static ProductData convert(ProductPojo p, BrandPojo b) {
-        ProductData d = ConvertUtil.convert(p, ProductData.class);
-        d.setBrand(b.getBrand());
-        d.setCategory(b.getCategory());
-        return d;
+    public static ProductData convert(ProductPojo pojo, BrandPojo brandPojo) {
+        ProductData data = ConvertUtil.convert(pojo, ProductData.class);
+        data.setBrand(brandPojo.getBrand());
+        data.setCategory(brandPojo.getCategory());
+        return data;
     }
 
-    public static ProductPojo convert(ProductForm f) {
-        return ConvertUtil.convert(f, ProductPojo.class);
+    public static ProductPojo convert(ProductForm form) {
+        return ConvertUtil.convert(form, ProductPojo.class);
     }
 
-    public static ProductPojo convert(ProductUpdateForm f) {
-        return ConvertUtil.convert(f, ProductPojo.class);
+    public static ProductPojo convert(ProductUpdateForm updateForm) {
+        return ConvertUtil.convert(updateForm, ProductPojo.class);
     }
 
-    public static void normalize(ProductForm f) {
-        f.setBarcode(StringUtil.toLowerCase(f.getBarcode()));
-        f.setBrand(StringUtil.toLowerCase(f.getBrand()));
-        f.setCategory(StringUtil.toLowerCase(f.getCategory()));
-        f.setName(StringUtil.toLowerCase(f.getName()));
+    public static void normalize(ProductForm form) {
+        form.setBarcode(StringUtil.toLowerCase(form.getBarcode()));
+        form.setBrand(StringUtil.toLowerCase(form.getBrand()));
+        form.setCategory(StringUtil.toLowerCase(form.getCategory()));
+        form.setName(StringUtil.toLowerCase(form.getName()));
     }
 
-    public static void normalize(ProductUpdateForm f) {
-        f.setName(StringUtil.toLowerCase(f.getName()));
+    public static void normalize(ProductUpdateForm form) {
+        form.setName(StringUtil.toLowerCase(form.getName()));
     }
 
 }

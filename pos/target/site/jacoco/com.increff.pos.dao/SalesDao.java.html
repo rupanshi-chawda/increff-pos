@@ -10,21 +10,21 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
-import java.time.ZonedDateTime;
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
 <span class="fc" id="L18">public class SalesDao extends AbstractDao {</span>
 
-    public List&lt;SalesPojo&gt; selectBetweenDates(ZonedDateTime startDate, ZonedDateTime endDate) {
+    public List&lt;SalesPojo&gt; selectBetweenDates(LocalDate startDate, LocalDate endDate) {
 <span class="fc" id="L21">        CriteriaBuilder cb = em().getCriteriaBuilder();</span>
 <span class="fc" id="L22">        CriteriaQuery&lt;SalesPojo&gt; q = cb.createQuery(SalesPojo.class);</span>
 <span class="fc" id="L23">        Root&lt;SalesPojo&gt; c = q.from(SalesPojo.class);</span>
 
 <span class="fc" id="L25">        q.select(c);</span>
-<span class="fc" id="L26">        ParameterExpression&lt;ZonedDateTime&gt; p = cb.parameter(ZonedDateTime.class);</span>
-<span class="fc" id="L27">        ParameterExpression&lt;ZonedDateTime&gt; a = cb.parameter(ZonedDateTime.class);</span>
+<span class="fc" id="L26">        ParameterExpression&lt;LocalDate&gt; p = cb.parameter(LocalDate.class);</span>
+<span class="fc" id="L27">        ParameterExpression&lt;LocalDate&gt; a = cb.parameter(LocalDate.class);</span>
 <span class="fc" id="L28">        q.where(cb.between(c.get(&quot;date&quot;), p, a));</span>
 
 <span class="fc" id="L30">        TypedQuery&lt;SalesPojo&gt; query = em().createQuery(q);</span>
@@ -33,11 +33,11 @@ import java.util.List;
 <span class="fc" id="L33">        return query.getResultList();</span>
     }
 
-    public SalesPojo selectByDate(ZonedDateTime date) {
+    public SalesPojo selectByDate(LocalDate date) {
 <span class="fc" id="L37">        CriteriaBuilder cb = em().getCriteriaBuilder();</span>
 <span class="fc" id="L38">        CriteriaQuery&lt;SalesPojo&gt; q = cb.createQuery(SalesPojo.class);</span>
 <span class="fc" id="L39">        Root&lt;SalesPojo&gt; c = q.from(SalesPojo.class);</span>
-<span class="fc" id="L40">        ParameterExpression&lt;ZonedDateTime&gt; p = cb.parameter(ZonedDateTime.class);</span>
+<span class="fc" id="L40">        ParameterExpression&lt;LocalDate&gt; p = cb.parameter(LocalDate.class);</span>
 <span class="fc" id="L41">        q.select(c).where(cb.equal(c.get(&quot;date&quot;), p));</span>
 
 <span class="fc" id="L43">        TypedQuery&lt;SalesPojo&gt; query = em().createQuery(q);</span>

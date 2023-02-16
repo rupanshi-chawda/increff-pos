@@ -36,7 +36,7 @@ public class DbConfig {
 	private String hibernateHbm2ddl;
 	
 
-	@Bean(name = "dataSource")
+	@Bean(name= "dataSource")
 	public DataSource getDataSource() {
 
 		BasicDataSource bean = new BasicDataSource();

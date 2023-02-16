@@ -21,7 +21,7 @@ import java.util.List;
 
 @Api
 @RestController
-@RequestMapping(path = "/api/salesreport")
+@RequestMapping(path = "/api/sales-report")
 public class SalesReportController
 {
     @Autowired

@@ -64,7 +64,7 @@ import java.util.stream.Collectors;
     }
 
     public List&lt;BrandData&gt; getAll() {
-<span class="fc" id="L67">        return api.getAll().stream().map(BrandHelper::convert).collect(Collectors.toList());</span>
+<span class="fc" id="L67">        return api.getAllSorted().stream().map(BrandHelper::convert).collect(Collectors.toList());</span>
     }
 
     public void update(Integer id, BrandForm f) throws ApiException {

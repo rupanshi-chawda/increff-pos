@@ -33,15 +33,15 @@ import java.util.List;
     @Transactional(rollbackOn = ApiException.class)
     public void add(List&lt;InventoryForm&gt; forms, List&lt;InventoryErrorData&gt; errorData) throws ApiException {
 <span class="fc" id="L35">        Integer errorSize = 0;</span>
-<span class="fc" id="L36">        Integer i=0;</span>
-
+<span class="fc" id="L36">        Integer i=0;// todo: rename i to row</span>
+//todo: move below to validate function validateProductExistence();
 <span class="fc bfc" id="L38" title="All 2 branches covered.">        for(InventoryForm f: forms)</span>
         {
 <span class="fc" id="L40">            InventoryErrorData inventoryErrorData = ConvertUtil.convert(f, InventoryErrorData.class);</span>
 <span class="fc" id="L41">            inventoryErrorData.setMessage(&quot;&quot;);</span>
             try
             {
-<span class="fc" id="L44">                productApi.checkProductBarcode(f.getBarcode());</span>
+<span class="fc" id="L44">                productApi.checkProductBarcodeExistence(f.getBarcode());</span>
             }
 <span class="fc" id="L46">            catch (ApiException e) {</span>
 <span class="fc" id="L47">                errorSize++;</span>

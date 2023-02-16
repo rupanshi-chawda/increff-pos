@@ -20,9 +20,8 @@ public class OrderPojo extends AbstractVersionPojo {
     private Integer id;
 
     @CreationTimestamp
-    @Column
+    @Column(nullable = false)
     private ZonedDateTime time;
 
-    @Column
     private String invoicePath;
 }

@@ -6,6 +6,7 @@ com\increff\invoice\api\PdfFromFop.class
 com\increff\invoice\dto\InvoiceDto.class
 com\increff\invoice\controller\AppRestControllerAdvice.class
 com\increff\invoice\model\OrderItemData.class
+com\increff\invoice\util\XmlUtil.class
 com\increff\invoice\controller\InvoiceController.class
 com\increff\invoice\model\InvoiceForm.class
 com\increff\invoice\model\MessageData.class

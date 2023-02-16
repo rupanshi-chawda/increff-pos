@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -27,12 +27,12 @@ import java.util.List;
     }
 
     @Transactional
-    public SalesPojo getByDate(ZonedDateTime date) {
+    public SalesPojo getByDate(LocalDate date) {
 <span class="fc" id="L31">        return dao.selectByDate(date);</span>
     }
 
     @Transactional
-    public void update(ZonedDateTime date, SalesPojo newPojo)
+    public void update(LocalDate date, SalesPojo newPojo)
     {
 <span class="fc" id="L37">        SalesPojo pojo = dao.selectByDate(date);</span>
 <span class="fc" id="L38">        pojo.setInvoicedOrderCount(newPojo.getInvoicedOrderCount());</span>
@@ -43,7 +43,7 @@ import java.util.List;
     // Business Logic Methods
 
     @Transactional
-    public List&lt;SalesPojo&gt; getAllBetweenDates(ZonedDateTime startDate, ZonedDateTime endDate) {
+    public List&lt;SalesPojo&gt; getAllBetweenDates(LocalDate startDate, LocalDate endDate) {
 <span class="fc" id="L47">        return dao.selectBetweenDates(startDate,endDate);</span>
     }
 }

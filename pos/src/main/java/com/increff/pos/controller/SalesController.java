@@ -1,6 +1,6 @@
 package com.increff.pos.controller;
 
-import com.increff.pos.dto.SalesDto;
+import com.increff.pos.dto.SalesJobDto;
 import com.increff.pos.model.form.SalesForm;
 import com.increff.pos.pojo.SalesPojo;
 import com.increff.pos.util.ApiException;
@@ -17,7 +17,7 @@ import java.util.List;
 public class SalesController {
 
     @Autowired
-    private SalesDto dto;
+    private SalesJobDto dto;
 
     @ApiOperation(value = "Gets all the sales data")
     @GetMapping(path = "")

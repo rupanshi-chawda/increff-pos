@@ -49,10 +49,12 @@ public class OrderDto {
     public void addItem(List<OrderItemForm> forms) throws ApiException {
         // Validating every order item before adding it.
 
+        //todo move this flow
         checkDuplicateItems(forms);
         validateItems(forms);
 
         // Place order
+        //todo move all below to next layer to add since we are only adding
         OrderPojo op = new OrderPojo();
         orderApi.addOrder(op);
 
@@ -67,7 +69,7 @@ public class OrderDto {
     }
 
     public List<OrderItemData> getByOrderId(Integer orderId) {
-        List<OrderItemPojo> list = orderApi.getByOrderId(orderId);
+        List<OrderItemPojo> list = orderApi.getItemsByOrderId(orderId);
         List<OrderItemData> list2 = new ArrayList<OrderItemData>();
         for(OrderItemPojo b : list) {
             String barcode = productApi.getBarcodeById(b.getProductId());
@@ -91,7 +93,7 @@ public class OrderDto {
 
     private void validateItems(List<OrderItemForm> forms) throws ApiException {
         for(OrderItemForm f : forms) {
-            productApi.checkProductBarcode(f.getBarcode());
+            productApi.checkProductBarcodeExistence(f.getBarcode());
 
             Integer id = productApi.getIdByBarcode(f.getBarcode());
             OrderHelper.validateId(id);

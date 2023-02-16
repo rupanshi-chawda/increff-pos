@@ -2,7 +2,7 @@ var brandData = {};
 
 function getSalesReportUrl() {
   var baseUrl = $("meta[name=baseUrl]").attr("content");
-  return baseUrl + "/api/salesreport";
+  return baseUrl + "/api/sales-report";
 }
 
 function getBrandUrl() {
@@ -179,7 +179,7 @@ function disableDate() {
 }
 
 $(document).ready(init);
-$(document).ready(getSalesList);
+//$(document).ready(getSalesList);
 $(document).ready(getBrandList);
 $(document).ready(initlists);
 $(document).ready(autoFillDate);

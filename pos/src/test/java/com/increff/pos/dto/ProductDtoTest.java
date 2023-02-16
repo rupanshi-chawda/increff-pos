@@ -46,7 +46,7 @@ public class ProductDtoTest extends AbstractUnitTest {
         productFormList.add(productForm);
         dto.add(productFormList);
 
-        Integer expectedBrandCategory = brandApi.checkBrandCategory(productForm.getBrand(), productForm.getCategory());
+        Integer expectedBrandCategory = brandApi.getCheckBrandCategoryId(productForm.getBrand(), productForm.getCategory());
         String expectedName = "airwrap";
         Double expectedMrp = 45000.95;
         String expectedBarcode = "a1b2c3d4";
@@ -176,12 +176,12 @@ public class ProductDtoTest extends AbstractUnitTest {
 
         ProductForm productForm = ProductTestHelper.createForm("dyson","hair","a1b2c3d4", "airwrap", 45000.95);
         ProductPojo px = ProductHelper.convert(productForm);
-        px.setBrandCategory(brandApi.checkBrandCategory(productForm.getBrand(), productForm.getCategory()));
+        px.setBrandCategory(brandApi.getCheckBrandCategoryId(productForm.getBrand(), productForm.getCategory()));
         api.add(px);
 
         ProductForm productForm2 = ProductTestHelper.createForm("dyson","hair","qwer1234", "supersonic dryer", 32000.95);
         ProductPojo py = ProductHelper.convert(productForm2);
-        py.setBrandCategory(brandApi.checkBrandCategory(productForm2.getBrand(), productForm2.getCategory()));
+        py.setBrandCategory(brandApi.getCheckBrandCategoryId(productForm2.getBrand(), productForm2.getCategory()));
         api.add(py);
 
         List<ProductData> list = dto.getAll();
@@ -195,7 +195,7 @@ public class ProductDtoTest extends AbstractUnitTest {
 
         ProductForm productForm = ProductTestHelper.createForm("dyson","hair","a1b2c3d4", "airwrap", 45000.95);
         ProductPojo px = ProductHelper.convert(productForm);
-        px.setBrandCategory(brandApi.checkBrandCategory(productForm.getBrand(), productForm.getCategory()));
+        px.setBrandCategory(brandApi.getCheckBrandCategoryId(productForm.getBrand(), productForm.getCategory()));
         api.add(px);
 
 
@@ -223,7 +223,7 @@ public class ProductDtoTest extends AbstractUnitTest {
 
             ProductForm productForm = ProductTestHelper.createForm("dyson","hair","a1b2c3d4", "airwrap", 45000.95);
             ProductPojo px = ProductHelper.convert(productForm);
-            px.setBrandCategory(brandApi.checkBrandCategory(productForm.getBrand(), productForm.getCategory()));
+            px.setBrandCategory(brandApi.getCheckBrandCategoryId(productForm.getBrand(), productForm.getCategory()));
             api.add(px);
 
 
@@ -253,7 +253,7 @@ public class ProductDtoTest extends AbstractUnitTest {
 
             ProductForm productForm = ProductTestHelper.createForm("dyson","hair","a1b2c3d4", "airwrap", 45000.95);
             ProductPojo px = ProductHelper.convert(productForm);
-            px.setBrandCategory(brandApi.checkBrandCategory(productForm.getBrand(), productForm.getCategory()));
+            px.setBrandCategory(brandApi.getCheckBrandCategoryId(productForm.getBrand(), productForm.getCategory()));
             api.add(px);
 
 
@@ -280,7 +280,7 @@ public class ProductDtoTest extends AbstractUnitTest {
 
             ProductForm productForm = ProductTestHelper.createForm("dyson","hair","a1b2c3d4", "airwrap", 45000.95);
             ProductPojo px = ProductHelper.convert(productForm);
-            px.setBrandCategory(brandApi.checkBrandCategory(productForm.getBrand(), productForm.getCategory()));
+            px.setBrandCategory(brandApi.getCheckBrandCategoryId(productForm.getBrand(), productForm.getCategory()));
             api.add(px);
 
             String expectedBarcode = "a1b2c3d4";

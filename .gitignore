@@ -27,3 +27,6 @@ hs_err_pid*
 /invoice/Pdf/
 /invoice/javax.xml.transform.dom.*
 /pos/src/main/resources/invoices/
+/pos/target
+/target
+/invoice/target

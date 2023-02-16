@@ -29,7 +29,7 @@ import java.util.List;
 <span class="fc" id="L29">        invoiceForm.setOrderId(orderPojo.getId());</span>
 <span class="fc" id="L30">        invoiceForm.setPlaceDate(orderPojo.getTime().toString());</span>
 
-<span class="fc" id="L32">        List&lt;OrderItemPojo&gt; orderItemPojoList = orderApi.getOrderItemByOrderId(orderPojo.getId());</span>
+<span class="fc" id="L32">        List&lt;OrderItemPojo&gt; orderItemPojoList = orderApi.getItemsByOrderId(orderPojo.getId());</span>
 <span class="fc" id="L33">        List&lt;OrderItem&gt; orderItemList = new ArrayList&lt;&gt;();</span>
 
 <span class="fc bfc" id="L35" title="All 2 branches covered.">        for(OrderItemPojo p: orderItemPojoList)</span>

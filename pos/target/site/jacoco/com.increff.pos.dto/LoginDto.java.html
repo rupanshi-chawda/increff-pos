@@ -38,7 +38,7 @@ import java.util.Objects;
 <span class="fc" id="L38">            return new ModelAndView(&quot;redirect:/site/login&quot;);</span>
         }
 <span class="fc" id="L40">        info.setRole(p.getRole());</span>
-<span class="pc bpc" id="L41" title="1 of 4 branches missed.">        boolean authenticated = (!Objects.isNull(p) &amp;&amp; Objects.equals(p.getPassword(), f.getPassword()));</span>
+<span class="pc bpc" id="L41" title="1 of 4 branches missed.">        boolean authenticated = (Objects.nonNull(p) &amp;&amp; Objects.equals(p.getPassword(), f.getPassword()));</span>
 <span class="fc bfc" id="L42" title="All 2 branches covered.">        if (!authenticated) {</span>
 <span class="fc" id="L43">            info.setMessage(&quot;Invalid password&quot;);</span>
 <span class="fc" id="L44">            return new ModelAndView(&quot;redirect:/site/login&quot;);</span>

@@ -61,9 +61,9 @@ import java.util.List;
 <span class="fc" id="L61">    }</span>
 
     public ProductData get(Integer id) throws ApiException {
-<span class="fc" id="L64">        ProductPojo p = api.get(id);</span>
-<span class="fc" id="L65">        BrandPojo b = brandApi.getCheckBrandId(p.getBrandCategory());</span>
-<span class="fc" id="L66">        return ProductHelper.convert(p, b);</span>
+<span class="nc" id="L64">        ProductPojo p = api.get(id);</span>
+<span class="nc" id="L65">        BrandPojo b = brandApi.getCheckBrandId(p.getBrandCategory());</span>
+<span class="nc" id="L66">        return ProductHelper.convert(p, b);</span>
     }
 
     public List&lt;ProductData&gt; getAll() throws ApiException {

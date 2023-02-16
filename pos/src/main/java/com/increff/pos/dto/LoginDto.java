@@ -38,7 +38,7 @@ public class LoginDto {
             return new ModelAndView("redirect:/site/login");
         }
         info.setRole(p.getRole());
-        boolean authenticated = (!Objects.isNull(p) && Objects.equals(p.getPassword(), f.getPassword()));
+        boolean authenticated = (Objects.nonNull(p) && Objects.equals(p.getPassword(), f.getPassword()));
         if (!authenticated) {
             info.setMessage("Invalid password");
             return new ModelAndView("redirect:/site/login");

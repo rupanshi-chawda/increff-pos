@@ -12,18 +12,16 @@ import org.springframework.stereotype.Component;
 @Getter
 <span class="fc" id="L13">@Setter</span>
 @Scope(value=&quot;session&quot;, proxyMode=ScopedProxyMode.TARGET_CLASS)
-public class InfoData implements Serializable {
+//this allows the infodata instance will be unique per user session, and any changes made to it during a session will
+// be available to the same user during subsequent requests within the same session.
+
+<span class="fc" id="L18">public class InfoData implements Serializable { // This allows the object to be serialized and deserialized, which is necessary for storing the object in a user session.</span>
 
 	private static final long serialVersionUID = 1L;
 
-<span class="fc" id="L19">	private String message;</span>
-<span class="nc" id="L20">	private String email;</span>
-<span class="nc" id="L21">	private String role;</span>
+<span class="fc" id="L22">	private String message = &quot;&quot;;</span>
+<span class="pc" id="L23">	private String email = &quot;No email&quot;;</span>
+<span class="pc" id="L24">	private String role = &quot;operator&quot;;</span>
 
-<span class="fc" id="L23">	public InfoData() {</span>
-<span class="fc" id="L24">		message = &quot;&quot;;</span>
-<span class="fc" id="L25">		email = &quot;No email&quot;;</span>
-<span class="fc" id="L26">		role = &quot;operator&quot;;</span>
-<span class="fc" id="L27">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

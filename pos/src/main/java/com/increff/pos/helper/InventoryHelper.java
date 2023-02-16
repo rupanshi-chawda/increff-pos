@@ -15,38 +15,38 @@ import java.util.Objects;
 public class InventoryHelper {
 
 
-    public static InventoryData convert(InventoryPojo p, String barcode) {
-        InventoryData d = ConvertUtil.convert(p, InventoryData.class);
-        d.setBarcode(barcode);
-        return d;
+    public static InventoryData convert(InventoryPojo pojo, String barcode) {
+        InventoryData data = ConvertUtil.convert(pojo, InventoryData.class);
+        data.setBarcode(barcode);
+        return data;
     }
 
-    public static InventoryPojo convert(InventoryForm f) {
-        return ConvertUtil.convert(f, InventoryPojo.class);
+    public static InventoryPojo convert(InventoryForm form) {
+        return ConvertUtil.convert(form, InventoryPojo.class);
     }
 
-    public static void normalize(InventoryForm f) {
-        f.setBarcode(StringUtil.toLowerCase(f.getBarcode()));
+    public static void normalize(InventoryForm form) {
+        form.setBarcode(StringUtil.toLowerCase(form.getBarcode()));
     }
 
 
-    public static void validateId(InventoryPojo p, Integer id) throws ApiException {
-        if (Objects.isNull(p)) {
+    public static void validateId(InventoryPojo pojo, Integer id) throws ApiException {
+        if (Objects.isNull(pojo)) {
             throw new ApiException("Product with given ID does not exists, id: " + id);
         }
     }
 
-    public static void validateInventoryId(InventoryPojo p) throws ApiException {
-        if (Objects.isNull(p)) {
+    public static void validateInventoryId(InventoryPojo pojo) throws ApiException {
+        if (Objects.isNull(pojo)) {
             throw new ApiException("Inventory for given barcode doesn't exists");
         }
     }
 
     public static InventoryItem convertMapToItem(Map.Entry<Pair<String,String>,Integer> mapElement) {
-        Pair<String, String> p = mapElement.getKey();
+        Pair<String, String> pojo = mapElement.getKey();
         InventoryItem inventoryItem = new InventoryItem();
-        inventoryItem.setBrand(p.getKey());
-        inventoryItem.setCategory(p.getValue());
+        inventoryItem.setBrand(pojo.getKey());
+        inventoryItem.setCategory(pojo.getValue());
         inventoryItem.setQuantity(mapElement.getValue());
         return inventoryItem;
     }
