@@ -17,9 +17,10 @@ import java.util.Objects;
 public class InventoryHelper {
 
 
-    public static InventoryData convert(InventoryPojo pojo, String barcode) {
+    public static InventoryData convert(InventoryPojo pojo, String barcode, Double mrp) {
         InventoryData data = ConvertUtil.convert(pojo, InventoryData.class);
         data.setBarcode(barcode);
+        data.setMrp(mrp);
         return data;
     }
 

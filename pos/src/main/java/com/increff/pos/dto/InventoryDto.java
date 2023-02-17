@@ -10,6 +10,7 @@ import com.increff.pos.pojo.BrandPojo;
 import com.increff.pos.pojo.InventoryPojo;
 import com.increff.pos.api.InventoryApi;
 import com.increff.pos.api.ProductApi;
+import com.increff.pos.pojo.ProductPojo;
 import com.increff.pos.util.*;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,16 +52,18 @@ public class InventoryDto {
     public InventoryData get(String barcode) throws ApiException {
         productApi.checkProductBarcodeExistence(barcode);
         Integer id = productApi.getIdByBarcode(barcode);
+        ProductPojo b = productApi.get(id);
         InventoryPojo p = api.get(id);
-        return InventoryHelper.convert(p, barcode);
+        return InventoryHelper.convert(p, barcode, b.getMrp());
     }
 
-    public List<InventoryData> getAll() {
+    public List<InventoryData> getAll() throws ApiException {
         List<InventoryPojo> list = api.getAll();
         List<InventoryData> list2 = new ArrayList<InventoryData>();
         for(InventoryPojo b : list) {
             String barcode = productApi.getBarcodeById(b.getId());
-            list2.add(InventoryHelper.convert(b, barcode));
+            ProductPojo p = productApi.get(b.getId());
+            list2.add(InventoryHelper.convert(b, barcode, p.getMrp()));
         }
         return list2;
     }

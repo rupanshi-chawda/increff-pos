@@ -212,7 +212,8 @@ public class InventoryDtoTest extends AbstractUnitTest {
 
         productApi.checkProductBarcodeExistence(expectedBarcode);
         Integer id = productApi.getIdByBarcode(expectedBarcode);
-        InventoryData data = InventoryHelper.convert(api.get(id), expectedBarcode);
+        ProductPojo p = productApi.get(id);
+        InventoryData data = InventoryHelper.convert(api.get(id), expectedBarcode, p.getMrp());
         dto.update(data.getBarcode(), inventoryForm1);
 
         InventoryPojo pojo = api.getByInventoryId(data.getId());
@@ -242,7 +243,8 @@ public class InventoryDtoTest extends AbstractUnitTest {
             String expectedBarcode = "a1b2c3d4";
 
             Integer id = productApi.getIdByBarcode(expectedBarcode);
-            InventoryData data = InventoryHelper.convert(api.getAll().get(0), expectedBarcode);
+            ProductPojo b = productApi.get(id);
+            InventoryData data = InventoryHelper.convert(api.get(id), expectedBarcode, b.getMrp());
             InventoryPojo p = api.getAll().get(0);
             dto.update(data.getBarcode(), inventoryForm1);
         }

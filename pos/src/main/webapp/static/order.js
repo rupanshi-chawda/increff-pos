@@ -1,4 +1,4 @@
-var wholeOrder = [];
+    var wholeOrder = [];
 
 function getOrderItemUrl() {
   var baseUrl = $("meta[name=baseUrl]").attr("content");
@@ -162,9 +162,11 @@ function checkSellingPrice(vars) {
 const barcodeList = new Map();
 var inv_qty = null;
 var inv_barcode = null;
+var mrp = null;
 
 function getInventory(barcode) {
   barcode = barcode.trim();
+  mrp = null;
   var url = getInventoryUrl() + "/" + barcode;
   $.ajax({
     url: url,
@@ -173,6 +175,7 @@ function getInventory(barcode) {
       inv_barcode = data.barcode;
       inv_qty = data.quantity;
         console.log(data);
+      mrp=data.mrp;
       barcodeList.set(data.barcode, data.quantity);
       addItem();
       resetForm();
@@ -198,6 +201,10 @@ function addItem() {
 //  console.log(barcodeList.get(barcode1));
 //  console.log(inv_qty);
 
+  if(sp > mrp){
+      toastr.error("Selling Price cannot be greater than MRP");
+      return;
+  }
   if(isNaN(qty) || isNaN(parseFloat(qty))) {
         toastr.error("Quantity must be number", "Error : ");
         return;
@@ -359,7 +366,7 @@ function displayOrderList(data){
    $tbody.empty();
    for(var i in data){
       var e = data[i];
-      console.log(e);
+      //console.log(e);
       var buttonHtml = '<button onclick="viewOrder(' + e.id + ')" class="btn"><i class="fa-solid fa-eye" style="color:#00295F"></i></button>'
       buttonHtml += '<button onclick="printOrder(' + e.id + ')" class="btn" target="_blank"><i class="fa-solid fa-print" style="color:#00295F"></i></button>'
       var row = '<tr>'

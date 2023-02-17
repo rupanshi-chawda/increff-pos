@@ -53,6 +53,9 @@ public class OrderFlowApi {
 
             Integer quantity = inventoryApi.getQuantityById(id);
             OrderHelper.validateInventory(f, quantity);
+
+            Double mrp = productApi.get(id).getMrp();
+            OrderHelper.validateSellingPrice(f, mrp);
         }
     }
 

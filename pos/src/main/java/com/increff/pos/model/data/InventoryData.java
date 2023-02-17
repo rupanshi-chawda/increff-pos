@@ -8,4 +8,5 @@ import lombok.Getter;
 @Setter
 public class InventoryData extends InventoryForm {
     private Integer id;
+    private Double mrp;
 }

@@ -17,64 +17,65 @@ import java.util.Objects;
 <span class="nc" id="L17">public class InventoryHelper {</span>
 
 
-    public static InventoryData convert(InventoryPojo pojo, String barcode) {
+    public static InventoryData convert(InventoryPojo pojo, String barcode, Double mrp) {
 <span class="fc" id="L21">        InventoryData data = ConvertUtil.convert(pojo, InventoryData.class);</span>
 <span class="fc" id="L22">        data.setBarcode(barcode);</span>
-<span class="fc" id="L23">        return data;</span>
+<span class="fc" id="L23">        data.setMrp(mrp);</span>
+<span class="fc" id="L24">        return data;</span>
     }
 
     public static InventoryPojo convert(InventoryForm form) {
-<span class="fc" id="L27">        return ConvertUtil.convert(form, InventoryPojo.class);</span>
+<span class="fc" id="L28">        return ConvertUtil.convert(form, InventoryPojo.class);</span>
     }
 
     public static void normalize(InventoryForm form) {
-<span class="fc" id="L31">        form.setBarcode(StringUtil.toLowerCase(form.getBarcode()));</span>
-<span class="fc" id="L32">    }</span>
+<span class="fc" id="L32">        form.setBarcode(StringUtil.toLowerCase(form.getBarcode()));</span>
+<span class="fc" id="L33">    }</span>
 
 
     public static void validateId(InventoryPojo pojo, Integer id) throws ApiException {
-<span class="pc bpc" id="L36" title="1 of 2 branches missed.">        if (Objects.isNull(pojo)) {</span>
-<span class="nc" id="L37">            throw new ApiException(&quot;Product with given ID does not exists, id: &quot; + id);</span>
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">        if (Objects.isNull(pojo)) {</span>
+<span class="nc" id="L38">            throw new ApiException(&quot;Product with given ID does not exists, id: &quot; + id);</span>
         }
-<span class="fc" id="L39">    }</span>
+<span class="fc" id="L40">    }</span>
 
     public static void validateInventoryId(InventoryPojo pojo) throws ApiException {
-<span class="fc bfc" id="L42" title="All 2 branches covered.">        if (Objects.isNull(pojo)) {</span>
-<span class="fc" id="L43">            throw new ApiException(&quot;Inventory for given barcode doesn't exists&quot;);</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        if (Objects.isNull(pojo)) {</span>
+<span class="fc" id="L44">            throw new ApiException(&quot;Inventory for given barcode doesn't exists&quot;);</span>
         }
-<span class="fc" id="L45">    }</span>
+<span class="fc" id="L46">    }</span>
 
     public static InventoryItem convertMapToItem(Map.Entry&lt;Pair&lt;String,String&gt;,Integer&gt; mapElement) {
-<span class="fc" id="L48">        Pair&lt;String, String&gt; pojo = mapElement.getKey();</span>
-<span class="fc" id="L49">        InventoryItem inventoryItem = new InventoryItem();</span>
-<span class="fc" id="L50">        inventoryItem.setBrand(pojo.getKey());</span>
-<span class="fc" id="L51">        inventoryItem.setCategory(pojo.getValue());</span>
-<span class="fc" id="L52">        inventoryItem.setQuantity(mapElement.getValue());</span>
-<span class="fc" id="L53">        return inventoryItem;</span>
+<span class="fc" id="L49">        Pair&lt;String, String&gt; pojo = mapElement.getKey();</span>
+<span class="fc" id="L50">        InventoryItem inventoryItem = new InventoryItem();</span>
+<span class="fc" id="L51">        inventoryItem.setBrand(pojo.getKey());</span>
+<span class="fc" id="L52">        inventoryItem.setCategory(pojo.getValue());</span>
+<span class="fc" id="L53">        inventoryItem.setQuantity(mapElement.getValue());</span>
+<span class="fc" id="L54">        return inventoryItem;</span>
     }
 
     public static void validateFormLists(List&lt;InventoryForm&gt; forms) throws ApiException {
-<span class="fc" id="L57">        List&lt;InventoryErrorData&gt; errorData = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L58">        Integer errorSize = 0;</span>
+<span class="fc" id="L58">        List&lt;InventoryErrorData&gt; errorData = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L59">        Integer errorSize = 0;</span>
 
-<span class="fc bfc" id="L60" title="All 2 branches covered.">        for(InventoryForm f: forms)</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        for(InventoryForm f: forms)</span>
         {
-<span class="fc" id="L62">            InventoryErrorData inventoryErrorData = ConvertUtil.convert(f, InventoryErrorData.class);</span>
-<span class="fc" id="L63">            inventoryErrorData.setMessage(&quot;&quot;);</span>
+<span class="fc" id="L63">            InventoryErrorData inventoryErrorData = ConvertUtil.convert(f, InventoryErrorData.class);</span>
+<span class="fc" id="L64">            inventoryErrorData.setMessage(&quot;&quot;);</span>
             try
             {
-<span class="fc" id="L66">                ValidationUtil.validateForms(f);</span>
-<span class="fc" id="L67">                InventoryHelper.normalize(f);</span>
+<span class="fc" id="L67">                ValidationUtil.validateForms(f);</span>
+<span class="fc" id="L68">                InventoryHelper.normalize(f);</span>
             }
-<span class="fc" id="L69">            catch (ApiException e) {</span>
-<span class="fc" id="L70">                errorSize++;</span>
-<span class="fc" id="L71">                inventoryErrorData.setMessage(e.getMessage());</span>
-<span class="fc" id="L72">            }</span>
-<span class="fc" id="L73">            errorData.add(inventoryErrorData);</span>
-<span class="fc" id="L74">        }</span>
-<span class="fc bfc" id="L75" title="All 2 branches covered.">        if(errorSize &gt; 0) {</span>
-<span class="nc" id="L76">            ErrorUtil.throwErrors(errorData);</span>
+<span class="fc" id="L70">            catch (ApiException e) {</span>
+<span class="fc" id="L71">                errorSize++;</span>
+<span class="fc" id="L72">                inventoryErrorData.setMessage(e.getMessage());</span>
+<span class="fc" id="L73">            }</span>
+<span class="fc" id="L74">            errorData.add(inventoryErrorData);</span>
+<span class="fc" id="L75">        }</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        if(errorSize &gt; 0) {</span>
+<span class="nc" id="L77">            ErrorUtil.throwErrors(errorData);</span>
         }
-<span class="fc" id="L78">    }</span>
+<span class="fc" id="L79">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

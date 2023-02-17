@@ -47,4 +47,9 @@ public class OrderHelper {
         }
     }
 
+    public static void validateSellingPrice(OrderItemForm form, Double mrp) throws ApiException {
+        if(form.getSellingPrice() > mrp) {
+            throw new ApiException("Selling Price cannot be greater than MRP");
+        }
+    }
 }

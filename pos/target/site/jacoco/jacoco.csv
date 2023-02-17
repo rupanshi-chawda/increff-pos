@@ -13,7 +13,7 @@ pos,com.increff.pos.dto,AdminDto,0,44,0,4,0,11,0,6,0,4
 pos,com.increff.pos.dto,SalesReportDto,7,275,2,16,2,52,2,13,0,6
 pos,com.increff.pos.dto,BrandFlowApi,0,26,0,2,0,7,0,3,0,2
 pos,com.increff.pos.dto,InitDto,0,66,1,7,0,15,1,6,0,3
-pos,com.increff.pos.dto,OrderFlowApi,0,112,0,4,0,26,0,6,0,4
+pos,com.increff.pos.dto,OrderFlowApi,0,121,0,4,0,28,0,6,0,4
 pos,com.increff.pos.dto,AbstractUiDto,4,40,2,2,0,8,2,2,0,2
 pos,com.increff.pos.dto,OrderDto,0,100,0,6,0,23,0,9,0,6
 pos,com.increff.pos.dto,LoginDto,0,115,1,7,0,26,1,7,0,4
@@ -21,7 +21,7 @@ pos,com.increff.pos.dto,InventoryFlowApi,0,34,0,2,0,8,0,3,0,2
 pos,com.increff.pos.dto,SalesJobDto,0,139,0,8,0,31,0,9,0,5
 pos,com.increff.pos.dto,BrandDto,12,111,1,3,3,28,1,8,0,7
 pos,com.increff.pos.dto,ProductFlowApi,0,35,0,2,0,8,0,3,0,2
-pos,com.increff.pos.dto,InventoryDto,7,204,0,8,2,46,0,11,0,7
+pos,com.increff.pos.dto,InventoryDto,7,219,0,8,2,48,0,11,0,7
 pos,com.increff.pos.model.commons,InventoryItem,7,24,0,0,1,5,2,7,2,7
 pos,com.increff.pos.api,OrderApi,67,143,2,2,10,36,2,10,0,10
 pos,com.increff.pos.api,ProductApi,0,105,0,6,0,26,0,13,0,10
@@ -35,7 +35,7 @@ pos,com.increff.pos.model.data,SalesReportData,0,25,0,0,0,4,0,5,0,5
 pos,com.increff.pos.model.data,BrandErrorData,0,10,0,0,0,3,0,3,0,3
 pos,com.increff.pos.model.data,BrandData,3,7,0,0,1,2,1,2,1,2
 pos,com.increff.pos.model.data,UserData,9,15,0,0,3,2,3,4,3,4
-pos,com.increff.pos.model.data,InventoryData,0,10,0,0,0,3,0,3,0,3
+pos,com.increff.pos.model.data,InventoryData,3,14,0,0,1,3,1,4,1,4
 pos,com.increff.pos.model.data,OrderData,3,14,0,0,1,3,1,4,1,4
 pos,com.increff.pos.model.data,MessageData,10,0,0,0,3,0,3,0,3,0
 pos,com.increff.pos.model.data,ProductErrorData,0,10,0,0,0,3,0,3,0,3
@@ -69,9 +69,9 @@ pos,com.increff.pos.controller,InventoryController,25,3,0,0,8,1,5,1,5,1
 pos,com.increff.pos.helper,BrandHelper,5,77,0,4,2,20,1,6,1,4
 pos,com.increff.pos.helper,UserHelper,3,38,0,0,1,10,1,4,1,4
 pos,com.increff.pos.helper,SalesJobHelper,3,18,0,0,1,6,1,1,1,1
-pos,com.increff.pos.helper,OrderHelper,20,38,2,2,3,11,3,6,1,6
+pos,com.increff.pos.helper,OrderHelper,25,46,3,3,4,13,4,7,1,7
 pos,com.increff.pos.helper,ProductHelper,5,108,0,4,2,28,1,8,1,6
-pos,com.increff.pos.helper,InventoryHelper,17,115,1,7,3,32,2,10,1,7
+pos,com.increff.pos.helper,InventoryHelper,17,118,1,7,3,33,2,10,1,7
 pos,com.increff.pos.pojo,AbstractVersionPojo,12,12,0,0,1,4,3,4,3,4
 pos,com.increff.pos.pojo,InventoryPojo,0,17,0,0,0,4,0,5,0,5
 pos,com.increff.pos.pojo,OrderItemPojo,4,34,0,0,0,7,1,10,1,10

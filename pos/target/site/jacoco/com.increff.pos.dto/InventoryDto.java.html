@@ -10,6 +10,7 @@ import com.increff.pos.pojo.BrandPojo;
 import com.increff.pos.pojo.InventoryPojo;
 import com.increff.pos.api.InventoryApi;
 import com.increff.pos.api.ProductApi;
+import com.increff.pos.pojo.ProductPojo;
 import com.increff.pos.util.*;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-<span class="fc" id="L29">public class InventoryDto {</span>
+<span class="fc" id="L30">public class InventoryDto {</span>
     
     @Autowired
     private InventoryApi api;
@@ -44,73 +45,75 @@ import java.util.Map;
     private CsvFileGenerator csvGenerator;
 
     public void add(List&lt;InventoryForm&gt; forms) throws ApiException {
-<span class="fc" id="L47">        InventoryHelper.validateFormLists(forms);</span>
-<span class="fc" id="L48">        flowApi.add(forms);</span>
-<span class="fc" id="L49">    }</span>
+<span class="fc" id="L48">        InventoryHelper.validateFormLists(forms);</span>
+<span class="fc" id="L49">        flowApi.add(forms);</span>
+<span class="fc" id="L50">    }</span>
 
     public InventoryData get(String barcode) throws ApiException {
-<span class="fc" id="L52">        productApi.checkProductBarcodeExistence(barcode);</span>
-<span class="fc" id="L53">        Integer id = productApi.getIdByBarcode(barcode);</span>
-<span class="fc" id="L54">        InventoryPojo p = api.get(id);</span>
-<span class="fc" id="L55">        return InventoryHelper.convert(p, barcode);</span>
+<span class="fc" id="L53">        productApi.checkProductBarcodeExistence(barcode);</span>
+<span class="fc" id="L54">        Integer id = productApi.getIdByBarcode(barcode);</span>
+<span class="fc" id="L55">        ProductPojo b = productApi.get(id);</span>
+<span class="fc" id="L56">        InventoryPojo p = api.get(id);</span>
+<span class="fc" id="L57">        return InventoryHelper.convert(p, barcode, b.getMrp());</span>
     }
 
-    public List&lt;InventoryData&gt; getAll() {
-<span class="fc" id="L59">        List&lt;InventoryPojo&gt; list = api.getAll();</span>
-<span class="fc" id="L60">        List&lt;InventoryData&gt; list2 = new ArrayList&lt;InventoryData&gt;();</span>
-<span class="fc bfc" id="L61" title="All 2 branches covered.">        for(InventoryPojo b : list) {</span>
-<span class="fc" id="L62">            String barcode = productApi.getBarcodeById(b.getId());</span>
-<span class="fc" id="L63">            list2.add(InventoryHelper.convert(b, barcode));</span>
-<span class="fc" id="L64">        }</span>
-<span class="fc" id="L65">        return list2;</span>
+    public List&lt;InventoryData&gt; getAll() throws ApiException {
+<span class="fc" id="L61">        List&lt;InventoryPojo&gt; list = api.getAll();</span>
+<span class="fc" id="L62">        List&lt;InventoryData&gt; list2 = new ArrayList&lt;InventoryData&gt;();</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        for(InventoryPojo b : list) {</span>
+<span class="fc" id="L64">            String barcode = productApi.getBarcodeById(b.getId());</span>
+<span class="fc" id="L65">            ProductPojo p = productApi.get(b.getId());</span>
+<span class="fc" id="L66">            list2.add(InventoryHelper.convert(b, barcode, p.getMrp()));</span>
+<span class="fc" id="L67">        }</span>
+<span class="fc" id="L68">        return list2;</span>
     }
 
     public void update(String barcode, InventoryForm f) throws ApiException {
-<span class="fc" id="L69">        InventoryHelper.normalize(f);</span>
-<span class="fc" id="L70">        ValidationUtil.validateForms(f);</span>
-<span class="fc" id="L71">        productApi.checkProductBarcodeExistence(barcode);</span>
-<span class="fc" id="L72">        InventoryPojo p = InventoryHelper.convert(f);</span>
-<span class="fc" id="L73">        p.setId(productApi.getIdByBarcode(f.getBarcode()));</span>
-<span class="fc" id="L74">        api.update(p);</span>
-<span class="fc" id="L75">    }</span>
+<span class="fc" id="L72">        InventoryHelper.normalize(f);</span>
+<span class="fc" id="L73">        ValidationUtil.validateForms(f);</span>
+<span class="fc" id="L74">        productApi.checkProductBarcodeExistence(barcode);</span>
+<span class="fc" id="L75">        InventoryPojo p = InventoryHelper.convert(f);</span>
+<span class="fc" id="L76">        p.setId(productApi.getIdByBarcode(f.getBarcode()));</span>
+<span class="fc" id="L77">        api.update(p);</span>
+<span class="fc" id="L78">    }</span>
 
     public List&lt;InventoryItem&gt; getAllItem() throws ApiException {
-<span class="fc" id="L78">        List&lt;InventoryData&gt; inventoryDataList = getAll();</span>
-<span class="fc" id="L79">            List&lt;InventoryItem&gt; inventoryItemList = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L80">        HashMap&lt;Pair&lt;String, String&gt;, Integer&gt; map = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L81">        List&lt;InventoryData&gt; inventoryDataList = getAll();</span>
+<span class="fc" id="L82">            List&lt;InventoryItem&gt; inventoryItemList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L83">        HashMap&lt;Pair&lt;String, String&gt;, Integer&gt; map = new HashMap&lt;&gt;();</span>
 
-<span class="fc bfc" id="L82" title="All 2 branches covered.">        for(InventoryData inventoryData : inventoryDataList)</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        for(InventoryData inventoryData : inventoryDataList)</span>
         {
-<span class="fc" id="L84">            BrandPojo brandPojo = brandApi.get(productApi.get(inventoryData.getId()).getBrandCategory());</span>
-<span class="fc" id="L85">            Pair&lt;String, String&gt; pair= new Pair&lt;&gt;(brandPojo.getBrand(), brandPojo.getCategory());</span>
-<span class="fc bfc" id="L86" title="All 2 branches covered.">            if(map.containsKey(pair)) {</span>
-<span class="fc" id="L87">                Integer prev = map.get(pair);</span>
-<span class="fc" id="L88">                map.replace(pair, prev+inventoryData.getQuantity());</span>
-<span class="fc" id="L89">            }</span>
+<span class="fc" id="L87">            BrandPojo brandPojo = brandApi.get(productApi.get(inventoryData.getId()).getBrandCategory());</span>
+<span class="fc" id="L88">            Pair&lt;String, String&gt; pair= new Pair&lt;&gt;(brandPojo.getBrand(), brandPojo.getCategory());</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">            if(map.containsKey(pair)) {</span>
+<span class="fc" id="L90">                Integer prev = map.get(pair);</span>
+<span class="fc" id="L91">                map.replace(pair, prev+inventoryData.getQuantity());</span>
+<span class="fc" id="L92">            }</span>
             else {
-<span class="fc" id="L91">                map.put(pair,inventoryData.getQuantity());</span>
+<span class="fc" id="L94">                map.put(pair,inventoryData.getQuantity());</span>
             }
-<span class="fc" id="L93">        }</span>
+<span class="fc" id="L96">        }</span>
 
-<span class="fc bfc" id="L95" title="All 2 branches covered.">        for(Map.Entry&lt;Pair&lt;String,String&gt;, Integer&gt; mapElement : map.entrySet()) {</span>
-<span class="fc" id="L96">            inventoryItemList.add(InventoryHelper.convertMapToItem(mapElement));</span>
-<span class="fc" id="L97">        }</span>
-<span class="fc" id="L98">        return inventoryItemList;</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">        for(Map.Entry&lt;Pair&lt;String,String&gt;, Integer&gt; mapElement : map.entrySet()) {</span>
+<span class="fc" id="L99">            inventoryItemList.add(InventoryHelper.convertMapToItem(mapElement));</span>
+<span class="fc" id="L100">        }</span>
+<span class="fc" id="L101">        return inventoryItemList;</span>
     }
 
     public void generateCsv(HttpServletResponse response) throws ApiException {
-<span class="fc" id="L102">        response.setContentType(&quot;text/csv&quot;);</span>
+<span class="fc" id="L105">        response.setContentType(&quot;text/csv&quot;);</span>
 
-<span class="fc" id="L104">        LocalDateTime lt = LocalDateTime.now();</span>
-<span class="fc" id="L105">        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd.HH:mm&quot;);</span>
-<span class="fc" id="L106">        String identifier = lt.format(dateTimeFormatter);</span>
+<span class="fc" id="L107">        LocalDateTime lt = LocalDateTime.now();</span>
+<span class="fc" id="L108">        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd.HH:mm&quot;);</span>
+<span class="fc" id="L109">        String identifier = lt.format(dateTimeFormatter);</span>
 
-<span class="fc" id="L108">        response.addHeader(&quot;Content-Disposition&quot;, &quot;attachment; filename=\&quot;inventoryReport&quot;+identifier+&quot;.csv&quot;);</span>
+<span class="fc" id="L111">        response.addHeader(&quot;Content-Disposition&quot;, &quot;attachment; filename=\&quot;inventoryReport&quot;+identifier+&quot;.csv&quot;);</span>
         try {
-<span class="fc" id="L110">            csvGenerator.writeInventoryToCsv(getAllItem(), response.getWriter());</span>
-<span class="nc" id="L111">        } catch (IOException e) {</span>
-<span class="nc" id="L112">            throw new ApiException(e.getMessage());</span>
-<span class="fc" id="L113">        }</span>
-<span class="fc" id="L114">    }</span>
+<span class="fc" id="L113">            csvGenerator.writeInventoryToCsv(getAllItem(), response.getWriter());</span>
+<span class="nc" id="L114">        } catch (IOException e) {</span>
+<span class="nc" id="L115">            throw new ApiException(e.getMessage());</span>
+<span class="fc" id="L116">        }</span>
+<span class="fc" id="L117">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

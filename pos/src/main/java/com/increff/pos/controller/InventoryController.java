@@ -36,7 +36,7 @@ public class InventoryController {
 
     @ApiOperation(value = "Gets list of all product inventories")
     @GetMapping(path = "")
-    public List<InventoryData> getAllInventory() {
+    public List<InventoryData> getAllInventory() throws ApiException {
         return dto.getAll();
     }
 

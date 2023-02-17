@@ -36,7 +36,7 @@ import java.util.List;
 
     @ApiOperation(value = &quot;Gets list of all product inventories&quot;)
     @GetMapping(path = &quot;&quot;)
-    public List&lt;InventoryData&gt; getAllInventory() {
+    public List&lt;InventoryData&gt; getAllInventory() throws ApiException {
 <span class="nc" id="L40">        return dto.getAll();</span>
     }
 
