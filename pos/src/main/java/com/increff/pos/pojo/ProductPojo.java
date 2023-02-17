@@ -29,7 +29,7 @@ public class ProductPojo extends AbstractVersionPojo {
     private String name;
 
     @Column(nullable = false)
-    @Min(value = 1)//todo: make min 0
+    @Min(value = 0)
     private Double mrp;
 
 }

@@ -77,13 +77,17 @@ public class SalesReportDtoTest extends AbstractUnitTest {
         OrderItemPojo p = OrderHelper.convert(orderItemForm);
         orderFlowApi.reduceInventory(orderItemForm.getBarcode(), orderItemForm.getQuantity());
         Integer pid = productApi.getIdByBarcode(orderItemForm.getBarcode());
-        orderApi.addItem(p, pid);
+        OrderPojo op = new OrderPojo();
+        orderApi.addOrder(op);
+        orderApi.addItem(p, pid, op.getId());
 
         OrderItemForm orderItemForm2 = OrderTestHelper.createForm("qwer1234",3,29000.95);
         OrderItemPojo p2 = OrderHelper.convert(orderItemForm2);
         orderFlowApi.reduceInventory(orderItemForm2.getBarcode(), orderItemForm2.getQuantity());
         Integer pid2 = productApi.getIdByBarcode(orderItemForm2.getBarcode());
-        orderApi.addItem(p2, pid2);
+        OrderPojo op2 = new OrderPojo();
+        orderApi.addOrder(op2);
+        orderApi.addItem(p2, pid2, op2.getId());
 
         List<SalesReportData> list = dto.getAll();
 
@@ -119,13 +123,17 @@ public class SalesReportDtoTest extends AbstractUnitTest {
         OrderItemPojo p = OrderHelper.convert(orderItemForm);
         orderFlowApi.reduceInventory(orderItemForm.getBarcode(), orderItemForm.getQuantity());
         Integer pid = productApi.getIdByBarcode(orderItemForm.getBarcode());
-        orderApi.addItem(p, pid);
+        OrderPojo op = new OrderPojo();
+        orderApi.addOrder(op);
+        orderApi.addItem(p, pid, op.getId());
 
         OrderItemForm orderItemForm2 = OrderTestHelper.createForm("qwer1234",3,29000.95);
         OrderItemPojo p2 = OrderHelper.convert(orderItemForm2);
         orderFlowApi.reduceInventory(orderItemForm2.getBarcode(), orderItemForm2.getQuantity());
         Integer pid2 = productApi.getIdByBarcode(orderItemForm2.getBarcode());
-        orderApi.addItem(p2, pid2);
+        OrderPojo op2 = new OrderPojo();
+        orderApi.addOrder(op2);
+        orderApi.addItem(p2, pid2, op2.getId());
 
         LocalDate date = LocalDate.now();
         SalesReportForm salesReportForm = SalesReportTestHelper.createForm(date.toString(), date.toString(), "dyson","hair");
@@ -163,13 +171,17 @@ public class SalesReportDtoTest extends AbstractUnitTest {
         OrderItemPojo p = OrderHelper.convert(orderItemForm);
         orderFlowApi.reduceInventory(orderItemForm.getBarcode(), orderItemForm.getQuantity());
         Integer pid = productApi.getIdByBarcode(orderItemForm.getBarcode());
-        orderApi.addItem(p, pid);
+        OrderPojo op = new OrderPojo();
+        orderApi.addOrder(op);
+        orderApi.addItem(p, pid, op.getId());
 
         OrderItemForm orderItemForm2 = OrderTestHelper.createForm("qwer1234",3,29000.95);
         OrderItemPojo p2 = OrderHelper.convert(orderItemForm2);
         orderFlowApi.reduceInventory(orderItemForm2.getBarcode(), orderItemForm2.getQuantity());
         Integer pid2 = productApi.getIdByBarcode(orderItemForm2.getBarcode());
-        orderApi.addItem(p2, pid2);
+        OrderPojo op2 = new OrderPojo();
+        orderApi.addOrder(op2);
+        orderApi.addItem(p2, pid2, op2.getId());
 
         MockHttpServletResponse response = new MockHttpServletResponse();
         dto.generateCsv(response);
@@ -206,13 +218,17 @@ public class SalesReportDtoTest extends AbstractUnitTest {
             OrderItemPojo p = OrderHelper.convert(orderItemForm);
             orderFlowApi.reduceInventory(orderItemForm.getBarcode(), orderItemForm.getQuantity());
             Integer pid = productApi.getIdByBarcode(orderItemForm.getBarcode());
-            orderApi.addItem(p, pid);
+            OrderPojo op = new OrderPojo();
+            orderApi.addOrder(op);
+            orderApi.addItem(p, pid, op.getId());
 
             OrderItemForm orderItemForm2 = OrderTestHelper.createForm("qwer1234",3,29000.95);
             OrderItemPojo p2 = OrderHelper.convert(orderItemForm2);
             orderFlowApi.reduceInventory(orderItemForm2.getBarcode(), orderItemForm2.getQuantity());
             Integer pid2 = productApi.getIdByBarcode(orderItemForm2.getBarcode());
-            orderApi.addItem(p2, pid2);
+            OrderPojo op2 = new OrderPojo();
+            orderApi.addOrder(op2);
+            orderApi.addItem(p2, pid2, op2.getId());
 
             LocalDate sdate = LocalDate.now();
             LocalDate edate = LocalDate.now().minusDays(1);

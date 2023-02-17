@@ -14,7 +14,7 @@ import java.util.List;
 @Api
 @RestController
 @RequestMapping(path = "/api/sales")
-public class SalesController {
+public class SalesJobController {
 
     @Autowired
     private SalesJobDto dto;

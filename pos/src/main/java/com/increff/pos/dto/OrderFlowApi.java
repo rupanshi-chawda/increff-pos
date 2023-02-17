@@ -29,13 +29,16 @@ public class OrderFlowApi {
     public void addItem(List<OrderItemForm> forms) throws ApiException {
         validateItems(forms);
 
+        OrderPojo op = new OrderPojo();
+        orderApi.addOrder(op);
+
         // Adding order item
         for(OrderItemForm f : forms) {
             OrderItemPojo p = OrderHelper.convert(f);
             //Reduce inventory
             reduceInventory(f.getBarcode(), f.getQuantity());
             Integer pid = productApi.getIdByBarcode(f.getBarcode());
-            orderApi.addItem(p, pid);
+            orderApi.addItem(p, pid, op.getId());
         }
     }
 

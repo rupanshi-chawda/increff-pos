@@ -238,7 +238,7 @@ public class OrderDtoTest extends AbstractUnitTest {
         }
         catch(ApiException e)
         {
-            String exception = "[quantity must be atleast 1, sellingPrice must be atleast 1]";
+            String exception = "[quantity must be atleast 1, sellingPrice must be atleast 0]";
             assertEquals(exception, e.getMessage());
             throw e;
         }
@@ -274,13 +274,17 @@ public class OrderDtoTest extends AbstractUnitTest {
         OrderItemPojo p = OrderHelper.convert(orderItemForm);
         flowApi.reduceInventory(orderItemForm.getBarcode(), orderItemForm.getQuantity());
         Integer pid = productApi.getIdByBarcode(orderItemForm.getBarcode());
-        orderApi.addItem(p, pid);
+        OrderPojo op = new OrderPojo();
+        orderApi.addOrder(op);
+        orderApi.addItem(p, pid, op.getId());
 
         OrderItemForm orderItemForm2 = OrderTestHelper.createForm("qwer1234",3,29000.95);
         OrderItemPojo p2 = OrderHelper.convert(orderItemForm2);
         flowApi.reduceInventory(orderItemForm2.getBarcode(), orderItemForm2.getQuantity());
         Integer pid2 = productApi.getIdByBarcode(orderItemForm2.getBarcode());
-        orderApi.addItem(p2, pid2);
+        OrderPojo op2 = new OrderPojo();
+        orderApi.addOrder(op2);
+        orderApi.addItem(p2, pid2, op2.getId());
 
 
         List<OrderData> list = dto.getAllOrder();
@@ -310,7 +314,9 @@ public class OrderDtoTest extends AbstractUnitTest {
         OrderItemPojo p = OrderHelper.convert(orderItemForm);
         flowApi.reduceInventory(orderItemForm.getBarcode(), orderItemForm.getQuantity());
         Integer pid = productApi.getIdByBarcode(orderItemForm.getBarcode());
-        orderApi.addItem(p, pid);
+        OrderPojo op = new OrderPojo();
+        orderApi.addOrder(op);
+        orderApi.addItem(p, pid, op.getId());
 
 
         List<OrderData> list = orderApi.getAllOrder().stream().map(OrderHelper::convert).collect(Collectors.toList());

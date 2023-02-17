@@ -21,7 +21,6 @@ com\increff\pos\model\data\InfoData.class
 com\increff\pos\helper\ProductHelper.class
 com\increff\pos\dto\ProductFlowApi.class
 com\increff\pos\dto\AdminDto.class
-com\increff\pos\api\SalesApi.class
 com\increff\pos\dto\SalesReportDto.class
 com\increff\pos\spring\SpringConfig.class
 com\increff\pos\model\data\OrderData.class
@@ -32,6 +31,7 @@ com\increff\pos\dto\BrandDto.class
 com\increff\pos\controller\SampleController.class
 com\increff\pos\controller\SiteUiController.class
 com\increff\pos\api\ProductApi.class
+com\increff\pos\helper\SalesJobHelper.class
 com\increff\pos\pojo\UserPojo.class
 com\increff\pos\model\data\BrandData.class
 com\increff\pos\model\data\InventoryData.class
@@ -72,6 +72,7 @@ com\increff\pos\controller\AbstractUiController.class
 com\increff\pos\model\data\OrderItemData.class
 com\increff\pos\pojo\BrandPojo.class
 com\increff\pos\helper\UserHelper.class
+com\increff\pos\controller\SalesJobController.class
 com\increff\pos\dao\OrderDao.class
 com\increff\pos\model\form\SalesForm.class
 com\increff\pos\api\UserApi.class
@@ -79,7 +80,6 @@ com\increff\pos\util\IOUtil.class
 com\increff\pos\dto\AbstractUiDto.class
 com\increff\pos\util\ConvertUtil.class
 com\increff\pos\model\data\InventoryErrorData.class
-com\increff\pos\controller\SalesController.class
 com\increff\pos\pojo\OrderPojo.class
 com\increff\pos\model\form\SalesReportForm.class
 com\increff\pos\controller\AdminController.class
@@ -91,6 +91,7 @@ com\increff\pos\dto\OrderFlowApi.class
 com\increff\pos\dto\ProductDto.class
 com\increff\pos\spring\ControllerConfig.class
 com\increff\pos\pojo\SalesPojo.class
+com\increff\pos\api\SalesJobApi.class
 com\increff\pos\dto\UserDto.class
 com\increff\pos\controller\BrandController.class
 com\increff\pos\model\form\ProductForm.class

@@ -27,6 +27,6 @@ public class OrderItemPojo extends AbstractVersionPojo {
     private Integer quantity;
 
     @Column(nullable = false)
-    @Min(value = 1)
+    @Min(value = 0)
     private Double sellingPrice;
 }

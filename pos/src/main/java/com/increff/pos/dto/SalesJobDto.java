@@ -1,7 +1,8 @@
 package com.increff.pos.dto;
 
 import com.increff.pos.api.OrderApi;
-import com.increff.pos.api.SalesApi;
+import com.increff.pos.api.SalesJobApi;
+import com.increff.pos.helper.SalesJobHelper;
 import com.increff.pos.model.form.SalesForm;
 import com.increff.pos.pojo.OrderItemPojo;
 import com.increff.pos.pojo.OrderPojo;
@@ -9,7 +10,6 @@ import com.increff.pos.pojo.SalesPojo;
 import com.increff.pos.util.ApiException;
 import com.increff.pos.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.*;
@@ -21,7 +21,7 @@ import java.util.Objects;
 public class SalesJobDto {
 
     @Autowired
-    private SalesApi api;
+    private SalesJobApi api;
 
     @Autowired
     private OrderApi orderApi;
@@ -39,11 +39,11 @@ public class SalesJobDto {
     }
 
     public void createReport() {
-        SalesPojo salesPojo = new SalesPojo();
+
 
         LocalDate date = LocalDate.now();
         Integer totalItems = 0;
-        double totalRevenue = 0.0;
+        Double totalRevenue = 0.0;
 
         ZonedDateTime startDate = date.atStartOfDay(ZoneId.systemDefault());
         ZonedDateTime endDate = startDate.with(LocalTime.MAX);
@@ -61,11 +61,7 @@ public class SalesJobDto {
             }
         }
 
-        //todo move to helper
-        salesPojo.setDate(date);
-        salesPojo.setInvoicedItemsCount(totalItems);
-        salesPojo.setTotalRevenue(totalRevenue);
-        salesPojo.setInvoicedOrderCount(totalOrders);
+        SalesPojo salesPojo = SalesJobHelper.createForm(date, totalItems, totalRevenue, totalOrders);
 
         SalesPojo pojo = api.getByDate(date);
         if(Objects.isNull(pojo)){

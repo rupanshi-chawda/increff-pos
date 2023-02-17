@@ -18,7 +18,7 @@ public class ProductUpdateForm {
 
 
     @NotNull
-    @Min(value = 1, message = "must be atleast 1")
+    @Min(value = 0, message = "must be atleast 0")
     private Double mrp;
 
 }

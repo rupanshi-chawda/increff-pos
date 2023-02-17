@@ -148,7 +148,7 @@ public class ProductDtoTest extends AbstractUnitTest {
 
         }
         catch(ApiException e) {
-            String exception = "[ {\r\n  \"barcode\" : \"a1b2c3d4\",\r\n  \"brand\" : \"dyson\",\r\n  \"category\" : \"hair\",\r\n  \"name\" : \"airwrap\",\r\n  \"mrp\" : -1200.00,\r\n  \"message\" : \"[mrp must be atleast 1]\"\r\n} ]";
+            String exception = "[ {\r\n  \"barcode\" : \"a1b2c3d4\",\r\n  \"brand\" : \"dyson\",\r\n  \"category\" : \"hair\",\r\n  \"name\" : \"airwrap\",\r\n  \"mrp\" : -1200.00,\r\n  \"message\" : \"[mrp must be atleast 0]\"\r\n} ]";
             assertEquals(exception, e.getMessage());
             throw e;
         }
@@ -334,7 +334,7 @@ public class ProductDtoTest extends AbstractUnitTest {
         }
         catch(ApiException e)
         {
-            String exception = "[mrp must be atleast 1]";
+            String exception = "[mrp must be atleast 0]";
             assertEquals(exception, e.getMessage());
             throw e;
         }

@@ -54,12 +54,9 @@ public class OrderApi {
         return orderDao.selectAllDesc();
     }
     
-    public void addItem(OrderItemPojo p, Integer pid){
-        OrderPojo op = new OrderPojo();
-        addOrder(op);
-
+    public void addItem(OrderItemPojo p, Integer pid, Integer oid){
         p.setProductId(pid);
-        p.setOrderId(op.getId());
+        p.setOrderId(oid);
         itemDao.insert(p);
     }
 
