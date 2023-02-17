@@ -50,14 +50,12 @@ public class AdminDtoTest extends AbstractUnitTest {
     public void addEmptyUserPasswordTest() throws ApiException {
         try {
             UserForm userForm = UserTestHelper.createForm("fake@gmail.com", "", " ");
-            System.out.println("inside empty password try");
             dto.add(userForm);
         }
         catch(ApiException e)
         {
             String exception = "Password cannot be empty";
             assertEquals(exception, e.getMessage());
-            System.out.println("inside empty password catch");
             throw e;
         }
     }

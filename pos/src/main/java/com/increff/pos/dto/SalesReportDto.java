@@ -38,13 +38,6 @@ public class SalesReportDto {
     @Autowired
     private CsvFileGenerator csvGenerator;
 
-    protected List<SalesReportData> salesListData = new ArrayList<>();
-
-    public List<SalesReportData> getAll() throws ApiException {
-        List<OrderPojo> list = orderApi.getAllOrder();
-        return getFilterSalesReport(list, "all", "all");
-    }
-
     public List<SalesReportData> getFilterAll(SalesReportForm form) throws ApiException {
         ValidationUtil.validateForms(form);
 
@@ -62,7 +55,6 @@ public class SalesReportDto {
         return getFilterSalesReport(list, form.getBrand(), form.getCategory());
     }
 
-    //todo: optimise this function to reduce api calls
     public List<SalesReportData> getFilterSalesReport(List<OrderPojo> list, String brand, String category) throws ApiException {
         HashMap<Integer, SalesReportData> map = new HashMap<Integer, SalesReportData>();
         for(OrderPojo orderPojo: list)
@@ -99,23 +91,22 @@ public class SalesReportDto {
             }
         }
 
-        salesListData = salesList;
-        return salesListData;
+        return salesList;
     }
 
-    public void generateCsv(HttpServletResponse response) throws ApiException {
+    public void generateCsv(SalesReportForm form, HttpServletResponse response) throws ApiException {
         response.setContentType("text/csv");
 
         LocalDateTime lt = LocalDateTime.now();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd.HH:mm");
         String identifier = lt.format(dateTimeFormatter);
-        response.addHeader("Content-Disposition", "attachment; filename=\"salesReport"+identifier+".csv\"");
+        response.addHeader("Content-Disposition", "attachment");
+        response.addHeader("filename", "salesReport"+identifier+".csv\"");
         try {
-            csvGenerator.writeSalesToCsv(salesListData, response.getWriter());
+            csvGenerator.writeSalesToCsv(getFilterAll(form), response.getWriter());
         } catch (IOException e) {
             throw new ApiException(e.getMessage());
         }
-        salesListData.clear();
     }
 
     private void checkDates(ZonedDateTime startDate, ZonedDateTime endDate) throws ApiException {

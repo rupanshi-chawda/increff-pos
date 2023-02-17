@@ -1,5 +1,6 @@
 package com.increff.pos.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.increff.pos.api.OrderApi;
 import com.increff.pos.dto.SalesReportDto;
 import com.increff.pos.model.data.SalesReportData;
@@ -11,6 +12,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletRequestWrapper;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -30,21 +33,8 @@ public class SalesReportController
     @Autowired
     private OrderApi orderApi;
 
-    @ApiOperation(value = "Gets all the orders")
-    @GetMapping(path = "")
-    public List<SalesReportData> getAll() throws ApiException {
-        return dto.getAll();
-    }
-
-    @ApiOperation(value = "Gets orders filtered by dates")
     @PostMapping(path = "/filter")
-    public List<SalesReportData> getFilteredData(@RequestBody SalesReportForm form) throws ApiException {
-        return dto.getFilterAll(form);
-    }
-
-    @ApiOperation(value = "Exports sales report to csv")
-    @GetMapping(path = "/exportcsv")
-    public void exportToCSV(HttpServletResponse response) throws ApiException {
-        dto.generateCsv(response);
+    public void generateCSV(@RequestBody SalesReportForm form, HttpServletResponse response) throws ApiException {
+        dto.generateCsv(form, response);
     }
 }

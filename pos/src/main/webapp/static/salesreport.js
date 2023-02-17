@@ -16,26 +16,33 @@ function resetForm() {
 }
 
 function getFilteredList(event) {
-  var $form = $("#sales-report-form");
-  var json = toJson($form);
-  console.log(json);
-  var url = getSalesReportUrl() + "/filter";
-  $.ajax({
-    url: url,
-    type: "POST",
-    data: json,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    success: function (response) {
-      displaySalesList(response);
-      downloadCsv();
-      toastr.success("Report Created Successfully", "Success : ");
-    },
-    error: handleAjaxError,
-  });
+    var $form = $("#sales-report-form");
+    var json = toJson($form);
+    var xhr = new XMLHttpRequest();
+    var url = getSalesReportUrl() + "/filter";
 
-  return false;
+    xhr.open('POST', url , true);
+    xhr.responseType = 'text';
+    xhr.setRequestHeader('Content-type', 'application/json');
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        var csv = xhr.response;
+        var identifier = new Date().toLocaleString().replace(',','');
+        var filename = 'salesReport'+identifier+'.csv';
+        var blob = new Blob([csv], {type: 'text/csv'});
+        if (window.navigator.msSaveOrOpenBlob) {
+          window.navigator.msSaveBlob(blob, filename);
+        } else {
+          var elem = window.document.createElement('a');
+          elem.href = window.URL.createObjectURL(blob);
+          elem.download = filename;
+          document.body.appendChild(elem);
+          elem.click();
+          document.body.removeChild(elem);
+        }
+      }
+    };
+    xhr.send(json);
 }
 
 function displaySalesList(data) {
@@ -53,17 +60,6 @@ function displaySalesList(data) {
     }
 }
 
-function getSalesList() {
-  var url = getSalesReportUrl();
-  $.ajax({
-    url: url,
-    type: "GET",
-    success: function (data) {
-      displaySalesList(data);
-    },
-    error: handleAjaxError,
-  });
-}
 function getBrandOption() {
   selectElement = document.querySelector("#inputBrand");
   output = selectElement.options[selectElement.selectedIndex].value;
@@ -147,16 +143,10 @@ function getBrandList() {
   });
 }
 
-function downloadCsv() {
-  window.location.href = getSalesReportUrl() + "/exportcsv";
-  console.log(getSalesReportUrl() + "/exportcsv");
-  resetForm();
-}
 
 function init() {
   $("#apply-filter").click(getFilteredList);
   $("#inputBrand").on("change", displayCategoryOptions);
-  //$('#download-csv').click(downloadCsv);
 }
 
 function autoFillDate() {
@@ -179,7 +169,6 @@ function disableDate() {
 }
 
 $(document).ready(init);
-//$(document).ready(getSalesList);
 $(document).ready(getBrandList);
 $(document).ready(initlists);
 $(document).ready(autoFillDate);

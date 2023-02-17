@@ -49,52 +49,6 @@ public class SalesReportDtoTest extends AbstractUnitTest {
     private BrandApi brandApi;
 
     @Test
-    public void getAllTest() throws ApiException {
-        BrandForm brandForm = BrandTestHelper.createForm("dyson", "hair");
-        brandApi.add(BrandHelper.convert(brandForm));
-
-        ProductForm productForm = ProductTestHelper.createForm("dyson","hair","a1b2c3d4", "airwrap", 45000.95);
-        ProductPojo px = ProductHelper.convert(productForm);
-        px.setBrandCategory(brandApi.getCheckBrandCategoryId(productForm.getBrand(), productForm.getCategory()));
-        productApi.add(px);
-
-        ProductForm productForm2 = ProductTestHelper.createForm("dyson","hair","qwer1234", "supersonic dryer", 32000.95);
-        ProductPojo py = ProductHelper.convert(productForm2);
-        py.setBrandCategory(brandApi.getCheckBrandCategoryId(productForm2.getBrand(), productForm2.getCategory()));
-        productApi.add(py);
-
-        InventoryForm inventoryForm = InventoryTestHelper.createForm("a1b2c3d4", 25);
-        InventoryPojo inventoryPojo = InventoryHelper.convert(inventoryForm);
-        inventoryPojo.setId(productApi.getIdByBarcode(inventoryForm.getBarcode()));
-        inventoryApi.add(inventoryPojo);
-
-        InventoryForm inventoryForm1 = InventoryTestHelper.createForm("qwer1234", 15);
-        InventoryPojo inventoryPojo1 = InventoryHelper.convert(inventoryForm1);
-        inventoryPojo1.setId(productApi.getIdByBarcode(inventoryForm1.getBarcode()));
-        inventoryApi.add(inventoryPojo1);
-
-        OrderItemForm orderItemForm = OrderTestHelper.createForm("a1b2c3d4",5,40599.95);
-        OrderItemPojo p = OrderHelper.convert(orderItemForm);
-        orderFlowApi.reduceInventory(orderItemForm.getBarcode(), orderItemForm.getQuantity());
-        Integer pid = productApi.getIdByBarcode(orderItemForm.getBarcode());
-        OrderPojo op = new OrderPojo();
-        orderApi.addOrder(op);
-        orderApi.addItem(p, pid, op.getId());
-
-        OrderItemForm orderItemForm2 = OrderTestHelper.createForm("qwer1234",3,29000.95);
-        OrderItemPojo p2 = OrderHelper.convert(orderItemForm2);
-        orderFlowApi.reduceInventory(orderItemForm2.getBarcode(), orderItemForm2.getQuantity());
-        Integer pid2 = productApi.getIdByBarcode(orderItemForm2.getBarcode());
-        OrderPojo op2 = new OrderPojo();
-        orderApi.addOrder(op2);
-        orderApi.addItem(p2, pid2, op2.getId());
-
-        List<SalesReportData> list = dto.getAll();
-
-        assertEquals(1, list.size());
-    }
-
-    @Test
     public void getFilterTest() throws ApiException {
         BrandForm brandForm = BrandTestHelper.createForm("dyson", "hair");
         brandApi.add(BrandHelper.convert(brandForm));
@@ -184,7 +138,9 @@ public class SalesReportDtoTest extends AbstractUnitTest {
         orderApi.addItem(p2, pid2, op2.getId());
 
         MockHttpServletResponse response = new MockHttpServletResponse();
-        dto.generateCsv(response);
+        LocalDate date = LocalDate.now();
+        SalesReportForm salesReportForm = SalesReportTestHelper.createForm(date.toString(), date.toString(), "dyson","hair");
+        dto.generateCsv(salesReportForm, response);
         assertEquals("text/csv", response.getContentType());
     }
 

@@ -38,90 +38,81 @@ import java.util.*;
     @Autowired
     private CsvFileGenerator csvGenerator;
 
-<span class="fc" id="L41">    protected List&lt;SalesReportData&gt; salesListData = new ArrayList&lt;&gt;();</span>
-
-    public List&lt;SalesReportData&gt; getAll() throws ApiException {
-<span class="fc" id="L44">        List&lt;OrderPojo&gt; list = orderApi.getAllOrder();</span>
-<span class="fc" id="L45">        return getFilterSalesReport(list, &quot;all&quot;, &quot;all&quot;);</span>
-    }
-
     public List&lt;SalesReportData&gt; getFilterAll(SalesReportForm form) throws ApiException {
-<span class="fc" id="L49">        ValidationUtil.validateForms(form);</span>
+<span class="fc" id="L42">        ValidationUtil.validateForms(form);</span>
 
-<span class="fc" id="L51">        String startDate = form.getStartDate() + &quot; 00:00:00&quot;;</span>
-<span class="fc" id="L52">        String endDate = form.getEndDate() + &quot; 23:59:59&quot;;</span>
-<span class="fc" id="L53">        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm:ss&quot;);</span>
-<span class="fc" id="L54">        LocalDateTime sDate = LocalDateTime.parse(startDate, formatter);</span>
-<span class="fc" id="L55">        LocalDateTime eDate = LocalDateTime.parse(endDate, formatter);</span>
-<span class="fc" id="L56">        ZonedDateTime start = sDate.atZone(ZoneId.systemDefault());</span>
-<span class="fc" id="L57">        ZonedDateTime end = eDate.atZone(ZoneId.systemDefault());</span>
+<span class="fc" id="L44">        String startDate = form.getStartDate() + &quot; 00:00:00&quot;;</span>
+<span class="fc" id="L45">        String endDate = form.getEndDate() + &quot; 23:59:59&quot;;</span>
+<span class="fc" id="L46">        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm:ss&quot;);</span>
+<span class="fc" id="L47">        LocalDateTime sDate = LocalDateTime.parse(startDate, formatter);</span>
+<span class="fc" id="L48">        LocalDateTime eDate = LocalDateTime.parse(endDate, formatter);</span>
+<span class="fc" id="L49">        ZonedDateTime start = sDate.atZone(ZoneId.systemDefault());</span>
+<span class="fc" id="L50">        ZonedDateTime end = eDate.atZone(ZoneId.systemDefault());</span>
 
-<span class="fc" id="L59">        checkDates(start, end);</span>
+<span class="fc" id="L52">        checkDates(start, end);</span>
 
-<span class="fc" id="L61">        List&lt;OrderPojo&gt; list = orderApi.getOrderByDateFilter(start, end);</span>
-<span class="fc" id="L62">        return getFilterSalesReport(list, form.getBrand(), form.getCategory());</span>
+<span class="fc" id="L54">        List&lt;OrderPojo&gt; list = orderApi.getOrderByDateFilter(start, end);</span>
+<span class="fc" id="L55">        return getFilterSalesReport(list, form.getBrand(), form.getCategory());</span>
     }
 
-    //todo: optimise this function to reduce api calls
     public List&lt;SalesReportData&gt; getFilterSalesReport(List&lt;OrderPojo&gt; list, String brand, String category) throws ApiException {
-<span class="fc" id="L67">        HashMap&lt;Integer, SalesReportData&gt; map = new HashMap&lt;Integer, SalesReportData&gt;();</span>
-<span class="fc bfc" id="L68" title="All 2 branches covered.">        for(OrderPojo orderPojo: list)</span>
+<span class="fc" id="L59">        HashMap&lt;Integer, SalesReportData&gt; map = new HashMap&lt;Integer, SalesReportData&gt;();</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        for(OrderPojo orderPojo: list)</span>
         {
-<span class="fc" id="L70">            List&lt;OrderItemPojo&gt; itemList = orderApi.getItemsByOrderId(orderPojo.getId());</span>
+<span class="fc" id="L62">            List&lt;OrderItemPojo&gt; itemList = orderApi.getItemsByOrderId(orderPojo.getId());</span>
 
-<span class="fc bfc" id="L72" title="All 2 branches covered.">            for (OrderItemPojo p: itemList)</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">            for (OrderItemPojo p: itemList)</span>
             {
-<span class="fc" id="L74">                ProductPojo productPojo = productApi.get(p.getProductId());</span>
-<span class="fc" id="L75">                BrandPojo brandPojo = brandApi.get(productPojo.getBrandCategory());</span>
+<span class="fc" id="L66">                ProductPojo productPojo = productApi.get(p.getProductId());</span>
+<span class="fc" id="L67">                BrandPojo brandPojo = brandApi.get(productPojo.getBrandCategory());</span>
 
-<span class="fc bfc" id="L77" title="All 2 branches covered.">                if(!map.containsKey(brandPojo.getId())) {</span>
-<span class="fc" id="L78">                    map.put(brandPojo.getId(), new SalesReportData());</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">                if(!map.containsKey(brandPojo.getId())) {</span>
+<span class="fc" id="L70">                    map.put(brandPojo.getId(), new SalesReportData());</span>
                 }
 
-<span class="fc" id="L81">                SalesReportData salesReportData = map.get(brandPojo.getId());</span>
+<span class="fc" id="L73">                SalesReportData salesReportData = map.get(brandPojo.getId());</span>
 
-<span class="fc" id="L83">                salesReportData.setQuantity(salesReportData.getQuantity() + p.getQuantity() );</span>
-<span class="fc" id="L84">                salesReportData.setRevenue(salesReportData.getRevenue() + (p.getQuantity() * p.getSellingPrice()));</span>
+<span class="fc" id="L75">                salesReportData.setQuantity(salesReportData.getQuantity() + p.getQuantity() );</span>
+<span class="fc" id="L76">                salesReportData.setRevenue(salesReportData.getRevenue() + (p.getQuantity() * p.getSellingPrice()));</span>
 
-<span class="fc" id="L86">            }</span>
-<span class="fc" id="L87">        }</span>
+<span class="fc" id="L78">            }</span>
+<span class="fc" id="L79">        }</span>
 
-<span class="fc" id="L89">        List&lt;SalesReportData&gt; salesList = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L90" title="All 2 branches covered.">        for(Map.Entry&lt;Integer, SalesReportData&gt; entry: map.entrySet()) {</span>
-<span class="fc" id="L91">            BrandPojo bp = brandApi.get(entry.getKey());</span>
-<span class="pc bpc" id="L92" title="1 of 4 branches missed.">            if((Objects.equals(brand,bp.getBrand()) || Objects.equals(brand,&quot;all&quot;)) &amp;&amp;</span>
-<span class="pc bpc" id="L93" title="1 of 4 branches missed.">                    (Objects.equals(category,bp.getCategory()) || Objects.equals(category,&quot;all&quot;)))</span>
+<span class="fc" id="L81">        List&lt;SalesReportData&gt; salesList = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        for(Map.Entry&lt;Integer, SalesReportData&gt; entry: map.entrySet()) {</span>
+<span class="fc" id="L83">            BrandPojo bp = brandApi.get(entry.getKey());</span>
+<span class="pc bpc" id="L84" title="3 of 4 branches missed.">            if((Objects.equals(brand,bp.getBrand()) || Objects.equals(brand,&quot;all&quot;)) &amp;&amp;</span>
+<span class="pc bpc" id="L85" title="3 of 4 branches missed.">                    (Objects.equals(category,bp.getCategory()) || Objects.equals(category,&quot;all&quot;)))</span>
             {
-<span class="fc" id="L95">                SalesReportData d = entry.getValue();</span>
-<span class="fc" id="L96">                d.setBrand(bp.getBrand());</span>
-<span class="fc" id="L97">                d.setCategory(bp.getCategory());</span>
-<span class="fc" id="L98">                salesList.add(d);</span>
+<span class="fc" id="L87">                SalesReportData d = entry.getValue();</span>
+<span class="fc" id="L88">                d.setBrand(bp.getBrand());</span>
+<span class="fc" id="L89">                d.setCategory(bp.getCategory());</span>
+<span class="fc" id="L90">                salesList.add(d);</span>
             }
-<span class="fc" id="L100">        }</span>
+<span class="fc" id="L92">        }</span>
 
-<span class="fc" id="L102">        salesListData = salesList;</span>
-<span class="fc" id="L103">        return salesListData;</span>
+<span class="fc" id="L94">        return salesList;</span>
     }
 
-    public void generateCsv(HttpServletResponse response) throws ApiException {
-<span class="fc" id="L107">        response.setContentType(&quot;text/csv&quot;);</span>
+    public void generateCsv(SalesReportForm form, HttpServletResponse response) throws ApiException {
+<span class="fc" id="L98">        response.setContentType(&quot;text/csv&quot;);</span>
 
-<span class="fc" id="L109">        LocalDateTime lt = LocalDateTime.now();</span>
-<span class="fc" id="L110">        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd.HH:mm&quot;);</span>
-<span class="fc" id="L111">        String identifier = lt.format(dateTimeFormatter);</span>
-<span class="fc" id="L112">        response.addHeader(&quot;Content-Disposition&quot;, &quot;attachment; filename=\&quot;salesReport&quot;+identifier+&quot;.csv\&quot;&quot;);</span>
+<span class="fc" id="L100">        LocalDateTime lt = LocalDateTime.now();</span>
+<span class="fc" id="L101">        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd.HH:mm&quot;);</span>
+<span class="fc" id="L102">        String identifier = lt.format(dateTimeFormatter);</span>
+<span class="fc" id="L103">        response.addHeader(&quot;Content-Disposition&quot;, &quot;attachment&quot;);</span>
+<span class="fc" id="L104">        response.addHeader(&quot;filename&quot;, &quot;salesReport&quot;+identifier+&quot;.csv\&quot;&quot;);</span>
         try {
-<span class="fc" id="L114">            csvGenerator.writeSalesToCsv(salesListData, response.getWriter());</span>
-<span class="nc" id="L115">        } catch (IOException e) {</span>
-<span class="nc" id="L116">            throw new ApiException(e.getMessage());</span>
-<span class="fc" id="L117">        }</span>
-<span class="fc" id="L118">        salesListData.clear();</span>
-<span class="fc" id="L119">    }</span>
+<span class="fc" id="L106">            csvGenerator.writeSalesToCsv(getFilterAll(form), response.getWriter());</span>
+<span class="nc" id="L107">        } catch (IOException e) {</span>
+<span class="nc" id="L108">            throw new ApiException(e.getMessage());</span>
+<span class="fc" id="L109">        }</span>
+<span class="fc" id="L110">    }</span>
 
     private void checkDates(ZonedDateTime startDate, ZonedDateTime endDate) throws ApiException {
-<span class="fc bfc" id="L122" title="All 2 branches covered.">        if(endDate.isBefore(startDate)) {</span>
-<span class="fc" id="L123">            throw new ApiException(&quot;End date must not be before Start date&quot;);</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">        if(endDate.isBefore(startDate)) {</span>
+<span class="fc" id="L114">            throw new ApiException(&quot;End date must not be before Start date&quot;);</span>
         }
-<span class="fc" id="L125">    }</span>
+<span class="fc" id="L116">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
