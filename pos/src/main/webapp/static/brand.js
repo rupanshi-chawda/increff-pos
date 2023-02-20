@@ -51,10 +51,16 @@ function addBrand(event) {
         else {
             var resp = JSON.parse(response.responseText);
             console.log(resp);
-            var jsonObj = JSON.parse(resp.message);
-            console.log(jsonObj);
-            toastr.error(jsonObj[0].message, "Error : ");
+            if(isJson(resp.message) == true) {
+                var jsonObj = JSON.parse(resp.message);
+                console.log(jsonObj);
+                toastr.error(jsonObj[0].message, "Error : ");
+            }
+            else {
+                handleAjaxError(response);
+            }
         }
+        wholeBrand=[];
     }
   });
 
