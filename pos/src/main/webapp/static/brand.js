@@ -28,8 +28,6 @@ function addBrand(event) {
   wholeBrand.push(json)
   var url = getBrandUrl();
   var jsonObj = arrayToJson();
-  console.log(wholeBrand);
-  console.log(url);
   $.ajax({
     url: url,
     type: "POST",
@@ -44,16 +42,13 @@ function addBrand(event) {
       toastr.success("Brand Added Successfully", "Success : ");
     },
     error: function (response) {
-        console.log(response);
         if(response.status == 403) {
             toastr.error("Error: 403 unauthorized");
         }
         else {
             var resp = JSON.parse(response.responseText);
-            console.log(resp);
             if(isJson(resp.message) == true) {
                 var jsonObj = JSON.parse(resp.message);
-                console.log(jsonObj);
                 toastr.error(jsonObj[0].message, "Error : ");
             }
             else {
@@ -71,8 +66,6 @@ function updateBrand(event) {
   //Get the ID
   var id = $("#brand-edit-form input[name=id]").val();
   var url = getBrandUrl() + "/" + id;
-  console.log(id);
-  console.log(url);
   //Set the values to update
   var $form = $("#brand-edit-form");
   var json = toJson($form);
@@ -114,7 +107,6 @@ var processCount = 0;
 
 function processData() {
   var file = $("#brandFile")[0].files[0];
-  console.log(file);
   if(file.name.split('.').pop() != "tsv"){
       toastr.error("File should be TSV");
       return;
@@ -124,7 +116,6 @@ function processData() {
 
 function readFileDataCallback(results) {
   fileData = results.data;
-  console.log(fileData);
   var filelen = fileData.length;
   	if(filelen == 0) {
         toastr.error("File is empty, upload not allowed");
@@ -171,7 +162,6 @@ function uploadRows() {
     },
     success: function (response) {
       //uploadRows();
-      console.log(response);
       errorData = response;
       resetForm();
       getBrandList();
@@ -183,14 +173,10 @@ function uploadRows() {
         }
         else {
             var resp = JSON.parse(response.responseText);
-            console.log(resp.message);
-            console.log(typeof resp.message);
             if (isJson(resp.message) == true) {
                 var jsonObj = JSON.parse(resp.message);
-                console.log(jsonObj);
                 errorData = jsonObj;
                 processCount = fileData.length;
-                console.log(response);
                 $("#download-errors").prop('disabled', false);
                 resetForm();
                 toastr.error("There are errors in file, please download errors", "Error : ");
@@ -270,7 +256,6 @@ function updateFileName() {
 }
 
 function displayUploadData() {
-  console.log("hello");
   resetUploadDialog();
   $("#upload-brand-modal").modal("toggle");
   $("#download-errors").prop("disabled", true);

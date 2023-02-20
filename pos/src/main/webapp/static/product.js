@@ -65,7 +65,6 @@ function addProduct(event) {
       var url = getProductUrl();
       wholeProduct.push(json);
       var jsonObj = arrayToJson();
-      console.log(url);
       $.ajax({
         url: url,
         type: "POST",
@@ -80,7 +79,6 @@ function addProduct(event) {
           wholeProduct = [];
         },
         error: function (response) {
-                 console.log(response);
                  if(response.status == 403) {
                       toastr.error("Error: 403 unauthorized");
                  }
@@ -88,7 +86,6 @@ function addProduct(event) {
                         var resp = JSON.parse(response.responseText);
                         if (isJson(resp.message) == true) {
                            var jsonObj = JSON.parse(resp.message);
-                           console.log(jsonObj);
                            toastr.error(jsonObj[0].message, "Error : ");
                         } else {
                            handleAjaxError(response);
@@ -158,7 +155,6 @@ var processCount = 0;
 
 function processData() {
   var file = $("#productFile")[0].files[0];
-  console.log(file);
   if(file.name.split('.').pop() != "tsv"){
       toastr.error("File should be TSV");
       return;
@@ -168,7 +164,6 @@ function processData() {
 
 function readFileDataCallback(results) {
   fileData = results.data;
-  console.log(fileData);
   var filelen = fileData.length;
     if(filelen == 0) {
         toastr.error("File is empty, upload not allowed");
@@ -201,12 +196,6 @@ function uploadRows() {
     //toastr.success("Rows uploaded Successfully", "Success : ");
     return;
   }
-//  if (errorData.length > 0) {
-//    $("#download-errors").prop("disabled", false);
-//  }
-  //Process next row
-//  var row = fileData[processCount];
-//  processCount++;
 
   var json = JSON.stringify(fileData);
   var url = getProductUrl();
@@ -221,29 +210,21 @@ function uploadRows() {
     },
     success: function (response) {
       //uploadRows();
-      console.log(response);
       errorData = response;
       resetForm();
       getProductList();
       toastr.success("Products Uploaded Successfully", "Success : ");
     },
     error: function (response) {
-//      row.error = response.responseText;
-//      errorData.push(row);
-//      uploadRows();
         if(response.status == 403){
             toastr.error("403 Forbidden");
         }
         else {
             var resp = JSON.parse(response.responseText);
-            console.log(resp.message);
-            console.log(typeof resp.message);
             if (isJson(resp.message) == true) {
                 var jsonObj = JSON.parse(resp.message);
-                console.log(jsonObj);
                 errorData = jsonObj;
                 processCount = fileData.length;
-                console.log(response);
                 $("#download-errors").prop('disabled', false);
                 resetForm();
                 toastr.error("There are errors in file, please download errors", "Error : ");
@@ -278,7 +259,6 @@ function displayProductList(data){
       var row = '<tr>'
       + '<td>' + e.barcode + '</td>'
       + '<td>'  + e.name + '</td>'
-      //+ '<td>'  + e.mrp + '</td>'
       + '<td>'  + parseFloat(e.mrp).toFixed(2) + '</td>'
       + '<td>' + buttonHtml + '</td>'
       + '</tr>';
@@ -327,7 +307,6 @@ function updateFileName() {
 }
 
 function displayUploadData() {
-  console.log("hello");
   resetUploadDialog();
   $("#upload-product-modal").modal("toggle");
   $("#download-errors").prop("disabled", true);
@@ -373,14 +352,12 @@ function getBrandList() {
 }
 
 function displayBrandOptions(data) {
-  console.log(data);
   for (var i in data) {
     var a = data[i].brand;
     var b = data[i].category;
     if (!brandData.hasOwnProperty(a)) Object.assign(brandData, { [a]: [] });
     brandData[a].push(b);
   }
-  console.log(brandData);
   var $elB = $("#inputBrand");
   $elB.empty();
   $elB.append(
@@ -402,7 +379,6 @@ function displayCategoryOptions() {
     `<option value="none" selected disabled hidden>select category</option>`
   );
   var a = getBrandOption();
-  console.log(brandData[a]);
   var len = brandData[a].length;
   for (var i = 0; i < len; i++) {
     $elC.append(

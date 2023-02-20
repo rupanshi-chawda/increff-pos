@@ -44,7 +44,6 @@ function resetForm() {
 function getFilteredList(event) {
   var $form = $("#sales-form");
   var json = toJson($form);
-  console.log(json);
   var url = getSalesUrl() + "/filter";
   $.ajax({
     url: url,

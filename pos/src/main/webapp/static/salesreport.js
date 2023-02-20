@@ -82,14 +82,12 @@ function displayCategoryOptions() {
 }
 
 function displayBrandOptions(data) {
-  console.log(data);
   for (var i in data) {
     var a = data[i].brand;
     var b = data[i].category;
     if (!brandData.hasOwnProperty(a)) Object.assign(brandData, { [a]: [] });
     brandData[a].push(b);
   }
-  console.log(brandData);
   var $elB = $("#inputBrand");
   $elB.empty();
 

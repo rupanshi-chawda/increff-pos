@@ -75,7 +75,6 @@ function displayUserList(data){
     var span = "Total Rows : " + data.length;
     $head.append(span);
 
-	console.log('Printing user data');
 	var $tbody = $('#user-table').find('tbody');
 	$tbody.empty();
 	for(var i in data){

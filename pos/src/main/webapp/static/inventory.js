@@ -55,12 +55,9 @@ function addInventory(event) {
   var url = getInventoryUrl();
   wholeInventory.push(json);
   var barcodeInv = $("#inventory-form input[name=barcode]").val();
-  console.log(barcodeInv);
 //  console.log(url);
 //  console.log(json);
 	var jsonObj = arrayToJson();
-	console.log(wholeInventory);
-    console.log(url);
 
   $.ajax({
     url: url,
@@ -83,7 +80,6 @@ function addInventory(event) {
       }
     },
     error: function (response) {
-        console.log(response);
         if(response.status == 403) {
             toastr.error("Error: 403 unauthorized");
         }
@@ -91,7 +87,6 @@ function addInventory(event) {
             var resp = JSON.parse(response.responseText);
                 if (isJson(resp.message) == true) {
                    var jsonObj = JSON.parse(resp.message);
-                   console.log(jsonObj);
                    toastr.error(jsonObj[0].message, "Error : ");
                 } else {
                    handleAjaxError(response);
@@ -112,7 +107,6 @@ function updateInventory(event) {
   //Set the values to update
   var $form = $("#inventory-edit-form");
   var json = toJson($form);
-  console.log(json);
 
   var qty = JSON.parse(json).quantity;
 
@@ -150,7 +144,6 @@ function getInventoryList() {
     url: url,
     type: "GET",
     success: function (data) {
-      console.log(data);
       displayInventoryList(data);
     },
     error: handleAjaxError,
@@ -164,7 +157,6 @@ var processCount = 0;
 
 function processData() {
   var file = $("#inventoryFile")[0].files[0];
-  console.log(file);
   if(file.name.split('.').pop() != "tsv"){
       toastr.error("File should be TSV");
       return;
@@ -201,21 +193,8 @@ function uploadRows() {
   //Update progress
   updateUploadDialog();
   $("#process-data").prop("disabled", true);
-  //If everything processed then return
-//  if (processCount == fileData.length) {
-//    toastr.success("Rows uploaded Successfully", "Success : ");
-//    return;
-//  }
-//  if (errorData.length > 0) {
-//    $("#download-errors").prop("disabled", false);
-//  }
-
-  //Process next row
-//  var row = fileData[processCount];
-//  processCount++;
 
   var json = JSON.stringify(fileData);
-  console.log(json);
   var url = getInventoryUrl();
 
   //Make ajax call
@@ -227,7 +206,6 @@ function uploadRows() {
       "Content-Type": "application/json",
     },
     success: function (response) {
-      console.log(response);
       errorData = response;
       resetForm();
       getInventoryList();
@@ -241,10 +219,8 @@ function uploadRows() {
 		    var resp = JSON.parse(response.responseText);
 		    if(isJson(resp.message) == true) {
                 var jsonObj = JSON.parse(resp.message);
-                console.log(jsonObj);
                 errorData = jsonObj;
                 processCount = fileData.length;
-                console.log(response);
                 $("#download-errors").prop('disabled', false);
                 resetForm();
                 toastr.error("There are errors in file, please download errors", "Error : ");
@@ -272,7 +248,6 @@ function displayInventoryList(data){
 
 	var $tbody = $('#inventory-table').find('tbody');
 	$tbody.empty();
-	console.log(data);
 	for(var i in data){
 		var e = data[i];
 //		console.log(e.barcode);
@@ -290,8 +265,6 @@ function displayInventoryList(data){
 
 function displayEditInventory(barcode) {
   var url = getInventoryUrl() + "/" + barcode;
-  console.log(url);
-  console.log(barcode);
   $.ajax({
     url: url,
     type: "GET",
@@ -317,8 +290,6 @@ function resetUploadDialog() {
 
 function updateUploadDialog() {
   $("#rowCount").html("" + fileData.length);
-//  $("#processCount").html("" + processCount);
-//  $("#errorCount").html("" + errorData.length);
 }
 
 function updateFileName() {
@@ -329,7 +300,6 @@ function updateFileName() {
 }
 
 function displayUploadData() {
-  console.log("hello");
   resetUploadDialog();
   $("#upload-inventory-modal").modal("toggle");
   $("#download-errors").prop("disabled", true);
@@ -342,7 +312,6 @@ function activateUpload() {
 
 function downloadCsv() {
   window.location.href = getInventoryUrl() + "/exportcsv";
-  console.log(getInventoryUrl() + "/exportcsv");
 }
 
 function displayInventory(data) {
