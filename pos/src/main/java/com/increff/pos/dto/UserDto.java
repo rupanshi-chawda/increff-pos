@@ -4,6 +4,7 @@ import com.increff.pos.helper.UserHelper;
 import com.increff.pos.pojo.UserPojo;
 import com.increff.pos.api.UserApi;
 import com.increff.pos.util.ApiException;
+import com.increff.pos.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;

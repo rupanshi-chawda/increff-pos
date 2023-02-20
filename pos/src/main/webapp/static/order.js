@@ -1,4 +1,4 @@
-    var wholeOrder = [];
+var wholeOrder = [];
 
 function getOrderItemUrl() {
   var baseUrl = $("meta[name=baseUrl]").attr("content");
@@ -94,7 +94,7 @@ function checkOrderItemExist() {
     var temp_barcode = $("#order-item-form input[name=barcode]").val();
     console.log(temp_barcode);
     if (temp_barcode == barcode) {
-      console.log("Exist");
+      console.log("Item Exist");
       return true;
     }
   }
@@ -116,6 +116,12 @@ function changeQuantity(item) {
       var prev_quantity = parseInt(JSON.parse(wholeOrder[i]).quantity);
       var new_quantity = prev_quantity + quantity;
       console.log(new_quantity);
+
+      if (new_quantity > barcodeList.get(barcode)) {
+          toastr.error("Quantity not available in the inventory");
+          return;
+      }
+
       var str = new_quantity.toString();
       console.log(str);
 
@@ -126,6 +132,7 @@ function changeQuantity(item) {
 
       var new_data = JSON.stringify(data);
       wholeOrder[i] = new_data;
+          resetForm();
     }
   }
 
@@ -145,12 +152,13 @@ function getOrderList() {
 }
 
 function checkSellingPrice(vars) {
+  console.log(vars);
   var barcode = vars[0];
-  var sp = vars[2];
+  var sp = parseFloat(vars[2]).toFixed(2);
   for (i in wholeOrder) {
     var temp_barcode = JSON.parse(wholeOrder[i]).barcode;
     if (temp_barcode == barcode) {
-      var cur_sp = parseInt(JSON.parse(wholeOrder[i]).sellingPrice);
+      var cur_sp = parseFloat(JSON.parse(wholeOrder[i]).sellingPrice).toFixed(2);
       if (cur_sp == sp) {
         return true;
       }
@@ -178,7 +186,6 @@ function getInventory(barcode) {
       mrp=data.mrp;
       barcodeList.set(data.barcode, data.quantity);
       addItem();
-      resetForm();
     },
     error: function (data) {
       toastr.error("Barcode does not exist in the Inventory");
@@ -205,7 +212,7 @@ function addItem() {
       toastr.error("Selling Price cannot be greater than MRP");
       return;
   }
-  if(isNaN(qty) || isNaN(parseFloat(qty))) {
+  if(qty.includes("-") || qty.includes("+") || qty.includes("*") || qty.includes("/") || qty.includes(".") || !isNumber(qty)) {
         toastr.error("Quantity must be number", "Error : ");
         return;
     }
@@ -224,14 +231,19 @@ function addItem() {
 
   if (qty > barcodeList.get(barcode1)) {
     toastr.error("Quantity not present in inventory");
-  } else {
+    return;
+  }
+  else {
     var _qty = barcodeList.get(barcode1) - qty;
 
     if (sp <= 0) {
-      toastr.error("Price cannot be negative or zero");
+        toastr.error("Price cannot be negative or zero");
     } else if (qty <= 0) {
-      toastr.error("Quantity cannot be negative or zero");
-    } else {
+        toastr.error("Quantity cannot be negative or zero");
+    } else if(qty > 10000) {
+        toastr.error("Quantity cannot be greater than 10000");
+    }
+    else {
       if (checkOrderItemExist()) {
         console.log("inside check");
         let vars = [];
@@ -281,6 +293,7 @@ function clearCart() {
   console.log("inside clear cart");
   wholeOrder = [];
   console.log(wholeOrder);
+  resetForm();
   toastr.info("Cart Cleared", "Info : ");
 }
 

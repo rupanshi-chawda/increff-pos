@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 public class OrderItemPojo extends AbstractVersionPojo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)// todo: why do we need generation type table and its impact on multi threading
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false)

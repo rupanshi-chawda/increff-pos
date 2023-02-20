@@ -6,6 +6,7 @@ import com.increff.pos.util.StringUtil;
 import com.increff.pos.model.data.UserData;
 import com.increff.pos.model.form.UserForm;
 import com.increff.pos.util.ApiException;
+import com.increff.pos.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,9 @@ public class AdminDto {
         }
         if(StringUtil.isEmpty(form.getPassword())) {
             throw new ApiException("Password cannot be empty");
+        }
+        if(form.getPassword().length() < 6) {
+            throw new ApiException("Password must be at least 6 characters long");
         }
         UserPojo p = UserHelper.convert(form);
         dto.add(p);

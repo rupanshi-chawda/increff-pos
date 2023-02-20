@@ -82,4 +82,8 @@ function isJson(str) {
   return true;
 }
 
+function isNumber(str) {
+  return /^\d+$/.test(str);
+}
+
 $(document).ready(init);

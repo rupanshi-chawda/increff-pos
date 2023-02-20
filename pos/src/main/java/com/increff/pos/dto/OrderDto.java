@@ -43,6 +43,7 @@ public class OrderDto {
     private InvoiceGenerator invoiceGenerator;
 
     public void addItem(List<OrderItemForm> forms) throws ApiException {
+        checkOrderNotEmpty(forms);
         checkDuplicateItems(forms);
         flowApi.addItem(forms);
     }
@@ -76,5 +77,10 @@ public class OrderDto {
             }
             set.add(f.getBarcode());
         }
+    }
+
+    private void checkOrderNotEmpty(List<OrderItemForm> forms) throws ApiException {
+        if(forms.size()<1)
+            throw new ApiException("Cannot Place Empty Order");
     }
 }

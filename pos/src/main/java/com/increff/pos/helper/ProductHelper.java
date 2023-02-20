@@ -36,10 +36,14 @@ public class ProductHelper {
         form.setBrand(StringUtil.toLowerCase(form.getBrand()));
         form.setCategory(StringUtil.toLowerCase(form.getCategory()));
         form.setName(StringUtil.toLowerCase(form.getName()));
+        DecimalFormat df = new DecimalFormat("0.00");
+        form.setMrp(Double.valueOf(df.format(form.getMrp())));
     }
 
     public static void normalize(ProductUpdateForm form) {
         form.setName(StringUtil.toLowerCase(form.getName()));
+        DecimalFormat df = new DecimalFormat("0.00");
+        form.setMrp(Double.valueOf(df.format(form.getMrp())));
     }
 
     public static void validateFormList(List<ProductForm> forms) throws ApiException {
@@ -52,8 +56,8 @@ public class ProductHelper {
             productErrorData.setMessage("");
             try
             {
-                ValidationUtil.validateForms(f);
                 ProductHelper.normalize(f);
+                ValidationUtil.validateForms(f);
             }
             catch (ApiException e) {
                 errorSize++;

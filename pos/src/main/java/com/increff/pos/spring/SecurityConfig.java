@@ -14,7 +14,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	//todo: how does this security works behind the scenes?
 	private static Logger logger = Logger.getLogger(SecurityConfig.class);
 
 	@Override

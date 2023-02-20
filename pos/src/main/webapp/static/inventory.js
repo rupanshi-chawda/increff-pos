@@ -31,6 +31,10 @@ function isJson(str) {
   return true;
 }
 
+function isNumber(str) {
+  return /^\d+$/.test(str);
+}
+
 //BUTTON ACTIONS
 function addInventory(event) {
   //Set the values to update
@@ -39,8 +43,8 @@ function addInventory(event) {
 
   var qty = JSON.parse(json).quantity;
 
-  if(isNaN(qty) || isNaN(parseFloat(qty))) {
-      toastr.error("Quantity must be number", "Error : ");
+  if(qty.includes("-") || qty.includes("+") || qty.includes("*") || qty.includes("/") || qty.includes(".") || !isNumber(qty)) {
+      toastr.error("Quantity must be whole number", "Error : ");
       return;
   }
   if(parseFloat(qty) > 2147483647) {
@@ -112,8 +116,8 @@ function updateInventory(event) {
 
   var qty = JSON.parse(json).quantity;
 
-  if(isNaN(qty) || isNaN(parseFloat(qty))) {
-      toastr.error("Quantity must be number", "Error : ");
+  if(qty.includes("-") || qty.includes("+") || qty.includes("*") || qty.includes("/") || qty.includes(".")) {
+      toastr.error("Quantity must be whole number", "Error : ");
       return;
   }
   if(parseFloat(qty) > 2147483647) {

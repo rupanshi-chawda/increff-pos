@@ -11,14 +11,18 @@ import com.increff.pos.pojo.OrderItemPojo;
 import com.increff.pos.pojo.OrderPojo;
 import com.increff.pos.util.ApiException;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.Objects;
 
 public class OrderHelper {
 
     public static OrderData convert(OrderPojo pojo) {
-        return ConvertUtil.convert(pojo, OrderData.class);
+        OrderData data = ConvertUtil.convert(pojo, OrderData.class);
+        data.setTime(data.getTime().withZoneSameInstant(ZoneId.of("Asia/Kolkata")));
+        return data;
     }
 
     public static OrderItemData convert(OrderItemPojo pojo, String barcode) {
@@ -33,6 +37,8 @@ public class OrderHelper {
 
     public static void normalize(OrderItemForm form) {
         form.setBarcode(StringUtil.toLowerCase(form.getBarcode()));
+        DecimalFormat df = new DecimalFormat("0.00");
+        form.setSellingPrice(Double.valueOf(df.format(form.getSellingPrice())));
     }
 
     public static void validateId(Integer id) throws ApiException {

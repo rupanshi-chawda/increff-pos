@@ -64,8 +64,8 @@ public class InventoryHelper {
             inventoryErrorData.setMessage("");
             try
             {
-                ValidationUtil.validateForms(f);
                 InventoryHelper.normalize(f);
+                ValidationUtil.validateForms(f);
             }
             catch (ApiException e) {
                 errorSize++;
