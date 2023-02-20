@@ -41,7 +41,7 @@
                         <div class="form-group">
                             <label for="inputQuantity" class="col-sm-2 col-form-label">Quantity</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="quantity" id="inputQuantity" placeholder="enter quantity" onKeyup="checkform()">
+                                <input type="text" maxlength="15" class="form-control" name="quantity" id="inputQuantity" placeholder="enter quantity" onKeyup="checkform()">
                             </div>
                         </div>
                     </form>
@@ -103,14 +103,14 @@
                     <form class="form" id="inventory-edit-form">
 
                         <div class="form-group">
-                            <label for="inputBarcode" maxlength="15" class="col-sm-2 col-form-label">Barcode</label>
+                            <label for="inputBarcode" class="col-sm-2 col-form-label">Barcode</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="barcode" placeholder="enter barcode" readonly>
+                                <input type="text" maxlength="15" class="form-control" name="barcode" placeholder="enter barcode" readonly>
                             </div>
                         </div><div class="form-group">
                         <label for="inputQuantity" class="col-sm-2 col-form-label">Quantity</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="quantity" placeholder="enter quantity"  onkeydown="enableUpdate()">
+                            <input type="text" maxlength="15" class="form-control" name="quantity" placeholder="enter quantity"  onkeydown="enableUpdate()">
                         </div>
                     </div>
                         <input type="hidden" name="id" >
