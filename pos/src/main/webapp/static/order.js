@@ -75,7 +75,7 @@ function displayOrderItemList(data) {
 	{
         var e = wholeOrder[i];
         //var buttonHtml = '<button onclick="displayEditOrderItem(' + i + ')" class="btn table__button-group"><i class="fa-solid fa-pencil" style="color:#007BFF"></i></button>'
-        var buttonHtml = '<button onclick="deleteOrderItem(' + i + ')" class="btn table__button-group"><i class="fa-solid fa-trash" style="color:#007BFF"></i></button>'
+        var buttonHtml = '<button onclick="deleteOrderItem(' + i + ')" class="btn table__button-group" title="Delete Order"><i class="fa-solid fa-trash" style="color:#007BFF"></i></button>'
         var row = '<tr>'
             + '<td>' + JSON.parse(e).barcode + '</td>'
             + '<td>' + JSON.parse(e).quantity + '</td>'
@@ -381,8 +381,8 @@ function displayOrderList(data){
    for(var i in data){
       var e = data[i];
       //console.log(e);
-      var buttonHtml = '<button onclick="viewOrder(' + e.id + ')" class="btn"><i class="fa-solid fa-eye" style="color:#007BFF"></i></button>'
-      buttonHtml += '<button onclick="printOrder(' + e.id + ')" class="btn" target="_blank"><i class="fa-solid fa-print" style="color:#007BFF"></i></button>'
+      var buttonHtml = '<button onclick="viewOrder(' + e.id + ')" class="btn" title="View Order"><i class="fa-solid fa-eye" style="color:#007BFF"></i></button>'
+      buttonHtml += '<button onclick="printOrder(' + e.id + ')" class="btn" target="_blank" title="Print Invoice"><i class="fa-solid fa-print" style="color:#007BFF"></i></button>'
       var row = '<tr>'
       + '<td>' + e.id + '</td>'
       + '<td>' + e.time + '</td>'

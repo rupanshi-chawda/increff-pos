@@ -221,7 +221,7 @@ function displayBrandList(data){
    $tbody.empty();
    for(var i in data){
       var e = data[i];
-      var buttonHtml = '<button onclick="displayEditBrand(' + e.id + ')" class="btn table__button-group"><i class="fa-solid fa-pencil" style="color:#007BFF"></i></button>'
+      var buttonHtml = '<button onclick="displayEditBrand(' + e.id + ')" class="btn table__button-group" title="Edit Brand"><i class="fa-solid fa-pencil" style="color:#007BFF"></i></button>'
       var row = '<tr>'
       + '<td>' + e.brand + '</td>'
       + '<td>'  + e.category + '</td>'

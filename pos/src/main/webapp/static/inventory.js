@@ -278,7 +278,7 @@ function displayInventoryList(data){
 //		console.log(e.barcode);
 //		console.log(typeof e.barcode);
         inventoryList.set(e.barcode, e.quantity);
-		var buttonHtml = '<button onclick="displayEditInventory(\'' + e.barcode + '\')" class="btn table__button-group"><i class="fa-solid fa-pencil" style="color:#007BFF"></i></button>'
+		var buttonHtml = '<button onclick="displayEditInventory(\'' + e.barcode + '\')" class="btn table__button-group" title="Edit Inventory"><i class="fa-solid fa-pencil" style="color:#007BFF"></i></button>'
         var row = '<tr>'
 		+ '<td>' + e.barcode + '</td>'
 		+ '<td>'  + e.quantity + '</td>'
