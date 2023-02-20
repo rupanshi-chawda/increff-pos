@@ -38,21 +38,24 @@ public class InitDto extends AbstractUiController {
         info.setMessage("");
         if(StringUtil.isEmpty(form.getEmail()) || StringUtil.isEmpty(form.getPassword())) {
             info.setMessage("Email or Password cannot be empty");
+            return mav("init.html");
         }
-        else if (dto.checkEmailExists(form.getEmail())) {
+        if (dto.checkEmailExists(form.getEmail())) {
             info.setMessage("You already have an account, please use existing credentials");
+            return mav("login.html");
         }
-        else if(Objects.equals(form.getEmail(), admin_email))
+        if(Objects.equals(form.getEmail(), admin_email))
         {
             UserPojo p = UserHelper.convert(form,"supervisor");
             dto.add(p);
             info.setMessage("Signed Up Successfully, you can login now");
+            return mav("login.html");
         }
         else
         {
             info.setMessage("Unauthorized access");
+            return mav("init.html");
         }
-        return mav("init.html");
     }
 
 }

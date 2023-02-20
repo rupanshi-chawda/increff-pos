@@ -19,7 +19,7 @@ public class SiteUiController extends AbstractUiController {
 
 	@RequestMapping(value = "/site/logout")
 	public ModelAndView logout() {
-		return mav("logout.html");
+		return mav("login.html");
 	}
 
 }

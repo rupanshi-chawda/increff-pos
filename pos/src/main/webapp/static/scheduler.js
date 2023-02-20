@@ -84,15 +84,18 @@ function refreshData() {
 function autoFillDate() {
   var date = new Date();
   var day = date.getDate();
-  var month = date.getMonth() + 1;
+  var month_today = date.getMonth() + 1;
+  var month_before = date.getMonth();
   var year = date.getFullYear();
 
-  if (month < 10) month = "0" + month;
+  if (month_before < 10) month_before = "0" + month_before;
+  if (month_today < 10) month_today = "0" + month_today;
   if (day < 10) day = "0" + day;
 
-  var today = year + "-" + month + "-" + day;
+  var today = year + "-" + month_today + "-" + day;
+  var before = year + "-" + month_before + "-" + day;
   $("#inputED").attr("value", today);
-  $("#inputSD").attr("value", today);
+  $("#inputSD").attr("value", before);
 }
 
 function disableDate() {

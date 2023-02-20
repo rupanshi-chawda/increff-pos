@@ -58,6 +58,7 @@ public class LoginDto {
 
     public ModelAndView logout(HttpServletRequest request) {
         request.getSession().invalidate();
+        info.setMessage("You have been logged out successfully");
         return new ModelAndView("redirect:/site/logout");
     }
 
