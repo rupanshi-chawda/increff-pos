@@ -216,15 +216,15 @@ public class ProductDtoTest extends AbstractUnitTest {
         api.add(px);
 
         Integer id = api.getIdByBarcode("a1b2c3d4");
-        ProductPojo p = api.get(id);
+        ProductData d = dto.get(id);
 
         String expectedBarcode = "a1b2c3d4";
         String expectedName = "airwrap";
         Double expectedMrp = 45000.95;
 
-        assertEquals(expectedBarcode, p.getBarcode());
-        assertEquals(expectedName, p.getName());
-        assertEquals(expectedMrp, p.getMrp());
+        assertEquals(expectedBarcode, d.getBarcode());
+        assertEquals(expectedName, d.getName());
+        assertEquals(expectedMrp, d.getMrp());
     }
 
     @Test

@@ -92,6 +92,7 @@ function checkOrderItemExist() {
     var barcode = JSON.parse(wholeOrder[i]).barcode;
     console.log(barcode);
     var temp_barcode = $("#order-item-form input[name=barcode]").val();
+
     console.log(temp_barcode);
     if (temp_barcode == barcode) {
       console.log("Item Exist");
@@ -173,7 +174,7 @@ var inv_barcode = null;
 var mrp = null;
 
 function getInventory(barcode) {
-  barcode = barcode.trim();
+  console.log(barcode);
   mrp = null;
   var url = getInventoryUrl() + "/" + barcode;
   $.ajax({

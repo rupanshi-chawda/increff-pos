@@ -16,7 +16,6 @@ function handleAjaxError(response) {
     toastr.warning("Access Forbidden, you cannot upload", "Warning: ");
   } else {
     var response = JSON.parse(response.responseText);
-    //alert(response.message);
 
     toastr.error(response.message, "Error : ", {
       closeButton: true,
