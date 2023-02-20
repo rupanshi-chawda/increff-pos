@@ -33,7 +33,7 @@ public class ProductApi {
         ProductPojo bx = getCheckProductId(id);
         bx.setName(p.getName());
         bx.setMrp(p.getMrp());
-        dao.update(p);
+
     }
 
     // Business Logic Methods

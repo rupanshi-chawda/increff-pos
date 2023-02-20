@@ -34,7 +34,6 @@ public class BrandApi {
         BrandPojo bx = getCheckBrandId(id);
         bx.setCategory(p.getCategory());
         bx.setBrand(p.getBrand());
-        dao.update(p);
     }
 
     // Business Logic Methods

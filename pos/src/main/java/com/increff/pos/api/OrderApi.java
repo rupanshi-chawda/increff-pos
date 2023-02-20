@@ -76,7 +76,6 @@ public class OrderApi {
     public void update(Integer id, OrderPojo p) throws ApiException {
         OrderPojo b = getOrder(id);
         b.setInvoicePath(p.getInvoicePath());
-        orderDao.update(p);
     }
 
     // Business Logic Methods

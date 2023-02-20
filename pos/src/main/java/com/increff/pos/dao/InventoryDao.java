@@ -8,5 +8,4 @@ import javax.persistence.TypedQuery;
 
 @Repository
 public class InventoryDao extends AbstractDao {
-    public void update(InventoryPojo p){}
 }

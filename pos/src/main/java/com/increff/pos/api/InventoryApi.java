@@ -27,7 +27,6 @@ public class InventoryApi {
             Integer prevQuantity = b.getQuantity();
             Integer newQuantity = prevQuantity + p.getQuantity();
             b.setQuantity(newQuantity);
-            dao.update(p);
         }
     }
 
@@ -45,7 +44,7 @@ public class InventoryApi {
         InventoryPojo bx = getByInventoryId(p.getId());
         InventoryHelper.validateId(bx, p.getId());
         bx.setQuantity(p.getQuantity());
-        dao.update(p);
+
     }
 
     // Business Logic Methods

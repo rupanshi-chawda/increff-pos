@@ -26,5 +26,4 @@ public class ProductDao extends AbstractDao{
         return getSingle(query);
     }
 
-    public void update(ProductPojo p){}
 }

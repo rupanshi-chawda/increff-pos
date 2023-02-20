@@ -7,7 +7,7 @@ function getOrderItemUrl() {
 
 function getOrderItemByIdUrl() {
   var baseUrl = $("meta[name=baseUrl]").attr("content");
-  return baseUrl + "/api/order/cartitems";
+  return baseUrl + "/api/order/cart-items";
 }
 
 function getOrderUrl() {

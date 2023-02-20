@@ -35,7 +35,7 @@ public class OrderController {
     }
 
     @ApiOperation(value = "Gets list of order items of an order by orderid")
-    @GetMapping(path = "/cartitems/{id}")
+    @GetMapping(path = "/cart-items/{id}")
     public List<OrderItemData> getOrderItemById(@PathVariable Integer id) throws ApiException {
         return dto.getByOrderId(id);
     }

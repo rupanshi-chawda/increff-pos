@@ -13,7 +13,6 @@ import java.util.List;
 @Repository
 public class OrderItemDao extends AbstractDao {
 
-    public void update(OrderItemPojo op){}
 
     public List<OrderItemPojo> selectByOrderId(Integer orderId) {
         CriteriaBuilder cb = em().getCriteriaBuilder();
