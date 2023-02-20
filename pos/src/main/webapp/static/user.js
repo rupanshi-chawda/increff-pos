@@ -80,9 +80,9 @@ function displayUserList(data){
 	$tbody.empty();
 	for(var i in data){
 		var e = data[i];
-		var buttonHtml = '<button onclick="displayDeleteUser(' + e.id + ')" class="btn table__button-group" id="delete-button"><i class="fa-solid fa-trash" style="color:#00295F"></i></button>'
+		var buttonHtml = '<button onclick="displayDeleteUser(' + e.id + ')" class="btn table__button-group" id="delete-button"><i class="fa-solid fa-trash" style="color:#007BFF"></i></button>'
 		var row = '<tr>'
-		+ '<td> <i class="fa-solid fa-circle-user" style="color:#00295F"></i> </td>'
+		+ '<td> <i class="fa-solid fa-circle-user" style="color:#007BFF"></i> </td>'
 		+ '<td>' + e.email + '</td>'
 		+ '<td>' + e.role + '</td>'
 		+ '<td>' + buttonHtml + '</td>'

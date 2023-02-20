@@ -16,7 +16,7 @@
     <div class="row">
         <div class="col-12">
             <form class="form" id="order-form">
-                <button type="button" class="btn btn-info" id="add-order"><i class="fa-solid fa-plus button-icon"></i></button>
+                <button type="button" class="btn btn-primary" id="add-order"><i class="fa-solid fa-plus button-icon"></i></button>
             </form>
         </div>
     </div>
@@ -40,17 +40,17 @@
                 <tbody>
                 <tr>
                     <td>id1</td>
-                    <td>30</td>
+                    <td>1/1/1</td>
                     <td>View</td>
                 </tr>
                 <tr>
                     <td>id2</td>
-                    <td>31</td>
+                    <td>2/2/2</td>
                     <td>View</td>
                 </tr>
                 <tr>
                     <td>id3</td>
-                    <td>7</td>
+                    <td>3/3/3</td>
                     <td>View</td>
                 </tr>
                 </tbody>
@@ -89,7 +89,7 @@
                             </div>
                             <div class="form-group col-md d-flex align-items-end flex-column px-4">
                                 <div class="form-group col-md"> &nbsp; </div>
-                                <button type="button" class="btn btn-info" id="add-order-item"> <i class="fa-solid fa-plus"></i> </button>
+                                <button type="button" class="btn btn-primary" id="add-order-item"> <i class="fa-solid fa-plus"></i> </button>
                             </div>
                         </div>
                     </form>
@@ -113,20 +113,20 @@
                                 <tr>
                                     <td>Barcode1</td>
                                     <td>11</td>
-                                    <td>30</td>
-                                    <td>Delete | Edit</td>
+                                    <td>21</td>
+                                    <td>Delete</td>
                                 </tr>
                                 <tr>
                                     <td>Barcode2</td>
                                     <td>12</td>
-                                    <td>31</td>
-                                    <td>Delete | Edit</td>
+                                    <td>22</td>
+                                    <td>Delete</td>
                                 </tr>
                                 <tr>
                                     <td>Barcode3</td>
                                     <td>13</td>
-                                    <td>7</td>
-                                    <td>Delete | Edit</td>
+                                    <td>23</td>
+                                    <td>Delete</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -137,7 +137,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick="clearCart()">Cancel</button>
                     &nbsp;
-                    <button type="button" class="btn btn-info" id="place-order" disabled="disabled">Order</button>
+                    <button type="button" class="btn btn-primary" id="place-order" disabled="disabled">Order</button>
                 </div>
             </div>
         </div>
@@ -171,20 +171,20 @@
                                 <tr>
                                     <td>Barcode1</td>
                                     <td>11</td>
-                                    <td>30</td>
-                                    <td>30</td>
+                                    <td>21</td>
+                                    <td>31</td>
                                 </tr>
                                 <tr>
                                     <td>Barcode2</td>
                                     <td>12</td>
-                                    <td>31</td>
-                                    <td>30</td>
+                                    <td>22</td>
+                                    <td>32</td>
                                 </tr>
                                 <tr>
                                     <td>Barcode3</td>
                                     <td>13</td>
-                                    <td>7</td>
-                                    <td>30</td>
+                                    <td>23</td>
+                                    <td>33</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -197,46 +197,6 @@
     </div>
 
 
-    <!--   Order Item Edit Modal ----------------------------------------------------------------------------- -->
-<!--    <div class="modal over-modal" tabindex="-1" role="dialog" id="edit-order-item-modal" data-backdrop="static" >-->
-<!--        <div class="modal-dialog" role="document">-->
-<!--            <div class="modal-content">-->
-<!--                <div class="modal-header">-->
-<!--                    <h5 class="modal-title">Edit Item</h5>-->
-<!--                    &lt;!&ndash;                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <span aria-hidden="true">&times;</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </button>&ndash;&gt;-->
-<!--                </div>-->
-<!--                <div class="modal-body">-->
-<!--                    <form class="form" id="edit-order-item-form">-->
-<!--                        <div class="form-group">-->
-<!--                            <label for="inputBarcode" class="col-sm-2 col-form-label">Barcode</label>-->
-<!--                            <div class="col-sm-10">-->
-<!--                                <input type="text" class="form-control" name="barcode" placeholder="enter barcode" readonly>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="form-group">-->
-<!--                            <label for="inputQuantity" class="col-sm-2 col-form-label">Quantity</label>-->
-<!--                            <div class="col-sm-10">-->
-<!--                                <input type="text" class="form-control" name="quantity" placeholder="enter quantity">-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="form-group">-->
-<!--                            <label for="inputSellingPrice" class="col-sm-2 col-form-label">Selling Price</label>-->
-<!--                            <div class="col-sm-10">-->
-<!--                                <input type="text" class="form-control" name="sellingPrice" placeholder="enter selling price">-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <input type="hidden" name="id" >-->
-<!--                    </form>-->
-<!--                </div>-->
-<!--                <div class="modal-footer">-->
-<!--                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>-->
-<!--                    <button type="button" class="btn btn-info" id="update-order-item">Update</button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
 
 </div> <!-- Container end-->
 
