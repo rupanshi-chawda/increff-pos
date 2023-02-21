@@ -27,7 +27,7 @@ function getInventoryUrl() {
 
 function getInvoiceUrl() {
   var baseUrl = $("meta[name=baseUrl]").attr("content");
-  console.log(baseUrl);
+  //console.log(baseUrl);
   return baseUrl + "/api/order/invoice";
 }
 
@@ -37,7 +37,7 @@ function getInvoiceUrl() {
 function placeOrder(event) {
   var url = getOrderItemUrl();
   let len = wholeOrder.length;
-  console.log(len);
+  //console.log(len);
   if (len == 0) {
     toastr.error("Cart empty! Order cannot be placed.", "Error : ", {
       closeButton: true,
@@ -46,7 +46,7 @@ function placeOrder(event) {
     });
   } else {
     var jsonObj = arrayToJson();
-    console.log(jsonObj);
+    //console.log(jsonObj);
     $.ajax({
       url: url,
       type: "POST",
@@ -90,12 +90,12 @@ function displayOrderItemList(data) {
 function checkOrderItemExist() {
   for (i in wholeOrder) {
     var barcode = JSON.parse(wholeOrder[i]).barcode;
-    console.log(barcode);
+    //console.log(barcode);
     var temp_barcode = $("#order-item-form input[name=barcode]").val();
 
-    console.log(temp_barcode);
+    //console.log(temp_barcode);
     if (temp_barcode == barcode) {
-      console.log("Item Exist");
+      //console.log("Item Exist");
       return true;
     }
   }
@@ -104,11 +104,11 @@ function checkOrderItemExist() {
 
 function changeQuantity(item) {
   var barcode = item[0];
-  console.log(barcode);
+  //console.log(barcode);
 
   var quantity = parseInt(item[1]);
-  console.log(quantity);
-  console.log(wholeOrder);
+  //console.log(quantity);
+  //console.log(wholeOrder);
 
   for (i in wholeOrder) {
     let data = {};
@@ -116,7 +116,7 @@ function changeQuantity(item) {
     if (temp_barcode == barcode) {
       var prev_quantity = parseInt(JSON.parse(wholeOrder[i]).quantity);
       var new_quantity = prev_quantity + quantity;
-      console.log(new_quantity);
+      //console.log(new_quantity);
 
       if (new_quantity > barcodeList.get(barcode)) {
           toastr.error("Quantity not available in the inventory");
@@ -124,12 +124,12 @@ function changeQuantity(item) {
       }
 
       var str = new_quantity.toString();
-      console.log(str);
+      //console.log(str);
 
       data["barcode"] = JSON.parse(wholeOrder[i]).barcode;
       data["quantity"] = str;
       data["sellingPrice"] = JSON.parse(wholeOrder[i]).sellingPrice;
-      console.log(data);
+      //console.log(data);
 
       var new_data = JSON.stringify(data);
       wholeOrder[i] = new_data;
@@ -137,7 +137,7 @@ function changeQuantity(item) {
     }
   }
 
-  console.log(wholeOrder);
+  //console.log(wholeOrder);
 }
 
 function getOrderList() {
@@ -153,7 +153,7 @@ function getOrderList() {
 }
 
 function checkSellingPrice(vars) {
-  console.log(vars);
+  //console.log(vars);
   var barcode = vars[0];
   var sp = parseFloat(vars[2]).toFixed(2);
   for (i in wholeOrder) {
@@ -174,7 +174,7 @@ var inv_barcode = null;
 var mrp = null;
 
 function getInventory(barcode) {
-  console.log(barcode);
+  //console.log(barcode);
   mrp = null;
   var url = getInventoryUrl() + "/" + barcode;
   $.ajax({
@@ -183,7 +183,7 @@ function getInventory(barcode) {
     success: function (data) {
       inv_barcode = data.barcode;
       inv_qty = data.quantity;
-        console.log(data);
+        //console.log(data);
       mrp=data.mrp;
       barcodeList.set(data.barcode, data.quantity);
       addItem();
@@ -203,11 +203,11 @@ function addItem() {
   var qty = $("#order-item-form input[name=quantity]").val();
   var sp = $("#order-item-form input[name=sellingPrice]").val();
 
-//  console.log(check);
+//  //console.log(check);
 //
-//  console.log(qty);
-//  console.log(barcodeList.get(barcode1));
-//  console.log(inv_qty);
+//  //console.log(qty);
+//  //console.log(barcodeList.get(barcode1));
+//  //console.log(inv_qty);
 
   if(sp > mrp){
       toastr.error("Selling Price cannot be greater than MRP");
@@ -246,7 +246,7 @@ function addItem() {
     }
     else {
       if (checkOrderItemExist()) {
-        console.log("inside check");
+        //console.log("inside check");
         let vars = [];
 
         var barcode = $("#order-item-form input[name=barcode]").val();
@@ -291,16 +291,17 @@ function displayCart() {
 }
 
 function clearCart() {
-  console.log("inside clear cart");
+  //console.log("inside clear cart");
   wholeOrder = [];
-  console.log(wholeOrder);
+  //console.log(wholeOrder);
   resetForm();
+  document.getElementById("place-order").disabled = true;
   toastr.info("Cart Cleared", "Info : ");
 }
 
 function getOrderItemList() {
   var jsonObj = $.parseJSON("[" + wholeOrder + "]");
-  console.log(jsonObj);
+  //console.log(jsonObj);
 }
 
 function deleteOrderItem(id) {
@@ -318,7 +319,7 @@ function updateOrderItem(event) {
 
   var $form = $("#edit-order-item-form");
   var json = toJson($form);
-  console.log(json);
+  //console.log(json);
   var jsonObj = $.parseJSON(json);
 
   var barcode = $("#edit-order-item-form input[name=barcode]").val();
@@ -338,24 +339,24 @@ function updateOrderItem(event) {
       extendedTimeOut: "0",
     });
   } else {
-    console.log("inside order item");
+    //console.log("inside order item");
     let item = [];
 
     item.push(barcode);
     item.push(qty);
     item.push(sp);
 
-    console.log(item);
+    //console.log(item);
 
     let data = {};
     data["barcode"] = item[0];
     data["quantity"] = item[1];
     data["sellingPrice"] = item[2];
 
-    console.log(data);
-    console.log(editOrderItem);
+    //console.log(data);
+    //console.log(editOrderItem);
     wholeOrder[editOrderItem] = JSON.stringify(data);
-    console.log(wholeOrder);
+    //console.log(wholeOrder);
   }
   toastr.success("Item updated Successfully", "Success : ");
   displayOrderItemList(wholeOrder);
@@ -380,7 +381,7 @@ function displayOrderList(data){
    $tbody.empty();
    for(var i in data){
       var e = data[i];
-      //console.log(e);
+      ////console.log(e);
       var buttonHtml = '<button onclick="viewOrder(' + e.id + ')" class="btn" title="View Order"><i class="fa-solid fa-eye" style="color:#007BFF"></i></button>'
       buttonHtml += '<button onclick="printOrder(' + e.id + ')" class="btn" target="_blank" title="Print Invoice"><i class="fa-solid fa-print" style="color:#007BFF"></i></button>'
       var row = '<tr>'
@@ -403,7 +404,7 @@ function getOrderList() {
     url: url,
     type: "GET",
     success: function (data) {
-      console.log(data);
+      //console.log(data);
       displayOrderList(data);
     },
     error: handleAjaxError,
@@ -435,7 +436,7 @@ function viewOrder(id) {
     url: url,
     type: "GET",
     success: function (data) {
-      console.log(data);
+      //console.log(data);
       displayOrderItemViewList(data);
     },
     error: handleAjaxError,
@@ -446,12 +447,12 @@ function viewOrder(id) {
 
  	var $tbody = $('#view-order-item-table').find('tbody');
  	$tbody.empty();
-    console.log(data);
+    //console.log(data);
     var amt = 0;
  	for(var i in data)
  	{
          var e = data[i];
-         console.log(e);
+         //console.log(e);
          var total = e.sellingPrice * e.quantity;
          var row = '<tr>'
          + '<td>' + e.barcode + '</td>'
@@ -478,11 +479,11 @@ function displayOrderItem(i) {
   data["sellingPrice"] = JSON.parse(wholeOrder[i]).sellingPrice;
 
   $("#edit-order-item-form input[name=barcode]").val(data.barcode);
-  console.log(data.barcode);
+  //console.log(data.barcode);
   $("#edit-order-item-form input[name=quantity]").val(data.quantity);
-  console.log(data.quantity);
+  //console.log(data.quantity);
   $("#edit-order-item-form input[name=sellingPrice]").val(data.sellingPrice);
-  console.log(data.sellingPrice);
+  //console.log(data.sellingPrice);
 
   $("#edit-order-item-modal").modal("toggle");
 }
