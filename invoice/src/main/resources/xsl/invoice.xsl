@@ -87,7 +87,7 @@
                 <fo:table-header>
                     <fo:table-row background-color="#293459" text-align="center" font-weight="bold" color="white">
                         <fo:table-cell border="1px solid #b8b6b6">
-                            <fo:block>ID</fo:block>
+                            <fo:block>Item ID</fo:block>
                         </fo:table-cell>
                         <fo:table-cell border="1px solid #b8b6b6">
                             <fo:block>Name</fo:block>
@@ -96,7 +96,7 @@
                             <fo:block>Quantity</fo:block>
                         </fo:table-cell>
                         <fo:table-cell border="1px solid #b8b6b6">
-                            <fo:block>Selling Price</fo:block>
+                            <fo:block>Selling Price (per unit)</fo:block>
                         </fo:table-cell>
                         <fo:table-cell border="1px solid #b8b6b6">
                             <fo:block>Total</fo:block>

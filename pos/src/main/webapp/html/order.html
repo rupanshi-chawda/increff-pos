@@ -16,7 +16,10 @@
     <div class="row">
         <div class="col-12">
             <form class="form" id="order-form">
-                <button type="button" class="btn btn-primary" id="add-order" title="Create Order"><i class="fa-solid fa-plus button-icon"></i></button>
+                <div class="col-sm-1 d-flex flex-column align-items-center">
+                    <button type="button" class="btn btn-primary" id="add-order" title="Create Order"><i class="fa-solid fa-plus button-icon"></i></button>
+                    <label class="icon-label" style="font-size:13px">Place</label>
+                </div>
             </form>
         </div>
     </div>
@@ -38,21 +41,6 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>id1</td>
-                    <td>1/1/1</td>
-                    <td>View</td>
-                </tr>
-                <tr>
-                    <td>id2</td>
-                    <td>2/2/2</td>
-                    <td>View</td>
-                </tr>
-                <tr>
-                    <td>id3</td>
-                    <td>3/3/3</td>
-                    <td>View</td>
-                </tr>
                 </tbody>
             </table>
 
@@ -110,24 +98,6 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>Barcode1</td>
-                                    <td>11</td>
-                                    <td>21</td>
-                                    <td>Delete</td>
-                                </tr>
-                                <tr>
-                                    <td>Barcode2</td>
-                                    <td>12</td>
-                                    <td>22</td>
-                                    <td>Delete</td>
-                                </tr>
-                                <tr>
-                                    <td>Barcode3</td>
-                                    <td>13</td>
-                                    <td>23</td>
-                                    <td>Delete</td>
-                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -135,7 +105,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick="clearCart()">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick="cancelCart()">Cancel</button>
                     &nbsp;
                     <button type="button" class="btn btn-primary" id="place-order" disabled="disabled">Order</button>
                 </div>
@@ -163,29 +133,11 @@
                                 <tr>
                                     <th scope="col">Barcode</th>
                                     <th scope="col">Quantity</th>
-                                    <th scope="col">Selling Price</th>
+                                    <th scope="col">Selling Price (per unit)</th>
                                     <th scope="col">Total</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>Barcode1</td>
-                                    <td>11</td>
-                                    <td>21</td>
-                                    <td>31</td>
-                                </tr>
-                                <tr>
-                                    <td>Barcode2</td>
-                                    <td>12</td>
-                                    <td>22</td>
-                                    <td>32</td>
-                                </tr>
-                                <tr>
-                                    <td>Barcode3</td>
-                                    <td>13</td>
-                                    <td>23</td>
-                                    <td>33</td>
-                                </tr>
                                 </tbody>
                             </table>
                             <!-- Table end-->

@@ -11,52 +11,50 @@
 
 <div class="container">
 
-	<div class="row-12">&nbsp;</div>
+	<div class="row-12 my-10">&nbsp;</div>
 
 <div class="row">
 <div class="col-12 d-flex justify-content-center">
-	
+
 	<div class="card" style="width: 500px">
-		<div class="card-header text-white" style="background-color: #00295F; text-align: center; font-size: 18px;">
-			Login
-		</div>
-		<div class="card-body">
-			<form class="form" id="login-form" method="POST" th:action="@{/session/login}">
+		<article class="card-body">
+			<h3 class="card-title text-center mb-4 mt-1">Login</h3>
+			<div class="card-footer text-danger" style="background-color: white">
+				[[${info.getMessage()}]]
+			</div>
+			<form class="form" id="init-form" method="POST" th:action="@{/session/login}">
 				<div class="form-group">
 					<div class="input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"> <i class="fa fa-user"></i> </span>
 						</div>
-						  <input type="text" class="form-control" name="email" id="email" placeholder="enter email">
-					</div>
-				</div>
+						<input type="text" class="form-control" name="email" id="email" placeholder="enter email">
+					</div> <!-- input-group.// -->
+				</div> <!-- form-group// -->
 				<div class="form-group">
 					<div class="input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"> <i class="fa fa-lock"></i> </span>
 						</div>
-						  <input type="password" class="form-control" name="password" id="password" placeholder="password">
-					</div>
-				</div>
-				<div class="d-flex justify-content-center">
-					<button type="submit" class="btn btn-primary btn-in" id="login">Log-In</button>
-				</div>
+						<input type="password" class="form-control" name="password" id="password" placeholder="password">
+					</div> <!-- input-group.// -->
+				</div> <!-- form-group// -->
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-block btn-in"> Submit </button>
+				</div> <!-- form-group// -->
 			</form>
-		</div>
-		<div class="card-footer text-danger" style="text-align: center;">
-			[[${info.getMessage()}]]
-		</div>
-	
-	</div>
-	
-	
+			<div class="card-footer" style="text-align: center; background-color: white">
+				Don't have an Account? <a class="link" th:href="@{/site/init}"> Signup </a>
+			</div>
+		</article>
+	</div> <!-- card.// -->
 
 </div> <!-- Col -->
 </div> <!-- Row -->
 
 </div> <!-- Container-->
 
-<footer th:replace="snippets.html :: name_footer"></footer>
+<!--<footer th:replace="snippets.html :: name_footer"></footer>-->
 
 </body>
 

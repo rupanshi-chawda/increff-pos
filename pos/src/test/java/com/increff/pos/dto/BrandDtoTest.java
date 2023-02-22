@@ -105,8 +105,8 @@ public class BrandDtoTest extends AbstractUnitTest {
         }
         catch(ApiException e)
         {
-            String exception = "[ {\r\n  \"brand\" : \"\",\r\n  \"category\" : \"hair\",\r\n  \"message\" : \"[brand  must be between 1 and 15 characters long , brand must not be blank]\"\r\n} ]";
-            String exception2 = "[ {\r\n  \"brand\" : \"dyson\",\r\n  \"category\" : \"\",\r\n  \"message\" : \"[brand must not be blank, brand  must be between 1 and 15 characters long ]\"\r\n} ]";
+            String exception = "[ {\r\n  \"brand\" : \"\",\r\n  \"category\" : \"hair\",\r\n  \"message\" : \"[brand  must be between 1 and 25 characters long , brand must not be blank]\"\r\n} ]";
+            String exception2 = "[ {\r\n  \"brand\" : \"dyson\",\r\n  \"category\" : \"\",\r\n  \"message\" : \"[brand must not be blank, brand  must be between 1 and 25 characters long ]\"\r\n} ]";
             assertThat(e.getMessage(), anyOf(containsString(exception),containsString(exception2)));
             throw e;
         }
@@ -229,8 +229,8 @@ public class BrandDtoTest extends AbstractUnitTest {
         }
         catch(ApiException e)
         {
-            String exception = "[brand must not be blank, brand  must be between 1 and 15 characters long ]";
-            String exception2 = "[brand  must be between 1 and 15 characters long , brand must not be blank]";
+            String exception = "[brand must not be blank, brand  must be between 1 and 25 characters long ]";
+            String exception2 = "[brand  must be between 1 and 25 characters long , brand must not be blank]";
             assertThat(e.getMessage(), anyOf(containsString(exception),containsString(exception2)));
             throw e;
         }

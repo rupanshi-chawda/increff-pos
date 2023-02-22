@@ -16,6 +16,8 @@ import java.time.*;
 import java.util.List;
 import java.util.Objects;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 
 @Service
 public class SalesJobDto {
@@ -31,6 +33,7 @@ public class SalesJobDto {
         LocalDate endDate = LocalDate.parse(salesForm.getEndDate());
         ValidationUtil.validateForms(salesForm);
         checkDates(startDate, endDate);
+        checkDuration(startDate, endDate);
         return  api.getAllBetweenDates(startDate, endDate);
     }
 
@@ -76,6 +79,13 @@ public class SalesJobDto {
     private void checkDates(LocalDate startDate, LocalDate endDate) throws ApiException {
         if(endDate.isBefore(startDate)) {
             throw new ApiException("End date must not be before Start date");
+        }
+    }
+
+    private void checkDuration(LocalDate startDate, LocalDate endDate) throws ApiException {
+        long months = DAYS.between(startDate, endDate);
+        if(months > 90) {
+            throw new ApiException("Duration cannot be more than 3 months");
         }
     }
 }

@@ -40,6 +40,7 @@ function addBrand(event) {
       resetForm();
       getBrandList();
       toastr.success("Brand Added Successfully", "Success : ");
+      displayAddBrand();
     },
     error: function (response) {
         if(response.status == 403) {
@@ -108,7 +109,7 @@ var processCount = 0;
 function processData() {
   var file = $("#brandFile")[0].files[0];
   if(file.name.split('.').pop() != "tsv"){
-      toastr.error("File should be TSV");
+      toastr.warning("File should be TSV");
       return;
   }
   readFileData(file, readFileDataCallback);
@@ -118,20 +119,20 @@ function readFileDataCallback(results) {
   fileData = results.data;
   var filelen = fileData.length;
   	if(filelen == 0) {
-        toastr.error("File is empty, upload not allowed");
+        toastr.warning("File is empty, upload not allowed");
     }
   	else if(filelen > 5000) {
-  	    toastr.error("File length exceeds 5000, upload not allowed");
+  	    toastr.warning("File length exceeds 5000, upload not allowed");
   	}
   	else {
   	    var headers = ["brand", "category"];
   	    if(Object.keys(fileData[0]).length != headers.length) {
-            toastr.error("Number of columns in File do not match. Please check the file and try again");
+            toastr.warning("Number of columns in File do not match");
             return;
         }
         for(var i in headers) {
             if(!fileData[0].hasOwnProperty(headers[i])) {
-                toastr.error('File column names do not match. Please check the file and try again');
+                toastr.warning('File column names do not match');
                 return;
             }
         }
@@ -209,6 +210,7 @@ function displayBrandList(data){
       var e = data[i];
       var buttonHtml = '<button onclick="displayEditBrand(' + e.id + ')" class="btn table__button-group" title="Edit Brand"><i class="fa-solid fa-pencil" style="color:#007BFF"></i></button>'
       var row = '<tr>'
+      + '<td>' + e.id + '</td>'
       + '<td>' + e.brand + '</td>'
       + '<td>'  + e.category + '</td>'
       + '<td>' + buttonHtml + '</td>'
@@ -306,6 +308,22 @@ function resetButtons(event){
     checkform();
 }
 
+function activateNav(){
+    // Get the current URL path
+    var currentPath = window.location.pathname;
+
+    // Loop through each navigation link
+    $('.nav-link').each(function() {
+      // Get the link's href attribute
+      var linkHref = $(this).attr('href');
+
+      // If the link's href attribute matches the current URL path
+      if (currentPath === linkHref) {
+        // Add the "active" class to the link's parent list item
+        $(this).parent().addClass('active');
+      }
+    });
+}
 //INITIALIZATION CODE
 function init() {
   $("#add-brand").click(addBrand);
@@ -321,3 +339,4 @@ function init() {
 
 $(document).ready(init);
 $(document).ready(getBrandList);
+$(document).ready(activateNav);

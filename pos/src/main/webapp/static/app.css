@@ -61,3 +61,8 @@ tr:hover {
   background-color: transparent;
   border-color: #007BFF;
 }
+.btn-warning[disabled] {
+  color: #856404;
+  background-color: transparent;
+  border-color: #856404;
+}

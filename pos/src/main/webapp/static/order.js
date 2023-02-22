@@ -39,7 +39,7 @@ function placeOrder(event) {
   let len = wholeOrder.length;
   //console.log(len);
   if (len == 0) {
-    toastr.error("Cart empty! Order cannot be placed.", "Error : ", {
+    toastr.warning("Cart empty! Order cannot be placed.", "Error : ", {
       closeButton: true,
       timeOut: "0",
       extendedTimeOut: "0",
@@ -75,7 +75,7 @@ function displayOrderItemList(data) {
 	{
         var e = wholeOrder[i];
         //var buttonHtml = '<button onclick="displayEditOrderItem(' + i + ')" class="btn table__button-group"><i class="fa-solid fa-pencil" style="color:#007BFF"></i></button>'
-        var buttonHtml = '<button onclick="deleteOrderItem(' + i + ')" class="btn table__button-group" title="Delete Order"><i class="fa-solid fa-trash" style="color:#007BFF"></i></button>'
+        var buttonHtml = '<button onclick="deleteOrderItem(' + i + ')" class="btn table__button-group" title="Delete Order"><i class="fa-solid fa-trash" style="color:#DC3545"></i></button>'
         var row = '<tr>'
             + '<td>' + JSON.parse(e).barcode + '</td>'
             + '<td>' + JSON.parse(e).quantity + '</td>'
@@ -210,23 +210,23 @@ function addItem() {
 //  //console.log(inv_qty);
 
   if(sp > mrp){
-      toastr.error("Selling Price cannot be greater than MRP");
+      toastr.warning("Selling Price cannot be greater than MRP");
       return;
   }
   if(qty.includes("-") || qty.includes("+") || qty.includes("*") || qty.includes("/") || qty.includes(".") || !isNumber(qty)) {
-        toastr.error("Quantity must be number", "Error : ");
+        toastr.warning("Quantity must be number", "Error : ");
         return;
     }
   if(parseFloat(qty) > 2147483647) {
-        toastr.error("Quantity is greater than Maximum value allowed", "Error : ");
+        toastr.warning("Quantity is greater than Maximum value allowed", "Error : ");
         return;
   }
   if(isNaN(sp) || isNaN(parseFloat(sp))) {
-        toastr.error("Selling Price must be number", "Error : ");
+        toastr.warning("Selling Price must be number", "Error : ");
         return;
     }
   if(parseFloat(sp) > 2147483647) {
-        toastr.error("Selling Price is greater than Maximum value allowed", "Error : ");
+        toastr.warning("Selling Price is greater than Maximum value allowed", "Error : ");
         return;
   }
 
@@ -238,11 +238,11 @@ function addItem() {
     var _qty = barcodeList.get(barcode1) - qty;
 
     if (sp <= 0) {
-        toastr.error("Price cannot be negative or zero");
+        toastr.warning("Price cannot be negative or zero");
     } else if (qty <= 0) {
-        toastr.error("Quantity cannot be negative or zero");
+        toastr.warning("Quantity cannot be negative or zero");
     } else if(qty > 10000) {
-        toastr.error("Quantity cannot be greater than 10000");
+        toastr.warning("Quantity cannot be greater than 10000");
     }
     else {
       if (checkOrderItemExist()) {
@@ -298,6 +298,13 @@ function clearCart() {
   document.getElementById("place-order").disabled = true;
   toastr.info("Cart Cleared", "Info : ");
 }
+function cancelCart() {
+  //console.log("inside clear cart");
+  wholeOrder = [];
+  //console.log(wholeOrder);
+  resetForm();
+  document.getElementById("place-order").disabled = true;
+}
 
 function getOrderItemList() {
   var jsonObj = $.parseJSON("[" + wholeOrder + "]");
@@ -327,13 +334,13 @@ function updateOrderItem(event) {
   var sp = $("#edit-order-item-form input[name=sellingPrice]").val();
 
   if (sp < 1) {
-    toastr.error("Price cannot be negative or zero", "Error : ", {
+    toastr.warning("Price cannot be negative or zero", "Error : ", {
       closeButton: true,
       timeOut: "0",
       extendedTimeOut: "0",
     });
   } else if (qty < 1) {
-    toastr.error("Quantity cannot be negative or zero", "Error : ", {
+    toastr.warning("Quantity cannot be negative or zero", "Error : ", {
       closeButton: true,
       timeOut: "0",
       extendedTimeOut: "0",
@@ -488,6 +495,23 @@ function displayOrderItem(i) {
   $("#edit-order-item-modal").modal("toggle");
 }
 
+function activateNav(){
+    // Get the current URL path
+    var currentPath = window.location.pathname;
+
+    // Loop through each navigation link
+    $('.nav-link').each(function() {
+      // Get the link's href attribute
+      var linkHref = $(this).attr('href');
+
+      // If the link's href attribute matches the current URL path
+      if (currentPath === linkHref) {
+        // Add the "active" class to the link's parent list item
+        $(this).parent().addClass('active');
+      }
+    });
+}
+
 //INITIALIZATION CODE
 // --------------------------------------------------------------------------------
 
@@ -503,3 +527,4 @@ function init() {
 $(document).ready(init);
 $(document).ready(getOrderList);
 $(document).ready(getOrderItemList);
+$(document).ready(activateNav);

@@ -49,6 +49,10 @@ var deleteid = 0;
 function displayDeleteUser(id) {
   deleteid = id;
   $("#delete-user-modal").modal("toggle");
+  var $head = $("#delete-user-modal").find("h5");
+    $head.empty();
+    var span = "Delete User - " + id;
+    $head.append(span);
 }
 
 function deleteUser(event) {
@@ -79,17 +83,22 @@ function displayUserList(data){
 	$tbody.empty();
 	for(var i in data){
 		var e = data[i];
-		var buttonHtml = '<button onclick="displayDeleteUser(' + e.id + ')" class="btn table__button-group" id="delete-button" title="Delete User"><i class="fa-solid fa-trash" style="color:#007BFF"></i></button>'
-		var row = '<tr>'
-		+ '<td> <i class="fa-solid fa-circle-user" style="color:#007BFF"></i> </td>'
-		+ '<td>' + e.email + '</td>'
-		+ '<td>' + e.role + '</td>'
-		+ '<td>' + buttonHtml + '</td>'
-		+ '</tr>';
-        $tbody.append(row);
-        if (e.role == "supervisor") {
-              $("#delete-button").prop("disabled", true);
-        }
+		if(e.role == "supervisor") {
+		    continue;
+		}
+		else {
+	        var buttonHtml = '<button onclick="displayDeleteUser(' + e.id + ')" class="btn table__button-group" id="delete-button" title="Delete User"><i class="fa-solid fa-trash" style="color:#DC3545"></i></button>'
+    		var row = '<tr>'
+    		+ '<td>' + e.id + '</td>'
+    		+ '<td>' + e.email + '</td>'
+    		+ '<td>' + e.role + '</td>'
+    		+ '<td>' + buttonHtml + '</td>'
+    		+ '</tr>';
+            $tbody.append(row);
+            if (e.role == "supervisor") {
+                  $("#delete-button").prop("disabled", true);
+            }
+		}
 	}
 }
 
@@ -111,6 +120,23 @@ function resetButtons(event){
     checkform();
 }
 
+function activateNav(){
+    // Get the current URL path
+    var currentPath = window.location.pathname;
+
+    // Loop through each navigation link
+    $('.nav-link').each(function() {
+      // Get the link's href attribute
+      var linkHref = $(this).attr('href');
+
+      // If the link's href attribute matches the current URL path
+      if (currentPath === linkHref) {
+        // Add the "active" class to the link's parent list item
+        $(this).parent().addClass('active');
+      }
+    });
+}
+
 //INITIALIZATION CODE
 function init() {
   $("#add-user").click(addUser);
@@ -120,3 +146,4 @@ function init() {
 
 $(document).ready(init);
 $(document).ready(getUserList);
+$(document).ready(activateNav);

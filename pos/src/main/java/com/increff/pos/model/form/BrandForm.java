@@ -12,7 +12,7 @@ public class BrandForm {
 
 
     @NotBlank
-    @Size(min = 1, max = 15,message = " must be between 1 and 15 characters long ")
+    @Size(min = 1, max = 25,message = " must be between 1 and 15 characters long ")
     private String brand;
 
     @NotBlank

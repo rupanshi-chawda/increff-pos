@@ -16,12 +16,11 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Component
 public class SalesReportDto {
@@ -50,6 +49,7 @@ public class SalesReportDto {
         ZonedDateTime end = eDate.atZone(ZoneId.systemDefault());
 
         checkDates(start, end);
+        checkDuration(start, end);
 
         List<OrderPojo> list = orderApi.getOrderByDateFilter(start, end);
         return getFilterSalesReport(list, form.getBrand(), form.getCategory());
@@ -112,6 +112,12 @@ public class SalesReportDto {
     private void checkDates(ZonedDateTime startDate, ZonedDateTime endDate) throws ApiException {
         if(endDate.isBefore(startDate)) {
             throw new ApiException("End date must not be before Start date");
+        }
+    }
+    private void checkDuration(ZonedDateTime startDate, ZonedDateTime endDate) throws ApiException {
+        long months = DAYS.between(startDate, endDate);
+        if(months > 90) {
+            throw new ApiException("Duration cannot be more than 3 months");
         }
     }
 }

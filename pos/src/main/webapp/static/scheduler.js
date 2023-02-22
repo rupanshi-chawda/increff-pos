@@ -107,6 +107,24 @@ function init() {
   $("#apply-filter").click(getFilteredList);
 }
 
+function activateNav(){
+    // Get the current URL path
+    var currentPath = window.location.pathname;
+
+    // Loop through each navigation link
+    $('.nav-link').each(function() {
+      // Get the link's href attribute
+      var linkHref = $(this).attr('href');
+
+      // If the link's href attribute matches the current URL path
+      if (currentPath === linkHref) {
+        // Add the "active" class to the link's parent list item
+        $(this).parent().addClass('active');
+      }
+    });
+}
+
 $(document).ready(init);
 $(document).ready(getSalesList);
 $(document).ready(autoFillDate);
+$(document).ready(activateNav);

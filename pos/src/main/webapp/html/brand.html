@@ -14,13 +14,18 @@
     <div class="row">&nbsp;</div>
 
     <div class="row supervisor">
-        <div class="col-12">
-            <button type="button" class="btn btn-primary" id="add-modal" title="Add Brand"><i class="fa-solid fa-plus button-icon"></i></button>
-            &nbsp; &nbsp;
-            <button type="button" class="btn btn-primary" id="upload-data" title="Upload Brand"><i class="fa-solid fa-arrow-up-from-bracket button-icon"></i></button>
-            &nbsp; &nbsp;
-            <button type="button" class="btn btn-primary" id="download-csv" title="Print Brand Report"><i class="fa-solid fa-print button-icon"></i></button>
-        </div>
+            <div class="col-sm-1 d-flex flex-column align-items-center">
+                <button type="button" class="btn btn-primary" id="add-modal" title="Add Brand"><i class="fa-solid fa-plus button-icon"></i></button>
+                <label class="icon-label" style="font-size:13px">Add</label>
+            </div>
+            <div class="col-sm-1 d-flex flex-column align-items-center">
+                <button type="button" class="btn btn-primary" id="upload-data" title="Upload Brand"><i class="fa-solid fa-arrow-up-from-bracket button-icon"></i></button>
+                <label class="icon-label" style="font-size:13px">Upload</label>
+            </div>
+            <div class="col-sm-1 d-flex flex-column align-items-center">
+                <button type="button" class="btn btn-primary" id="download-csv" title="Download Brand Report"><i class="fa-solid fa-print button-icon"></i></button>
+                <label class="icon-label" style="font-size:13px">Report</label>
+            </div>
     </div>
 
 <!--    Brand Add Modal-->
@@ -28,19 +33,19 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add Brand</h5>
+                    <h5 class="modal-title">Add New Brand</h5>
                 </div>
                 <div class="modal-body">
                     <form class="form" id="brand-form">
                         <div class="form-group">
                             <label for="inputBrand" class="col-sm-2 col-form-label">Brand</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-12">
                                 <input type="text" maxlength="15" class="form-control" name="brand" id="inputBrand" placeholder="enter brand" onKeyup="checkform()">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputCategory" class="col-sm-2 col-form-label">Category</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-12">
                                 <input type="text" maxlength="15" class="form-control" name="category" id="inputCategory" placeholder="enter category" onKeyup="checkform()">
                             </div>
                         </div>
@@ -55,37 +60,23 @@
     </div>
 
     <!-- Blank Row -->
-    <div class="row d-flex justify-content-end" id="total-rows">
+    <div class="row col-10 d-flex justify-content-end" id="total-rows">
         <span class="py-2 px-3"> Total Rows : </span>
     </div>
     <div class="row">
 
         <!-- Table -->
-        <div class="col-12">
+        <div class="col-10">
             <table class="table" id="Brand-table">
                 <thead class="thead-light">
                 <tr>
+                    <th scope="col">ID</th>
                     <th scope="col">Brand</th>
                     <th scope="col">Category</th>
                     <th scope="col" class="col-1"> </th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>Brand1</td>
-                    <td>Cat1</td>
-                    <td>Edit</td>
-                </tr>
-                <tr>
-                    <td>Brand2</td>
-                    <td>Cat2</td>
-                    <td>Edit</td>
-                </tr>
-                <tr>
-                    <td>Brand3</td>
-                    <td>Cat3</td>
-                    <td>Edit</td>
-                </tr>
                 </tbody>
             </table>
         </div>
@@ -102,13 +93,13 @@
                     <form class="form" id="brand-edit-form">
                         <div class="form-group">
                             <label for="inputBrand" class="col-sm-2 col-form-label">Brand</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-12">
                                 <input type="text" maxlength="15" class="form-control" name="brand" placeholder="enter brand" onkeydown="enableUpdate()">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputCategory" class="col-sm-2 col-form-label">Category</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-12">
                                 <input type="text" maxlength="15" class="form-control" name="category" placeholder="enter category" onkeydown="enableUpdate()">
                             </div>
                         </div>

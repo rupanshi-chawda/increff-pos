@@ -163,8 +163,8 @@ public class ProductDtoTest extends AbstractUnitTest {
 
         }
         catch(ApiException e) {
-            String exception = "[ {\r\n  \"barcode\" : \"a1b2c3d4\",\r\n  \"brand\" : \"\",\r\n  \"category\" : \"hair\",\r\n  \"name\" : \"airwrap\",\r\n  \"mrp\" : 45000.95,\r\n  \"message\" : \"[brand  must be between 1 and 15 characters long , brand must not be blank]\"\r\n} ]";
-            String exception2 = "[ {\r\n  \"barcode\" : \"a1b2c3d4\",\r\n  \"brand\" : \"dyson\",\r\n  \"category\" : \"\",\r\n  \"name\" : \"airwrap\",\r\n  \"mrp\" : 45000.95,\r\n  \"message\" : \"[brand must not be blank, brand  must be between 1 and 15 characters long ]\"\r\n} ]";
+            String exception = "[ {\r\n  \"barcode\" : \"a1b2c3d4\",\r\n  \"brand\" : \"\",\r\n  \"category\" : \"hair\",\r\n  \"name\" : \"airwrap\",\r\n  \"mrp\" : 45000.95,\r\n  \"message\" : \"[brand  must be between 1 and 25 characters long , brand must not be blank]\"\r\n} ]";
+            String exception2 = "[ {\r\n  \"barcode\" : \"a1b2c3d4\",\r\n  \"brand\" : \"dyson\",\r\n  \"category\" : \"\",\r\n  \"name\" : \"airwrap\",\r\n  \"mrp\" : 45000.95,\r\n  \"message\" : \"[brand must not be blank, brand  must be between 1 and 25 characters long ]\"\r\n} ]";
             assertThat(e.getMessage(), anyOf(containsString(exception),containsString(exception2)));
             throw e;
         }

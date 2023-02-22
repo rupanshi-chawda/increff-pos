@@ -41,9 +41,12 @@
 					</div> <!-- input-group.// -->
 				</div> <!-- form-group// -->
 				<div class="form-group">
-					<button type="submit" class="btn btn-primary btn-block btn-in"> Signup  </button>
+					<button type="submit" class="btn btn-primary btn-block btn-in"> Submit  </button>
 				</div> <!-- form-group// -->
 			</form>
+			<div class="card-footer" style="text-align: center; background-color: white">
+				Already have an Account? <a class="link" th:href="@{/site/login}"> login </a>
+			</div>
 		</article>
 	</div> <!-- card.// -->
 
@@ -52,7 +55,7 @@
 
 </div> <!-- Container-->
 
-<footer th:replace="snippets.html :: name_footer"></footer>
+<!--<footer th:replace="snippets.html :: name_footer"></footer>-->
 
 </body>
 

@@ -54,11 +54,11 @@ function addProduct(event) {
   var mrp = JSON.parse(json).mrp;
 
   if(isNaN(mrp) || isNaN(parseFloat(mrp))) {
-      toastr.error("MRP must be number", "Error : ");
+      toastr.warning("MRP must be number", "Error : ");
       return;
   }
   if(parseFloat(mrp) > 2147483647) {
-      toastr.error("MRP is greater than Maximum value allowed", "Error : ");
+      toastr.warning("MRP is greater than Maximum value allowed", "Error : ");
       return;
   }
 
@@ -77,6 +77,7 @@ function addProduct(event) {
           toastr.success("Product Added Successfully", "Success : ");
           resetForm();
           wholeProduct = [];
+          displayAddProduct();
         },
         error: function (response) {
                  if(response.status == 403) {
@@ -110,11 +111,11 @@ function updateProduct(event) {
   var mrp = JSON.parse(json).mrp;
 
   if(isNaN(mrp) || isNaN(parseFloat(mrp))) {
-      toastr.error("MRP must be a number", "Error : ");
+      toastr.warning("MRP must be a number", "Error : ");
       return;
   }
   if(parseFloat(mrp) > 2147483647) {
-      toastr.error("MRP is greater than Maximum value allowed", "Error : ");
+      toastr.warning("MRP is greater than Maximum value allowed", "Error : ");
       return;
   }
 
@@ -156,7 +157,7 @@ var processCount = 0;
 function processData() {
   var file = $("#productFile")[0].files[0];
   if(file.name.split('.').pop() != "tsv"){
-      toastr.error("File should be TSV");
+      toastr.warning("File should be TSV");
       return;
   }
   readFileData(file, readFileDataCallback);
@@ -166,20 +167,20 @@ function readFileDataCallback(results) {
   fileData = results.data;
   var filelen = fileData.length;
     if(filelen == 0) {
-        toastr.error("File is empty, upload not allowed");
+        toastr.warning("File is empty, upload not allowed");
     }
   	else if(filelen > 5000) {
-  	    toastr.error("File length exceeds 5000, upload not allowed");
+  	    toastr.warning("File length exceeds 5000, upload not allowed");
   	}
   	else {
   	        var headers = ["barcode", "brand", "category", "name", "mrp"];
       	    if(Object.keys(fileData[0]).length != headers.length) {
-                toastr.error("Number of columns in File do not match. Please check the file and try again");
+                toastr.warning("Number of columns in File do not match. Please check the file and try again");
                 return;
             }
             for(var i in headers) {
                 if(!fileData[0].hasOwnProperty(headers[i])) {
-                toastr.error('File column names do not match. Please check the file and try again');
+                toastr.warning('File column names do not match. Please check the file and try again');
                     return;
                 }
             }
@@ -258,6 +259,8 @@ function displayProductList(data){
       var buttonHtml = '<button onclick="displayEditProduct(' + e.id + ')" class="btn table__button-group" title="Edit Product"><i class="fa-solid fa-pencil" style="color:#007BFF"></i></button>'
       var row = '<tr>'
       + '<td>' + e.barcode + '</td>'
+      + '<td>' + e.brand + '</td>'
+      + '<td>' + e.category + '</td>'
       + '<td>'  + e.name + '</td>'
       + '<td>'  + parseFloat(e.mrp).toFixed(2) + '</td>'
       + '<td>' + buttonHtml + '</td>'
@@ -325,7 +328,7 @@ function displayProduct(data) {
 
   var $head = $("#edit-product-modal").find("h5");
   $head.empty();
-  var span = "Edit Product - " + data.id;
+  var span = "Edit Product - " + data.barcode;
   $head.append(span);
 
   document.getElementById("update-product").disabled = true;
@@ -403,6 +406,23 @@ function resetButtons(event){
     checkform();
 }
 
+function activateNav(){
+    // Get the current URL path
+    var currentPath = window.location.pathname;
+
+    // Loop through each navigation link
+    $('.nav-link').each(function() {
+      // Get the link's href attribute
+      var linkHref = $(this).attr('href');
+
+      // If the link's href attribute matches the current URL path
+      if (currentPath === linkHref) {
+        // Add the "active" class to the link's parent list item
+        $(this).parent().addClass('active');
+      }
+    });
+}
+
 //INITIALIZATION CODE
 function init() {
   $("#add-product").click(addProduct);
@@ -419,3 +439,4 @@ function init() {
 $(document).ready(init);
 $(document).ready(getProductList);
 $(document).ready(getBrandList);
+$(document).ready(activateNav);

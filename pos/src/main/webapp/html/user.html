@@ -16,7 +16,10 @@
  <!-- Top row with form-->
  <div class="row">
 	 <div class="col-12">
-		 <button type="button" class="btn btn-primary" id="add-modal" title="Add User"><i class="fa-solid fa-plus button-icon"></i></button>
+		 <div class="col-sm-1 d-flex flex-column align-items-center">
+			 <button type="button" class="btn btn-primary" id="add-modal" title="Add Brand"><i class="fa-solid fa-plus button-icon"></i></button>
+			 <label class="icon-label" style="font-size:13px">Add</label>
+		 </div>
 	 </div>
 </div>
 
@@ -25,19 +28,19 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Add User</h5>
+					<h5 class="modal-title">Add New User</h5>
 				</div>
 				<div class="modal-body">
 					<form class="form" id="user-form">
 						<div class="form-group">
 							<label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
-							<div class="col-sm-10">
+							<div class="col-sm-12">
 								<input type="text" maxlength="25" class="form-control" name="email" id="inputEmail" placeholder="enter email" onKeyup="checkform()">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
-							<div class="col-sm-10">
+							<div class="col-sm-12">
 								<input type="text" maxlength="15" class="form-control" name="password" id="inputPassword" placeholder="enter password" onKeyup="checkform()">
 							</div>
 						</div>
@@ -77,30 +80,24 @@
 
 
 <!-- Blank Row -->
-	<div class="row d-flex justify-content-end" id="total-rows">
+	<div class="row col-10 d-flex justify-content-end" id="total-rows">
 		<span class="py-2 px-3"> Total Rows : </span>
 	</div>
 
 <div class="row">
 
  <!-- Table -->
- <div class="col-12">
+ <div class="col-10">
 	<table class="table" id="user-table">
 	  <thead class="thead-light">
 	    <tr>
-		  	<th scope="col-sm-1">#</th>
+		  	<th scope="col-sm-1">ID</th>
 	      	<th scope="col">User Emails</th>
 		  	<th scope="col">Role</th>
 	      	<th scope="col" class="col-sm-2"> </th>
 	    </tr>
 	  </thead>
 	  <tbody>
-	    <tr>
-	      	<td> </td>
-			<td>User1</td>
-			<td>Role1</td>
-	      	<td>Edit | Delete</td>
-	    </tr>
 	  </tbody>
 	</table>
 
